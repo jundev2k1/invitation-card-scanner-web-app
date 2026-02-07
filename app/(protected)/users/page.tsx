@@ -1,7 +1,7 @@
+import { HeaderPage } from "@/app/components";
+
 export default function UserPage() {
   return (
-    <div>
-      <h1>User Page</h1>
-    </div>
+    <HeaderPage title="User List" />
   );
 }

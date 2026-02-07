@@ -1,7 +1,7 @@
+import { HeaderPage } from "@/app/components";
+
 export default function InvitationCardsPage() {
   return (
-    <div>
-      <h1>Invitation Cards Page</h1>
-    </div>
+    <HeaderPage title="Invitation Cards" />
   );
 }

@@ -1,7 +1,8 @@
+'use client';
+import { HeaderPage } from "@/app/components";
+
 export default function DashboardPage() {
   return (
-    <div>
-      <h1>Dashboard Page</h1>
-    </div>
+    <HeaderPage title="Dashboard" />
   );
 }
