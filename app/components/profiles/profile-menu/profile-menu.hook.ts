@@ -1,3 +1,4 @@
+'use client';
 import { CookieStore } from "@/lib/cookies";
 import { authService, userService } from "@/services";
 import { useAuthStore } from "@/store";

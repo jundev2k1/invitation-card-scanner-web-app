@@ -16,10 +16,6 @@ body.dark {
   background-color: var(--color-zinc-900)!important;
 }
 
-a {
-  @apply text-blue-600 hover:underline;
-}
-
 input,
 textarea,
 select {
