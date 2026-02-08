@@ -1,15 +1,19 @@
 import { CookieStore } from '@/lib/cookies';
-import { ThemeColor, ThemeMode } from '@/types';
+import { Language, ThemeColor, ThemeMode } from '@/types';
 import { create } from 'zustand';
 
 type ThemeState = {
+  language: Language;
+  setLanguage: (language: Language) => void;
   theme: ThemeMode;
   setTheme: (theme: ThemeMode) => void;
   color: ThemeColor;
   setColor: (color: ThemeColor) => void;
 };
 
-export const useThemeStore = create<ThemeState>((set) => ({
+export const useAppStore = create<ThemeState>((set) => ({
+  language: CookieStore.language,
+  setLanguage: (language: Language) => set({ language }),
   theme: CookieStore.themeMode,
   setTheme: (theme: ThemeMode) => {
     CookieStore.themeMode = theme;
