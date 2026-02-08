@@ -1,18 +1,13 @@
 import { BellIcon } from "@/app/components/icons";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useSidebarStore } from "@/store";
 import { MenuIcon } from "lucide-react";
 import { ProfileMenu } from "../../profiles";
 import { ThemeToggleButton } from "../../theme";
 
-type PageHeaderProps = {
-  title?: string
-};
-
-export default function PageHeader({ title = '' }: PageHeaderProps) {
-  const toggleSidebar = () => {
-
-  }
+export default function PageHeader() {
+  const { isCollapsed, toggleSidebar, currentPage } = useSidebarStore();
 
   return (
     <header
@@ -26,15 +21,15 @@ export default function PageHeader({ title = '' }: PageHeaderProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="lg:hidden"
-          onClick={toggleSidebar}
+          className="lg:hidden! md:hidden! sm:hidden!"
+          onClick={() => toggleSidebar(!isCollapsed)}
           aria-label="Toggle sidebar"
         >
           <MenuIcon className="h-5 w-5" />
         </Button>
 
         <h1 className="text-lg md:text-xl font-semibold tracking-tight">
-          {title || "Dashboard"}
+          {currentPage || "Dashboard"}
         </h1>
       </div>
 
