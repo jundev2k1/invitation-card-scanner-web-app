@@ -1,14 +1,23 @@
 import { BellIcon, LogOutIcon, SettingsIcon, UserIcon } from "@/app/components/icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 import { ThemeToggleButton } from "../../theme";
+import { useHeader } from "./useHeader";
 
 type PageHeaderProps = {
   title?: string
 };
 
 export default function PageHeader({ title = '' }: PageHeaderProps) {
+  const { handleLogout } = useHeader();
   return (
     <header className="flex items-center justify-between border-b bg-white text-zinc-800 dark:bg-zinc-800 dark:text-zinc-100 px-6 py-4">
       <h1 className="text-xl font-semibold">{title}</h1>
@@ -46,7 +55,7 @@ export default function PageHeader({ title = '' }: PageHeaderProps) {
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-600 cursor-pointer">
+            <DropdownMenuItem className="text-red-600 cursor-pointer" onClick={handleLogout}>
               <LogOutIcon className="mr-2 h-4 w-4" />
               Logout
             </DropdownMenuItem>

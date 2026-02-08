@@ -1,6 +1,6 @@
 'use client';
-import Cookies from "js-cookie";
-import { ThemeToggleButton } from "./components";
+import { useThemeStore } from "@/store";
+import { Toast } from "./components";
 import "./globals.css";
 
 // export const metadata: Metadata = {
@@ -13,14 +13,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const themeMode = Cookies.get("theme") || 'light';
+  const { theme, color } = useThemeStore();
   return (
     <html lang="en">
-      <body className={themeMode}>
+      <body className={`${theme} ${color}`}>
         {children}
-        <div className="absolute right-0.5 bottom-0.5">
-          <ThemeToggleButton />
-        </div>
+        <Toast.Toaster />
       </body>
     </html>
   );

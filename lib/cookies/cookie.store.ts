@@ -9,17 +9,23 @@ import {
 
 export default class CookieStore {
   // Auth
-  static get accessToken(): string {
-    return Cookies.get(ACCESS_TOKEN_COOKIE_KEY) || '';
+  static get accessToken(): string | null {
+    return Cookies.get(ACCESS_TOKEN_COOKIE_KEY) || null;
   }
-  static set accessToken(token: string) {
-    Cookies.set(ACCESS_TOKEN_COOKIE_KEY, token);
+  static set accessToken(token: string | null) {
+    if (!token)
+      Cookies.remove(ACCESS_TOKEN_COOKIE_KEY);
+    else
+      Cookies.set(ACCESS_TOKEN_COOKIE_KEY, token);
   }
-  static get refreshToken(): string {
-    return Cookies.get(REFRESH_TOKEN_COOKIE_KEY) || '';
+  static get refreshToken(): string | null {
+    return Cookies.get(REFRESH_TOKEN_COOKIE_KEY) || null;
   }
-  static set refreshToken(token: string) {
-    Cookies.set(REFRESH_TOKEN_COOKIE_KEY, token);
+  static set refreshToken(token: string | null) {
+    if (!token)
+      Cookies.remove(REFRESH_TOKEN_COOKIE_KEY);
+    else
+      Cookies.set(REFRESH_TOKEN_COOKIE_KEY, token);
   }
 
   // Theme
