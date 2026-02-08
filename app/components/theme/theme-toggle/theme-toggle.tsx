@@ -1,13 +1,16 @@
 import { DarkIcon, LightIcon } from "@/app/components/icons";
 import { Button } from "@/components/ui/button";
-import Cookies from "js-cookie";
+import { CookieStore } from "@/lib/cookies";
+import { useAppStore } from "@/store/useAppStore";
+import { ThemeMode } from "@/types";
 
 export default function ThemeToggleButton() {
-  const isDarkMode = Cookies.get("theme") === "dark";
+  const { theme, setTheme } = useAppStore();
+  const isDarkMode = theme === "dark";
 
   const toggle = () => {
-    Cookies.set("theme", isDarkMode ? "light" : "dark");
-    window.location.reload();
+    CookieStore.themeMode = isDarkMode ? ThemeMode.LIGHT : ThemeMode.DARK;
+    setTheme(isDarkMode ? ThemeMode.LIGHT : ThemeMode.DARK);
   };
 
   return (

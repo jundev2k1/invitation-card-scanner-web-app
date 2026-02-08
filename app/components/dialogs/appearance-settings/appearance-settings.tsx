@@ -41,7 +41,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
         <DialogHeader className="space-y-1.5 pb-4">
           <div className="flex items-center gap-2">
             <PaletteIcon className="h-5 w-5 text-primary" />
-            <DialogTitle className="text-xl font-semibold">
+            <DialogTitle className="text-xl font-semibold dark:text-zinc-50">
               Appearance
             </DialogTitle>
           </div>
@@ -95,7 +95,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
 
           {/* Theme Mode */}
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Theme Mode</Label>
+            <Label className="text-sm font-medium dark:text-zinc-100">Theme Mode</Label>
             <RadioGroup
               value={theme}
               onValueChange={(v) => setMode(v as ThemeMode)}
@@ -120,7 +120,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
                 <Label
                   htmlFor="mode-dark"
                   className={cn(
-                    "flex flex-col items-center justify-center rounded-md border border-input bg-background px-4 py-3 text-center cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground",
+                    "flex flex-col items-center justify-center rounded-md border border-input bg-background px-4 py-3 text-center cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground ",
                     theme === ThemeMode.DARK && "border-primary bg-primary/5 text-primary"
                   )}
                 >
@@ -133,7 +133,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
 
           {/* Accent Color */}
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Accent Color</Label>
+            <Label className="text-sm font-medium dark:text-zinc-100">Accent Color</Label>
             <RadioGroup
               value={color}
               onValueChange={(v) => setColor(v as ThemeColor)}

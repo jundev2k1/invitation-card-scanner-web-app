@@ -1,29 +1,41 @@
-export const addSeconds = (date: Date, seconds: number) => {
-  date.setSeconds(date.getSeconds() + seconds);
-  return date;
-}
+import {
+  addDays,
+  addHours,
+  addMinutes,
+  addMonths,
+  addSeconds,
+  addYears,
+  differenceInDays,
+  endOfDay,
+  format,
+  isAfter,
+  isBefore,
+  startOfDay,
+  subDays
+} from 'date-fns';
+import { vi } from 'date-fns/locale';
 
-export const addMinutes = (date: Date, minutes: number) => {
-  date.setMinutes(date.getUTCMinutes() + minutes);
-  return date;
-}
+export const addSecs = (date: Date, seconds: number) => addSeconds(date, seconds);
+export const addMins = (date: Date, minutes: number) => addMinutes(date, minutes);
+export const addHrs = (date: Date, hours: number) => addHours(date, hours);
+export const addDs = (date: Date, days: number) => addDays(date, days);
+export const addMths = (date: Date, months: number) => addMonths(date, months);
+export const addYrs = (date: Date, years: number) => addYears(date, years);
 
-export const addHours = (date: Date, hours: number) => {
-  date.setHours(date.getHours() + hours);
-  return date;
-}
+export const formatDate = (date: Date, formatStr = 'dd/MM/yyyy') => {
+  return format(date, formatStr, { locale: vi });
+};
 
-export const addDays = (date: Date, days: number) => {
-  date.setDate(date.getDate() + days);
-  return date;
-}
+export const getRangeOfDay = (date: Date) => ({
+  start: startOfDay(date), // 00:00:00
+  end: endOfDay(date)      // 23:59:59
+});
 
-export const addMonths = (date: Date, months: number) => {
-  date.setMonth(date.getMonth() + months);
-  return date;
-}
+export const isFuture = (date: Date) => isAfter(date, new Date());
+export const isPast = (date: Date) => isBefore(date, new Date());
 
-export const addYears = (date: Date, years: number) => {
-  date.setFullYear(date.getFullYear() + years);
-  return date;
-}
+export const getDiffDays = (dateLeft: Date, dateRight: Date) => {
+  return differenceInDays(dateLeft, dateRight);
+};
+
+export const subtractDays = (date: Date, days: number) => subDays(date, days);

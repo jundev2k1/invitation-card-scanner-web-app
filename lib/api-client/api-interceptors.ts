@@ -3,6 +3,7 @@ import { api } from "@/lib/api-client/api";
 import { CookieStore } from "@/lib/cookies";
 import { useAuthStore } from '@/store';
 import { HttpCode } from "@/types";
+import { redirect } from "next/navigation";
 import { AUTH_ROUTES } from "../routes";
 
 api.interceptors.request.use((config) => {
@@ -24,16 +25,13 @@ api.interceptors.response.use((res) => res, (err) => {
     const refreshToken = CookieStore.refreshToken;
     if (accessToken && refreshToken) {
       api.post('/auth/refresh', { accessToken, refreshToken }).then((response) => {
-        if (response.status === 200) {
-          CookieStore.accessToken = response.data.accessToken;
-          CookieStore.refreshToken = response.data.refreshToken;
-        } else {
-          useAuthStore.getState().logout();
+        if (response.status !== 200) throw new Error();
 
-          if (typeof window !== 'undefined') {
-            window.location.href = '/login'
-          }
-        }
+        CookieStore.accessToken = response.data.accessToken;
+        CookieStore.refreshToken = response.data.refreshToken;
+      }).catch(() => {
+        useAuthStore.getState().logout();
+        redirect('/login');
       });
     }
   }

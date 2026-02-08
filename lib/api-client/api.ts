@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { AxiosResponseTransformer } from "axios";
+import { handleDates } from "./http";
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -6,5 +7,12 @@ export const api = axios.create({
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
-  }
+  },
+  transformResponse: [
+    ...(Array.isArray(axios.defaults.transformResponse)
+      ? axios.defaults.transformResponse
+      : [axios.defaults.transformResponse]
+    ) as AxiosResponseTransformer[],
+    handleDates,
+  ],
 });

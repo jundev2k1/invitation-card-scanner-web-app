@@ -1,10 +1,11 @@
 import { Role } from '@/types';
 import { create } from 'zustand';
 
-type UserInfo = {
+export type UserInfo = {
   id: string;
   nickname: string;
   email: string;
+  avatar: string;
   role: Role;
 };
 

@@ -1,6 +1,6 @@
 import { Language, ThemeColor, ThemeMode } from "@/types";
 import Cookies from "js-cookie";
-import { addMinutes } from "../datetime/date.util";
+import { addMins } from "../datetime/date.util";
 import {
   ACCESS_TOKEN_COOKIE_KEY,
   LANGUAGE_COOKIE_KEY,
@@ -18,7 +18,7 @@ export default class CookieStore {
     if (!token)
       Cookies.remove(ACCESS_TOKEN_COOKIE_KEY);
     else {
-      const expires = addMinutes(new Date, 15);
+      const expires = addMins(new Date, 15);
       Cookies.set(ACCESS_TOKEN_COOKIE_KEY, token, { expires: expires });
     }
   }
@@ -37,7 +37,7 @@ export default class CookieStore {
     return Cookies.get(LANGUAGE_COOKIE_KEY) as Language || Language.ENGLISH;
   }
   static set language(language: Language) {
-    Cookies.set("language", language);
+    Cookies.set(LANGUAGE_COOKIE_KEY, language);
   }
 
   // Theme
