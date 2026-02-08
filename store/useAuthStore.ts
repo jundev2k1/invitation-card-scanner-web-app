@@ -1,13 +1,21 @@
+import { Role } from '@/types';
 import { create } from 'zustand';
 
+type UserInfo = {
+  id: string;
+  nickname: string;
+  email: string;
+  role: Role;
+};
+
 type AuthState = {
-  user: any;
-  setUser: (user: any) => void;
+  user: UserInfo | null;
+  setUser: (user: UserInfo) => void;
   logout: () => void;
 };
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  setUser: (user: any) => set({ user }),
+  setUser: (user: UserInfo) => set({ user }),
   logout: () => set({ user: null }),
 }));
