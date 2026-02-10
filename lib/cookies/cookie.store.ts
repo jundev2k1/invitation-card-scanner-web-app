@@ -1,6 +1,5 @@
 import { Language, ThemeColor, ThemeMode } from "@/types";
 import Cookies from "js-cookie";
-import { addMins } from "../datetime/date.util";
 import {
   ACCESS_TOKEN_COOKIE_KEY,
   LANGUAGE_COOKIE_KEY,
@@ -17,10 +16,8 @@ export default class CookieStore {
   static set accessToken(token: string | null) {
     if (!token)
       Cookies.remove(ACCESS_TOKEN_COOKIE_KEY);
-    else {
-      const expires = addMins(new Date, 15);
-      Cookies.set(ACCESS_TOKEN_COOKIE_KEY, token, { expires: expires });
-    }
+    else
+      Cookies.set(ACCESS_TOKEN_COOKIE_KEY, token, { expires: 7 });
   }
   static get refreshToken(): string | null {
     return Cookies.get(REFRESH_TOKEN_COOKIE_KEY) || null;

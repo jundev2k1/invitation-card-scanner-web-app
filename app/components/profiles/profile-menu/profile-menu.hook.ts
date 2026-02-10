@@ -1,8 +1,8 @@
 'use client';
+import { RouteUtil } from "@/app/utils/route";
 import { CookieStore } from "@/lib/cookies";
 import { authService, userService } from "@/services";
 import { useAuthStore } from "@/store";
-import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const useProfileMenu = () => {
@@ -26,7 +26,7 @@ export const useProfileMenu = () => {
 
     CookieStore.accessToken = null;
     CookieStore.refreshToken = null;
-    redirect("/login");
+    RouteUtil.redirectToLogin();
   };
 
   return {

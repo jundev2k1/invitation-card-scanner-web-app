@@ -1,35 +1,26 @@
 'use client';
-import { PageContent } from "@/app/components";
+import { DataList, PageContent } from "@/app/components";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useSidebarStore } from "@/store";
 import { PlusIcon } from "lucide-react";
-import { useEffect } from "react";
+import { breadcrumbs, columns, useUserPage } from "./useUserPage";
 
 export default function UserPage() {
-  const { currentPage, setCurrentPage } = useSidebarStore();
-
-  useEffect(() => {
-    setCurrentPage("User Management");
-  }, [currentPage]);
+  const { isLoading, keyword, filter, data, onPageChange, onPageSizeChange, setKeyword } = useUserPage();
 
   return (
     <PageContent
       title="User Management"
       description="View, edit, and manage all system users."
-      breadcrumbs={[
-        { label: "Dashboard", href: "/admin" },
-        { label: "Users" },
-      ]}
+      breadcrumbs={breadcrumbs}
       filters={
-        <>
-          <Input
-            type="text"
-            placeholder="Search users..."
-            className="w-1/2"
-          />
-          <Button>Search</Button>
-        </>
+        <Input
+          type="text"
+          value={keyword}
+          placeholder="Search..."
+          className="w-75"
+          onChange={(e) => setKeyword(e.currentTarget.value)}
+        />
       }
       actions={
         <Button>
@@ -38,16 +29,16 @@ export default function UserPage() {
         </Button>
       }
     >
-      {/* Nội dung list: Table, Cards, Filters... */}
-      <div className="space-y-6">
-        {/* Ví dụ table */}
-        <div className="rounded-md border bg-card">
-          {/* Table component hoặc data table */}
-          <div className="p-6 text-center text-muted-foreground">
-            Users table placeholder
-          </div>
-        </div>
-      </div>
+      {isLoading ? (
+        <></>
+      ) : (
+        <DataList
+          data={data}
+          columns={columns}
+          emptyMessage="No users found."
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange} />
+      )}
     </PageContent>
   );
 }

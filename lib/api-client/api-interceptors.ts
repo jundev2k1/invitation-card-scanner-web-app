@@ -1,9 +1,9 @@
 import { Toast } from "@/app/components";
+import { RouteUtil } from "@/app/utils/route";
 import { api } from "@/lib/api-client/api";
 import { CookieStore } from "@/lib/cookies";
 import { useAuthStore } from '@/store';
 import { HttpCode } from "@/types";
-import { redirect } from "next/navigation";
 import { AUTH_ROUTES } from "../routes";
 
 api.interceptors.request.use((config) => {
@@ -19,8 +19,9 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use((res) => res, (err) => {
   const status = err.response?.status;
+  const originalRequest = err.config;
 
-  if (status === HttpCode.UNAUTHORIZED) {
+  if (status === HttpCode.UNAUTHORIZED && !originalRequest._retry) {
     const accessToken = CookieStore.accessToken;
     const refreshToken = CookieStore.refreshToken;
     if (accessToken && refreshToken) {
@@ -31,8 +32,16 @@ api.interceptors.response.use((res) => res, (err) => {
         CookieStore.refreshToken = response.data.refreshToken;
       }).catch(() => {
         useAuthStore.getState().logout();
-        redirect('/login');
+        CookieStore.accessToken = null;
+        CookieStore.refreshToken = null;
+        RouteUtil.redirectToLogin();
       });
+    }
+    else {
+      useAuthStore.getState().logout();
+      CookieStore.accessToken = null;
+      CookieStore.refreshToken = null;
+      RouteUtil.redirectToLogin();
     }
   }
 

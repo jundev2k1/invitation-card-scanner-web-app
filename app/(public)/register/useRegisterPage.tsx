@@ -1,12 +1,12 @@
 import { Toast } from "@/app/components";
+import { RouteUtil } from "@/app/utils/route";
 import { CookieStore } from "@/lib/cookies";
 import { authService } from "@/services";
 import { RegisterRequest } from "@/services/auth/auth.type";
-import { redirect } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export const useRegisterPage = ({ isSubmitting = false }) => {
-  if (CookieStore.accessToken) redirect("/");
+  if (CookieStore.accessToken) RouteUtil.redirectToDashboard();
 
   const registerButtonRef = useRef<HTMLButtonElement>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +16,7 @@ export const useRegisterPage = ({ isSubmitting = false }) => {
       await authService.register(data);
       Toast.showSuccess("Register successfully.\nPlease wait for admin approval.");
       setTimeout(() => {
-        redirect("/login");
+        RouteUtil.redirectToLogin();
       }, 500);
     } catch (err: any) {
       console.error(err);

@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { RouteUtil } from "./utils/route";
 
 export default function Home() {
-  redirect("/dashboard");
+  RouteUtil.redirectToDashboard();
 }

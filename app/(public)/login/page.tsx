@@ -1,6 +1,7 @@
 // app/login/page.tsx
 "use client";
 
+import { RouteUtil } from "@/app/utils/route";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,7 +15,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { redirect } from "next/navigation";
 import { useLoginPage } from "./useLoginPage";
 
 export default function LoginPage() {
@@ -129,7 +129,10 @@ export default function LoginPage() {
 
           <CardFooter className="flex justify-center border-t border-slate-800 pt-6 text-sm text-slate-400">
             Don't have an account?{" "}
-            <Button onClick={() => redirect('/register')} variant="link" className="ml-1.5 text-purple-400 hover:text-purple-300">
+            <Button
+              onClick={() => RouteUtil.redirectToRegister()}
+              variant="link"
+              className="ml-1.5 text-purple-400 hover:text-purple-300">
               Sign up
             </Button>
           </CardFooter>

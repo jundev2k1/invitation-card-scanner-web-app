@@ -1,10 +1,10 @@
+import { RouteUtil } from "@/app/utils/route";
 import { CookieStore } from "@/lib/cookies";
 import { authService } from "@/services";
-import { redirect } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export const useLoginPage = () => {
-  if (CookieStore.accessToken) redirect("/");
+  if (CookieStore.accessToken) RouteUtil.redirectToDashboard();
 
   const loginButtonRef = useRef<HTMLButtonElement>(null);
   const [username, setUsername] = useState("");
@@ -27,7 +27,7 @@ export const useLoginPage = () => {
       if (response.statusCode == 200) {
         CookieStore.accessToken = response.data!.accessToken;
         CookieStore.refreshToken = response.data!.refreshToken;
-        redirect("/");
+        RouteUtil.redirectToDashboard();
       } else {
         setError(response.message);
       }

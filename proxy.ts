@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { RouteUtil } from "./app/utils/route";
 import { ACCESS_TOKEN_COOKIE_KEY } from "./lib/cookies";
 import { AUTH_ROUTES, PUBLIC_ROUTES } from "./lib/routes";
 
@@ -10,11 +11,11 @@ export function proxy(req: NextRequest) {
   const isAuthRoute = AUTH_ROUTES.includes(pathname);
 
   if (!isPublicRoute && !token) {
-    return NextResponse.redirect(new URL('/login', req.url));
+    return NextResponse.redirect(new URL(RouteUtil.getLoginRoute(), req.url));
   }
 
   if (isAuthRoute && token) {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+    return NextResponse.redirect(new URL(RouteUtil.getDashboardRoute(), req.url));
   }
 
   return NextResponse.next();
