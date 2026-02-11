@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+} from "@/app/components/icons";
+import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
 import {
   Table,
   TableBody,
@@ -15,15 +15,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { cn } from "@/lib/utils";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsLeftIcon,
-  ChevronsRightIcon,
-} from "lucide-react";
-import { ReactNode } from "react";
+} from "./default.table";
+
+import { IconButton, Select } from "@/app/components";
 
 export interface SearchResult<T> {
   items: T[];
@@ -71,8 +65,8 @@ export function DataList<T extends { id?: string | number }>({
 
   if (totalCount === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground dark:text-muted-foreground">
-        <p className="text-lg font-medium">{emptyMessage}</p>
+      <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
+        <div className="text-lg font-medium">{emptyMessage}</div>
       </div>
     );
   }
@@ -118,7 +112,9 @@ export function DataList<T extends { id?: string | number }>({
 
                     return (
                       <TableCell key={col.key} className={cn("whitespace-nowrap", col.className)}>
-                        {col.render ? col.render(value, item) : String(value ?? "-")}
+                        <div className="flex items-center min-h-10">
+                          {col.render ? col.render(value, item) : String(value ?? "-")}
+                        </div>
                       </TableCell>
                     );
                   })}
@@ -129,9 +125,7 @@ export function DataList<T extends { id?: string | number }>({
         </div>
       </div>
 
-      {/* Pagination */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-muted-foreground">
-        {/* Range info */}
         <div>
           Showing <span className="font-medium">{(page - 1) * pageSize + 1}</span> to{" "}
           <span className="font-medium">{(page - 1) * pageSize + count}</span> of{" "}
@@ -139,68 +133,59 @@ export function DataList<T extends { id?: string | number }>({
         </div>
 
         <div className="flex items-center gap-4">
-          {/* Page size */}
           <div className="flex items-center gap-2">
-            <span>Rows per page:</span>
+            <span className="whitespace-nowrap">Rows per page:</span>
             <Select
+              className="w-20 h-8"
               value={String(pageSize)}
               onValueChange={(val) => onPageSizeChange(Number(val))}
-            >
-              <SelectTrigger className="w-17.5 h-8">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="10">10</SelectItem>
-                <SelectItem value="20">20</SelectItem>
-                <SelectItem value="50">50</SelectItem>
-                <SelectItem value="100">100</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { label: "10", value: "10" },
+                { label: "20", value: "20" },
+                { label: "50", value: "50" },
+                { label: "100", value: "100" },
+              ]}
+            />
           </div>
 
-          {/* Pagination buttons */}
           <div className="flex items-center gap-1">
-            <Button
+            <IconButton
               variant="outline"
-              size="icon"
               className="h-8 w-8"
+              icon={<ChevronsLeftIcon size={14} />}
               disabled={page === 1}
               onClick={() => onPageChange(1)}
-            >
-              <ChevronsLeftIcon className="h-4 w-4" />
-            </Button>
-            <Button
+              tooltip="First page"
+            />
+            <IconButton
               variant="outline"
-              size="icon"
               className="h-8 w-8"
+              icon={<ChevronLeftIcon size={14} />}
               disabled={page === 1}
               onClick={() => onPageChange(page - 1)}
-            >
-              <ChevronLeftIcon className="h-4 w-4" />
-            </Button>
+              tooltip="Previous page"
+            />
 
-            <span className="px-4 font-medium">
+            <span className="px-4 font-medium whitespace-nowrap min-w-25 text-center">
               Page {page} of {totalPage}
             </span>
 
-            <Button
+            <IconButton
               variant="outline"
-              size="icon"
               className="h-8 w-8"
+              icon={<ChevronRightIcon size={14} />}
               disabled={page === totalPage}
               onClick={() => onPageChange(page + 1)}
-            >
-              <ChevronRightIcon className="h-4 w-4" />
-            </Button>
-            <Button
+              tooltip="Next page"
+            />
+            <IconButton
               variant="outline"
-              size="icon"
               className="h-8 w-8"
+              icon={<ChevronsRightIcon size={14} />}
               disabled={page === totalPage}
               onClick={() => onPageChange(totalPage)}
-            >
-              <ChevronsRightIcon className="h-4 w-4" />
-            </Button>
+              tooltip="Last page"
+            />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { DarkIcon, LightIcon } from "@/app/components/icons";
+import { MoonIcon, SunIcon } from "@/app/components/icons";
 import { Button } from "@/components/ui/button";
 import { CookieStore } from "@/lib/cookies";
 import { useAppStore } from "@/store/useAppStore";
@@ -6,7 +6,7 @@ import { ThemeMode } from "@/types";
 
 export default function ThemeToggleButton() {
   const { theme, setTheme } = useAppStore();
-  const isDarkMode = theme === "dark";
+  const isDarkMode = theme === ThemeMode.DARK;
 
   const toggle = () => {
     CookieStore.themeMode = isDarkMode ? ThemeMode.LIGHT : ThemeMode.DARK;
@@ -15,7 +15,7 @@ export default function ThemeToggleButton() {
 
   return (
     <Button className="cursor-pointer" variant="ghost" size="icon" onClick={toggle}>
-      {isDarkMode ? <DarkIcon /> : <LightIcon />}
+      {isDarkMode ? <MoonIcon /> : <SunIcon />}
     </Button>
   );
 }

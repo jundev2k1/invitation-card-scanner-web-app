@@ -1,8 +1,18 @@
+import {
+  AppearanceSettings,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/app/components";
 import { LogOutIcon, SettingsIcon, UserIcon } from "@/app/components/icons";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { AppearanceSettings } from "../../dialogs";
 import { useProfileMenu } from "./profile-menu.hook";
+
 export const ProfileMenu = () => {
   const {
     user,
@@ -10,7 +20,6 @@ export const ProfileMenu = () => {
     setIsOpenSetting,
     handleLogout
   } = useProfileMenu();
-  console.log(user);
   return <>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

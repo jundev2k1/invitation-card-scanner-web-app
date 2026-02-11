@@ -6,7 +6,7 @@ import { PlusIcon } from "lucide-react";
 import { breadcrumbs, columns, useUserPage } from "./useUserPage";
 
 export default function UserPage() {
-  const { isLoading, keyword, filter, data, onPageChange, onPageSizeChange, setKeyword } = useUserPage();
+  const { isLoading, keyword, data, onPageChange, onPageSizeChange, setKeyword } = useUserPage();
 
   return (
     <PageContent

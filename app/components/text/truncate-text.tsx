@@ -1,16 +1,14 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/button";
+import { CheckIcon, CopyIcon } from "@/app/components/icons";
+import * as Toast from "@/app/components/toast";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/app/components/tooltip";
 import { cn } from "@/lib/utils";
-import { Check, Copy } from "lucide-react";
 import React, { useState } from "react";
-import { Toast } from "..";
 
 interface TruncatedTextProps {
   text: string;
@@ -76,9 +74,9 @@ export function TruncatedText({
             onClick={handleCopy}
           >
             {copied ? (
-              <Check size={12} className="text-green-500" />
+              <CheckIcon size={12} className="text-green-500" />
             ) : (
-              <Copy size={12} />
+              <CopyIcon size={12} />
             )}
           </Button>
         )}
