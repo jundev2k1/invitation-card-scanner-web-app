@@ -2,6 +2,7 @@ export * from "./badge";
 export * from "./dialogs";
 export * from "./hooks";
 export * from "./icons";
+export * from "./input";
 export * from "./layout";
 export * from "./list";
 export * from "./text";
