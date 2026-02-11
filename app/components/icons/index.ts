@@ -7,15 +7,12 @@ export {
   ChevronsRight as ChevronsRightIcon, Copy as CopyIcon, Eye as EyeIcon,
   EyeOff as EyeOffIcon,
   Info as InfoIcon,
-  Key as KeyIcon,
-  Loader2 as LoaderIcon,
+  Key as KeyIcon, LayoutDashboardIcon as LayoutDashboardIcon, Loader2 as LoaderIcon,
   LogIn as LogInIcon,
   LogOut as LogOutIcon,
-  Mail as MailIcon,
-  Moon as MoonIcon,
+  Mail as MailIcon, Menu as MenuIcon, Minus as MinusIcon, Moon as MoonIcon,
   Palette as PaletteIcon,
-  Phone as PhoneIcon,
-  Settings as SettingsIcon,
+  Phone as PhoneIcon, Plus as PlusIcon, Settings as SettingsIcon,
   Sun as SunIcon,
   Text as TextIcon, UserCircle as UserCircleIcon, User as UserIcon, UserPlus as UserPlusIcon,
   Users as UsersIcon
@@ -24,3 +21,10 @@ export {
 export {
   PiGenderFemale as FemaleIcon, PiGenderMale as MaleIcon, PiGenderNeuter as OtherIcon
 } from "react-icons/pi";
+
+export type { IconType } from "react-icons";
+export {
+  LuCalendarClock as CalendarClockIcon,
+  LuClipboardPen as ClipboardPenIcon,
+  LuFolderOpen as FolderOpenIcon
+} from "react-icons/lu";

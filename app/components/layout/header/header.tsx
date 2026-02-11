@@ -1,5 +1,5 @@
+import { Button } from "@/app/components/button";
 import { BellIcon } from "@/app/components/icons";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/store";
 import { MenuIcon } from "lucide-react";
@@ -17,7 +17,6 @@ export default function PageHeader() {
       )}
     >
       <div className="flex items-center gap-4">
-        {/* Hamburger chỉ hiện trên mobile */}
         <Button
           variant="ghost"
           size="icon"

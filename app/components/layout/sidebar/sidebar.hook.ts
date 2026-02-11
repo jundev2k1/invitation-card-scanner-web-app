@@ -1,6 +1,10 @@
-import { LayoutDashboardIcon, UsersIcon } from "lucide-react";
-import { IconType } from "react-icons";
-import { LuCalendarClock, LuClipboardPen, LuFolderOpen } from "react-icons/lu";
+import {
+  CalendarClockIcon,
+  ClipboardPenIcon,
+  FolderOpenIcon,
+  LayoutDashboardIcon,
+  UsersIcon, type IconType
+} from "@/app/components/icons";
 
 export interface PageInfo {
   title: string;
@@ -26,9 +30,9 @@ export const SIDEBAR_GROUPS: SidebarGroupInfo[] = [
   },
   {
     title: "Event Management", items: [
-      { title: "Event Category", path: "/event-categories", icon: LuFolderOpen, isDisabled: true },
-      { title: "Event List", path: "/events", icon: LuCalendarClock },
-      { title: "Card List", path: "/invitation-cards", icon: LuClipboardPen },
+      { title: "Event Category", path: "/event-categories", icon: FolderOpenIcon, isDisabled: true },
+      { title: "Event List", path: "/events", icon: CalendarClockIcon },
+      { title: "Card List", path: "/invitation-cards", icon: ClipboardPenIcon },
     ]
   }
 ];

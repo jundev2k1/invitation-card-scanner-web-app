@@ -7,10 +7,10 @@ export * from "./dropdown";
 export * from "./hooks";
 export * from "./icons";
 export * from "./input";
+export * from "./label";
 export * from "./layout";
 export * from "./select";
 export * from "./table";
 export * from "./text";
 export * from "./theme";
 export * as Toast from "./toast";
-

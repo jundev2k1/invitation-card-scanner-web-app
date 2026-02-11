@@ -1,8 +1,6 @@
 'use client';
-import { DataList, PageContent } from "@/app/components";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { PlusIcon } from "lucide-react";
+import { DataList, IconButton, PageContent, TextBox } from "@/app/components";
+import { AtSignIcon } from "@/app/components/icons";
 import { breadcrumbs, columns, useUserPage } from "./useUserPage";
 
 export default function UserPage() {
@@ -14,7 +12,7 @@ export default function UserPage() {
       description="View, edit, and manage all system users."
       breadcrumbs={breadcrumbs}
       filters={
-        <Input
+        <TextBox
           type="text"
           value={keyword}
           placeholder="Search..."
@@ -23,10 +21,7 @@ export default function UserPage() {
         />
       }
       actions={
-        <Button>
-          <PlusIcon className="mr-2 h-4 w-4" />
-          Add New User
-        </Button>
+        <IconButton icon={<AtSignIcon />} variant="outline" isRound />
       }
     >
       {isLoading ? (

@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
+import { IconButton } from "@/app/components/button";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/app/components/icons";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/store";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 import { SIDEBAR_GROUPS } from "./sidebar.hook";
 
@@ -30,19 +30,11 @@ export const Sidebar = () => {
           </div>
         )}
 
-        <Button
-          variant="ghost"
-          size="icon"
-          className="hidden lg:flex"
+        <IconButton
+          icon={isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          className="hidden lg:flex text-gray-600 dark:text-gray-400"
           onClick={() => toggleSidebar(!isCollapsed)}
-          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
-          {isCollapsed ? (
-            <ChevronRightIcon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-          ) : (
-            <ChevronLeftIcon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-          )}
-        </Button>
+          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"} />
       </div>
 
       {/* Navigation Groups */}

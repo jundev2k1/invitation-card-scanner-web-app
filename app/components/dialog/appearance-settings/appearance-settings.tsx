@@ -1,23 +1,17 @@
-import { MoonIcon, PaletteIcon, SunIcon } from "@/app/components/icons";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+} from "@/app/components/dialog";
+import { MoonIcon, PaletteIcon, SunIcon } from "@/app/components/icons";
+import { RadioGroup, RadioGroupItem } from "@/app/components/input";
+import { Label } from "@/app/components/label";
+import { Select } from "@/app/components/select";
 import { cn } from "@/lib/utils";
-import { ThemeColor, ThemeMode } from "@/types";
+import { Language, ThemeColor, ThemeMode } from "@/types";
 import { ThemeColorStyles, useAppearanceSettings } from "./appearance-settings.hook";
 
 type AppearanceSettingsProps = {
@@ -29,9 +23,9 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
   const {
     language,
     setLanguage,
-    theme,        // ThemeMode.LIGHT | ThemeMode.DARK
+    theme,
     setMode,
-    color,        // ThemeColor enum value
+    color,
     setColor,
   } = useAppearanceSettings();
 
@@ -56,41 +50,19 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
             <Label className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Language
             </Label>
-            <Select value={language} onValueChange={setLanguage}>
-              <SelectTrigger
-                className={cn(
-                  "w-full h-10",
-                  "bg-white dark:bg-gray-800",
-                  "border border-gray-300 dark:border-gray-600",
-                  "text-gray-900 dark:text-gray-100",
-                  "focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500"
-                )}
-              >
-                <SelectValue placeholder="Select language" />
-              </SelectTrigger>
-              <SelectContent
-                className={cn(
-                  "pointer-events-auto z-100", // fix dropdown bị che / không click
-                  "bg-white dark:bg-gray-800",
-                  "border border-gray-300 dark:border-gray-600",
-                  "text-gray-900 dark:text-gray-100",
-                  "shadow-lg"
-                )}
-              >
-                <SelectItem
-                  value="vi"
-                  className="focus:bg-indigo-50 dark:focus:bg-indigo-950/50"
-                >
-                  Tiếng Việt
-                </SelectItem>
-                <SelectItem
-                  value="en"
-                  className="focus:bg-indigo-50 dark:focus:bg-indigo-950/50"
-                >
-                  English
-                </SelectItem>
-              </SelectContent>
-            </Select>
+            <Select
+              className={cn(
+                "w-full h-10",
+                "bg-white dark:bg-gray-800",
+                "border border-gray-300 dark:border-gray-600",
+                "text-gray-900 dark:text-gray-100",
+                "focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500"
+              )}
+              value={language}
+              onValueChange={(val) => setLanguage(val as Language)}
+              options={[
+                { label: "Tiếng Việt", value: Language.VIETNAMESE },
+                { label: "English", value: Language.ENGLISH }]} />
           </div>
 
           {/* Theme Mode */}
