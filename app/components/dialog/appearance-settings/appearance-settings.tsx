@@ -78,7 +78,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
                 <Label
                   htmlFor="mode-light"
                   className={cn(
-                    "flex flex-col items-center justify-center rounded-md border border-input bg-background px-4 py-3 text-center cursor-pointer transition-colors hover:bg-accent hover:text-accent-foreground",
+                    "flex flex-col items-center justify-center rounded-md border border-input bg-background px-4 py-3 text-center cursor-pointer transition-colors dark:text-gray-600 hover:bg-accent hover:text-accent-foreground",
                     theme === ThemeMode.LIGHT && "border-primary bg-primary/5 text-primary"
                   )}
                 >
