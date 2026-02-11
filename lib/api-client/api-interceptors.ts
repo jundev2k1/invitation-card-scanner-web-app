@@ -25,7 +25,7 @@ api.interceptors.response.use((res) => res, (err) => {
     const accessToken = CookieStore.accessToken;
     const refreshToken = CookieStore.refreshToken;
     if (accessToken && refreshToken) {
-      api.post('/auth/refresh', { accessToken, refreshToken }).then((response) => {
+      api.post('api/auth/refresh', { accessToken, refreshToken }).then((response) => {
         if (response.status !== 200) throw new Error();
 
         CookieStore.accessToken = response.data.accessToken;
