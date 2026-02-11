@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 
 interface BadgeButtonProps {
   count: number;
-  onClick: () => void;
-  label?: string;
+  onClick?: () => void | undefined;
+  label?: string | React.ReactNode;
   variant?: "default" | "outline" | "secondary" | "ghost" | "destructive";
   size?: "default" | "sm" | "lg" | "icon";
   className?: string;
@@ -18,7 +18,7 @@ export const BadgeButton = ({ count, label, variant = "default", size = "default
         variant={variant}
         size={size}
         className={cn(
-          "relative font-medium transition-all",
+          "relative font-medium transition-all cursor-pointer",
           count > 0 && "pr-8",
           className
         )}

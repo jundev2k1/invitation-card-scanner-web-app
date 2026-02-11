@@ -1,4 +1,4 @@
-import { Button } from "@/app/components/button";
+import { IconButton } from "@/app/components/button";
 import { CheckIcon, CopyIcon } from "@/app/components/icons";
 import * as Toast from "@/app/components/toast";
 import {
@@ -67,18 +67,10 @@ export function TruncatedText({
         </Tooltip>
 
         {showCopy && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-2 w-2 cursor-pointer"
-            onClick={handleCopy}
-          >
-            {copied ? (
-              <CheckIcon size={12} className="text-green-500" />
-            ) : (
-              <CopyIcon size={12} />
-            )}
-          </Button>
+          <IconButton
+            icon={copied ? <CheckIcon /> : <CopyIcon />}
+            className="h-3 w-3 cursor-pointer dark:text-muted-foreground"
+            onClick={handleCopy} />
         )}
       </span>
     </TooltipProvider>

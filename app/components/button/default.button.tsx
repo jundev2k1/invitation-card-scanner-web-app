@@ -33,7 +33,7 @@ const AppButton = React.forwardRef<HTMLButtonElement, AppButtonProps>(
         variant={variant}
         size={size}
         className={cn(
-          "gap-2 select-none",
+          "gap-2 select-none cursor-pointer",
           pressEffect && "active:scale-95 transition-all",
           className
         )}

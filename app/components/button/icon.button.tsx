@@ -26,7 +26,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         size={size}
         disabled={disabled || isLoading}
         className={cn(
-          "shrink-0 active:scale-90 transition-transform",
+          "shrink-0 active:scale-90 transition-transform cursor-pointer",
           isRound ? "rounded-full" : "rounded-md",
           className
         )}

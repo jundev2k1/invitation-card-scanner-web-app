@@ -1,6 +1,5 @@
 'use client';
-import { DataList, IconButton, PageContent, TextBox } from "@/app/components";
-import { AtSignIcon } from "@/app/components/icons";
+import { BadgeButton, ClipboardPenIcon, DataList, PageContent, TextBox } from "@/app/components";
 import { breadcrumbs, columns, useUserPage } from "./useUserPage";
 
 export default function UserPage() {
@@ -13,27 +12,31 @@ export default function UserPage() {
       breadcrumbs={breadcrumbs}
       filters={
         <TextBox
-          type="text"
           value={keyword}
-          placeholder="Search..."
+          placeholder="Search with username or email..."
           className="w-75"
           onChange={(e) => setKeyword(e.currentTarget.value)}
         />
       }
       actions={
-        <IconButton icon={<AtSignIcon />} variant="outline" isRound />
+        <BadgeButton
+          count={1}
+          label={<ClipboardPenIcon />}
+          className="dark:text-muted-foreground"
+          variant="outline" />
       }
     >
-      {isLoading ? (
-        <></>
-      ) : (
-        <DataList
-          data={data}
-          columns={columns}
-          emptyMessage="No users found."
-          onPageChange={onPageChange}
-          onPageSizeChange={onPageSizeChange} />
-      )}
-    </PageContent>
+      {
+        isLoading ? (
+          <></>
+        ) : (
+          <DataList
+            data={data}
+            columns={columns}
+            emptyMessage="No users found."
+            onPageChange={onPageChange}
+            onPageSizeChange={onPageSizeChange} />
+        )}
+    </PageContent >
   );
 }

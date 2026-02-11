@@ -1,4 +1,4 @@
-import { Button } from "@/app/components/button";
+import { IconButton } from "@/app/components/button";
 import { BellIcon } from "@/app/components/icons";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/store";
@@ -17,15 +17,11 @@ export default function PageHeader() {
       )}
     >
       <div className="flex items-center gap-4">
-        <Button
-          variant="ghost"
-          size="icon"
+        <IconButton
+          icon={<MenuIcon />}
           className="lg:hidden! md:hidden! sm:hidden!"
           onClick={() => toggleSidebar(!isCollapsed)}
-          aria-label="Toggle sidebar"
-        >
-          <MenuIcon className="h-5 w-5" />
-        </Button>
+          aria-label="Toggle sidebar" />
 
         <h1 className="text-lg md:text-xl font-semibold tracking-tight">
           {currentPage || "Dashboard"}
@@ -36,15 +32,18 @@ export default function PageHeader() {
       <div className="flex items-center gap-3 md:gap-4">
         <ThemeToggleButton />
 
-        <Button
+        <IconButton
+          icon={
+            <>
+              <BellIcon />
+              <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-[10px] text-white flex items-center justify-center">3</span>
+            </>
+          }
           variant="ghost"
           size="icon"
           className="relative hover:bg-accent hover:text-accent-foreground"
           aria-label="Notifications"
-        >
-          <BellIcon className="h-5 w-5" />
-          <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-[10px] text-white flex items-center justify-center">3</span>
-        </Button>
+        />
 
         <ProfileMenu />
       </div>
