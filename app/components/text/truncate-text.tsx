@@ -47,7 +47,7 @@ export function TruncatedText({
 
   return (
     <TooltipProvider>
-      <div className={cn("flex items-center gap-2", className)}>
+      <span className={cn("flex items-center gap-2", className)}>
         <Tooltip>
           <TooltipTrigger asChild>
             <span
@@ -82,7 +82,7 @@ export function TruncatedText({
             )}
           </Button>
         )}
-      </div>
+      </span>
     </TooltipProvider>
   );
 }
