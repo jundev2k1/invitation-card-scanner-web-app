@@ -1,4 +1,5 @@
-import { Column, InfoIcon, MailIcon, PhoneIcon, SexBadge, TruncatedText, useFilter, UserIcon, UserStatusBadge } from "@/app/components";
+import { Column, SexBadge, TruncatedText, useFilter, UserStatusBadge } from "@/app/components";
+import { InfoIcon, MailIcon, PhoneIcon, UserIcon } from "@/app/components/icons";
 import { RouteUtil } from "@/app/utils/route";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";

@@ -5,7 +5,6 @@ export * from "./datetime";
 export * from "./dialog";
 export * from "./dropdown";
 export * from "./hooks";
-export * from "./icons";
 export * from "./input";
 export * from "./label";
 export * from "./layout";

@@ -1,5 +1,6 @@
 "use client";
-import { BadgeButton, ClipboardPenIcon, PageContent } from "@/app/components";
+import { BadgeButton, PageContent } from "@/app/components";
+import { ClipboardPenIcon } from "@/app/components/icons";
 import { UserEditForm } from "../form/edit/editUserDetail";
 import { UserViewForm } from "../form/view/viewUserDetail";
 import { breadcrumbs, useUserDetail } from "./useUserDetail";

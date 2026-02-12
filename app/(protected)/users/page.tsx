@@ -1,5 +1,6 @@
 'use client';
-import { BadgeButton, ClipboardPenIcon, DataList, PageContent, TextBox } from "@/app/components";
+import { DataList, PageContent, TextBox } from "@/app/components";
+import { ApproveList } from "./_approve-list/ApproveList";
 import { breadcrumbs, columns, useUserPage } from "./useUserPage";
 
 export default function UserPage() {
@@ -19,11 +20,7 @@ export default function UserPage() {
         />
       }
       actions={
-        <BadgeButton
-          count={1}
-          label={<ClipboardPenIcon />}
-          className="dark:text-muted-foreground"
-          variant="outline" />
+        <ApproveList />
       }
     >
       {
