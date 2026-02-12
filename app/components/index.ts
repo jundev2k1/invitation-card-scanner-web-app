@@ -9,6 +9,7 @@ export * from "./input";
 export * from "./label";
 export * from "./layout";
 export * from "./select";
+export * from "./skeleton";
 export * from "./table";
 export * from "./text";
 export * from "./theme";

@@ -1,5 +1,5 @@
 'use client';
-import { DataList, PageContent, TextBox } from "@/app/components";
+import { DataList, PageContent, SkeletonTable, TextBox } from "@/app/components";
 import { ApproveList } from "./_approve-list/ApproveList";
 import { breadcrumbs, columns, useUserPage } from "./useUserPage";
 
@@ -25,7 +25,7 @@ export default function UserPage() {
     >
       {
         isLoading ? (
-          <></>
+          <SkeletonTable />
         ) : (
           <DataList
             data={data}
