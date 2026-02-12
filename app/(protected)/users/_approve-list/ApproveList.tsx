@@ -37,13 +37,11 @@ const getColumns = (handleApprove: (id: string) => void) => [
         <IconButton
           icon={<EyeIcon />}
           variant="outline"
-          size="sm"
           onClick={() => RouteUtil.redirectToUserDetail(item.id)}
         />
         <Button
           variant="default"
           leftIcon={<CheckIcon />}
-          size="sm"
           onClick={(e) => {
             e.stopPropagation();
             handleApprove(item.id);
