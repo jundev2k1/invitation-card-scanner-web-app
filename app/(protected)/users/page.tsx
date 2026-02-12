@@ -4,7 +4,7 @@ import { ApproveList } from "./_approve-list/ApproveList";
 import { breadcrumbs, columns, useUserPage } from "./useUserPage";
 
 export default function UserPage() {
-  const { isLoading, keyword, data, onPageChange, onPageSizeChange, setKeyword } = useUserPage();
+  const { isLoading, keyword, data, filter, onPageChange, onPageSizeChange, setKeyword } = useUserPage();
 
   return (
     <PageContent
@@ -31,7 +31,9 @@ export default function UserPage() {
             data={data}
             columns={columns}
             emptyMessage="No users found."
+            page={filter.page}
             onPageChange={onPageChange}
+            pageSize={filter.pageSize}
             onPageSizeChange={onPageSizeChange} />
         )}
     </PageContent >

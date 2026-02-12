@@ -42,7 +42,9 @@ export interface DataListProps<T> {
   emptyMessage?: string;
   rowKey?: keyof T | ((item: T) => string);
   onRowClick?: (item: T) => void;
+  page: number;
   onPageChange: (newPage: number) => void;
+  pageSize: number;
   onPageSizeChange: (newSize: number) => void;
 }
 
@@ -53,10 +55,12 @@ export function DataList<T extends { id?: string | number }>({
   emptyMessage = "No data available",
   rowKey = "id" as keyof T,
   onRowClick,
+  page,
   onPageChange,
+  pageSize,
   onPageSizeChange,
 }: DataListProps<T>) {
-  const { items, count, totalCount, totalPage, page, pageSize } = data;
+  const { items, count, totalCount, totalPage } = data;
 
   const getRowKey = (item: T, index: number): string => {
     if (typeof rowKey === "function") return rowKey(item);
@@ -140,6 +144,7 @@ export function DataList<T extends { id?: string | number }>({
               value={String(pageSize)}
               onValueChange={(val) => onPageSizeChange(Number(val))}
               options={[
+                { label: "5", value: "5" },
                 { label: "10", value: "10" },
                 { label: "20", value: "20" },
                 { label: "50", value: "50" },

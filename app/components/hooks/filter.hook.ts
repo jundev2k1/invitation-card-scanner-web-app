@@ -6,9 +6,10 @@ type SearchFilter = {
   pageSize: number,
 }
 
-export const useFilter = () => {
+export const useFilter = (defaultFilter?: SearchFilter) => {
   const [keyword, setKeyword] = useState('');
-  const [filter, setFilter] = useState<SearchFilter>({
+  const [filter, setFilter] = useState<SearchFilter>(defaultFilter ??
+  {
     keyword: '',
     page: 1,
     pageSize: 20
@@ -18,8 +19,8 @@ export const useFilter = () => {
     const handler = setTimeout(() => {
       setFilter({
         keyword: keyword,
-        page: 1,
-        pageSize: 20
+        page: filter.page,
+        pageSize: filter.pageSize
       });
     }, 300);
 

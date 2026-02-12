@@ -1,8 +1,7 @@
-import { BadgeButton, Button, DataList, Dialog, DialogContent, DialogHeader, DialogTitle, IconButton } from "@/app/components";
+import { BadgeButton, Button, DataList, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, IconButton, SkeletonTable, TruncatedText } from "@/app/components";
 import { CheckIcon, ClipboardPenIcon, EyeIcon } from "@/app/components/icons";
 import { RouteUtil } from "@/app/utils/route";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
-import { defaultSearchResult } from "@/types/search-result";
 import { useApproveList } from "./useApproveList";
 
 const getColumns = (handleApprove: (id: string) => void) => [
@@ -10,6 +9,7 @@ const getColumns = (handleApprove: (id: string) => void) => [
     key: "id",
     label: "ID",
     className: "w-32 font-mono text-muted-foreground",
+    render: (_: any, item: UserSearchItemDto) => <TruncatedText className="dark:text-muted-foreground" text={item.id} isUUID showCopy />
   },
   {
     key: "info",
@@ -62,7 +62,11 @@ export function ApproveList() {
     isOpen,
     setIsOpen,
     isLoading,
-    onApprove
+    onApprove,
+    data,
+    filter,
+    onPageChange,
+    onPageSizeChange
   } = useApproveList();
   const columns = getColumns(onApprove);
   return (
@@ -76,27 +80,28 @@ export function ApproveList() {
       />
 
       <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
-        <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto p-0" onOpenAutoFocus={(e) => e.preventDefault()}>
+        <DialogContent className="sm:max-w-4xl max-h-[90vh] p-0 overflow-hidden" onOpenAutoFocus={(e) => e.preventDefault()}>
           <DialogHeader className="px-6 pt-6 pb-4 border-b text-foreground">
             <DialogTitle className="text-xl font-semibold text-accent-foreground">
               Approve list
             </DialogTitle>
           </DialogHeader>
 
-          <div className="p-6">
+          <DialogDescription className="p-6 h-[80vh] overflow-y-auto">
             {isLoading ? (
-              <div className="text-center py-12 text-muted-foreground">
-                Loading ...
-              </div>
+              <SkeletonTable />
             ) : (
               <DataList
-                data={defaultSearchResult}
+                data={data}
                 columns={columns}
-                onPageChange={(newPage) => console.log(newPage, defaultSearchResult.page)}
-                onPageSizeChange={(newSize) => console.log(newSize, defaultSearchResult.pageSize)}
+                page={filter.page}
+                onPageChange={onPageChange}
+                pageSize={filter.pageSize}
+                onPageSizeChange={onPageSizeChange}
               />
             )}
-          </div>
+          </DialogDescription>
+
         </DialogContent>
       </Dialog>
     </>
