@@ -38,9 +38,6 @@ api.interceptors.response.use((res) => res, (err) => {
       });
     }
     else {
-      useAuthStore.getState().logout();
-      CookieStore.accessToken = null;
-      CookieStore.refreshToken = null;
       RouteUtil.redirectToLogin();
     }
   }
