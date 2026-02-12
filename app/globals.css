@@ -16,16 +16,6 @@ body.dark {
   background-color: var(--color-zinc-900)!important;
 }
 
-input,
-textarea,
-select {
-  @apply border border-gray-300 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
-}
-
-button {
-  @apply inline-flex items-center justify-center rounded-md px-4 py-2 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
-}
-
 ::-webkit-scrollbar {
   width: 8px;
 }
