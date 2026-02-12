@@ -1,4 +1,4 @@
-import { BadgeButton, Button, DataList, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, IconButton, SkeletonTable, TruncatedText } from "@/app/components";
+import { BadgeButton, Button, DataList, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, IconButton, SkeletonTable, SmartDateTime, TruncatedText } from "@/app/components";
 import { CheckIcon, ClipboardPenIcon, EyeIcon } from "@/app/components/icons";
 import { RouteUtil } from "@/app/utils/route";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
@@ -22,8 +22,8 @@ const getColumns = (handleApprove: (id: string) => void) => [
         <div className="text-sm text-muted-foreground">
           {item.email}
         </div>
-        <div className="text-xs text-muted-foreground">
-          Created At: {new Date(item.createdAt).toLocaleDateString("vi-VN")}
+        <div className="text-xs text-muted-foreground flex gap-1 items-center">
+          Created at <SmartDateTime className="text-xs" date={item.createdAt} />
         </div>
       </div>
     ),
