@@ -1,6 +1,5 @@
 'use client';
-import { useThemeStore } from "@/store";
-import { Toast } from "./components";
+import { ThemeWrapper, Toast } from "./components";
 import "./globals.css";
 
 // export const metadata: Metadata = {
@@ -13,13 +12,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { theme, color } = useThemeStore();
   return (
-    <html lang="en">
-      <body className={`${theme} ${color}`}>
+    <html lang="en" suppressHydrationWarning>
+      <ThemeWrapper>
         {children}
         <Toast.Toaster />
-      </body>
+      </ThemeWrapper>
     </html>
   );
 }

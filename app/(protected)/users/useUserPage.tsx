@@ -9,7 +9,7 @@ import { defaultSearchResult, SearchResult } from "@/types/search-result";
 import { useEffect, useState } from "react";
 
 export const breadcrumbs = [
-  { label: "Dashboard", href: "/dashboard" },
+  { label: "Dashboard", href: RouteUtil.getDashboardRoute() },
   { label: "Users" },
 ];
 
@@ -68,14 +68,14 @@ export const columns: readonly Column<UserSearchItemDto>[] = Object.freeze([
 ]);
 
 export const useUserPage = () => {
-  const { currentPage, setCurrentPage } = useSidebarStore();
+  const { setCurrentPage } = useSidebarStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { keyword, filter, setKeyword, onPageChange, onPageSizeChange } = useFilter()
   const [data, setData] = useState<SearchResult<UserSearchItemDto>>(defaultSearchResult);
 
   useEffect(() => {
     setCurrentPage("User Management");
-  }, [currentPage]);
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
