@@ -50,7 +50,7 @@ function BodyDataListInner<T extends { id?: string | number }>({
       <TableBody>
         <TableRow>
           <TableCell colSpan={columns.length} className="h-25 text-center">
-            <div className="py-11.75 text-muted-foreground font-medium">{emptyMessage}</div>
+            <div className="py-11.75 text-muted-foreground font-medium">{emptyMessage || "No results found"}</div>
           </TableCell>
         </TableRow>
       </TableBody>

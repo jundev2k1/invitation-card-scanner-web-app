@@ -17,7 +17,7 @@ export const useApproveList = ({ onPageRefresh }: ApproveListProps) => {
 
   const [unApprovedCount, setUnApprovedCount] = useState<number>(0);
   const [data, setData] = useState<SearchResult<UserSearchItemDto>>(defaultSearchResult);
-  const { filter, setKeyword, onPageChange, onPageSizeChange } = useFilter({ keyword: '', page: 1, pageSize: 5 });
+  const { filter, keyword, setKeyword, onPageChange, onPageSizeChange } = useFilter({ keyword: '', page: 1, pageSize: 5 });
 
   const onRefresh = () => {
     setIsRefresh(isRefresh + 1);
@@ -81,6 +81,7 @@ export const useApproveList = ({ onPageRefresh }: ApproveListProps) => {
     onApprove,
     data,
     filter,
+    keyword,
     setKeyword,
     onPageChange,
     onPageSizeChange

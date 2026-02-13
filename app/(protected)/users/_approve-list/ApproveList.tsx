@@ -8,8 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
   IconButton,
-  SkeletonTable,
   SmartDateTime,
+  TextBox,
   TruncatedText
 } from "@/app/components";
 import { CheckCheckIcon, CheckIcon, ClipboardPenIcon, EyeIcon } from "@/app/components/icons";
@@ -87,6 +87,8 @@ export function ApproveList({ onPageRefresh }: ApproveListProps) {
     onApprove,
     data,
     filter,
+    keyword,
+    setKeyword,
     onPageChange,
     onPageSizeChange
   } = useApproveList({ onPageRefresh });
@@ -109,21 +111,25 @@ export function ApproveList({ onPageRefresh }: ApproveListProps) {
             </DialogTitle>
           </DialogHeader>
 
-          <DialogDescription className="p-6 h-[80vh] overflow-y-auto">
-            {isLoading ? (
-              <SkeletonTable />
-            ) : (
-              <DataList
-                data={data}
-                columns={columns}
-                page={filter.page}
-                onPageChange={onPageChange}
-                pageSize={filter.pageSize}
-                onPageSizeChange={onPageSizeChange}
+          <DialogDescription className="px-6 pt-2 pb-6 max-h-[calc(90vh-90px)] overflow-y-auto">
+            <div className="mb-3">
+              <TextBox
+                value={keyword}
+                placeholder="Search with username or email..."
+                className="w-75"
+                onChange={(e) => setKeyword(e.currentTarget.value)}
               />
-            )}
+            </div>
+            <DataList
+              data={data}
+              columns={columns}
+              isLoading={isLoading}
+              page={filter.page}
+              onPageChange={onPageChange}
+              pageSize={filter.pageSize}
+              onPageSizeChange={onPageSizeChange}
+            />
           </DialogDescription>
-
         </DialogContent>
       </Dialog>
     </>

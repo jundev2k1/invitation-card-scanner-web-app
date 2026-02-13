@@ -51,7 +51,7 @@ export function TruncatedText({
             <span
               onClick={handleCopy}
               className={cn(
-                "block truncate cursor-pointer hover:text-primary transition-colors dark:hover:text-primary",
+                "block truncate cursor-pointer hover:text-primary transition-colors",
                 isTruncate ? maxWidth : ''
               )}
             >

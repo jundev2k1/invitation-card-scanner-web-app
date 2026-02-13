@@ -12,7 +12,7 @@ export function SearchTextbox({ onClear, containerClassName, className, value, .
     <div className={cn("relative w-full max-w-sm", containerClassName)}>
       <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input
-        className={cn("pl-9 pr-9 focus-visible:ring-primary", className)}
+        className={cn("pl-9 pr-9 focus-visible:ring-2", className)}
         value={value}
         {...props}
       />
