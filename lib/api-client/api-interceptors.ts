@@ -95,7 +95,8 @@ api.interceptors.response.use(
       HttpCode.UNAUTHORIZED
     ];
 
-    if (resStatus && !successCodes.includes(resStatus)) {
+    if (resStatus && !successCodes.includes(resStatus) && !err.config._errorShown) {
+      err.config._errorShown = true;
       Toast.showError(err.response?.data?.message || 'Unexpected error');
     }
 

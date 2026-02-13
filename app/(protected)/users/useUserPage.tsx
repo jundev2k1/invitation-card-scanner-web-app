@@ -76,10 +76,10 @@ export const useUserPage = () => {
   const [isRefresh, setIsRefresh] = useState<number>(1);
 
   useEffect(() => {
-    setCurrentPage("User Management");
-  }, []);
+    if (currentPage != "User Management") {
+      setCurrentPage("User Management");
+    }
 
-  useEffect(() => {
     setIsLoading(true);
     userService.getUserList({ keyword: filter.keyword, page: filter.page, pageSize: filter.pageSize })
       .then(res => {
