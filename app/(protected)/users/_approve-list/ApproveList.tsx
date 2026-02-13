@@ -14,8 +14,8 @@ import {
 } from "@/app/components";
 import { CheckCheckIcon, CheckIcon, ClipboardPenIcon, EyeIcon } from "@/app/components/icons";
 import { RouteUtil } from "@/app/utils/route";
+import { UserStatus } from "@/types";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
-import { UserStatus } from "@/types/enum/user-status.enum";
 import { useApproveList } from "./useApproveList";
 
 const getColumns = (handleApprove: (id: string) => void) => [

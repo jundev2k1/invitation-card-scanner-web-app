@@ -1,6 +1,4 @@
-import { Role } from "@/types/enum";
-import { Sex } from "@/types/enum/sex.enum";
-import { UserStatus } from "@/types/enum/user-status.enum";
+import { Role, Sex, UserStatus } from "@/types";
 
 export interface UserDetailDto {
   id: string;

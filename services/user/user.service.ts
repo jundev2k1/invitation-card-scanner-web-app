@@ -1,8 +1,5 @@
 import { api, baseQuery, mapToUrlSearchParams } from "@/lib/api-client";
-import { UserDetailDto } from "@/types";
-import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
-import { UserStatus } from "@/types/enum/user-status.enum";
-import { SearchResult } from "@/types/search-result";
+import { SearchResult, UserDetailDto, UserSearchItemDto, UserStatus } from "@/types";
 import { GetUserListRequest } from "./user.type";
 
 export const userService = {

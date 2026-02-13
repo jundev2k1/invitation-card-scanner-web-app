@@ -1,8 +1,11 @@
 import { useFilter } from "@/app/components";
 import { userService } from "@/services";
-import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
-import { UserStatus } from "@/types/enum/user-status.enum";
-import { defaultSearchResult, SearchResult } from "@/types/search-result";
+import {
+  defaultSearchResult,
+  SearchResult,
+  UserSearchItemDto,
+  UserStatus
+} from "@/types";
 import { useEffect, useState } from "react";
 
 type ApproveListProps = {

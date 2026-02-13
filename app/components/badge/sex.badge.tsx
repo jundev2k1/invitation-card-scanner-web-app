@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Sex } from "@/types/enum/sex.enum";
+import { Sex } from "@/types";
 import { FemaleIcon, MaleIcon, OtherIcon } from "../icons";
 
 type SexBadgeProps = {

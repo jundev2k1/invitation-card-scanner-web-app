@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { UserStatus } from "@/types/enum/user-status.enum";
+import { UserStatus } from "@/types";
 
 const colors = Object.freeze({
   [UserStatus.INACTIVE]: "bg-gray-500 text-white dark:bg-gray-600 dark:text-white",

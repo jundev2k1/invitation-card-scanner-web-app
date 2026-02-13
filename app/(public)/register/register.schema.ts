@@ -1,5 +1,5 @@
 import { passwordRegex, phoneNumberRegex } from "@/lib/validation";
-import { Sex } from "@/types/enum/sex.enum";
+import { Sex } from "@/types";
 import { z } from "zod";
 
 export const registerSchema = z.object({

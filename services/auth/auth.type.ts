@@ -1,4 +1,4 @@
-import { Sex } from "@/types/enum/sex.enum";
+import { Sex } from "@/types";
 
 export type LoginRequest = {
   username: string;

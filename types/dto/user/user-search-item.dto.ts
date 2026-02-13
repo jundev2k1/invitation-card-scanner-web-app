@@ -1,5 +1,4 @@
-import { Sex } from "@/types/enum/sex.enum";
-import { UserStatus } from "@/types/enum/user-status.enum";
+import { Sex, UserStatus } from "@/types";
 
 export interface UserSearchItemDto {
   id: string;

@@ -1,4 +1,4 @@
-import { UserStatus } from "@/types/enum/user-status.enum"
+import { UserStatus } from "@/types"
 
 export type GetUserListRequest = {
   keyword: string,
