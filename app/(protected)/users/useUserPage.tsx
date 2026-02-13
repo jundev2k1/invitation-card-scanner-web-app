@@ -7,7 +7,7 @@ import { userService } from "@/services";
 import { useSidebarStore } from "@/store";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
 import { defaultSearchResult, SearchResult } from "@/types/search-result";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const breadcrumbs = [
   { label: "Dashboard", href: RouteUtil.getDashboardRoute() },
@@ -85,10 +85,10 @@ export const useUserPage = () => {
       .then(res => {
         setData(res.data!);
         setIsLoading(false);
-      })
+      });
   }, [filter, isRefresh]);
 
-  const onPageRefresh = () => setIsRefresh(isRefresh + 1);
+  const onPageRefresh = useCallback(() => setIsRefresh(isRefresh + 1), [isRefresh]);
   return {
     isLoading,
     onPageRefresh,

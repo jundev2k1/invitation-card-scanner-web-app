@@ -6,7 +6,7 @@ import {
   UserSearchItemDto,
   UserStatus
 } from "@/types";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type ApproveListProps = {
   onPageRefresh?: () => void
@@ -45,12 +45,12 @@ export const useApproveList = ({ onPageRefresh }: ApproveListProps) => {
     }
   }
 
-  const onClose = () => {
+  const onClose = useCallback(() => {
     setIsOpen(false);
 
     if (hasChanged)
       onPageRefresh?.();
-  }
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;

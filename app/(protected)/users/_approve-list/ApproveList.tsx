@@ -16,6 +16,7 @@ import { CheckCheckIcon, CheckIcon, ClipboardPenIcon, EyeIcon } from "@/app/comp
 import { RouteUtil } from "@/app/utils/route";
 import { UserStatus } from "@/types";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
+import { useMemo } from "react";
 import { useApproveList } from "./useApproveList";
 
 const getColumns = (handleApprove: (id: string) => void) => [
@@ -92,7 +93,7 @@ export function ApproveList({ onPageRefresh }: ApproveListProps) {
     onPageChange,
     onPageSizeChange
   } = useApproveList({ onPageRefresh });
-  const columns = getColumns(onApprove);
+  const columns = useMemo(() => getColumns(onApprove), [onApprove]);
   return (
     <>
       <BadgeButton

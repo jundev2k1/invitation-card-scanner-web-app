@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type SearchFilter = {
   keyword: string,
@@ -27,13 +27,13 @@ export const useFilter = (defaultFilter?: SearchFilter) => {
     return () => clearTimeout(handler);
   }, [keyword]);
 
-  const onPageChange = (page: number) => {
+  const onPageChange = useCallback((page: number) => {
     setFilter({ ...filter, page });
-  }
+  }, [filter]);
 
-  const onPageSizeChange = (pageSize: number) => {
+  const onPageSizeChange = useCallback((pageSize: number) => {
     setFilter({ ...filter, pageSize });
-  }
+  }, [filter]);
 
   return ({
     keyword,
