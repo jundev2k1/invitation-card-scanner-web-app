@@ -1,4 +1,4 @@
-import { api, baseQuery } from "@/lib/api-client";
+import { api, baseQuery, mapToUrlSearchParams } from "@/lib/api-client";
 import { UserDetailDto } from "@/types";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
 import { UserStatus } from "@/types/enum/user-status.enum";
@@ -12,13 +12,14 @@ export const userService = {
   getStatusStats: () => {
     return baseQuery(api.get<Record<UserStatus, number>>('/backoffice/users/status/stats'));
   },
-  getUserList: ({ keyword, page, pageSize }: GetUserListRequest) => {
-    return baseQuery(api.get<SearchResult<UserSearchItemDto>>('/backoffice/users', { params: { keyword, page, pageSize } }));
+  getUserList: (props: GetUserListRequest) => {
+    const req = mapToUrlSearchParams(props);
+    return baseQuery(api.get<SearchResult<UserSearchItemDto>>('/backoffice/users', { params: req }));
   },
   getUserDetail: (id: string) => {
     return baseQuery(api.get<UserDetailDto>(`/backoffice/users/${id}`));
   },
   approveUser: (id: string) => {
-    return baseQuery(api.post(`/backoffice/users/${id}/status/approve`));
+    return baseQuery<null>(api.post(`/backoffice/users/${id}/status/approve`));
   },
 };

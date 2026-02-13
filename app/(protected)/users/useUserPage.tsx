@@ -73,6 +73,7 @@ export const useUserPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { keyword, filter, setKeyword, onPageChange, onPageSizeChange } = useFilter()
   const [data, setData] = useState<SearchResult<UserSearchItemDto>>(defaultSearchResult);
+  const [isRefresh, setIsRefresh] = useState<number>(1);
 
   useEffect(() => {
     setCurrentPage("User Management");
@@ -85,10 +86,12 @@ export const useUserPage = () => {
         setData(res.data!);
         setIsLoading(false);
       })
-  }, [filter]);
+  }, [filter, isRefresh]);
 
+  const onPageRefresh = () => setIsRefresh(isRefresh + 1);
   return {
     isLoading,
+    onPageRefresh,
     keyword,
     data,
     filter,

@@ -19,7 +19,7 @@ export const useFilter = (defaultFilter?: SearchFilter) => {
     const handler = setTimeout(() => {
       setFilter({
         keyword: keyword,
-        page: filter.page,
+        page: keyword.trim() === '' ? filter.page : 1,
         pageSize: filter.pageSize
       });
     }, 300);

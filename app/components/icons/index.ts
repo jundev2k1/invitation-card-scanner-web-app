@@ -1,7 +1,7 @@
 export {
   AlertTriangle as AlertTriangleIcon,
   AtSign as AtSignIcon,
-  Bell as BellIcon, Check as CheckIcon, ChevronLeft as ChevronLeftIcon,
+  Bell as BellIcon, CheckCheck as CheckCheckIcon, Check as CheckIcon, ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
   ChevronsLeft as ChevronsLeftIcon,
   ChevronsRight as ChevronsRightIcon, Copy as CopyIcon, Eye as EyeIcon,
@@ -28,3 +28,4 @@ export {
   LuClipboardPen as ClipboardPenIcon,
   LuFolderOpen as FolderOpenIcon
 } from "react-icons/lu";
+

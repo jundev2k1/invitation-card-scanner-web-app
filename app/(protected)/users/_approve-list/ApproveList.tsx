@@ -1,7 +1,21 @@
-import { BadgeButton, Button, DataList, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, IconButton, SkeletonTable, SmartDateTime, TruncatedText } from "@/app/components";
-import { CheckIcon, ClipboardPenIcon, EyeIcon } from "@/app/components/icons";
+import {
+  BadgeButton,
+  Button,
+  DataList,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  IconButton,
+  SkeletonTable,
+  SmartDateTime,
+  TruncatedText
+} from "@/app/components";
+import { CheckCheckIcon, CheckIcon, ClipboardPenIcon, EyeIcon } from "@/app/components/icons";
 import { RouteUtil } from "@/app/utils/route";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
+import { UserStatus } from "@/types/enum/user-status.enum";
 import { useApproveList } from "./useApproveList";
 
 const getColumns = (handleApprove: (id: string) => void) => [
@@ -9,7 +23,8 @@ const getColumns = (handleApprove: (id: string) => void) => [
     key: "id",
     label: "ID",
     className: "w-32 font-mono text-muted-foreground",
-    render: (_: any, item: UserSearchItemDto) => <TruncatedText className="dark:text-muted-foreground" text={item.id} isUUID showCopy />
+    render: (_: any, item: UserSearchItemDto) =>
+      <TruncatedText className="dark:text-muted-foreground" text={item.id} isUUID showCopy />
   },
   {
     key: "info",
@@ -32,40 +47,49 @@ const getColumns = (handleApprove: (id: string) => void) => [
     key: "actions",
     label: "Actions",
     className: "w-48 text-right",
-    render: (_: any, item: UserSearchItemDto) => (
-      <div className="flex gap-2 justify-end">
-        <IconButton
-          icon={<EyeIcon />}
-          variant="outline"
-          onClick={() => RouteUtil.redirectToUserDetail(item.id)}
-        />
-        <Button
-          variant="default"
-          leftIcon={<CheckIcon />}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleApprove(item.id);
-          }}
-        >
-          Approve
-        </Button>
-      </div>
-    ),
+    render: (_: any, item: UserSearchItemDto) => {
+      const isApproved = item.status === UserStatus.ACTIVE;
+      return (
+        <div className="flex gap-2 justify-end">
+          <IconButton
+            icon={<EyeIcon />}
+            variant="outline"
+            onClick={() => RouteUtil.redirectToUserDetail(item.id)}
+          />
+          <Button
+            variant={isApproved ? "outline" : "default"}
+            leftIcon={isApproved ? <CheckCheckIcon /> : <CheckIcon />}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleApprove(item.id);
+            }}
+            disabled={isApproved}
+          >
+            Approve
+          </Button>
+        </div>
+      )
+    },
   },
 ];
 
-export function ApproveList() {
+type ApproveListProps = {
+  onPageRefresh?: () => void
+}
+
+export function ApproveList({ onPageRefresh }: ApproveListProps) {
   const {
     unApprovedCount,
     isOpen,
     setIsOpen,
+    onClose,
     isLoading,
     onApprove,
     data,
     filter,
     onPageChange,
     onPageSizeChange
-  } = useApproveList();
+  } = useApproveList({ onPageRefresh });
   const columns = getColumns(onApprove);
   return (
     <>
@@ -77,7 +101,7 @@ export function ApproveList() {
         onClick={() => setIsOpen(true)}
       />
 
-      <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
+      <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="sm:max-w-4xl max-h-[90vh] p-0 overflow-hidden" onOpenAutoFocus={(e) => e.preventDefault()}>
           <DialogHeader className="px-6 pt-6 pb-4 border-b text-foreground">
             <DialogTitle className="text-xl font-semibold text-accent-foreground">

@@ -5,10 +5,15 @@ import { UserStatus } from "@/types/enum/user-status.enum";
 import { defaultSearchResult, SearchResult } from "@/types/search-result";
 import { useEffect, useState } from "react";
 
-export const useApproveList = () => {
+type ApproveListProps = {
+  onPageRefresh?: () => void
+}
+
+export const useApproveList = ({ onPageRefresh }: ApproveListProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRefresh, setIsRefresh] = useState<number>(0);
+  const [hasChanged, setHasChanged] = useState<boolean>(false);
 
   const [unApprovedCount, setUnApprovedCount] = useState<number>(0);
   const [data, setData] = useState<SearchResult<UserSearchItemDto>>(defaultSearchResult);
@@ -19,15 +24,36 @@ export const useApproveList = () => {
   }
 
   const onApprove = async (id: string) => {
-    console.log(id);
-    onRefresh();
+    try {
+      // Handle approve user
+      await userService.approveUser(id);
+
+      // Set new status
+      const targetItem = data.items.find(i => i.id === id);
+      if (!targetItem) return;
+      targetItem.status = UserStatus.ACTIVE;
+      setData(data);
+
+      // Refresh page
+      setHasChanged(true);
+      onRefresh();
+    } catch (err: any) {
+      console.error(err);
+    }
+  }
+
+  const onClose = () => {
+    setIsOpen(false);
+
+    if (hasChanged)
+      onPageRefresh?.();
   }
 
   useEffect(() => {
     if (!isOpen) return;
 
     setIsLoading(true);
-    userService.getUserList({ keyword: filter.keyword, page: filter.page, pageSize: filter.pageSize })
+    userService.getUserList({ keyword: filter.keyword, statuses: [UserStatus.WAITING_FOR_APPROVE], page: filter.page, pageSize: filter.pageSize })
       .then(res => {
         setData(res.data!);
         setIsLoading(false);
@@ -50,6 +76,7 @@ export const useApproveList = () => {
     onRefresh,
     isOpen,
     setIsOpen,
+    onClose,
     isLoading,
     onApprove,
     data,

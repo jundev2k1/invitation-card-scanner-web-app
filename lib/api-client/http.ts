@@ -26,6 +26,13 @@ export const mapToFormData = (data: Record<string, any>) => {
 export const mapToUrlSearchParams = (data: Record<string, any>) => {
   const urlSearchParams = new URLSearchParams();
   for (const [key, value] of Object.entries(data)) {
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        urlSearchParams.append(key, item);
+      }
+      continue;
+    }
+
     urlSearchParams.append(key, value);
   }
   return urlSearchParams;
