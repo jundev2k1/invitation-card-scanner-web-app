@@ -1,3 +1,4 @@
+import { PageAction } from "@/types";
 import { redirect } from "next/navigation";
 
 export class RouteUtil {
@@ -26,8 +27,8 @@ export class RouteUtil {
   private static readonly USERS = "/users";
   public static getUserListRoute() { return this.USERS };
   public static redirectToUserList() { redirect(this.USERS); };
-  public static getUserDetailUrl(id: string) { return `/users/${id}`; }
-  public static redirectToUserDetail(id: string) { redirect(this.getUserDetailUrl(id)); };
+  public static getUserDetailUrl(id: string, action?: PageAction) { return `/users/${id}?action=${action || PageAction.VIEW}`; }
+  public static redirectToUserDetail(id: string, action?: PageAction) { redirect(this.getUserDetailUrl(id, action)); };
 
   // Event Categories Route
   private static readonly EVENT_CATEGORIES = "/event-categories";

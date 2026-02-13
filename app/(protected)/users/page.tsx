@@ -5,6 +5,7 @@ import { breadcrumbs, columns, useUserPage } from "./useUserPage";
 
 export default function UserPage() {
   const {
+    currentPage,
     isLoading,
     onPageRefresh,
     keyword,
@@ -17,7 +18,7 @@ export default function UserPage() {
 
   return (
     <PageContent
-      title="User Management"
+      title={currentPage}
       description="View, edit, and manage all system users."
       breadcrumbs={breadcrumbs}
       filters={

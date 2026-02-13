@@ -1,6 +1,6 @@
-import { api, baseQuery, mapToUrlSearchParams } from "@/lib/api-client";
+import { api, baseQuery, mapToFormData, mapToUrlSearchParams } from "@/lib/api-client";
 import { SearchResult, UserDetailDto, UserSearchItemDto, UserStatus } from "@/types";
-import { GetUserListRequest } from "./user.type";
+import { GetUserListRequest, UpdateUserRequest, UploadAvatarResponse } from "./user.type";
 
 export const userService = {
   getProfile: () => {
@@ -15,6 +15,13 @@ export const userService = {
   },
   getUserDetail: (id: string) => {
     return baseQuery(api.get<UserDetailDto>(`/backoffice/users/${id}`));
+  },
+  updateUser: (id: string, data: UpdateUserRequest) => {
+    return baseQuery(api.put(`/backoffice/users/${id}`, data));
+  },
+  uploadAvatar: (id: string, file: File) => {
+    const req = mapToFormData({ id, avatar: file });
+    return baseQuery<UploadAvatarResponse>(api.put(`/users/${id}/avatar`, req));
   },
   approveUser: (id: string) => {
     return baseQuery<null>(api.post(`/backoffice/users/${id}/status/approve`));

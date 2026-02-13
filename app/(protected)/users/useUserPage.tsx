@@ -69,7 +69,7 @@ export const columns: readonly Column<UserSearchItemDto>[] = Object.freeze([
 ]);
 
 export const useUserPage = () => {
-  const { setCurrentPage } = useSidebarStore();
+  const { currentPage, setCurrentPage } = useSidebarStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { keyword, filter, setKeyword, onPageChange, onPageSizeChange } = useFilter()
   const [data, setData] = useState<SearchResult<UserSearchItemDto>>(defaultSearchResult);
@@ -90,6 +90,7 @@ export const useUserPage = () => {
 
   const onPageRefresh = useCallback(() => setIsRefresh(isRefresh + 1), [isRefresh]);
   return {
+    currentPage,
     isLoading,
     onPageRefresh,
     keyword,

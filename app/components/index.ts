@@ -1,6 +1,7 @@
 export * from "./avatar";
 export * from "./badge";
 export * from "./button";
+export * from "./card";
 export * from "./datetime";
 export * from "./dialog";
 export * from "./dropdown";
@@ -9,8 +10,10 @@ export * from "./input";
 export * from "./label";
 export * from "./layout";
 export * from "./select";
+export * from "./separator";
 export * from "./skeleton";
 export * from "./table";
 export * from "./text";
 export * from "./theme";
 export * as Toast from "./toast";
+export * from "./tooltip";

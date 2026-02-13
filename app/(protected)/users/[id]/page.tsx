@@ -1,6 +1,7 @@
 "use client";
 
-import UserDetailView from "./overview/userDetail";
+import { PageAction } from "@/types";
+import UserDetailLayout from "./_overview/userDetail";
 
 interface UserDetailPageProps {
   params: Promise<{ id: string }>
@@ -10,7 +11,9 @@ interface UserDetailPageProps {
 export default async function UserDetailPage({ params, searchParams }: UserDetailPageProps) {
   const { id } = await params;
   const { action } = await searchParams;
-  const mode = action === "edit" ? "edit" : "view";
+  const mode = (typeof action === "string" && Object.values(PageAction).includes(action as PageAction))
+    ? action as PageAction
+    : PageAction.VIEW;
 
-  return <UserDetailView id={id} action={mode} />
+  return <UserDetailLayout id={id} action={mode} />
 }
