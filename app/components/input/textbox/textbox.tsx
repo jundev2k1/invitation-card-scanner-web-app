@@ -11,7 +11,7 @@ export default function AppInput({ label, helperText, className, id, ...props }:
   return (
     <div className="grid w-full items-center gap-1.5">
       {label && <Label htmlFor={id}>{label}</Label>}
-      <Input className={cn("focus-visible:ring-2", className)} id={id} {...props} />
+      <Input className={cn("focus-visible:ring-2 dark:text-muted-foreground", className)} id={id} {...props} />
       {helperText && <div className="text-xs text-muted-foreground">{helperText}</div>}
     </div>
   );

@@ -48,7 +48,7 @@ function BodyDataListInner<T extends { id?: string | number }>({
   if (totalCount === 0) {
     return (
       <TableBody>
-        <TableRow>
+        <TableRow className="hover:bg-inherit">
           <TableCell colSpan={columns.length} className="h-25 text-center">
             <div className="py-11.75 text-muted-foreground font-medium">{emptyMessage || "No results found"}</div>
           </TableCell>
