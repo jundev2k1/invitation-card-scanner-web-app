@@ -1,3 +1,2 @@
-export * from "./data-list.table";
+export * from "./data-list";
 export * from "./default.table";
-
