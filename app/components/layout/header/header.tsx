@@ -1,8 +1,8 @@
 import { IconButton } from "@/app/components/button";
-import { BellIcon } from "@/app/components/icons";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/store";
 import { MenuIcon } from "lucide-react";
+import { ButtonNotification } from "../../notification";
 import { ProfileMenu } from "../../profiles";
 import { ThemeToggleButton } from "../../theme";
 
@@ -31,20 +31,7 @@ export default function PageHeader() {
       {/* Right: Actions */}
       <div className="flex items-center gap-3 md:gap-4">
         <ThemeToggleButton />
-
-        <IconButton
-          icon={
-            <>
-              <BellIcon />
-              <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-[10px] text-white flex items-center justify-center">3</span>
-            </>
-          }
-          variant="ghost"
-          size="icon"
-          className="relative hover:bg-accent hover:text-accent-foreground"
-          aria-label="Notifications"
-        />
-
+        <ButtonNotification />
         <ProfileMenu />
       </div>
     </header>
