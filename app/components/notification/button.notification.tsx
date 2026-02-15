@@ -16,19 +16,18 @@ export const ButtonNotification = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button
+        <IconButton
           className="relative inline-flex items-center justify-center rounded-md p-2 hover:bg-accent hover:text-accent-foreground transition-colors outline-none"
-          aria-label="Notifications"
-        >
-          <IconButton icon={
+          icon={
             <>
               <BellIcon />
-              <span className="absolute top-1.5 right-1.5 h-4 w-4 rounded-full bg-destructive text-[10px] font-medium text-white flex items-center justify-center border-2 border-background">
+              <span className="absolute top-0.5 right-0.5 h-4 w-4 rounded-full bg-destructive text-[10px] font-medium text-white flex items-center justify-center border-2 border-background">
                 2
               </span>
             </>
-          } />
-        </button>
+          }
+          aria-label="Notifications"
+        />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-80">
