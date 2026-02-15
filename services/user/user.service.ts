@@ -24,6 +24,6 @@ export const userService = {
     return baseQuery<UploadAvatarResponse>(api.put(`/users/${id}/avatar`, req));
   },
   approveUser: (id: string) => {
-    return baseQuery<null>(api.post(`/backoffice/users/${id}/status/approve`));
+    return baseQuery<null>(api.patch(`/backoffice/users/${id}/status/approve`));
   },
 };
