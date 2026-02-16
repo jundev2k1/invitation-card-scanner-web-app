@@ -1,0 +1,15 @@
+{
+  "login": {
+    "title": "Đăng nhập",
+    "desc": "Chào mừng! Vui lý nhập tài khoản đăng nhập.",
+    "noAccount": "Bạn chua có tài khoản?",
+    "form": {
+      "lbUsername": "Tài khoản",
+      "lbPassword": "Mật khâu",
+      "btnSignIn": "Đăng nhập",
+      "btnSignInLoading": "Đăng nhập...",
+      "btnRegister": "Đăng ký",
+      "btnForgotPassword": "Quên mật khâu?"
+    }
+  }
+}

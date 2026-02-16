@@ -1,4 +1,5 @@
 
+"use client";
 import { useAppStore } from "@/store/useAppStore";
 import { ThemeColor, ThemeMode } from "@/types";
 import { useEffect, useState } from "react";

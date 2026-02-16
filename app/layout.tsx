@@ -1,4 +1,4 @@
-'use client';
+import { headers } from "next/headers";
 import { ThemeWrapper, Toast } from "./components";
 import "./globals.css";
 
@@ -7,13 +7,16 @@ import "./globals.css";
 //   description: "The page for managing by admin",
 // };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerList = await headers();
+  const locale = headerList.get('x-next-intl-locale') ?? 'en';
+    
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <ThemeWrapper>
         {children}
         <Toast.Toaster />

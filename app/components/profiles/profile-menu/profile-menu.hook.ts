@@ -3,9 +3,14 @@ import { RouteUtil } from "@/app/utils/route";
 import { CookieStore } from "@/lib/cookies";
 import { authService, userService } from "@/services";
 import { useAuthStore } from "@/store";
+import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const useProfileMenu = () => {
+  const locale = useLocale();
+  const router = useRouter();
+
   const { user, setUser } = useAuthStore();
   const [isOpenSetting, setIsOpenSetting] = useState(false);
 
@@ -26,7 +31,7 @@ export const useProfileMenu = () => {
 
     CookieStore.accessToken = null;
     CookieStore.refreshToken = null;
-    RouteUtil.redirectToLogin();
+    router.push(RouteUtil.getLoginRoute(locale));
   };
 
   return {

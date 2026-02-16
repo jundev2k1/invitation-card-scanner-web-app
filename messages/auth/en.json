@@ -1,0 +1,15 @@
+{
+  "login": {
+    "title": "Sign in",
+    "desc": "Welcome back! Please enter your credentials to continue.",
+    "noAccount": "Don't have an account?",
+    "form": {
+      "lbUsername": "Username",
+      "lbPassword": "Password",
+      "btnSignIn": "Sign in",
+      "btnSignInLoading": "Signing in...",
+      "btnRegister": "Sign up",
+      "btnForgotPassword": "Forgot password?"
+    }
+  }
+}

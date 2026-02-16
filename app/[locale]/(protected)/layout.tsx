@@ -1,5 +1,5 @@
 'use client';
-import { HeaderPage, Sidebar } from "../components";
+import { HeaderPage, Sidebar } from "../../components";
 
 export default function RootLayout({
   children,

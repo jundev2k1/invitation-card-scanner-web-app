@@ -1,10 +1,20 @@
+"use client";
 import { RouteUtil } from "@/app/utils/route";
 import { CookieStore } from "@/lib/cookies";
 import { authService } from "@/services";
+import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export const useLoginPage = () => {
-  if (CookieStore.accessToken) RouteUtil.redirectToDashboard();
+  const locale = useLocale();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (CookieStore.accessToken) {
+      router.replace(RouteUtil.getDashboardRoute(locale));
+    }
+  }, [locale, router]);
 
   const loginButtonRef = useRef<HTMLButtonElement>(null);
   const [username, setUsername] = useState("");
@@ -12,6 +22,10 @@ export const useLoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const redirectToRegisterPage = () => {
+    router.push(RouteUtil.getRegisterRoute(locale));
+  }
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -27,7 +41,8 @@ export const useLoginPage = () => {
       if (response.statusCode == 200) {
         CookieStore.accessToken = response.data!.accessToken;
         CookieStore.refreshToken = response.data!.refreshToken;
-        RouteUtil.redirectToDashboard();
+
+        router.push(RouteUtil.getDashboardRoute(locale));
       } else {
         setError(response.message);
       }
@@ -52,6 +67,7 @@ export const useLoginPage = () => {
     isLoading,
     loginButtonRef,
     handleLogin,
+    redirectToRegisterPage,
     username,
     setUsername,
     password,

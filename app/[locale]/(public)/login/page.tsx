@@ -1,7 +1,5 @@
-// app/login/page.tsx
 "use client";
 
-import { RouteUtil } from "@/app/utils/route";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useLoginPage } from "./useLoginPage";
 
 export default function LoginPage() {
@@ -22,6 +21,7 @@ export default function LoginPage() {
     isLoading,
     loginButtonRef,
     handleLogin,
+    redirectToRegisterPage,
     username,
     setUsername,
     password,
@@ -30,9 +30,9 @@ export default function LoginPage() {
     setShowPassword,
     error
   } = useLoginPage();
+  const t = useTranslations();
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-linear-to-br from-gray-950 via-indigo-950 to-purple-950">
-      {/* Background decorative orbs - using standard Tailwind blur + opacity */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-32 -top-48 h-96 w-96 rounded-full bg-purple-600 opacity-20 blur-3xl" />
         <div className="absolute -right-32 bottom-32 h-80 w-80 rounded-full bg-cyan-500 opacity-20 blur-3xl" />
@@ -45,10 +45,10 @@ export default function LoginPage() {
               <span className="text-3xl font-bold tracking-tight">NT</span>
             </div>
             <CardTitle className="text-3xl font-bold tracking-tight text-white">
-              Sign In
+              {t('auth.login.title')}
             </CardTitle>
             <CardDescription className="text-slate-400">
-              Welcome back! Please enter your credentials to continue.
+              {t('auth.login.desc')}
             </CardDescription>
           </CardHeader>
 
@@ -62,12 +62,12 @@ export default function LoginPage() {
             <div className="space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="username" className="text-slate-200">
-                  Email or Username
+                  {t('auth.login.form.lbUsername')}
                 </Label>
                 <Input
                   id="username"
                   type="text"
-                  placeholder="you@example.com"
+                  placeholder="user123"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="border-slate-700 bg-slate-950 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all"
@@ -79,7 +79,7 @@ export default function LoginPage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password" className="text-slate-200">
-                    Password
+                    {t('auth.login.form.lbPassword')}
                   </Label>
                 </div>
                 <div className="relative">
@@ -107,7 +107,7 @@ export default function LoginPage() {
                     variant="link"
                     className="h-auto px-0 text-sm text-purple-400 hover:text-purple-300"
                   >
-                    Forgot password?
+                    {t('auth.login.form.btnForgotPassword')}
                   </Button>
                 </div>
               </div>
@@ -123,17 +123,18 @@ export default function LoginPage() {
               )}
             >
               {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? t('auth.login.form.btnSignInLoading') : t('auth.login.form.btnSignIn')}
             </Button>
           </CardContent>
 
           <CardFooter className="flex justify-center border-t border-slate-800 pt-6 text-sm text-slate-400">
-            Don't have an account?{" "}
+            {t('auth.login.noAccount')}{" "}
             <Button
-              onClick={() => RouteUtil.redirectToRegister()}
+              onClick={redirectToRegisterPage}
               variant="link"
-              className="ml-1.5 text-purple-400 hover:text-purple-300">
-              Sign up
+              className="ml-1.5 text-purple-400 hover:text-purple-300 cursor-pointer"
+            >
+              {t('auth.login.form.btnRegister')}
             </Button>
           </CardFooter>
         </Card>

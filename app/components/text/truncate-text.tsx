@@ -1,3 +1,4 @@
+"use client";
 import { IconButton } from "@/app/components/button";
 import { CheckIcon, CopyIcon } from "@/app/components/icons";
 import * as Toast from "@/app/components/toast";

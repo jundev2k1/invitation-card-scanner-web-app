@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/app/components/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
