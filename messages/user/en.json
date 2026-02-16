@@ -1,5 +1,9 @@
 {
-  "Home": {
-    "title": "Welcome"
+  "enum": {
+    "gender": {
+      "MALE": "Male",
+      "FEMALE": "Female",
+      "OTHER": "Other"
+    }
   }
 }

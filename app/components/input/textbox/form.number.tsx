@@ -1,15 +1,15 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
 import { useFormContext } from "react-hook-form";
 
 interface FormNumberProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
+  isRequired?: boolean;
 }
 
-export function FormNumber({ name, label, ...props }: FormNumberProps) {
+export function FormNumber({ name, label, isRequired, ...props }: FormNumberProps) {
   const { register, formState: { errors } } = useFormContext();
   const error = errors[name]?.message as string;
 
@@ -19,7 +19,8 @@ export function FormNumber({ name, label, ...props }: FormNumberProps) {
       <Input
         type="number"
         {...register(name, { valueAsNumber: true })}
-        className={cn(error && "border-destructive")}
+        className={error ? "border-destructive text-destructive" : "text-slate-300"}
+        required={isRequired}
         {...props}
       />
       {error && <div className="text-xs text-destructive font-medium">{error}</div>}

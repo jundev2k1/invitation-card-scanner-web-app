@@ -1,5 +1,9 @@
 {
-  "Home": {
-    "title": "Chào mừng"
+  "enum": {
+    "gender": {
+      "MALE": "Male",
+      "FEMALE": "Female",
+      "OTHER": "Other"
+    }
   }
 }

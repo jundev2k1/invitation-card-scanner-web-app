@@ -1,5 +1,6 @@
 "use client";
-import { EyeIcon, EyeOffIcon, LoaderIcon } from "@/app/components/icons";
+import { FormPassword, FormRadioGroup, FormTextArea, FormTextBox } from "@/app/components";
+import { LoaderIcon } from "@/app/components/icons";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,32 +10,27 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { RegisterRequest } from "@/services/auth/auth.type";
 import { Sex } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { registerSchema } from "./register.schema";
+import { useTranslations } from "next-intl";
+import { FormProvider } from "react-hook-form";
 import { useRegisterPage } from "./useRegisterPage";
 
 export default function RegisterPage() {
   const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting }
-  } = useForm<RegisterRequest>({
-    resolver: zodResolver(registerSchema)
-  });
-  const {
+    form,
+    isSubmitting,
     registerButtonRef,
-    showPassword,
-    setShowPassword,
     onSubmit,
-  } = useRegisterPage({ isSubmitting });
+    redirectToLoginPage
+  } = useRegisterPage();
+  const t = useTranslations();
+
+  const sexOptions = [
+    { value: Sex.MALE, label: t("user.enum.gender.MALE") },
+    { value: Sex.FEMALE, label: t("user.enum.gender.FEMALE") },
+    { value: Sex.OTHER, label: t("user.enum.gender.OTHER") },
+  ];
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-linear-to-br from-gray-950 via-indigo-950 to-purple-950">
@@ -51,182 +47,122 @@ export default function RegisterPage() {
               <span className="text-3xl font-bold tracking-tight">NT</span>
             </div>
             <CardTitle className="text-3xl font-bold tracking-tight text-white">
-              Create Account
+              {t('auth.register.title')}
             </CardTitle>
             <CardDescription className="text-slate-400">
-              Join us today! Fill in your details to get started.
+              {t('auth.register.desc')}
             </CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-6">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                {/* Username - required */}
-                <div className="space-y-2">
+            <FormProvider {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                  {/* Username - required */}
                   <div className="space-y-2">
-                    <Label htmlFor="username" className="text-slate-200">
-                      Username <span className="text-red-400">*</span>
-                    </Label>
-                    <Input
-                      id="username"
-                      type="text"
+                    <FormTextBox
+                      name="username"
+                      label={t('auth.register.form.lbUsername')}
+                      className="border-slate-700 bg-slate-950 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all"
                       placeholder="user01"
-                      className="border-slate-700 bg-slate-950 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all"
-                      autoFocus
                       autoComplete="username"
-                      required
-                      {...register("username")}
+                      autoFocus
+                      isRequired
                     />
                   </div>
-                  {errors.username && <span className="text-xs text-red-400">{errors.username.message}</span>}
-                </div>
 
-                {/* Email - required */}
-                <div className="space-y-2">
+                  {/* Email - required */}
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-slate-200">
-                      Email <span className="text-red-400">*</span>
-                    </Label>
-                    <Input
-                      id="email"
-                      type="email"
+                    <FormTextBox
+                      name="email"
+                      label={t('auth.register.form.lbEmail')}
+                      className="border-slate-700 bg-slate-950 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all"
                       placeholder="user01@example.com"
-                      className="border-slate-700 bg-slate-950 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all"
                       autoComplete="email"
-                      required
-                      {...register("email")}
+                      isRequired
                     />
                   </div>
-                  {errors.email && <span className="text-xs text-red-400">{errors.email.message}</span>}
-                </div>
 
-                {/* Password */}
-                <div className="space-y-2 md:col-span-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="password" className="text-slate-200">
-                      Password <span className="text-red-400">*</span>
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="••••••••"
-                        className="border-slate-700 bg-slate-950 pr-10 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all"
-                        autoComplete="new-password"
-                        required
-                        {...register("password")}
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute right-0 top-0 h-full px-3 text-slate-400 hover:text-slate-200 hover:bg-transparent"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? <EyeOffIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
-                      </Button>
-                    </div>
+                  {/* Password */}
+                  <div className="space-y-2 md:col-span-2">
+                    <FormPassword
+                      name="password"
+                      label={t('auth.register.form.lbPassword')}
+                      className="border-slate-700 bg-slate-950 pr-10 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all"
+                      placeholder="••••••••"
+                      autoComplete="new-password"
+                      isRequired
+                    />
                   </div>
-                  {errors.password && <span className="text-xs text-red-400">{errors.password.message}</span>}
-                </div>
 
-                {/* Nickname */}
-                <div className="space-y-2">
+                  {/* Nickname */}
                   <div className="space-y-2">
-                    <Label htmlFor="nickname" className="text-slate-200">
-                      Nickname
-                    </Label>
-                    <Input
-                      id="nickname"
-                      type="text"
+                    <FormTextBox
+                      name="nickname"
+                      label={t('auth.register.form.lbNickname')}
+                      className="border-slate-700 bg-slate-950 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all"
                       placeholder="User 01"
-                      className="border-slate-700 bg-slate-950 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all"
-                      autoComplete="name"
-                      {...register("nickname")}
+                      autoComplete="nickname"
                     />
                   </div>
-                  {errors.nickname && <span className="text-xs text-red-400">{errors.nickname.message}</span>}
-                </div>
 
-                {/* Phone Number */}
-                <div className="space-y-2">
+                  {/* Phone Number */}
                   <div className="space-y-2">
-                    <Label htmlFor="phoneNumber" className="text-slate-200">
-                      Phone Number
-                    </Label>
-                    <Input
-                      id="phoneNumber"
-                      type="tel"
-                      placeholder="0123456789"
+                    <FormTextBox
+                      name="phoneNumber"
+                      label={t('auth.register.form.lbPhoneNumber')}
                       className="border-slate-700 bg-slate-950 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all"
-                      autoComplete="tel"
-                      {...register("phoneNumber")}
+                      autoComplete="phoneNumber"
+                      placeholder="0969456789"
                     />
                   </div>
-                  {errors.phoneNumber && <span className="text-xs text-red-400">{errors.phoneNumber.message}</span>}
-                </div>
 
-                {/* Sex - Radio Group */}
-                <div className="space-y-2 md:col-span-2">
-                  <div className="space-y-2">
-                    <Label className="text-slate-200">Gender</Label>
-                    <RadioGroup
+                  {/* Sex - Radio Group */}
+                  <div className="space-y-2 md:col-span-2">
+                    <FormRadioGroup
+                      name="sex"
+                      label={t('auth.register.form.lbGender')}
+                      options={sexOptions}
                       className="flex gap-3"
-                      defaultValue={Sex.MALE}
-                      {...register("sex")}
-                    >
-                      {Object.entries(Sex).map(([key, value]) => (
-                        <div key={key} className="flex items-center gap-1">
-                          <RadioGroupItem
-                            id={`sex-${value}`}
-                            value={value}
-                            className="border-slate-600 text-purple-500 focus:ring-purple-500 p-1!"
-                          />
-                          <Label htmlFor={`sex-${value}`} className="text-slate-200 cursor-pointer">{key}</Label>
-                        </div>
-                      ))}
-                    </RadioGroup>
-                  </div>
-                  {errors.sex && <span className="text-xs text-red-400">{errors.sex.message}</span>}
-                </div>
-
-                {/* Bio */}
-                <div className="space-y-2 md:col-span-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="bio" className="text-slate-200">
-                      Bio
-                    </Label>
-                    <Textarea
-                      id="bio"
-                      placeholder="Example bio."
-                      className="min-h-20 border-slate-700 bg-slate-950 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all resize-none"
-                      maxLength={280}
-                      {...register("bio")}
                     />
                   </div>
-                  {errors.bio && <span className="text-xs text-red-400">{errors.bio.message}</span>}
-                </div>
-              </div>
 
-              <Button
-                type="submit"
-                ref={registerButtonRef}
-                disabled={isSubmitting}
-                className={cn(
-                  "w-full bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-lg shadow-purple-500/30 transition-all mt-2",
-                  isSubmitting && "opacity-70 cursor-not-allowed"
-                )}
-              >
-                {isSubmitting && <LoaderIcon className="mr-2 h-5 w-5 animate-spin" />}
-                {isSubmitting ? "Creating account..." : "Sign Up"}
-              </Button>
-            </form>
+                  {/* Bio */}
+                  <div className="space-y-2 md:col-span-2">
+                    <FormTextArea
+                      name="bio"
+                      label={t('auth.register.form.lbBio')}
+                      className="min-h-20 border-slate-700 bg-slate-950 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 focus:ring-offset-2 focus:ring-offset-slate-950 transition-all resize-none"
+                      placeholder="Example bio."
+                      maxLength={4000}
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  ref={registerButtonRef}
+                  disabled={isSubmitting}
+                  className={cn(
+                    "w-full bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-lg shadow-purple-500/30 transition-all mt-2 cursor-pointer",
+                    isSubmitting && "opacity-70 cursor-not-allowed"
+                  )}
+                >
+                  {isSubmitting && <LoaderIcon className="mr-2 h-5 w-5 animate-spin" />}
+                  {isSubmitting ? t('auth.register.form.btnSignUpLoading') : t('auth.register.form.btnSignUp')}
+                </Button>
+              </form>
+            </FormProvider>
           </CardContent>
 
           <CardFooter className="flex justify-center border-t border-slate-800 pt-6 text-sm text-slate-400">
-            Already have an account?{" "}
-            <Button variant="link" className="ml-1.5 text-purple-400 hover:text-purple-300" asChild>
-              <a href="/login">Sign in</a>
+            {t('auth.register.footer.haveAccount')}
+            <Button
+              variant="link"
+              className="ml-1.5 text-purple-400 hover:text-purple-300 cursor-pointer"
+              onClick={redirectToLoginPage}
+            >
+              {t('auth.register.footer.signIn')}
             </Button>
           </CardFooter>
         </Card>

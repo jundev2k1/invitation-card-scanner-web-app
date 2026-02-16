@@ -11,5 +11,32 @@
       "btnRegister": "Sign up",
       "btnForgotPassword": "Forgot password?"
     }
+  },
+  "register": {
+    "title": "Create Account",
+    "desc": "Join us today! Fill in your details to get started.",
+    "form": {
+      "lbUsername": "Username",
+      "lbEmail": "Email",
+      "lbPassword": "Password",
+      "lbNickname": "Nickname",
+      "lbPhoneNumber": "Phone Number",
+      "lbGender": "Gender",
+      "lbBio": "Bio",
+      "btnSignUp": "Sign Up",
+      "btnSignUpLoading": "Creating account..."
+    },
+    "footer": {
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "placeholders": {
+      "username": "user01",
+      "email": "user01@example.com",
+      "password": "••••••••",
+      "nickname": "User 01",
+      "phoneNumber": "0123456789",
+      "bio": "Example bio."
+    }
   }
 }

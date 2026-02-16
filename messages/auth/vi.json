@@ -11,5 +11,32 @@
       "btnRegister": "Đăng ký",
       "btnForgotPassword": "Quên mật khâu?"
     }
+  },
+  "register": {
+    "title": "Tạo tài khoản",
+    "desc": "Tham gia cùng chúng tôi ngay hôm nay! Điền thông tin để bắt đầu.",
+    "form": {
+      "lbUsername": "Tên đăng nhập",
+      "lbEmail": "Email",
+      "lbPassword": "Mật khẩu",
+      "lbNickname": "Biệt danh",
+      "lbPhoneNumber": "Số điện thoại",
+      "lbGender": "Giới tính",
+      "lbBio": "Tiểu sử",
+      "btnSignUp": "Đăng ký",
+      "btnSignUpLoading": "Đang tạo tài khoản..."
+    },
+    "footer": {
+      "haveAccount": "Đã có tài khoản?",
+      "signIn": "Đăng nhập"
+    },
+    "placeholders": {
+      "username": "user01",
+      "email": "user01@example.com",
+      "password": "••••••••",
+      "nickname": "Người dùng 01",
+      "phoneNumber": "0123456789",
+      "bio": "Ví dụ tiểu sử."
+    }
   }
 }

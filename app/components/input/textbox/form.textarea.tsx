@@ -8,17 +8,19 @@ interface FormTextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaEle
   name: string;
   label?: string;
   containerClassName?: string;
+  isRequired?: boolean;
 }
 
-export function FormTextArea({ name, label, containerClassName, className, ...props }: FormTextAreaProps) {
+export function FormTextArea({ name, label, containerClassName, className, isRequired, ...props }: FormTextAreaProps) {
   const { register, formState: { errors } } = useFormContext();
   const error = errors[name]?.message as string;
 
   return (
     <div className={cn("space-y-1.5", containerClassName)}>
       {label && (
-        <Label htmlFor={name} className={error ? "text-destructive" : ""}>
+        <Label htmlFor={name} className={error ? "text-destructive" : "text-slate-300"}>
           {label}
+          {isRequired && <span className="text-red-400">*</span>}
         </Label>
       )}
       <Textarea
@@ -29,6 +31,7 @@ export function FormTextArea({ name, label, containerClassName, className, ...pr
           error ? "border-destructive focus-visible:ring-destructive" : "", 
           className
         )}
+        required={isRequired}
         {...props}
       />
       {error && (
