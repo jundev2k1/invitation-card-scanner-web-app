@@ -3,7 +3,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@/app/components/icons";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/store";
 import Link from "next/link";
-import { SIDEBAR_GROUPS } from "./sidebar.hook";
+import { SIDEBAR_GROUPS } from "./useSidebar";
 
 export const Sidebar = () => {
   const { isCollapsed, toggleSidebar } = useSidebarStore();

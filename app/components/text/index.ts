@@ -1,1 +1,2 @@
-export * from "./truncate-text";
+export * from "./TruncateText";
+

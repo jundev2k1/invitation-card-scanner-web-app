@@ -1,1 +1,2 @@
-export { default as HeaderPage } from "./header";
+export { default as HeaderPage } from "./Header";
+

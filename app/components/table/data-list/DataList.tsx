@@ -4,10 +4,10 @@ import { SearchResult } from "@/types/search-result";
 import { ReactNode } from "react";
 import {
   Table
-} from "../default.table";
-import { BodyDataList } from "./elements/body.data-list.table";
-import { FooterDataList } from "./elements/footer.data-list.table";
-import { HeaderDataList } from "./elements/header.data-list.table";
+} from "../DefaultTable";
+import { BodyDataList } from "./elements/BodyDataList";
+import { FooterDataList } from "./elements/FooterDataList";
+import { HeaderDataList } from "./elements/HeaderDataList";
 
 export interface Column<T> {
   key: string;

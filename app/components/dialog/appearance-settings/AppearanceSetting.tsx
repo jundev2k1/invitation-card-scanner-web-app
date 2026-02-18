@@ -12,7 +12,7 @@ import { Label } from "@/app/components/label";
 import { Select } from "@/app/components/select";
 import { cn } from "@/lib/utils";
 import { Language, ThemeColor, ThemeMode } from "@/types";
-import { ThemeColorStyles, useAppearanceSettings } from "./appearance-settings.hook";
+import { ThemeColorStyles, useAppearanceSettings } from "./useAppearance-settings";
 
 type AppearanceSettingsProps = {
   open: boolean;

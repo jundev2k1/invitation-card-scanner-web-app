@@ -1,4 +1,3 @@
-
 "use client";
 import { useAppStore } from "@/store/useAppStore";
 import { ThemeColor, ThemeMode } from "@/types";

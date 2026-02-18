@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/app/components";
 import { LogOutIcon, SettingsIcon, UserIcon } from "@/app/components/icons";
-import { useProfileMenu } from "./profile-menu.hook";
+import { useProfileMenu } from "./useProfileMenu";
 
 export const ProfileMenu = () => {
   const {

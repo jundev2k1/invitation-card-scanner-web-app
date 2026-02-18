@@ -1,2 +1,3 @@
-export { FormCheckbox } from "./form-checkbox";
-export { FormCheckboxGroup } from "./form-checkbox-group";
+export { FormCheckbox } from "./FormCheckbox";
+export { FormCheckboxGroup } from "./FormCheckboxGroup";
+

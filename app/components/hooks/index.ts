@@ -1,1 +1,2 @@
-export * from "./filter.hook";
+export * from "./useFilter";
+

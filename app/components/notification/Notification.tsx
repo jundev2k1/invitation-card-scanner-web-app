@@ -10,9 +10,9 @@ import {
   DropdownMenuTrigger
 } from "../dropdown";
 import { BellIcon } from "../icons";
-import { NotificationItem } from "./item.notification";
+import { NotificationItem } from "./NotificationItem";
 
-export const ButtonNotification = () => {
+export const Notification = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

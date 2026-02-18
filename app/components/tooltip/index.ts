@@ -1,1 +1,2 @@
-export * from "./default.tooltip";
+export * from "./Tooltip";
+

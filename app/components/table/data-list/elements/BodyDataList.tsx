@@ -2,8 +2,8 @@ import { Skeleton } from "@/app/components/skeleton";
 import { cn } from "@/lib/utils";
 import { SearchResult } from "@/types/search-result";
 import React from "react";
-import { TableBody, TableCell, TableRow } from "../../default.table";
-import { Column } from "../data-list.table";
+import { TableBody, TableCell, TableRow } from "../../DefaultTable";
+import { Column } from "../DataList";
 
 interface BodyDataListProps<T> {
   columns: readonly Column<T>[];

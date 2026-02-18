@@ -7,4 +7,4 @@ export {
   DialogHeader, DialogOverlay,
   DialogPortal, DialogTitle, DialogTrigger
 } from "@/components/ui/dialog";
-export { AppearanceSettings } from "./appearance-settings";
+export { AppearanceSettings } from "./AppearanceSetting";

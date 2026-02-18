@@ -1,1 +1,2 @@
-export * from "./data-list.table";
+export * from "./DataList";
+

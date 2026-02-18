@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/store";
 import { MenuIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { ButtonNotification } from "../../notification";
+import { Notification } from "../../notification";
 import { ProfileMenu } from "../../profiles";
 import { ThemeToggleButton } from "../../theme";
 
@@ -26,14 +26,14 @@ export default function PageHeader() {
           aria-label="Toggle sidebar" />
 
         <h1 className="text-lg md:text-xl font-semibold tracking-tight">
-          {t(currentPage) || "Dashboard"}
+          {currentPage ? t(currentPage) : "Dashboard"}
         </h1>
       </div>
 
       {/* Right: Actions */}
       <div className="flex items-center gap-3 md:gap-4">
         <ThemeToggleButton />
-        <ButtonNotification />
+        <Notification />
         <ProfileMenu />
       </div>
     </header>

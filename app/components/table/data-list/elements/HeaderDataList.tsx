@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import React from "react";
-import { TableHead, TableHeader, TableRow } from "../../default.table";
-import { Column } from "../data-list.table";
+import { TableHead, TableHeader, TableRow } from "../../DefaultTable";
+import { Column } from "../DataList";
 
 type HeaderDataListProps<T> = {
   columns: readonly Column<T>[];
