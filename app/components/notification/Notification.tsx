@@ -1,5 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Check, UserPlus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { IconButton } from "../button";
 import {
   DropdownMenu,
@@ -13,6 +14,7 @@ import { BellIcon } from "../icons";
 import { NotificationItem } from "./NotificationItem";
 
 export const Notification = () => {
+  const t = useTranslations();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,7 +23,7 @@ export const Notification = () => {
           icon={
             <>
               <BellIcon />
-              <span className="absolute top-0.5 right-0.5 h-4 w-4 rounded-full bg-destructive text-[10px] font-medium text-white flex items-center justify-center border-2 border-background">
+              <span className="absolute top-0.5 right-0.5 h-4 w-4 rounded-full bg-destructive text-[10px] font-medium text-white flex items-center justify-center border-2 border-background select-none">
                 2
               </span>
             </>
@@ -32,9 +34,9 @@ export const Notification = () => {
 
       <DropdownMenuContent align="end" className="w-80">
         <DropdownMenuLabel className="flex justify-between items-center px-4 py-3">
-          <span>Notification</span>
+          <span>{t('common.notification.title')}</span>
           <span className="text-xs font-normal text-muted-foreground cursor-pointer hover:underline">
-            Mark all as read
+            {t('common.notification.markAllAsRead')}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -57,7 +59,7 @@ export const Notification = () => {
 
         <DropdownMenuSeparator />
         <DropdownMenuItem className="w-full justify-center text-primary font-medium cursor-pointer p-3">
-          View all
+          {t('common.notification.viewAll')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

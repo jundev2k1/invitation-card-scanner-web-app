@@ -4,6 +4,11 @@
     "settings": "Cài đặt chung",
     "logout": "Đăng xuất"
   },
+  "notification": {
+    "title": "Thông báo",
+    "markAllAsRead": "Đánh dấu tất cả đã đọc",
+    "viewAll": "Xem tất cả"
+  },
   "dataList": {
     "footer": {
       "tooltipFirstPage": "Trang đầu",

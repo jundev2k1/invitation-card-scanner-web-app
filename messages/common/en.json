@@ -3,6 +3,11 @@
     "profile": "Profile",
     "settings": "Settings"
   },
+  "notification": {
+    "title": "Notifications",
+    "markAllAsRead": "Mark all as read",
+    "viewAll": "View all"
+  },
   "dataList": {
     "footer": {
       "tooltipFirstPage": "First Page",
