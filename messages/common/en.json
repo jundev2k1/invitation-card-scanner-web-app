@@ -1,4 +1,26 @@
 {
+  "sidebar": {
+    "dashboard": {
+      "title": "Dashboard",
+      "items": {
+        "dashboard": "Dashboard"
+      }
+    },
+    "users": {
+      "title": "Users",
+      "items": {
+        "userList": "User List"
+      }
+    },
+    "events": {
+      "title": "Events",
+      "items": {
+        "categoryList": "Category List",
+        "eventList": "Event List",
+        "cardList": "Invitation Card List"
+      }
+    }
+  },
   "profileMenu": {
     "profile": "Profile",
     "settings": "Settings"

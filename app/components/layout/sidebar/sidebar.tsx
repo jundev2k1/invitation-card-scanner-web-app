@@ -2,10 +2,12 @@ import { IconButton } from "@/app/components/button";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/app/components/icons";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/store";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { SIDEBAR_GROUPS } from "./useSidebar";
 
 export const Sidebar = () => {
+  const t = useTranslations();
   const { isCollapsed, toggleSidebar } = useSidebarStore();
   return (
     <aside
@@ -31,7 +33,7 @@ export const Sidebar = () => {
             isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
           )}
         >
-          Admin Panel
+          {process.env.NEXT_PUBLIC_APP_NAME || 'Admin Panel'}
         </div>
 
         <IconButton
@@ -46,7 +48,7 @@ export const Sidebar = () => {
       <nav className="flex-1 overflow-y-auto py-4">
         <ul className="space-y-6 px-3">
           {SIDEBAR_GROUPS.map((group, groupIndex) => (
-            <li key={group.title}>
+            <li key={groupIndex}>
               {/* Group Title - hidden when collapsed */}
               <div
                 className={cn(
@@ -58,7 +60,7 @@ export const Sidebar = () => {
                     : "opacity-100 max-h-10 mb-2" // Khi giãn: hiện màu, cho phép hiển thị chiều cao
                 )}
               >
-                {group.title}
+                {t(group.title)}
               </div>
 
               <ul className="space-y-1">
@@ -79,7 +81,7 @@ export const Sidebar = () => {
                         "transition-all duration-300 ease-in-out whitespace-nowrap overflow-hidden",
                         isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
                       )}>
-                        {item.title}
+                        {t(item.title)}
                       </span>
                     </Link>
                   </li>

@@ -1,4 +1,26 @@
 {
+  "sidebar": {
+    "dashboard": {
+      "title": "Bảng điều khiển",
+      "items": {
+        "dashboard": "Thống kê"
+      }
+    },
+    "users": {
+      "title": "Người dùng",
+      "items": {
+        "userList": "Danh sách người dùng"
+      }
+    },
+    "events": {
+      "title": "Sự kiện",
+      "items": {
+        "categoryList": "Danh mục",
+        "eventList": "Danh sách sự kiện",
+        "cardList": "Danh sách thiệp mời"
+      }
+    }
+  },
   "profileMenu": {
     "profile": "Hồ sơ của tôi",
     "settings": "Cài đặt chung",

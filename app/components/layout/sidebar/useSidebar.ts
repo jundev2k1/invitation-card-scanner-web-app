@@ -19,20 +19,20 @@ export interface SidebarGroupInfo {
 
 export const SIDEBAR_GROUPS: SidebarGroupInfo[] = [
   {
-    title: "Dashboard", items: [
-      { title: "Dashboard", path: "/dashboard", icon: LayoutDashboardIcon },
+    title: "common.sidebar.dashboard.title", items: [
+      { title: "common.sidebar.dashboard.items.dashboard", path: "/dashboard", icon: LayoutDashboardIcon },
     ]
   },
   {
-    title: "Users", items: [
-      { title: "User List", path: "/users", icon: UsersIcon },
+    title: "common.sidebar.users.title", items: [
+      { title: "common.sidebar.users.items.userList", path: "/users", icon: UsersIcon },
     ]
   },
   {
-    title: "Event Management", items: [
-      { title: "Event Category", path: "/event-categories", icon: FolderOpenIcon, isDisabled: true },
-      { title: "Event List", path: "/events", icon: CalendarClockIcon },
-      { title: "Card List", path: "/invitation-cards", icon: ClipboardPenIcon },
+    title: "common.sidebar.events.title", items: [
+      { title: "common.sidebar.events.items.categoryList", path: "/event-categories", icon: FolderOpenIcon, isDisabled: true },
+      { title: "common.sidebar.events.items.eventList", path: "/events", icon: CalendarClockIcon },
+      { title: "common.sidebar.events.items.cardList", path: "/invitation-cards", icon: ClipboardPenIcon },
     ]
   }
 ];
