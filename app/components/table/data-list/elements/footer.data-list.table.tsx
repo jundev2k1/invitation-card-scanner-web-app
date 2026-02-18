@@ -1,5 +1,6 @@
 import { IconButton } from "@/app/components/button";
 import { Select } from "@/app/components/select";
+import { useTranslations } from "next-intl";
 import React from "react";
 import {
   ChevronLeftIcon,
@@ -35,18 +36,18 @@ export const FooterDataList = React.memo(({
   pageSize,
   onPageSizeChange,
 }: FooterDataListProps) => {
-
+  const t = useTranslations();
+  const showFrom = totalCount !== 0 ? ((page - 1) * pageSize + 1) : 0;
+  const showTo = (page - 1) * pageSize + count;
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-muted-foreground">
       <div>
-        Showing <span className="font-medium">{totalCount !== 0 ? ((page - 1) * pageSize + 1) : 0}</span> to{" "}
-        <span className="font-medium">{(page - 1) * pageSize + count}</span> of{" "}
-        <span className="font-medium">{totalCount}</span> results
+        {t('common.dataList.footer.showing', { start: showFrom, end: showTo, totalCount })}
       </div>
 
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <span className="whitespace-nowrap">Rows per page:</span>
+          <span className="whitespace-nowrap">{t('common.dataList.footer.rowPerPage')}</span>
           <Select
             className="w-20 h-8"
             value={String(pageSize)}
@@ -62,7 +63,7 @@ export const FooterDataList = React.memo(({
             icon={<ChevronsLeftIcon size={14} />}
             disabled={page === 1}
             onClick={() => onPageChange(1)}
-            tooltip="First page"
+            tooltip={t('common.dataList.footer.tooltipFirstPage')}
           />
           <IconButton
             variant="outline"
@@ -70,11 +71,11 @@ export const FooterDataList = React.memo(({
             icon={<ChevronLeftIcon size={14} />}
             disabled={page === 1}
             onClick={() => onPageChange(page - 1)}
-            tooltip="Previous page"
+            tooltip={t('common.dataList.footer.tooltipPrevPage')}
           />
 
           <span className="px-4 font-medium whitespace-nowrap min-w-25 text-center">
-            Page {page} of {totalPage}
+            {t('common.dataList.footer.pagination', { page, totalPage })}
           </span>
 
           <IconButton
@@ -83,7 +84,7 @@ export const FooterDataList = React.memo(({
             icon={<ChevronRightIcon size={14} />}
             disabled={page === totalPage}
             onClick={() => onPageChange(page + 1)}
-            tooltip="Next page"
+            tooltip={t('common.dataList.footer.tooltipNextPage')}
           />
           <IconButton
             variant="outline"
@@ -91,7 +92,7 @@ export const FooterDataList = React.memo(({
             icon={<ChevronsRightIcon size={14} />}
             disabled={page === totalPage}
             onClick={() => onPageChange(totalPage)}
-            tooltip="Last page"
+            tooltip={t('common.dataList.footer.tooltipLastPage')}
           />
         </div>
       </div>

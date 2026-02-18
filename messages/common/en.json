@@ -1,5 +1,16 @@
 {
-  "Home": {
-    "title": "Welcome"
+  "dataList": {
+    "footer": {
+      "tooltipFirstPage": "First Page",
+      "tooltipNextPage": "Next Page",
+      "tooltipPrevPage": "Previous Page",
+      "tooltipLastPage": "Last Page",
+      "rowPerPage": "Rows per page:",
+      "showing": "Showing {start} to {end} of {totalCount} results",
+      "pagination": "Page {page} of {totalPage} pages"
+    }
+  },
+  "datetime": {
+    "createdAt": "Created At"
   }
 }

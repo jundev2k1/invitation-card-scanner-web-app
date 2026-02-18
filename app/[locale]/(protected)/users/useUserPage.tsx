@@ -7,23 +7,26 @@ import { userService } from "@/services";
 import { useSidebarStore } from "@/store";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
 import { defaultSearchResult, SearchResult } from "@/types/search-result";
-import { useCallback, useEffect, useState } from "react";
+import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useTranslations } from "use-intl";
 
-export const breadcrumbs = [
-  { label: "Dashboard", href: RouteUtil.getDashboardRoute() },
-  { label: "Users" },
+const getBreadcrumbs = (t: any, locale: string) => [
+  { label: t('dashboard.title'), href: RouteUtil.getDashboardRoute(locale) },
+  { label: t('user.list.title') },
 ];
 
-export const columns: readonly Column<UserSearchItemDto>[] = Object.freeze([
+const getColumns = (t: any, redirectToDetail: (id: string) => void): Column<UserSearchItemDto>[] => [
   {
     key: "id",
-    label: "ID",
+    label: t('user.list.table.columns.id'),
     className: "w-20",
     render: (_, item) => <TruncatedText className="dark:text-muted-foreground" text={item.id} isUUID showCopy />
   },
   {
     key: "information",
-    label: "Information",
+    label: t('user.list.table.columns.information'),
     render: (_, item) => (
       <div className="flex items-center gap-2">
         <Avatar size="lg">
@@ -51,24 +54,27 @@ export const columns: readonly Column<UserSearchItemDto>[] = Object.freeze([
   },
   {
     key: "status",
-    label: "Status",
+    label: t('user.list.table.columns.status'),
     render: (_, item) => <UserStatusBadge status={item.status} />
   },
   {
     key: "action",
-    label: "Action",
+    label: t('user.list.table.columns.action'),
     render: (_, item) => (
       <Button
         className="cursor-pointer dark:text-muted-foreground"
         variant="outline"
-        onClick={() => RouteUtil.redirectToUserDetail(item.id)}>
+        onClick={() => redirectToDetail(item.id)}>
         <InfoIcon />
       </Button>
     )
   },
-]);
+];
 
 export const useUserPage = () => {
+  const locale = useLocale();
+  const router = useRouter();
+  const t = useTranslations();
   const { currentPage, setCurrentPage } = useSidebarStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { keyword, filter, setKeyword, onPageChange, onPageSizeChange } = useFilter()
@@ -76,8 +82,8 @@ export const useUserPage = () => {
   const [isRefresh, setIsRefresh] = useState<number>(1);
 
   useEffect(() => {
-    if (currentPage != "User Management") {
-      setCurrentPage("User Management");
+    if (currentPage != "user.list.title") {
+      setCurrentPage("user.list.title");
     }
 
     setIsLoading(true);
@@ -88,9 +94,15 @@ export const useUserPage = () => {
       });
   }, [filter, isRefresh]);
 
+  const redirectToDetail = useCallback((id: string) => router.push(RouteUtil.getUserDetailUrl(locale, id)), [locale]);
+
+  const breadcrumbs = useMemo(() => getBreadcrumbs(t, locale), [locale]);
+  const columns = useMemo(() => getColumns(t, redirectToDetail), [locale]);
   const onPageRefresh = useCallback(() => setIsRefresh(isRefresh + 1), [isRefresh]);
   return {
     currentPage,
+    breadcrumbs,
+    columns,
     isLoading,
     onPageRefresh,
     keyword,

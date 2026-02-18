@@ -1,5 +1,16 @@
 {
-  "Home": {
-    "title": "Chào mừng"
+  "dataList": {
+    "footer": {
+      "tooltipFirstPage": "Trang đầu",
+      "tooltipNextPage": "Trang sau",
+      "tooltipPrevPage": "Trang trước",
+      "tooltipLastPage": "Trang cuối",
+      "rowPerPage": "Số dòng trên trang:",
+      "showing": "Hiển thị từ {start} đến {end} trên {totalCount} kết quả",
+      "pagination": "Trang {page} trên {totalPage} trang"
+    }
+  },
+  "datetime": {
+    "createdAt": "Được tạo"
   }
 }

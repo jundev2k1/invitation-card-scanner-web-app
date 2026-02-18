@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../tooltip";
 
 interface BadgeButtonProps {
   count: number;
@@ -9,10 +10,12 @@ interface BadgeButtonProps {
   variant?: "default" | "outline" | "secondary" | "ghost" | "destructive";
   size?: "default" | "sm" | "lg" | "icon";
   className?: string;
+  tooltip?: string;
 }
 
-export const BadgeButton = ({ count, label, variant = "default", size = "default", className, onClick }: BadgeButtonProps) => {
-  return (
+export const BadgeButton = ({ count, label, variant = "default", size = "default", className, onClick, tooltip }: BadgeButtonProps) => {
+  const buttonNode = (
+
     <div className="relative inline-block">
       <Button
         variant={variant}
@@ -39,5 +42,17 @@ export const BadgeButton = ({ count, label, variant = "default", size = "default
         )}
       </Button>
     </div>
+  )
+  if (!tooltip) return buttonNode;
+
+  return (
+    <TooltipProvider delayDuration={300}>
+      <Tooltip>
+        <TooltipTrigger asChild>{buttonNode}</TooltipTrigger>
+        <TooltipContent side="top">
+          <p className="text-xs">{tooltip}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

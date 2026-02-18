@@ -5,5 +5,34 @@
       "FEMALE": "Female",
       "OTHER": "Other"
     }
+  },
+  "list": {
+    "title": "User List",
+    "desc": "View, edit, and manage all system users.",
+    "btnApproveList": "Review",
+    "filter": {
+      "search": {
+        "placeholder": "Search by username, email,..."
+      }
+    },
+    "table": {
+      "columns": {
+        "id": "ID",
+        "information": "Information",
+        "status": "Status",
+        "action": "Action"
+      },
+      "txtEmpty": "No data found"
+    }
+  },
+  "approveList": {
+    "title": "Approve List",
+    "filter": {
+      "search": {
+        "placeholder": "Search by username, email,..."
+      }
+    },
+    "txtEmpty": "No data found",
+    "btnApprove": "Approve"
   }
 }

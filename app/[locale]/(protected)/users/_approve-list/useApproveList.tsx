@@ -1,4 +1,6 @@
-import { useFilter } from "@/app/components";
+import { Button, IconButton, SmartDateTime, TruncatedText, useFilter } from "@/app/components";
+import { CheckCheckIcon, CheckIcon, EyeIcon } from "@/app/components/icons";
+import { RouteUtil } from "@/app/utils/route";
 import { userService } from "@/services";
 import {
   defaultSearchResult,
@@ -6,13 +8,73 @@ import {
   UserSearchItemDto,
   UserStatus
 } from "@/types";
-import { useCallback, useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+const getColumns = (t: any, handleApprove: (id: string) => void, redirectToUserDetail: (id: string) => void) => [
+  {
+    key: "id",
+    label: t('user.list.table.columns.id'),
+    className: "w-32 font-mono text-muted-foreground",
+    render: (_: any, item: UserSearchItemDto) =>
+      <TruncatedText className="dark:text-muted-foreground" text={item.id} isUUID showCopy />
+  },
+  {
+    key: "info",
+    label: t('user.list.table.columns.information'),
+    render: (_: any, item: UserSearchItemDto) => (
+      <div className="space-y-1">
+        <div className="font-medium">
+          {item.nickname || item.username}
+        </div>
+        <div className="text-sm text-muted-foreground">
+          {item.email}
+        </div>
+        <div className="text-xs text-muted-foreground flex gap-1 items-center">
+          {t('common.datetime.createdAt')} <SmartDateTime className="text-xs" date={item.createdAt} />
+        </div>
+      </div>
+    ),
+  },
+  {
+    key: "actions",
+    label: t('user.list.table.columns.action'),
+    className: "w-48 text-right",
+    render: (_: any, item: UserSearchItemDto) => {
+      const isApproved = item.status === UserStatus.ACTIVE;
+      return (
+        <div className="flex gap-2 justify-end">
+          <IconButton
+            icon={<EyeIcon />}
+            variant="outline"
+            onClick={() => redirectToUserDetail(item.id)}
+          />
+          <Button
+            variant={isApproved ? "outline" : "default"}
+            leftIcon={isApproved ? <CheckCheckIcon /> : <CheckIcon />}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleApprove(item.id);
+            }}
+            disabled={isApproved}
+          >
+            {t('user.approveList.btnApprove')}
+          </Button>
+        </div>
+      )
+    },
+  },
+];
 
 type ApproveListProps = {
   onPageRefresh?: () => void
 }
 
 export const useApproveList = ({ onPageRefresh }: ApproveListProps) => {
+  const locale = useLocale();
+  const router = useRouter();
+  const t = useTranslations();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRefresh, setIsRefresh] = useState<number>(0);
@@ -74,14 +136,17 @@ export const useApproveList = ({ onPageRefresh }: ApproveListProps) => {
     })
   }, [isRefresh]);
 
+  const redirectToDetail = useCallback((id: string) => router.push(RouteUtil.getUserDetailUrl(locale, id)), [locale]);
+  const columns = useMemo(() => getColumns(t, onApprove, redirectToDetail), [onApprove, redirectToDetail]);
+
   return {
+    columns,
     unApprovedCount,
     onRefresh,
     isOpen,
     setIsOpen,
     onClose,
     isLoading,
-    onApprove,
     data,
     filter,
     keyword,

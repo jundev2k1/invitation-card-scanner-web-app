@@ -1,9 +1,38 @@
 {
   "enum": {
     "gender": {
-      "MALE": "Male",
-      "FEMALE": "Female",
-      "OTHER": "Other"
+      "MALE": "Nam",
+      "FEMALE": "Nữ",
+      "OTHER": "Khác"
     }
+  },
+  "list": {
+    "title": "Danh sách người dùng",
+    "desc": "Xem, sửa và quản lý tài khoản người dung.",
+    "btnApproveList": "Dánh sách chưa phê duyệt",
+    "filter": {
+      "search": {
+        "placeholder": "Tìm kiếm theo tài khoản, email,..."
+      }
+    },
+    "table": {
+      "columns": {
+        "id": "ID",
+        "information": "Thông tin người dùng",
+        "status": "Trạng thái",
+        "action": "Hành động"
+      },
+      "txtEmpty": "Không có dữ liệu người dùng"
+    }
+  },
+  "approveList": {
+    "title": "Phê duyệt",
+    "filter": {
+      "search": {
+        "placeholder": "Tìm kiếm theo tài khoản, email,..."
+      }
+    },
+    "txtEmpty": "Không có dữ liệu người dùng chờ phê duyệt",
+    "btnApprove": "Phê duyệt"
   }
 }

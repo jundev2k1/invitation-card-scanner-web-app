@@ -2,11 +2,13 @@ import { IconButton } from "@/app/components/button";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/store";
 import { MenuIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { ButtonNotification } from "../../notification";
 import { ProfileMenu } from "../../profiles";
 import { ThemeToggleButton } from "../../theme";
 
 export default function PageHeader() {
+  const t = useTranslations();
   const { isCollapsed, toggleSidebar, currentPage } = useSidebarStore();
 
   return (
@@ -24,7 +26,7 @@ export default function PageHeader() {
           aria-label="Toggle sidebar" />
 
         <h1 className="text-lg md:text-xl font-semibold tracking-tight">
-          {currentPage || "Dashboard"}
+          {t(currentPage) || "Dashboard"}
         </h1>
       </div>
 

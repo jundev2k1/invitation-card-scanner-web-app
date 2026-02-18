@@ -1,11 +1,14 @@
 'use client';
 import { DataList, PageContent, TextBox } from "@/app/components";
+import { useTranslations } from "next-intl";
 import { ApproveList } from "./_approve-list/ApproveList";
-import { breadcrumbs, columns, useUserPage } from "./useUserPage";
+import { useUserPage } from "./useUserPage";
 
 export default function UserPage() {
   const {
     currentPage,
+    breadcrumbs,
+    columns,
     isLoading,
     onPageRefresh,
     keyword,
@@ -15,29 +18,30 @@ export default function UserPage() {
     onPageSizeChange,
     setKeyword
   } = useUserPage();
+  const t = useTranslations();
 
   return (
     <PageContent
-      title={currentPage}
-      description="View, edit, and manage all system users."
+      title={t(currentPage)}
+      description={t('user.list.desc')}
       breadcrumbs={breadcrumbs}
       filters={
         <TextBox
           value={keyword}
-          placeholder="Search with username or email..."
+          placeholder={t('user.list.filter.search.placeholder')}
           className="w-75"
           onChange={(e) => setKeyword(e.currentTarget.value)}
         />
       }
       actions={
-        <ApproveList onPageRefresh={onPageRefresh} />
+        <ApproveList tooltip={t('user.list.btnApproveList')} onPageRefresh={onPageRefresh} />
       }
     >
       <DataList
         data={data}
         columns={columns}
         isLoading={isLoading}
-        emptyMessage="No users found."
+        emptyMessage={t("user.list.table.txtEmpty")}
         page={filter.page}
         onPageChange={onPageChange}
         pageSize={filter.pageSize}
