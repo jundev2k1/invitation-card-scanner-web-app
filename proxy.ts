@@ -59,8 +59,16 @@ export function proxy(req: NextRequest) {
   const isPublicRoute = PUBLIC_ROUTES.some((route) =>
     cleanPath.startsWith(route)
   );
-
   const isAuthRoute = AUTH_ROUTES.includes(cleanPath);
+
+  if (cleanPath === "/" || cleanPath === "") {
+    if (token) {
+      return NextResponse.redirect(new URL(RouteUtil.getDashboardRoute(locale), req.url));
+    }
+    else {
+      return NextResponse.redirect(new URL(RouteUtil.getLoginRoute(locale), req.url));
+    }
+  }
 
   if (!isPublicRoute && !token) {
     return NextResponse.redirect(

@@ -1,4 +1,5 @@
-import { headers } from "next/headers";
+import { defaultLocale } from "@/i18n/request";
+import { CookieStore } from "@/lib/cookies";
 import { ThemeWrapper, Toast } from "./components";
 import "./globals.css";
 
@@ -12,9 +13,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headerList = await headers();
-  const locale = headerList.get('x-next-intl-locale') ?? 'en';
-    
+  const locale = CookieStore.language ?? defaultLocale;
   return (
     <html lang={locale} suppressHydrationWarning>
       <ThemeWrapper>
