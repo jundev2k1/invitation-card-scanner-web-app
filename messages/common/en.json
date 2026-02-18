@@ -1,4 +1,8 @@
 {
+  "profileMenu": {
+    "profile": "Profile",
+    "settings": "Settings"
+  },
   "dataList": {
     "footer": {
       "tooltipFirstPage": "First Page",

@@ -1,4 +1,9 @@
 {
+  "profileMenu": {
+    "profile": "Hồ sơ của tôi",
+    "settings": "Cài đặt chung",
+    "logout": "Đăng xuất"
+  },
   "dataList": {
     "footer": {
       "tooltipFirstPage": "Trang đầu",

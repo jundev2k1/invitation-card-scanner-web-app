@@ -1,3 +1,4 @@
+"use client";
 import {
   AppearanceSettings,
   Avatar,
@@ -11,9 +12,11 @@ import {
   DropdownMenuTrigger,
 } from "@/app/components";
 import { LogOutIcon, SettingsIcon, UserIcon } from "@/app/components/icons";
+import { useTranslations } from "next-intl";
 import { useProfileMenu } from "./useProfileMenu";
 
 export const ProfileMenu = () => {
+  const t = useTranslations();
   const {
     user,
     isOpenSetting,
@@ -39,16 +42,16 @@ export const ProfileMenu = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer">
           <UserIcon className="mr-2 h-4 w-4" />
-          Profile
+          {t('common.profileMenu.profile')}
         </DropdownMenuItem>
         <DropdownMenuItem className="cursor-pointer" onClick={() => setIsOpenSetting(true)}>
           <SettingsIcon className="mr-2 h-4 w-4" />
-          Settings
+          {t('common.profileMenu.settings')}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="text-red-600 cursor-pointer" onClick={handleLogout}>
           <LogOutIcon className="mr-2 h-4 w-4" />
-          Logout
+          {t('common.profileMenu.logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
