@@ -1,21 +1,5 @@
 import { Role } from "@/types";
 
-export const getUserRole = (role: Role): string => {
-  switch (role) {
-    case Role.ADMIN:
-      return "Admin";
-
-    case Role.ROOT:
-      return "Root";
-
-    case Role.STAFF:
-      return "Staff";
-
-    default:
-      return "Unknown";
-  }
-}
-
 export const getRoleColor = (role: Role): string => {
   const variants: Record<Role, string> = {
     [Role.ROOT]: "bg-violet-500 hover:bg-violet-600",

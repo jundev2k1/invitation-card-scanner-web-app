@@ -23,7 +23,8 @@
   },
   "profileMenu": {
     "profile": "Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logout": "Logout"
   },
   "notification": {
     "title": "Notifications",

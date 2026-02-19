@@ -4,6 +4,12 @@
       "MALE": "Nam",
       "FEMALE": "Nữ",
       "OTHER": "Khác"
+    },
+    "role": {
+      "ROOT": "Chủ sở hữu",
+      "ADMIN": "Quản trị viên",
+      "STAFF": "Nhân viên",
+      "UNKNOWN": "Chưa xác định"
     }
   },
   "list": {

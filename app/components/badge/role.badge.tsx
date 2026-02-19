@@ -7,12 +7,14 @@ import {
 import { roleMapper } from "@/app/utils/mappers";
 import { Badge } from "@/components/ui/badge";
 import { Role } from "@/types";
+import { useTranslations } from "next-intl";
 
 type RoleBadgeProps = {
   role: Role
 };
 
 export const RoleBadge = ({ role }: RoleBadgeProps) => {
+  const t = useTranslations();
   const icons = {
     [Role.ROOT]: CrownIcon,
     [Role.ADMIN]: ShieldUserIcon,
@@ -22,7 +24,7 @@ export const RoleBadge = ({ role }: RoleBadgeProps) => {
   return (
     <Badge className={roleMapper.getRoleColor(role)}>
       <Icon />
-      {roleMapper.getUserRole(role)}
+      {t(`user.enum.role.${role || "UNKNOWN"}`)}
     </Badge>
   )
 };
