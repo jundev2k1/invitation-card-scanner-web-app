@@ -26,6 +26,7 @@ export type { IconType } from "react-icons";
 export {
   LuCalendarClock as CalendarClockIcon,
   LuClipboardPen as ClipboardPenIcon,
-  LuFolderOpen as FolderOpenIcon
+  LuFolderOpen as FolderOpenIcon,
+  LuRotateCcw as RotateCcwIcon
 } from "react-icons/lu";
 

@@ -44,5 +44,8 @@
   },
   "datetime": {
     "createdAt": "Created At"
+  },
+  "button": {
+    "refresh": "Refresh"
   }
 }

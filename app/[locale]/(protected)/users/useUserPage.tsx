@@ -3,13 +3,13 @@ import { InfoIcon, MailIcon, PhoneIcon, UserIcon } from "@/app/components/icons"
 import { RouteUtil } from "@/app/utils/route";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { userService } from "@/services";
+import { useUserSearch } from "@/services/user/useUserService";
 import { useSidebarStore } from "@/store";
+import { defaultSearchResult } from "@/types";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
-import { defaultSearchResult, SearchResult } from "@/types/search-result";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useTranslations } from "use-intl";
 
 const getBreadcrumbs = (t: any, locale: string) => [
@@ -75,30 +75,23 @@ export const useUserPage = () => {
   const locale = useLocale();
   const router = useRouter();
   const t = useTranslations();
+
   const { currentPage, setCurrentPage } = useSidebarStore();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { keyword, filter, setKeyword, onPageChange, onPageSizeChange } = useFilter()
-  const [data, setData] = useState<SearchResult<UserSearchItemDto>>(defaultSearchResult);
-  const [isRefresh, setIsRefresh] = useState<number>(1);
+  const { keyword, filter, setKeyword, onPageChange, onPageSizeChange } = useFilter();
+  const { data, isLoading, refetch } = useUserSearch(keyword, [], filter.page, filter.pageSize);
 
   useEffect(() => {
-    if (currentPage != "user.list.title") {
-      setCurrentPage("user.list.title");
-    }
+    if (currentPage == "user.list.title") return;
 
-    setIsLoading(true);
-    userService.getUserList({ keyword: filter.keyword, page: filter.page, pageSize: filter.pageSize })
-      .then(res => {
-        setData(res.data!);
-        setIsLoading(false);
-      });
-  }, [filter, isRefresh]);
+    setCurrentPage("user.list.title");
+  }, [currentPage]);
 
   const redirectToDetail = useCallback((id: string) => router.push(RouteUtil.getUserDetailUrl(locale, id)), [locale]);
 
   const breadcrumbs = useMemo(() => getBreadcrumbs(t, locale), [locale]);
   const columns = useMemo(() => getColumns(t, redirectToDetail), [locale]);
-  const onPageRefresh = useCallback(() => setIsRefresh(isRefresh + 1), [isRefresh]);
+  const onPageRefresh = useCallback(refetch, []);
+
   return {
     currentPage,
     breadcrumbs,
@@ -106,7 +99,7 @@ export const useUserPage = () => {
     isLoading,
     onPageRefresh,
     keyword,
-    data,
+    data: data?.data ?? defaultSearchResult,
     filter,
     setKeyword,
     onPageChange,

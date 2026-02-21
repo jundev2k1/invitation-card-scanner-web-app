@@ -44,5 +44,8 @@
   },
   "datetime": {
     "createdAt": "Được tạo"
+  },
+  "button": {
+    "refresh": "Làm mới"
   }
 }

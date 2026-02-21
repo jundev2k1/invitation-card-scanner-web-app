@@ -1,5 +1,5 @@
 'use client';
-import { DataList, PageContent, TextBox } from "@/app/components";
+import { DataList, PageContent, RefreshButton, TextBox } from "@/app/components";
 import { useTranslations } from "next-intl";
 import { ApproveList } from "./_approve-list/ApproveList";
 import { useUserPage } from "./useUserPage";
@@ -22,7 +22,7 @@ export default function UserPage() {
 
   return (
     <PageContent
-      title={t(currentPage)}
+      title={currentPage ? t(currentPage) : 'User Management'}
       description={t('user.list.desc')}
       breadcrumbs={breadcrumbs}
       filters={
@@ -34,7 +34,10 @@ export default function UserPage() {
         />
       }
       actions={
-        <ApproveList tooltip={t('user.list.btnApproveList')} onPageRefresh={onPageRefresh} />
+        <>
+          <ApproveList tooltip={t('user.list.btnApproveList')} onPageRefresh={onPageRefresh} />
+          <RefreshButton onRefresh={onPageRefresh} />
+        </>
       }
     >
       <DataList
