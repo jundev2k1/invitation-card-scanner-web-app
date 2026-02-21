@@ -40,5 +40,9 @@
     },
     "txtEmpty": "No data found",
     "btnApprove": "Approve"
+  },
+  "detail": {
+    "title": "User Detail",
+    "desc": "View, edit, and manage system user."
   }
 }

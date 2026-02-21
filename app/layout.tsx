@@ -2,7 +2,6 @@ import { defaultLocale } from "@/i18n/request";
 import { CookieStore } from "@/lib/cookies";
 import { ThemeWrapper, Toast } from "./components";
 import "./globals.css";
-import Providers from "./providers";
 
 // export const metadata: Metadata = {
 //   title: "Admin Page",
@@ -17,12 +16,10 @@ export default async function RootLayout({
   const locale = CookieStore.language ?? defaultLocale;
   return (
     <html lang={locale} suppressHydrationWarning>
-      <Providers>
-        <ThemeWrapper>
-          {children}
-          <Toast.Toaster />
-        </ThemeWrapper>
-      </Providers>
+      <ThemeWrapper>
+        {children}
+        <Toast.Toaster />
+      </ThemeWrapper>
     </html>
   );
 }

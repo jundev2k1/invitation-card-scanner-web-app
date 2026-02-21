@@ -40,5 +40,9 @@
     },
     "txtEmpty": "Không có dữ liệu người dùng chờ phê duyệt",
     "btnApprove": "Phê duyệt"
+  },
+  "detail": {
+    "title": "Chi tiết người dùng",
+    "desc": "Xem, sửa và quản lý tài khoản người dùng."
   }
 }

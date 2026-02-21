@@ -3,7 +3,7 @@ import { InfoIcon, MailIcon, PhoneIcon, UserIcon } from "@/app/components/icons"
 import { RouteUtil } from "@/app/utils/route";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useUserSearch } from "@/services/user/useUserService";
+import { useGetUserSearch } from "@/services/user/useUserService";
 import { useSidebarStore } from "@/store";
 import { defaultSearchResult } from "@/types";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
@@ -78,7 +78,7 @@ export const useUserPage = () => {
 
   const { currentPage, setCurrentPage } = useSidebarStore();
   const { keyword, filter, setKeyword, onPageChange, onPageSizeChange } = useFilter();
-  const { data, isLoading, refetch } = useUserSearch(keyword, [], filter.page, filter.pageSize);
+  const { data, isLoading, refetch } = useGetUserSearch(keyword, [], filter.page, filter.pageSize);
 
   useEffect(() => {
     if (currentPage == "user.list.title") return;

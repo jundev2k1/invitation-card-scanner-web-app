@@ -1,8 +1,10 @@
-import { Toast } from "@/app/components";
-import { userService } from "@/services";
+import { RouteUtil } from "@/app/utils/route";
+import { useGetUserDetail } from "@/services";
 import { useSidebarStore } from "@/store";
-import { UserDetailDto } from "@/types";
-import { useEffect, useState } from "react";
+import { PageAction } from "@/types";
+import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect } from "react";
 
 export const breadcrumbs = [
   { label: "Dashboard", href: "/" },
@@ -10,36 +12,26 @@ export const breadcrumbs = [
 ];
 
 export const useUserDetail = (id: string) => {
+  const locale = useLocale();
+  const router = useRouter();
   const { currentPage, setCurrentPage } = useSidebarStore();
-  const [data, setData] = useState<UserDetailDto>();
-  const [isRefresh, setIsRefresh] = useState<number>(1);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { data, isLoading, refetch } = useGetUserDetail(id, 5);
 
   useEffect(() => {
-    if (currentPage == "User Management")
+    if (currentPage == "user.list.title")
       return;
 
-    setCurrentPage("User Management");
+    setCurrentPage("user.list.title");
   }, []);
 
-  useEffect(() => {
-    userService.getUserDetail(id)
-      .then(res => {
-        if (res.data == null) {
-          Toast.showError("User not found");
-          return;
-        }
+  const redirectToEdit = useCallback(() => router.push(RouteUtil.getUserDetailUrl(locale, id, PageAction.EDIT)), [locale]);
+  const redirectToDetail = useCallback(() => router.push(RouteUtil.getUserDetailUrl(locale, id, PageAction.VIEW)), [locale]);
 
-        setData(res.data!);
-        setIsLoading(false);
-      })
-      .catch(err => console.error(err));
-  }, [id, isRefresh]);
-
-  const onPageRefresh = () => setIsRefresh(isRefresh + 1);
   return {
     isLoading,
-    data,
-    onPageRefresh
+    data: data?.data ?? null,
+    onPageRefresh: refetch,
+    redirectToEdit,
+    redirectToDetail,
   };
 };

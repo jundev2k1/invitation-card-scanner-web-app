@@ -39,7 +39,7 @@ export function RefreshButton({ cooldown = 5, onRefresh }: RefreshButtonProps) {
       onClick={handleRefresh}
       disabled={isCooldownActive}
     >
-      {t("common.button.refresh")}
+      {t("common.actions.refresh")}
       {isCooldownActive && ` (${secondsLeft}s)`}
     </AppButton>
   );

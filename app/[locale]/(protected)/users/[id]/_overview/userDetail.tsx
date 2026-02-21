@@ -1,8 +1,8 @@
 "use client";
-import { Button, PageContent, SkeletonProfile } from "@/app/components";
-import { ClipboardPenIcon } from "@/app/components/icons";
-import { RouteUtil } from "@/app/utils/route";
+import { Button, PageContent, RefreshButton, SkeletonProfile } from "@/app/components";
+import { ClipboardPenIcon, InfoIcon } from "@/app/components/icons";
 import { PageAction } from "@/types";
+import { useTranslations } from "next-intl";
 import { UserEditForm } from "../_edit/EditUserDetail";
 import { UserViewForm } from "../_view/ViewUserDetail";
 import { breadcrumbs, useUserDetail } from "./useUserDetail";
@@ -13,13 +13,20 @@ type UserDetailProps = {
 };
 
 export default function UserDetailLayout({ id, action }: UserDetailProps) {
-  const { data, onPageRefresh, isLoading } = useUserDetail(id);
+  const t = useTranslations();
+  const {
+    isLoading,
+    data,
+    onPageRefresh,
+    redirectToEdit,
+    redirectToDetail,
+  } = useUserDetail(id);
   if (isLoading) return <SkeletonProfile />;
 
   return (
     <PageContent
-      title="User Detail"
-      description="View, edit, and manage all system users."
+      title={t('user.detail.title')}
+      description={t('user.detail.desc')}
       breadcrumbs={[...breadcrumbs, { label: data!.nickName || data!.username || '' }]}
       actions={
         <>
@@ -28,11 +35,22 @@ export default function UserDetailLayout({ id, action }: UserDetailProps) {
               leftIcon={<ClipboardPenIcon />}
               className="dark:text-muted-foreground"
               variant="outline"
-              onClick={() => RouteUtil.redirectToUserDetail(id, PageAction.EDIT)}
+              onClick={redirectToEdit}
             >
-              Edit
+              {t('common.actions.edit')}
             </Button>
           )}
+          {action === PageAction.EDIT && (
+            <Button
+              leftIcon={<InfoIcon />}
+              className="dark:text-muted-foreground"
+              variant="outline"
+              onClick={redirectToDetail}
+            >
+              {t('common.actions.view')}
+            </Button>
+          )}
+          <RefreshButton onRefresh={onPageRefresh} />
         </>
       }
     >

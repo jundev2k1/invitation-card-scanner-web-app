@@ -1,5 +1,4 @@
 'use client';
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, RoleBadge, Separator, SexBadge, UserStatusBadge } from "@/app/components";
 import { CalendarClockIcon, MailIcon, PhoneIcon, UserIcon } from "@/app/components/icons";
 import { userMapper } from "@/app/utils/mappers";

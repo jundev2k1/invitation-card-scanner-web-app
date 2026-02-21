@@ -1,4 +1,11 @@
 {
+  "actions": {
+    "view": "Chi tiết",
+    "refresh": "Làm mới",
+    "add": "Thêm mới",
+    "edit": "Chỉnh Sửa",
+    "delete": "Xóa"
+  },
   "sidebar": {
     "dashboard": {
       "title": "Bảng điều khiển",
@@ -44,8 +51,5 @@
   },
   "datetime": {
     "createdAt": "Được tạo"
-  },
-  "button": {
-    "refresh": "Làm mới"
   }
 }

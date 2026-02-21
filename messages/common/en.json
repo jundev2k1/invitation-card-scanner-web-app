@@ -1,4 +1,11 @@
 {
+  "actions": {
+    "view": "View Detail",
+    "refresh": "Refresh",
+    "add": "Add New",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
   "sidebar": {
     "dashboard": {
       "title": "Dashboard",
@@ -44,8 +51,5 @@
   },
   "datetime": {
     "createdAt": "Created At"
-  },
-  "button": {
-    "refresh": "Refresh"
   }
 }

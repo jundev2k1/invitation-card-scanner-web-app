@@ -1,4 +1,5 @@
 "use client";
+import Providers from "@/app/providers";
 import { useAppStore } from "@/store/useAppStore";
 import { ThemeColor, ThemeMode } from "@/types";
 import { useEffect, useState } from "react";
@@ -16,7 +17,9 @@ export function ThemeWrapper({ children }: { children: React.ReactNode }) {
     : `${ThemeMode.LIGHT} ${ThemeColor.DEFAULT}`;
   return (
     <body className={themeClass}>
-      {children}
+      <Providers>
+        {children}
+      </Providers>
     </body>
   );
 }
