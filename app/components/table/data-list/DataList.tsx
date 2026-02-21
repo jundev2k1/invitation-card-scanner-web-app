@@ -14,6 +14,7 @@ export interface Column<T> {
   label: string;
   render?: (value: any, item: T) => ReactNode;
   className?: string;
+  align?: "left" | "right" | "center";
 }
 
 export interface DataListProps<T> {

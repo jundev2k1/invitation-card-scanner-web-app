@@ -75,7 +75,13 @@ function BodyDataListInner<T extends { id?: string | number }>({
 
             return (
               <TableCell key={col.key} className={cn("whitespace-nowrap", col.className)}>
-                <div className="flex items-center min-h-10">
+                <div className={
+                  cn("flex items-center min-h-10",
+                    col.align === "center" && "justify-center",
+                    col.align === "right" && "justify-end",
+                    col.align === "left" && "justify-start"
+                  )
+                }>
                   {col.render ? col.render(value, item) : String(value ?? "-")}
                 </div>
               </TableCell>

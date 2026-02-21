@@ -1,0 +1,38 @@
+{
+  "enum": {
+    "status": {
+      "DELETED": "Đã xóa",
+      "DRAFT": "Bản nháp",
+      "PUBLISHED": "Đã đăng",
+      "COMPLETED": "Hoàn thành",
+      "CANCELLED": "Đã hủy"
+    }
+  },
+  "list": {
+    "title": "Danh sách sự kiện",
+    "desc": "Xem, sửa và quản lý tất cả sự kiện.",
+    "filter": {
+      "search": {
+        "placeholder": "Tìm theo tiêu đề, tên địa điểm,..."
+      }
+    },
+    "table": {
+      "columns": {
+        "id": "ID",
+        "information": "Thông tin sự kiện",
+        "eventDate": "Thời gian sự kiện",
+        "status": "Trạng thái",
+        "action": "Hành động"
+      },
+      "content": {
+        "from": "Từ",
+        "to": "Đến"
+      },
+      "txtEmpty": "No data found"
+    }
+  },
+  "detail": {
+    "title": "Event Detail",
+    "desc": "View, edit, and manage event."
+  }
+}

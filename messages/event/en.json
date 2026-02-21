@@ -1,0 +1,38 @@
+{
+  "enum": {
+    "status": {
+      "DELETED": "Deleted",
+      "DRAFT": "Draft",
+      "PUBLISHED": "Published",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "list": {
+    "title": "Event List",
+    "desc": "View, edit, and manage all events.",
+    "filter": {
+      "search": {
+        "placeholder": "Search by title, location,..."
+      }
+    },
+    "table": {
+      "columns": {
+        "id": "ID",
+        "information": "Information",
+        "eventDate": "Event Date",
+        "status": "Status",
+        "action": "Action"
+      },
+      "content": {
+        "from": "From",
+        "to": "To"
+      },
+      "txtEmpty": "No data found"
+    }
+  },
+  "detail": {
+    "title": "Event Detail",
+    "desc": "View, edit, and manage event."
+  }
+}
