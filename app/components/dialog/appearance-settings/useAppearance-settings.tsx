@@ -1,6 +1,8 @@
+"use client";
 import { CookieStore } from "@/lib/cookies";
 import { useAppStore } from "@/store/useAppStore";
 import { Language, ThemeColor, ThemeMode } from "@/types";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const ThemeColorStyles = Object.freeze({
   [ThemeColor.DEFAULT]: "#6b7280",
@@ -14,6 +16,10 @@ export const ThemeColorStyles = Object.freeze({
 });
 
 export const useAppearanceSettings = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const {
     theme,
     setTheme,
@@ -36,7 +42,18 @@ export const useAppearanceSettings = () => {
   const updateLanguage = (lang: Language) => {
     setLanguage(lang);
     CookieStore.language = lang;
+
+    if (!pathname) return;
+
+    const segments = pathname.split("/");
+    segments[1] = lang;
+
+    const newPath = segments.join("/");
+    const currentParams = searchParams.toString();
+    const finalUrl = currentParams ? `${newPath}?${currentParams}` : newPath;
+    router.push(finalUrl);
   };
+
   return {
     language,
     setLanguage: updateLanguage,
