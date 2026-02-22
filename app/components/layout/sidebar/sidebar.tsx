@@ -12,7 +12,7 @@ export const Sidebar = () => {
   return (
     <aside
       className={cn(
-        "fixed inset-y-0 left-0 z-20 flex flex-col border-r transition-all duration-300 ease-in-out",
+        "fixed inset-y-0 left-0 z-20 flex flex-col border-r transition-all duration-300 ease-in-out h-screen",
         "bg-white dark:bg-gray-950",
         "border-gray-200 dark:border-gray-800",
         isCollapsed ? "w-16" : "w-64 lg:w-72",
@@ -22,7 +22,7 @@ export const Sidebar = () => {
       {/* Sidebar Header */}
       <div
         className={cn(
-          "flex h-16 items-center border-b px-4 transition-all duration-300",
+          "flex h-16 items-center grow shrink-0 border-b px-4 transition-all duration-300",
           "border-gray-200 dark:border-gray-800",
           isCollapsed ? "justify-center" : "justify-between"
         )}
@@ -45,7 +45,7 @@ export const Sidebar = () => {
       </div>
 
       {/* Navigation Groups */}
-      <nav className="flex-1 overflow-y-auto py-4">
+      <nav className="flex-1 grow overflow-y-auto py-4">
         <ul className="space-y-6 px-3">
           {SIDEBAR_GROUPS.map((group, groupIndex) => (
             <li key={groupIndex}>
@@ -95,7 +95,7 @@ export const Sidebar = () => {
       {/* Footer - simple version + copyright */}
       <div
         className={cn(
-          "border-t px-4 py-3 text-xs border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 overflow-hidden",
+          "border-t px-4 py-3 text-xs border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 overflow-hidden grow shrink-0",
           "transition-all duration-300"
         )}
       >
