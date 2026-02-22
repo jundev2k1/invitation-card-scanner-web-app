@@ -38,6 +38,8 @@
       "204": "A user with the given email already exists.",
       "205": "A user with the given username already exists."
     },
+    "createSuccess": "Create item successfully.",
+    "updateSuccess": "Update item successfully.",
     "deleteSuccess": "Delete item successfully.",
     "updateStatusSuccess": "Update status successfully.",
     "confirmDelete": "Are you sure you want to delete this item?"
@@ -47,7 +49,9 @@
     "refresh": "Refresh",
     "add": "Add New",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "save": "Save Changes",
+    "cancel": "Cancel"
   },
   "sidebar": {
     "dashboard": {
@@ -93,6 +97,7 @@
     }
   },
   "datetime": {
-    "createdAt": "Created At"
+    "createdAt": "Created At",
+    "placeholder": "Select Date"
   }
 }

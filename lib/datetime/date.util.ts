@@ -13,7 +13,8 @@ import {
   startOfDay,
   subDays
 } from 'date-fns';
-import { vi } from 'date-fns/locale';
+import { enUS, vi } from 'date-fns/locale';
+import { CookieStore } from '../cookies';
 
 export const addSecs = (date: Date, seconds: number) => addSeconds(date, seconds);
 export const addMins = (date: Date, minutes: number) => addMinutes(date, minutes);
@@ -23,7 +24,7 @@ export const addMths = (date: Date, months: number) => addMonths(date, months);
 export const addYrs = (date: Date, years: number) => addYears(date, years);
 
 export const formatDate = (date: Date, formatStr = 'dd/MM/yyyy') => {
-  return format(date, formatStr, { locale: vi });
+  return format(date, formatStr, { locale: CookieStore.language === 'vi' ? vi : enUS });
 };
 
 export const getRangeOfDay = (date: Date) => ({

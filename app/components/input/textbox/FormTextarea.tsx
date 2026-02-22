@@ -18,7 +18,7 @@ export function FormTextArea({ name, label, containerClassName, className, isReq
   return (
     <div className={cn("space-y-1.5", containerClassName)}>
       {label && (
-        <Label htmlFor={name} className={error ? "text-destructive" : "text-slate-300"}>
+        <Label htmlFor={name} className={error ? "text-destructive" : "text-slate-900 dark:text-muted-foreground"}>
           {label}
           {isRequired && <span className="text-red-400">*</span>}
         </Label>

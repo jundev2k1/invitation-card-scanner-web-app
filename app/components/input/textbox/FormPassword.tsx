@@ -22,7 +22,7 @@ export function FormPassword({ name, label, className, isRequired, ...props }: F
   return (
     <div className="space-y-1.5 w-full">
       {label && (
-        <Label className={error ? "text-destructive" : "text-slate-300"} htmlFor={name}>
+        <Label className={error ? "text-destructive" : "text-slate-900 dark:text-muted-foreground"} htmlFor={name}>
           {label}
           {isRequired && <span className="text-red-400">*</span>}
         </Label>

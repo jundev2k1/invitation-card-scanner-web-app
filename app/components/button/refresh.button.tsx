@@ -35,6 +35,7 @@ export function RefreshButton({ cooldown = 5, onRefresh }: RefreshButtonProps) {
   return (
     <AppButton
       leftIcon={<RotateCcwIcon className={isCooldownActive ? "animate-spin" : ""} />}
+      className="dark:text-muted-foreground"
       variant="outline"
       onClick={handleRefresh}
       disabled={isCooldownActive}

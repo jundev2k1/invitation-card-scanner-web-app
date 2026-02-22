@@ -11,7 +11,7 @@ export {
   LogOut as LogOutIcon,
   Mail as MailIcon, Menu as MenuIcon, Minus as MinusIcon, Moon as MoonIcon,
   Palette as PaletteIcon,
-  Phone as PhoneIcon, Plus as PlusIcon, Save as SaveIcon, Settings as SettingsIcon, ShieldCheck as ShieldCheckIcon,
+  Phone as PhoneIcon, PlusCircle as PlusCircleIcon, Plus as PlusIcon, Save as SaveIcon, Settings as SettingsIcon, ShieldCheck as ShieldCheckIcon,
   ShieldUser as ShieldUserIcon, Sun as SunIcon,
   Text as TextIcon, Trash2 as TrashIcon, UserCircle as UserCircleIcon, User as UserIcon, UserPlus as UserPlusIcon,
   Users as UsersIcon, X as XIcon

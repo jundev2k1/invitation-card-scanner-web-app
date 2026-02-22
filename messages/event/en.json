@@ -34,5 +34,19 @@
   "detail": {
     "title": "Event Detail",
     "desc": "View, edit, and manage event."
+  },
+  "insert": {
+    "title": "Create Event",
+    "fields": {
+      "category": "Category",
+      "title": "Title",
+      "description": "Description",
+      "startAt": "Start at",
+      "endAt": "End at",
+      "location": "Location name",
+      "address": "Address",
+      "mapUrl": "Map URL",
+      "status": "Status"
+    }
   }
 }

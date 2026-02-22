@@ -38,6 +38,8 @@
       "204": "Email đã tồn tại.",
       "205": "Tên đăng nhập đã tồn tại."
     },
+    "createSuccess": "Tạo mới dữ liệu thành công.",
+    "updateSuccess": "Cập nhật dữ liệu thành công.",
     "deleteSuccess": "Xóa thành công.",
     "updateStatusSuccess": "Cập nhật trạng thái thành công.",
     "confirmDelete": "Bạn có chắc muốn xóa dữ liệu này?"
@@ -47,7 +49,9 @@
     "refresh": "Làm mới",
     "add": "Thêm mới",
     "edit": "Chỉnh Sửa",
-    "delete": "Xóa"
+    "delete": "Xóa",
+    "save": "Lưu thay đổi",
+    "cancel": "Hủy bỏ"
   },
   "sidebar": {
     "dashboard": {
@@ -93,6 +97,7 @@
     }
   },
   "datetime": {
-    "createdAt": "Được tạo"
+    "createdAt": "Được tạo",
+    "placeholder": "Chọn thời gian"
   }
 }

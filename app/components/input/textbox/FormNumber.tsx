@@ -19,7 +19,7 @@ export function FormNumber({ name, label, isRequired, ...props }: FormNumberProp
       <Input
         type="number"
         {...register(name, { valueAsNumber: true })}
-        className={error ? "border-destructive text-destructive" : "text-slate-300"}
+        className={error ? "border-destructive text-destructive" : "text-slate-900 dark:text-muted-foreground"}
         required={isRequired}
         {...props}
       />

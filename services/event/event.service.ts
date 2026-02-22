@@ -11,7 +11,7 @@ export const eventService = {
     return baseQuery(api.get<EventDetailDto>(`/backoffice/events/${id}`));
   },
   createEvent: (req: CreateEventRequest) => {
-    return baseQuery(api.post('/backoffice/events'));
+    return baseQuery(api.post('/backoffice/events', req));
   },
   updateEvent: (id: string, data: UpdateEventRequest) => {
     return baseQuery(api.put(`/backoffice/events/${id}`, data));

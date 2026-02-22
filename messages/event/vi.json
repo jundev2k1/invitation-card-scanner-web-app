@@ -28,11 +28,25 @@
         "from": "Từ",
         "to": "Đến"
       },
-      "txtEmpty": "No data found"
+      "txtEmpty": "Không có sự kiện nào"
     }
   },
   "detail": {
-    "title": "Event Detail",
-    "desc": "View, edit, and manage event."
+    "title": "Chi tiết sự kiện",
+    "desc": "Xem, sửa và quản lý sự kiện."
+  },
+  "insert": {
+    "title": "Tạo mới sự kiện",
+    "fields": {
+      "category": "Loại sự kiện",
+      "title": "Tiêu đề",
+      "description": "Mô tả",
+      "startAt": "Bắt đầu lúc",
+      "endAt": "Kết thúc lúc",
+      "location": "Địa điểm",
+      "address": "Địa chỉ",
+      "mapUrl": "URL bản đồ",
+      "status": "Trạng thái"
+    }
   }
 }
