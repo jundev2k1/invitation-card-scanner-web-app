@@ -1,9 +1,13 @@
 import { Toast } from "@/app/components";
+import { RouteUtil } from "@/app/utils/route";
 import { phoneNumberRegex } from "@/lib/validation";
 import { userService } from "@/services";
 import { UpdateUserRequest } from "@/services/user/user.type";
-import { Sex, UserDetailDto } from "@/types";
+import { PageAction, Sex, UserDetailDto } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
@@ -28,6 +32,9 @@ export const sexOptions = [
 ];
 
 export const useUserEditForm = (userDetail: UserDetailDto, onPageRefresh: () => void) => {
+  const locale = useLocale();
+  const router = useRouter();
+
   const form = useForm<UpdateUserRequest>({
     resolver: zodResolver(userEditSchema),
     defaultValues: {
@@ -49,9 +56,14 @@ export const useUserEditForm = (userDetail: UserDetailDto, onPageRefresh: () => 
     }
   }
 
+  const redirectToDetail = useCallback(() => {
+    router.push(RouteUtil.getUserDetailUrl(locale, userDetail.id, PageAction.VIEW))
+  }, [locale]);
+
   return {
     form,
     userDetail,
     handleSubmit,
+    redirectToDetail,
   };
 }

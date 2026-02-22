@@ -2,7 +2,6 @@
 
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, FormRadioGroup, FormTextArea, FormTextBox, RoleBadge, Separator, UserStatusBadge } from "@/app/components";
 import { SaveIcon, XIcon } from "@/app/components/icons";
-import { RouteUtil } from "@/app/utils/route";
 import { UserDetailDto } from "@/types";
 import { FormProvider } from "react-hook-form";
 import { AvatarUpload } from "../_shared";
@@ -14,7 +13,7 @@ type UserEditFormProps = {
 };
 
 export const UserEditForm = ({ userDetail, onPageRefresh }: UserEditFormProps) => {
-  const { form, handleSubmit } = useUserEditForm(userDetail, onPageRefresh);
+  const { form, handleSubmit, redirectToDetail } = useUserEditForm(userDetail, onPageRefresh);
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
@@ -52,7 +51,7 @@ export const UserEditForm = ({ userDetail, onPageRefresh }: UserEditFormProps) =
                 type="button"
                 leftIcon={<XIcon />}
                 variant="outline"
-                onClick={() => RouteUtil.redirectToUserDetail(userDetail.id)}
+                onClick={redirectToDetail}
               >
                 Cancel
               </Button>
