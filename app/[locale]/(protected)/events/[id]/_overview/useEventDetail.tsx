@@ -1,3 +1,4 @@
+import { Toast } from "@/app/components";
 import { RouteUtil } from "@/app/utils/route";
 import { useDeleteEvent, useGetEventDetail } from "@/services";
 import { useSidebarStore } from "@/store";
@@ -36,9 +37,10 @@ export const useEventDetail = (id: string) => {
   const redirectToEdit = useCallback(() => router.push(RouteUtil.getEventDetailUrl(locale, id, PageAction.EDIT)), [locale]);
   const redirectToDetail = useCallback(() => router.push(RouteUtil.getEventDetailUrl(locale, id, PageAction.VIEW)), [locale]);
   const handleDelete = useCallback(async () => {
-    if (!window.confirm("Delete?")) return;
+    if (!window.confirm(t('common.messages.confirmDelete'))) return;
 
     await mutateAsync(id);
+    Toast.showSuccess(t('common.messages.deleteSuccess'));
     router.push(RouteUtil.getEventListRoute(locale));
   }, []);
 

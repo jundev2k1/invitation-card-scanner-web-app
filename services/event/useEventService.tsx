@@ -76,4 +76,3 @@ export {
   useCreateEvent, useDeleteEvent, useGetEventDetail, useSearchEvents, useUpdateEvent,
   useUpdateEventStatus
 };
-

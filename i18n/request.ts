@@ -1,10 +1,21 @@
 import { CookieStore } from '@/lib/cookies';
+import { createTranslator } from 'next-intl';
 import { getRequestConfig } from 'next-intl/server';
 
 export const locales = ['en', 'vi'] as const;
 export const defaultLocale = 'en';
 
 export type Locale = (typeof locales)[number];
+
+async function getMessages(locale: Locale) {
+  return {
+    common: (await import(`../messages/common/${locale}.json`)).default,
+    auth: (await import(`../messages/auth/${locale}.json`)).default,
+    dashboard: (await import(`../messages/dashboard/${locale}.json`)).default,
+    user: (await import(`../messages/user/${locale}.json`)).default,
+    event: (await import(`../messages/event/${locale}.json`)).default
+  }
+}
 
 export default getRequestConfig(async ({ requestLocale }) => {
   const locale = await requestLocale;
@@ -16,14 +27,17 @@ export default getRequestConfig(async ({ requestLocale }) => {
     resolvedLocale = CookieStore.language || defaultLocale;
   }
 
+  const messages = await getMessages(resolvedLocale);
   return {
     locale: resolvedLocale,
-    messages: {
-      common: (await import(`../messages/common/${resolvedLocale}.json`)).default,
-      auth: (await import(`../messages/auth/${resolvedLocale}.json`)).default,
-      dashboard: (await import(`../messages/dashboard/${resolvedLocale}.json`)).default,
-      user: (await import(`../messages/user/${resolvedLocale}.json`)).default,
-      event: (await import(`../messages/event/${resolvedLocale}.json`)).default
-    }
+    messages
   };
 });
+
+export async function getTranslator(locale?: string) {
+  const resolvedLocale = locale && locales.includes(locale as any)
+    ? locale as Locale
+    : CookieStore.language || defaultLocale;
+  const messages = await getMessages(resolvedLocale);;
+  return createTranslator({ locale: resolvedLocale, messages });
+}

@@ -1,5 +1,6 @@
 import { Toast } from "@/app/components";
 import { RouteUtil } from "@/app/utils/route";
+import { getTranslator } from "@/i18n/request";
 import { api } from "@/lib/api-client/api";
 import { CookieStore } from "@/lib/cookies";
 import { useAuthStore } from '@/store';
@@ -31,6 +32,7 @@ function processQueue(error: any, token: string | null = null) {
 api.interceptors.response.use(
   (res) => res,
   async (err) => {
+    const t = await getTranslator(CookieStore.language);
     const status = err.response?.status;
     const originalRequest = err.config;
 
@@ -96,7 +98,11 @@ api.interceptors.response.use(
 
     if (resStatus && !successCodes.includes(resStatus) && !err.config._errorShown) {
       err.config._errorShown = true;
-      Toast.showError(err.response?.data?.message || 'Unexpected error');
+      console.error(err);
+      const errorMessage = err.response?.data?.messageCode
+        ? t(`common.messages.code.${err.response?.data?.messageCode}`)
+        : err.response?.data?.message || 'Unexpected error';
+      Toast.showError(errorMessage);
     }
 
     return Promise.reject(err);
