@@ -22,7 +22,7 @@ export const Sidebar = () => {
       {/* Sidebar Header */}
       <div
         className={cn(
-          "flex h-16 items-center grow shrink-0 border-b px-4 transition-all duration-300",
+          "flex h-16 items-center shrink-0 border-b px-4 transition-all duration-300",
           "border-gray-200 dark:border-gray-800",
           isCollapsed ? "justify-center" : "justify-between"
         )}
@@ -56,8 +56,8 @@ export const Sidebar = () => {
                   "text-gray-500 dark:text-gray-400",
                   "whitespace-nowrap overflow-hidden",
                   isCollapsed
-                    ? "opacity-0 max-h-0 mb-0" // Khi co: ẩn màu, thu chiều cao, bỏ margin
-                    : "opacity-100 max-h-10 mb-2" // Khi giãn: hiện màu, cho phép hiển thị chiều cao
+                    ? "opacity-0 max-h-0 mb-0"
+                    : "opacity-100 max-h-10 mb-2"
                 )}
               >
                 {t(group.title)}
@@ -95,7 +95,7 @@ export const Sidebar = () => {
       {/* Footer - simple version + copyright */}
       <div
         className={cn(
-          "border-t px-4 py-3 text-xs border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 overflow-hidden grow shrink-0",
+          "border-t px-4 py-3 text-xs border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 overflow-hidden shrink-0",
           "transition-all duration-300"
         )}
       >
