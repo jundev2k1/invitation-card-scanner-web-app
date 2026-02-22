@@ -48,7 +48,10 @@ export class RouteUtil {
     return this.withLocale(locale, this.EVENTS);
   }
 
-  public static getEventDetailUrl(locale: string, id: string) {
-    return this.withLocale(locale, `/events/${id}`);
+  public static getEventDetailUrl(locale: string, id: string, action?: PageAction) {
+    return this.withLocale(
+      locale,
+      `/events/${id}?action=${action || PageAction.VIEW}`
+    );
   }
 }

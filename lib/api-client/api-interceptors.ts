@@ -4,6 +4,7 @@ import { api } from "@/lib/api-client/api";
 import { CookieStore } from "@/lib/cookies";
 import { useAuthStore } from '@/store';
 import { HttpCode } from "@/types";
+import { redirect } from "next/navigation";
 import { AUTH_ROUTES } from "../routes";
 
 api.interceptors.request.use((config) => {
@@ -39,8 +40,7 @@ api.interceptors.response.use(
 
       if (!accessToken || !refreshToken) {
         useAuthStore.getState().logout();
-        RouteUtil.redirectToLogin();
-        return Promise.reject(err);
+        redirect(RouteUtil.getLoginRoute(CookieStore.language));
       }
 
       if (isRefreshing) {
@@ -79,8 +79,7 @@ api.interceptors.response.use(
         useAuthStore.getState().logout();
         CookieStore.accessToken = null;
         CookieStore.refreshToken = null;
-        RouteUtil.redirectToLogin();
-        return Promise.reject(refreshError);
+        redirect(RouteUtil.getLoginRoute(CookieStore.language));
       } finally {
         isRefreshing = false;
       }

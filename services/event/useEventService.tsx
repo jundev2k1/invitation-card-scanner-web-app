@@ -13,7 +13,8 @@ const useSearchEvents = (params: GetEventListRequest) => {
   return useQuery({
     queryKey: EVENT_KEYS.list(params),
     queryFn: () => eventService.searchEvents(params),
-    staleTime: 1000 * 60
+    staleTime: 1000 * 60,
+    retry: false
   });
 }
 
@@ -23,6 +24,7 @@ const useGetEventDetail = (id: string, seconds?: number) => {
     queryFn: () => eventService.getEventDetail(id),
     staleTime: 1000 * (seconds || 15),
     enabled: !!id,
+    retry: false
   });
 };
 
@@ -65,7 +67,7 @@ const useDeleteEvent = () => {
   return useMutation({
     mutationFn: (id: string) => eventService.deleteEvent(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: EVENT_KEYS.all });
+      queryClient.invalidateQueries({ queryKey: ["events", "list"] });
     },
   });
 };
@@ -74,3 +76,4 @@ export {
   useCreateEvent, useDeleteEvent, useGetEventDetail, useSearchEvents, useUpdateEvent,
   useUpdateEventStatus
 };
+
