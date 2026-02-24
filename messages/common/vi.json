@@ -97,7 +97,8 @@
     }
   },
   "datetime": {
-    "createdAt": "Được tạo",
+    "lastUpdated": "Cập nhật gần nhất",
+    "createdAt": "Đã tạo",
     "placeholder": "Chọn thời gian"
   }
 }

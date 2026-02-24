@@ -2,8 +2,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, RoleBadge, Separator, SexBadge, UserStatusBadge } from "@/app/components";
 import { CalendarClockIcon, MailIcon, PhoneIcon, UserIcon } from "@/app/components/icons";
 import { userMapper } from "@/app/utils/mappers";
-import { formatDate } from "@/lib/datetime/date.util";
+import { formatDateTime } from "@/lib/datetime/date.util";
 import { UserDetailDto } from "@/types";
+import { useTranslations } from "next-intl";
 import { AvatarUpload } from "../_shared";
 
 type UserViewFormProps = {
@@ -12,6 +13,7 @@ type UserViewFormProps = {
 }
 
 export const UserViewForm = ({ userDetail: data }: UserViewFormProps) => {
+  const t = useTranslations();
   return (
     <div className="space-y-8">
       <Card>
@@ -37,7 +39,7 @@ export const UserViewForm = ({ userDetail: data }: UserViewFormProps) => {
             <div className="flex items-center gap-3">
               <UserIcon className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm text-muted-foreground">User ID</p>
+                <p className="text-sm text-muted-foreground">{t('user.detail.fields.id')}:</p>
                 <p className="font-medium">{data.id}</p>
               </div>
             </div>
@@ -45,15 +47,15 @@ export const UserViewForm = ({ userDetail: data }: UserViewFormProps) => {
             <div className="flex items-center gap-3">
               <UserIcon className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm text-muted-foreground">Gender:</p>
-                <p className="font-medium">{userMapper.getUserSex(data.sex)} <SexBadge sex={data.sex} /></p>
+                <p className="text-sm text-muted-foreground">{t('user.detail.fields.gender')}:</p>
+                <p className="font-medium">{t(userMapper.getUserSexKey(data.sex))} <SexBadge sex={data.sex} /></p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               <MailIcon className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm text-muted-foreground">Email</p>
+                <p className="text-sm text-muted-foreground">{t('user.detail.fields.email')}:</p>
                 <p className="font-medium">{data.email}</p>
               </div>
             </div>
@@ -61,7 +63,7 @@ export const UserViewForm = ({ userDetail: data }: UserViewFormProps) => {
             <div className="flex items-center gap-3">
               <PhoneIcon className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm text-muted-foreground">Phone number</p>
+                <p className="text-sm text-muted-foreground">{t('user.detail.fields.phoneNumber')}:</p>
                 <p className="font-medium">{data.phoneNumber || "-"}</p>
               </div>
             </div>
@@ -69,16 +71,16 @@ export const UserViewForm = ({ userDetail: data }: UserViewFormProps) => {
             <div className="flex items-center gap-3">
               <CalendarClockIcon className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm text-muted-foreground">Created at:</p>
-                <p className="font-medium">{formatDate(data.createdAt)}</p>
+                <p className="text-sm text-muted-foreground">{t('user.detail.fields.createdAt')}:</p>
+                <p className="font-medium">{formatDateTime(data.createdAt)}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               <CalendarClockIcon className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm text-muted-foreground">Last updated at:</p>
-                <p className="font-medium">{formatDate(data.updatedAt)}</p>
+                <p className="text-sm text-muted-foreground">{t('user.detail.fields.updatedAt')}:</p>
+                <p className="font-medium">{formatDateTime(data.updatedAt)}</p>
               </div>
             </div>
           </div>
@@ -87,7 +89,7 @@ export const UserViewForm = ({ userDetail: data }: UserViewFormProps) => {
             <>
               <Separator />
               <div>
-                <h4 className="font-medium mb-2">Biography</h4>
+                <h4 className="font-medium mb-2">{t('user.detail.fields.bio')}</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
                   {data.bio}
                 </p>

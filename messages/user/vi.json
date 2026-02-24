@@ -1,5 +1,12 @@
 {
   "enum": {
+    "status": {
+      "INACTIVE": "Vô hiệu hóa",
+      "WAITING_FOR_APPROVE": "Chưa phê duyệt",
+      "ACTIVE": "Hoạt động",
+      "SUSPENDED": "Bị cấm",
+      "DELETED": "Đã xóa"
+    },
     "gender": {
       "MALE": "Nam",
       "FEMALE": "Nữ",
@@ -43,6 +50,19 @@
   },
   "detail": {
     "title": "Chi tiết người dùng",
-    "desc": "Xem, sửa và quản lý tài khoản người dùng."
+    "desc": "Xem, sửa và quản lý tài khoản người dùng.",
+    "fields": {
+      "id": "ID",
+      "username": "Tài khoản",
+      "email": "Email",
+      "nickname": "Biệt danh",
+      "phoneNumber": "Số điện thoại",
+      "gender": "Giới tính",
+      "bio": "Tiểu sử",
+      "status": "Trạng thái",
+      "role": "Quyền hệ thống",
+      "createdAt": "Ngày tạo",
+      "updatedAt": "Ngày cập nhật"
+    }
   }
 }

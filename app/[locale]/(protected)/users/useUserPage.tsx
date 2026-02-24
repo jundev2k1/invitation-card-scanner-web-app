@@ -1,5 +1,5 @@
-import { Column, SexBadge, TruncatedText, useFilter, UserStatusBadge } from "@/app/components";
-import { InfoIcon, MailIcon, PhoneIcon, UserIcon } from "@/app/components/icons";
+import { Column, SexBadge, SmartDateTime, TruncatedText, useFilter, UserStatusBadge } from "@/app/components";
+import { ClockIcon, InfoIcon, MailIcon, PhoneIcon, UserIcon } from "@/app/components/icons";
 import { RouteUtil } from "@/app/utils/route";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -28,7 +28,7 @@ const getColumns = (t: any, redirectToDetail: (id: string) => void): Column<User
     key: "information",
     label: t('user.list.table.columns.information'),
     render: (_, item) => (
-      <div className="flex items-center gap-2">
+      <div className="flex gap-2">
         <Avatar size="lg">
           <AvatarImage src={item.avatarUrl} />
           <AvatarFallback><UserIcon /></AvatarFallback>
@@ -47,6 +47,10 @@ const getColumns = (t: any, redirectToDetail: (id: string) => void): Column<User
               <PhoneIcon size={12} />
               <TruncatedText text={item.phoneNumber} isTruncate={false} />
             </span>
+          </p>
+          <p className="flex items-center gap-1 dark:text-muted-foreground">
+            <ClockIcon size={12} />
+            <SmartDateTime date={item.createdAt} label={t('common.datetime.createdAt')} />
           </p>
         </div>
       </div>

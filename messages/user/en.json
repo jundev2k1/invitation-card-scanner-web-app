@@ -1,5 +1,12 @@
 {
   "enum": {
+    "status": {
+      "INACTIVE": "Inactive",
+      "WAITING_FOR_APPROVE": "Waiting for approve",
+      "ACTIVE": "Active",
+      "SUSPENDED": "Suspended",
+      "DELETED": "Deleted"
+    },
     "gender": {
       "MALE": "Male",
       "FEMALE": "Female",
@@ -43,6 +50,19 @@
   },
   "detail": {
     "title": "User Detail",
-    "desc": "View, edit, and manage system user."
+    "desc": "View, edit, and manage system user.",
+    "fields": {
+      "id": "User ID",
+      "username": "Username",
+      "email": "Email",
+      "nickname": "Nickname",
+      "phoneNumber": "Phone Number",
+      "gender": "Gender",
+      "bio": "Biography",
+      "status": "Status",
+      "role": "Role",
+      "createdAt": "Created At",
+      "updatedAt": "Last Updated At"
+    }
   }
 }

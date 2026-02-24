@@ -27,6 +27,8 @@ export const formatDate = (date: Date, formatStr = 'dd/MM/yyyy') => {
   return format(date, formatStr, { locale: CookieStore.language === 'vi' ? vi : enUS });
 };
 
+export const formatDateTime = (date: Date, formatStr = 'HH:mm dd/MM/yyyy') => formatDate(date, formatStr);
+
 export const getRangeOfDay = (date: Date) => ({
   start: startOfDay(date), // 00:00:00
   end: endOfDay(date)      // 23:59:59

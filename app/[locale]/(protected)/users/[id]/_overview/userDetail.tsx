@@ -1,6 +1,6 @@
 "use client";
 import { Button, PageContent, RefreshButton, SkeletonProfile } from "@/app/components";
-import { ClipboardPenIcon, InfoIcon } from "@/app/components/icons";
+import { ClipboardPenIcon } from "@/app/components/icons";
 import { PageAction } from "@/types";
 import { useTranslations } from "next-intl";
 import { UserEditForm } from "../_edit/EditUserDetail";
@@ -19,7 +19,6 @@ export default function UserDetailLayout({ id, action }: UserDetailProps) {
     data,
     onPageRefresh,
     redirectToEdit,
-    redirectToDetail,
   } = useUserDetail(id);
   if (isLoading) return <SkeletonProfile />;
 
@@ -31,26 +30,18 @@ export default function UserDetailLayout({ id, action }: UserDetailProps) {
       actions={
         <>
           {action === PageAction.VIEW && (
-            <Button
-              leftIcon={<ClipboardPenIcon />}
-              className="dark:text-muted-foreground"
-              variant="outline"
-              onClick={redirectToEdit}
-            >
-              {t('common.actions.edit')}
-            </Button>
+            <>
+              <Button
+                leftIcon={<ClipboardPenIcon />}
+                className="dark:text-muted-foreground"
+                variant="outline"
+                onClick={redirectToEdit}
+              >
+                {t('common.actions.edit')}
+              </Button>
+              <RefreshButton onRefresh={onPageRefresh} />
+            </>
           )}
-          {action === PageAction.EDIT && (
-            <Button
-              leftIcon={<InfoIcon />}
-              className="dark:text-muted-foreground"
-              variant="outline"
-              onClick={redirectToDetail}
-            >
-              {t('common.actions.view')}
-            </Button>
-          )}
-          <RefreshButton onRefresh={onPageRefresh} />
         </>
       }
     >

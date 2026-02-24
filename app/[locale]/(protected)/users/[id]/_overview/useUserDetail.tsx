@@ -25,13 +25,11 @@ export const useUserDetail = (id: string) => {
   }, []);
 
   const redirectToEdit = useCallback(() => router.push(RouteUtil.getUserDetailUrl(locale, id, PageAction.EDIT)), [locale]);
-  const redirectToDetail = useCallback(() => router.push(RouteUtil.getUserDetailUrl(locale, id, PageAction.VIEW)), [locale]);
 
   return {
     isLoading,
     data: data?.data ?? null,
     onPageRefresh: refetch,
     redirectToEdit,
-    redirectToDetail,
   };
 };

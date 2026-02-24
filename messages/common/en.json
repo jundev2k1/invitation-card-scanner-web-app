@@ -97,7 +97,8 @@
     }
   },
   "datetime": {
-    "createdAt": "Created At",
-    "placeholder": "Select Date"
+    "lastUpdated": "Last updated at",
+    "createdAt": "Created at",
+    "placeholder": "Select date"
   }
 }

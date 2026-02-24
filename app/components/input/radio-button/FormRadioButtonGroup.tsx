@@ -17,7 +17,9 @@ export function FormRadioGroup({ name, label, horizontal = false, options }: For
 
   return (
     <div className="space-y-3">
-      {label && <Label className="text-slate-300">{label}</Label>}
+      {label && <Label className={error ? "text-destructive" : "text-slate-900 dark:text-muted-foreground"}>
+        {label}
+      </Label>}
       <Controller
         control={control}
         name={name}

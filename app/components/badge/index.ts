@@ -1,3 +1,4 @@
-export * from "./role.badge";
-export * from "./sex.badge";
-export * from "./user-status.badge";
+export * from "./EventStatusBadge";
+export * from "./RoleBadge";
+export * from "./SexBadge";
+export * from "./UserStatusBadge";

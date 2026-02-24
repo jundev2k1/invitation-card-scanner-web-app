@@ -1,8 +1,9 @@
 "use client";
 
+import { formatDateTime } from "@/lib/datetime/date.util";
 import { cn } from "@/lib/utils";
-import { format, formatDistanceToNow } from "date-fns";
-import { enUS, vi } from "date-fns/locale";
+import { formatDistanceToNow } from "date-fns";
+import { enUS } from "date-fns/locale";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
@@ -10,9 +11,10 @@ interface SmartDateTimeProps {
   date: string | Date;
   label?: string;
   className?: string;
+  format?: string;
 }
 
-export function SmartDateTime({ date, label, className }: SmartDateTimeProps) {
+export function SmartDateTime({ date, label, className, format }: SmartDateTimeProps) {
   const [isHovered, setIsHovered] = useState(false);
   const d = new Date(date);
 
@@ -21,7 +23,7 @@ export function SmartDateTime({ date, label, className }: SmartDateTimeProps) {
     locale: enUS
   });
 
-  const absoluteTime = format(d, "HH:mm dd/MM/yyyy", { locale: vi });
+  const absoluteTime = formatDateTime(d, format);
 
   return (
     <div
@@ -29,9 +31,9 @@ export function SmartDateTime({ date, label, className }: SmartDateTimeProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {label && <span className="font-medium">{label}:</span>}
+      {label && <span>{label}</span>}
 
-      <div className="relative overflow-hidden inline-block h-4 min-w-27">
+      <div className="relative overflow-hidden inline-block h-5 min-w-27">
         <AnimatePresence mode="wait">
           {isHovered ? (
             <motion.span

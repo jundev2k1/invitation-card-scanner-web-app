@@ -3,6 +3,7 @@
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, FormRadioGroup, FormTextArea, FormTextBox, RoleBadge, Separator, UserStatusBadge } from "@/app/components";
 import { SaveIcon, XIcon } from "@/app/components/icons";
 import { UserDetailDto } from "@/types";
+import { useTranslations } from "next-intl";
 import { FormProvider } from "react-hook-form";
 import { AvatarUpload } from "../_shared";
 import { sexOptions, useUserEditForm } from "./useEditUserDetail";
@@ -13,6 +14,7 @@ type UserEditFormProps = {
 };
 
 export const UserEditForm = ({ userDetail, onPageRefresh }: UserEditFormProps) => {
+  const t = useTranslations();
   const { form, handleSubmit, redirectToDetail } = useUserEditForm(userDetail, onPageRefresh);
   return (
     <FormProvider {...form}>
@@ -36,13 +38,13 @@ export const UserEditForm = ({ userDetail, onPageRefresh }: UserEditFormProps) =
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="grid md:grid-cols-2 gap-4">
-              <FormTextBox name="nickName" label="Nickname" className="w-full" />
-              <FormTextBox name="email" label="Email" className="w-full" />
-              <FormTextBox name="phoneNumber" label="Phone Number" className="w-full" />
-              <FormRadioGroup name="sex" label="Gender" className="w-full" options={sexOptions} />
+              <FormTextBox name="nickName" label={t('user.detail.fields.nickname')} className="w-full" />
+              <FormTextBox name="email" label={t('user.detail.fields.email')} className="w-full" />
+              <FormTextBox name="phoneNumber" label={t('user.detail.fields.phoneNumber')} className="w-full" />
+              <FormRadioGroup name="sex" label={t('user.detail.fields.gender')} className="w-full" options={sexOptions} />
               <div className="col-span-2">
                 <Separator className="my-4" />
-                <FormTextArea name="bio" label="Biography" className="col-span-2 w-full" />
+                <FormTextArea name="bio" label={t('user.detail.fields.bio')} className="col-span-2 w-full" />
               </div>
             </div>
 
@@ -53,14 +55,14 @@ export const UserEditForm = ({ userDetail, onPageRefresh }: UserEditFormProps) =
                 variant="outline"
                 onClick={redirectToDetail}
               >
-                Cancel
+                {t('common.actions.cancel')}
               </Button>
               <Button
                 type="submit"
                 leftIcon={<SaveIcon />}
                 disabled={form.formState.isSubmitting}
               >
-                Save Changes
+                {t('common.actions.save')}
               </Button>
             </div>
           </CardContent>

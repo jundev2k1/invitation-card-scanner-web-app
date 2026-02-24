@@ -1,24 +1,24 @@
 import { Sex, UserStatus } from "@/types";
 
-export const getUserStatus = (status: UserStatus): string => {
+export const getUserStatusKey = (status: UserStatus): string => {
   switch (status) {
     case UserStatus.INACTIVE:
-      return "Inactive";
+      return "user.enum.status.INACTIVE";
 
     case UserStatus.WAITING_FOR_APPROVE:
-      return "Waiting for approve";
+      return "user.enum.status.WAITING_FOR_APPROVE";
 
     case UserStatus.ACTIVE:
-      return "Active";
+      return "user.enum.status.ACTIVE";
 
     case UserStatus.SUSPENDED:
-      return "Suspended";
+      return "user.enum.status.SUSPENDED";
 
     case UserStatus.DELETED:
-      return "Deleted";
+      return "user.enum.status.DELETED";
 
     default:
-      return "Unknown";
+      return "-";
   }
 }
 
@@ -33,19 +33,19 @@ export const getUserStatusColor = (status: UserStatus): string => {
   return variants[status] || "bg-gray-500 text-white dark:bg-gray-600 dark:text-white";
 }
 
-export const getUserSex = (sex: Sex): string => {
+export const getUserSexKey = (sex: Sex): string => {
   switch (sex) {
     case Sex.MALE:
-      return "Male";
+      return "user.enum.gender.MALE";
 
     case Sex.FEMALE:
-      return "Female";
+      return "user.enum.gender.FEMALE";
 
     case Sex.OTHER:
-      return "Other";
+      return "user.enum.gender.OTHER";
 
     default:
-      return "Unknown";
+      return "-";
   };
 }
 
