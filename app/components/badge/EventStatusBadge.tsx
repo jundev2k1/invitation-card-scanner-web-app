@@ -11,7 +11,7 @@ export const EventStatusBadge = ({ status }: EventStatusBadgeProps) => {
   const t = useTranslations();
   return (
     <Badge className={eventMapper.getEventStatusColor(status)}>
-      {t(`event.enum.status.${status || "-"}`)}
+      {status ? t(eventMapper.getEventStatusTransKey(status)) : "-"}
     </Badge>
   );
 }

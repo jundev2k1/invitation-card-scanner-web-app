@@ -1,5 +1,5 @@
 import { api, baseQuery, mapToUrlSearchParams } from "@/lib/api-client";
-import { EventDetailDto, EventSearchItemDto, EventStatusEnum, SearchResult } from "@/types";
+import { EventDetailDto, EventSearchItemDto, EventStatus, SearchResult } from "@/types";
 import { CreateEventRequest, GetEventListRequest, UpdateEventRequest } from "./event.type";
 
 export const eventService = {
@@ -16,7 +16,7 @@ export const eventService = {
   updateEvent: (id: string, data: UpdateEventRequest) => {
     return baseQuery(api.put(`/backoffice/events/${id}`, data));
   },
-  updateEventStatus: (id: string, status: EventStatusEnum) => {
+  updateEventStatus: (id: string, status: EventStatus) => {
     return baseQuery(api.patch(`/backoffice/events/${id}/status/${status}`));
   },
   deleteEvent: (id: string) => {

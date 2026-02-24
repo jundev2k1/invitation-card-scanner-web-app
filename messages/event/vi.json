@@ -33,7 +33,66 @@
   },
   "detail": {
     "title": "Chi tiết sự kiện",
-    "desc": "Xem, sửa và quản lý sự kiện."
+    "desc": "Xem, sửa và quản lý sự kiện.",
+    "fields": {
+      "id": "ID",
+      "category": "Loại sự kiện",
+      "title": "Tiêu đề",
+      "description": "Mô tả",
+      "time": "Thời gian",
+      "startAt": "Bắt đầu lúc",
+      "endAt": "Kết thúc lúc",
+      "location": "Tên địa điểm",
+      "address": "Địa chỉ",
+      "mapUrl": "Link bản đồ",
+      "status": "Trạng thái",
+      "dateInfo": "Thông tin ngày tháng",
+      "settings": "Cài đặt",
+      "createdAt": "Ngày tạo",
+      "updatedAt": "Cập nhật lần cuối"
+    },
+    "actions": {
+      "viewMap": "Xem bản đồ"
+    }
+  },
+  "cardList": {
+    "title": "Danh sách thiệp mời",
+    "desc": "Xem, sửa và quản lý thiệp mời.",
+    "table": {
+      "columns": {
+        "id": "ID",
+        "information": "Thông tin",
+        "action": "Hành động"
+      }
+    },
+    "insert": {
+      "title": "Tạo thiệp sự kiện",
+      "fields": {
+        "guestName": "Tên khách mời",
+        "notes": "Ghi chú"
+      }
+    },
+    "detail": {
+      "title": "Chi tiết thiệp sự kiện",
+      "fields": {
+        "guestName": "Tên khách mời",
+        "notes": "Ghi chú"
+      },
+      "table": {
+        "title": "Lịch sử quét mã",
+        "columns": {
+          "information": "Thông tin quét",
+          "notes": "Ghi chú"
+        },
+        "content": {
+          "scannedAt": "Quét lúc",
+          "scannedByName": "Người quét"
+        }
+      }
+    },
+    "actions": {
+      "add": "Thêm thiệp mời"
+    }
   },
   "insert": {
     "title": "Tạo mới sự kiện",
@@ -43,9 +102,9 @@
       "description": "Mô tả",
       "startAt": "Bắt đầu lúc",
       "endAt": "Kết thúc lúc",
-      "location": "Địa điểm",
+      "location": "Tên địa điểm",
       "address": "Địa chỉ",
-      "mapUrl": "URL bản đồ",
+      "mapUrl": "Link bản đồ",
       "status": "Trạng thái"
     }
   }

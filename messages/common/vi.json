@@ -44,6 +44,12 @@
     "updateStatusSuccess": "Cập nhật trạng thái thành công.",
     "confirmDelete": "Bạn có chắc muốn xóa dữ liệu này?"
   },
+  "text": {
+    "fromLower": "từ",
+    "fromUpper": "Từ",
+    "toLower": "đến",
+    "toUpper": "Đến"
+  },
   "actions": {
     "view": "Chi tiết",
     "refresh": "Làm mới",
@@ -100,5 +106,9 @@
     "lastUpdated": "Cập nhật gần nhất",
     "createdAt": "Đã tạo",
     "placeholder": "Chọn thời gian"
+  },
+  "map": {
+    "noMap": "Bản đồ chưa sẵn sàng",
+    "noMapDesc": "Vui lòng cung cấp mã nhúng (Embed URL) hợp lệ"
   }
 }

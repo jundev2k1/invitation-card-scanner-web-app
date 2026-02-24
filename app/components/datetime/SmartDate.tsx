@@ -1,9 +1,7 @@
 "use client";
 
-import { formatDateTime } from "@/lib/datetime/date.util";
+import { formatDateTime, formatDistanceToNow } from "@/lib/datetime/date.util";
 import { cn } from "@/lib/utils";
-import { formatDistanceToNow } from "date-fns";
-import { enUS } from "date-fns/locale";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
@@ -18,10 +16,7 @@ export function SmartDateTime({ date, label, className, format }: SmartDateTimeP
   const [isHovered, setIsHovered] = useState(false);
   const d = new Date(date);
 
-  const relativeTime = formatDistanceToNow(d, {
-    addSuffix: true,
-    locale: enUS
-  });
+  const relativeTime = formatDistanceToNow(d);
 
   const absoluteTime = formatDateTime(d, format);
 
@@ -33,7 +28,7 @@ export function SmartDateTime({ date, label, className, format }: SmartDateTimeP
     >
       {label && <span>{label}</span>}
 
-      <div className="relative overflow-hidden inline-block h-5 min-w-27">
+      <div className="relative overflow-hidden inline-block h-5 min-w-29">
         <AnimatePresence mode="wait">
           {isHovered ? (
             <motion.span

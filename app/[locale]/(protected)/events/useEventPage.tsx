@@ -1,11 +1,11 @@
 "use client";
-import { Column, DropdownButton, Select, Toast, TruncatedText, useFilter } from "@/app/components";
-import { MapPinHouseIcon } from "@/app/components/icons";
+import { Column, DropdownButton, Select, SmartDateTime, Toast, TruncatedText, useFilter } from "@/app/components";
+import { ClockIcon, MapPinHouseIcon } from "@/app/components/icons";
 import { RouteUtil } from "@/app/utils/route";
 import { formatDate } from "@/lib/datetime/date.util";
 import { useDeleteEvent, useSearchEvents, useUpdateEventStatus } from "@/services";
 import { useSidebarStore } from "@/store";
-import { defaultSearchResult, EventSearchItemDto, EventStatusEnum } from "@/types";
+import { defaultSearchResult, EventSearchItemDto, EventStatus } from "@/types";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo } from "react";
@@ -16,17 +16,17 @@ const getBreadcrumbs = (t: any, locale: string) => [
 ];
 
 const statusOptions = [
-  { label: "event.enum.status.DRAFT", value: EventStatusEnum.DRAFT },
-  { label: "event.enum.status.PUBLISHED", value: EventStatusEnum.PUBLISHED },
-  { label: "event.enum.status.COMPLETED", value: EventStatusEnum.COMPLETED },
-  { label: "event.enum.status.CANCELLED", value: EventStatusEnum.CANCELLED },
+  { label: "event.enum.status.DRAFT", value: EventStatus.DRAFT },
+  { label: "event.enum.status.PUBLISHED", value: EventStatus.PUBLISHED },
+  { label: "event.enum.status.COMPLETED", value: EventStatus.COMPLETED },
+  { label: "event.enum.status.CANCELLED", value: EventStatus.CANCELLED },
 ];
 
 const getColumns = (
   t: any,
   redirectToDetail: (id: string) => void,
   onDeleteEvent: (id: string) => void,
-  onUpdateStatus: (id: string, status: EventStatusEnum) => Promise<void>
+  onUpdateStatus: (id: string, status: EventStatus) => Promise<void>
 ): Column<EventSearchItemDto>[] => [
     {
       key: "id",
@@ -39,20 +39,22 @@ const getColumns = (
       label: t('user.list.table.columns.information'),
       className: "w-[40%]",
       render: (_, item) => (
-        <div className="flex items-center gap-2">
-          <div className="flex flex-col gap-1">
-            <p className="flex gap-2">
-              <span className="font-medium dark:text-muted-foreground">{item.title}</span>
-            </p>
-            <p className="flex items-center gap-3 dark:text-muted-foreground">
-              {item.locationName && (
-                <span className="flex items-center gap-1">
-                  <MapPinHouseIcon size={12} />
-                  <TruncatedText text={item.locationName} isTruncate={false} />
-                </span>
-              )}
-            </p>
-          </div>
+        <div className="flex flex-col gap-1">
+          <p className="flex gap-2">
+            <span className="font-medium dark:text-muted-foreground">{item.title}</span>
+          </p>
+          <p className="flex items-center gap-3 dark:text-muted-foreground">
+            {item.locationName && (
+              <span className="flex items-center gap-1">
+                <MapPinHouseIcon size={12} />
+                <TruncatedText text={item.locationName} isTruncate={false} />
+              </span>
+            )}
+          </p>
+          <p className="flex items-center gap-1 dark:text-muted-foreground">
+            <ClockIcon size={12} />
+            <SmartDateTime date={item.createdAt} label={t('common.datetime.createdAt')} />
+          </p>
         </div>
       )
     },
@@ -81,7 +83,7 @@ const getColumns = (
           className="dark:text-muted-foreground"
           options={statusOptions.map(i => ({ label: t(i.label), value: i.value.toString() }))}
           value={item.status.toString()}
-          onValueChange={async (value) => await onUpdateStatus(item.id, parseInt(value) as EventStatusEnum)}
+          onValueChange={async (value) => await onUpdateStatus(item.id, parseInt(value) as EventStatus)}
         />
       )
     },
@@ -93,7 +95,7 @@ const getColumns = (
       render: (_, item) => {
         const options = [
           { label: t('common.actions.view'), action: () => redirectToDetail(item.id) },
-          { label: t('common.actions.delete'), action: () => onDeleteEvent(item.id) },
+          { label: t('common.actions.delete'), action: () => onDeleteEvent(item.id), className: "text-red-600" },
         ];
         return (
           <DropdownButton options={options} />
@@ -127,7 +129,7 @@ export const useEventPage = () => {
     await deleteEvent(id);
     Toast.showSuccess(t('common.messages.deleteSuccess'));
   }, [locale]);
-  const onUpdateStatus = useCallback(async (id: string, status: EventStatusEnum) => {
+  const onUpdateStatus = useCallback(async (id: string, status: EventStatus) => {
     await updateStatus({ id, status });
     Toast.showSuccess(t('common.messages.updateStatusSuccess'));
   }, [locale]);

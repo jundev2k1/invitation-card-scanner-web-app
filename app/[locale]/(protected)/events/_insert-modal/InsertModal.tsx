@@ -13,7 +13,7 @@ import {
   TextBox
 } from "@/app/components";
 import { PlusCircleIcon } from "@/app/components/icons";
-import { EventStatusEnum } from "@/types";
+import { EventStatus } from "@/types";
 import { useTranslations } from "next-intl";
 import { FormProvider } from "react-hook-form";
 import { useInsertModal } from "./useInsertModal";
@@ -25,6 +25,8 @@ export function InsertModal() {
   return (
     <>
       <Button
+        variant="outline"
+        className="dark:text-muted-foreground"
         leftIcon={<PlusCircleIcon />}
         onClick={onOpen}
       >
@@ -44,7 +46,7 @@ export function InsertModal() {
               <div className="px-6 pt-2 pb-6 h-[calc(90vh-140px)] overflow-y-auto">
                 <div className="grid md:grid-cols-2 gap-3">
                   <FormTextBox name="categoryId" label={t('event.insert.fields.category')} containerClassName="w-full" disabled />
-                  <TextBox name="status" label={t('event.insert.fields.status')} className="w-full" value={EventStatusEnum.DRAFT} disabled />
+                  <TextBox name="status" label={t('event.insert.fields.status')} className="w-full" value={EventStatus.DRAFT} disabled />
                   <FormTextBox name="title" label={t('event.insert.fields.title')} containerClassName="md:col-span-2 w-full col" />
                   <FormDateTimePicker name="startAt" label={t('event.insert.fields.startAt')} />
                   <FormDateTimePicker name="endAt" label={t('event.insert.fields.endAt')} />

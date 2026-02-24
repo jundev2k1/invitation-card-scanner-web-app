@@ -44,6 +44,12 @@
     "updateStatusSuccess": "Update status successfully.",
     "confirmDelete": "Are you sure you want to delete this item?"
   },
+  "text": {
+    "fromLower": "from",
+    "fromUpper": "From",
+    "toLower": "to",
+    "toUpper": "To"
+  },
   "actions": {
     "view": "View Detail",
     "refresh": "Refresh",
@@ -100,5 +106,9 @@
     "lastUpdated": "Last updated at",
     "createdAt": "Created at",
     "placeholder": "Select date"
+  },
+  "map": {
+    "noMap": "No map available",
+    "noMapDesc": "Please select a location to view the map."
   }
 }

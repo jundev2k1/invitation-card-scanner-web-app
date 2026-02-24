@@ -33,7 +33,66 @@
   },
   "detail": {
     "title": "Event Detail",
-    "desc": "View, edit, and manage event."
+    "desc": "View, edit, and manage event.",
+    "fields": {
+      "id": "ID",
+      "category": "Category",
+      "title": "Title",
+      "description": "Description",
+      "time": "Time",
+      "startAt": "Start at",
+      "endAt": "End at",
+      "location": "Location name",
+      "address": "Address",
+      "mapUrl": "Map URL",
+      "status": "Status",
+      "dateInfo": "Date Info",
+      "settings": "Settings",
+      "createdAt": "Created At",
+      "updatedAt": "Last Updated At"
+    },
+    "actions": {
+      "viewMap": "View Map"
+    }
+  },
+  "cardList": {
+    "title": "Invitation Card List",
+    "desc": "View, edit, and manage invitation cards.",
+    "table": {
+      "columns": {
+        "id": "ID",
+        "information": "Information",
+        "action": "Action"
+      }
+    },
+    "insert": {
+      "title": "Create event card",
+      "fields": {
+        "guestName": "Guest Name",
+        "notes": "Notes"
+      }
+    },
+    "detail": {
+      "title": "Event card detail",
+      "fields": {
+        "guestName": "Guest Name",
+        "notes": "Notes"
+      },
+      "table": {
+        "title": "Scan History",
+        "columns": {
+          "information": "Scan Information",
+          "notes": "Notes"
+        },
+        "content": {
+          "scannedAt": "Scanned At",
+          "scannedByName": "Scanned By"
+        }
+      }
+    },
+    "actions": {
+      "add": "Add Card"
+    }
   },
   "insert": {
     "title": "Create Event",

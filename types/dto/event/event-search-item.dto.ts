@@ -1,4 +1,4 @@
-import { EventStatusEnum } from "@/types/enum";
+import { EventStatus } from "@/types/enum";
 
 export interface EventSearchItemDto {
   id: string;
@@ -10,7 +10,7 @@ export interface EventSearchItemDto {
   address: string;
   mapUrl: string;
   thumbnailUrl: string;
-  status: EventStatusEnum;
+  status: EventStatus;
   createdAt: Date;
   updatedAt: Date;
 }

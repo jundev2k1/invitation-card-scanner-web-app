@@ -8,6 +8,7 @@ import {
   differenceInDays,
   endOfDay,
   format,
+  formatDistanceToNow as formatDistanceDateToNow,
   isAfter,
   isBefore,
   startOfDay,
@@ -15,6 +16,19 @@ import {
 } from 'date-fns';
 import { enUS, vi } from 'date-fns/locale';
 import { CookieStore } from '../cookies';
+
+const getLocale = () => {
+  switch (CookieStore.language) {
+    case 'vi':
+      return vi;
+
+    case 'en':
+      return enUS;
+
+    default:
+      return enUS;
+  }
+};
 
 export const addSecs = (date: Date, seconds: number) => addSeconds(date, seconds);
 export const addMins = (date: Date, minutes: number) => addMinutes(date, minutes);
@@ -24,10 +38,18 @@ export const addMths = (date: Date, months: number) => addMonths(date, months);
 export const addYrs = (date: Date, years: number) => addYears(date, years);
 
 export const formatDate = (date: Date, formatStr = 'dd/MM/yyyy') => {
-  return format(date, formatStr, { locale: CookieStore.language === 'vi' ? vi : enUS });
+  return format(date, formatStr, { locale: getLocale() });
 };
 
 export const formatDateTime = (date: Date, formatStr = 'HH:mm dd/MM/yyyy') => formatDate(date, formatStr);
+
+export const formatDistanceToNow = (date: Date, addSuffix = true) => formatDistanceDateToNow(
+  date,
+  {
+    addSuffix,
+    locale: getLocale()
+  }
+);
 
 export const getRangeOfDay = (date: Date) => ({
   start: startOfDay(date), // 00:00:00

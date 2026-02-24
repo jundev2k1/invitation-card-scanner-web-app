@@ -1,3 +1,4 @@
+"use client";
 import { MoonIcon, SunIcon } from "@/app/components/icons";
 import { Button } from "@/components/ui/button";
 import { CookieStore } from "@/lib/cookies";

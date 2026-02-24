@@ -1,4 +1,4 @@
-import { EventStatusEnum } from "@/types";
+import { EventStatus } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { eventService } from "./event.service";
 import { CreateEventRequest, GetEventListRequest, UpdateEventRequest } from "./event.type";
@@ -53,7 +53,7 @@ const useUpdateEvent = () => {
 const useUpdateEventStatus = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, status }: { id: string; status: EventStatusEnum }) =>
+    mutationFn: ({ id, status }: { id: string; status: EventStatus }) =>
       eventService.updateEventStatus(id, status),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: EVENT_KEYS.all });
@@ -76,3 +76,4 @@ export {
   useCreateEvent, useDeleteEvent, useGetEventDetail, useSearchEvents, useUpdateEvent,
   useUpdateEventStatus
 };
+

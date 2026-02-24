@@ -1,4 +1,4 @@
-export enum EventStatusEnum {
+export enum EventStatus {
   DELETED = 0,
   DRAFT = 1,
   PUBLISHED = 2,

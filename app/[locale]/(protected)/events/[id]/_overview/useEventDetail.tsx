@@ -7,9 +7,10 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo } from "react";
 
-const getBreadcrumbs = (t: any, locale: string) => [
-  { label: t('dashboard.title'), href: RouteUtil.getDashboardRoute(locale) },
-  { label: t('event.list.title'), href: RouteUtil.getEventListRoute(locale) },
+const getBreadcrumbs = (t: any, dashboardUrl: string, eventListUrl: string, pageTitle: string) => [
+  { label: t('dashboard.title'), href: dashboardUrl },
+  { label: t('event.list.title'), href: eventListUrl },
+  { label: pageTitle },
 ];
 
 export const useEventDetail = (id: string) => {
@@ -33,7 +34,6 @@ export const useEventDetail = (id: string) => {
     }
   }, [status, locale, router]);
 
-  const breadcrumbs = useMemo(() => getBreadcrumbs(t, locale), [locale]);
   const redirectToEdit = useCallback(() => router.push(RouteUtil.getEventDetailUrl(locale, id, PageAction.EDIT)), [locale]);
   const redirectToDetail = useCallback(() => router.push(RouteUtil.getEventDetailUrl(locale, id, PageAction.VIEW)), [locale]);
   const handleDelete = useCallback(async () => {
@@ -43,6 +43,9 @@ export const useEventDetail = (id: string) => {
     Toast.showSuccess(t('common.messages.deleteSuccess'));
     router.push(RouteUtil.getEventListRoute(locale));
   }, []);
+  const dashboardUrl = useMemo(() => RouteUtil.getDashboardRoute(locale), [locale]);
+  const eventListUrl = useMemo(() => RouteUtil.getEventListRoute(locale), [locale]);
+  const breadcrumbs = useMemo(() => getBreadcrumbs(t, dashboardUrl, eventListUrl, data?.data?.title ?? '...'), [locale, isLoading]);
 
   return {
     breadcrumbs,

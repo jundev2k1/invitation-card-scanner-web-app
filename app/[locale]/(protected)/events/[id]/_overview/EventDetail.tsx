@@ -1,8 +1,9 @@
 "use client";
-import { Button, PageContent, RefreshButton, SkeletonProfile } from "@/app/components";
+import { Button, Card, CardContent, PageContent, RefreshButton, SkeletonCard, SkeletonProfile } from "@/app/components";
 import { ClipboardPenIcon, InfoIcon, TrashIcon } from "@/app/components/icons";
 import { PageAction } from "@/types";
 import { useTranslations } from "next-intl";
+import { EventViewForm } from "../_view/ViewEventDetail";
 import { useEventDetail } from "./useEventDetail";
 
 type EventDetailProps = {
@@ -27,19 +28,12 @@ export default function EventDetailLayout({ id, action }: EventDetailProps) {
     <PageContent
       title={t('event.detail.title')}
       description={t('event.detail.desc')}
-      breadcrumbs={[...breadcrumbs, { label: data!.title || '' }]}
+      breadcrumbs={breadcrumbs}
       actions={
         <>
           {action === PageAction.VIEW && (
             <>
-              <Button
-                leftIcon={<ClipboardPenIcon />}
-                className="dark:text-muted-foreground"
-                variant="outline"
-                onClick={redirectToEdit}
-              >
-                {t('common.actions.edit')}
-              </Button>
+              <RefreshButton onRefresh={onPageRefresh} />
               <Button
                 leftIcon={<TrashIcon />}
                 className="dark:text-muted-foreground"
@@ -47,6 +41,14 @@ export default function EventDetailLayout({ id, action }: EventDetailProps) {
                 onClick={handleDelete}
               >
                 {t('common.actions.delete')}
+              </Button>
+              <Button
+                leftIcon={<ClipboardPenIcon />}
+                className="dark:text-muted-foreground"
+                variant="outline"
+                onClick={redirectToEdit}
+              >
+                {t('common.actions.edit')}
               </Button>
             </>
           )}
@@ -60,12 +62,21 @@ export default function EventDetailLayout({ id, action }: EventDetailProps) {
               {t('common.actions.view')}
             </Button>
           )}
-          <RefreshButton onRefresh={onPageRefresh} />
         </>
       }
     >
-      {action === PageAction.VIEW && <></>}
-      {action === PageAction.EDIT && <></>}
+      {isLoading || !data ? (
+        <Card>
+          <CardContent>
+            <SkeletonCard />
+          </CardContent>
+        </Card>
+      ) : (
+        <>
+          {action === PageAction.VIEW && <EventViewForm eventDetail={data} />}
+          {action === PageAction.EDIT && <></>}
+        </>
+      )}
     </PageContent>
   );
 }

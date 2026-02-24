@@ -5,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 interface SelectProps {
   value?: string;
@@ -17,12 +18,12 @@ interface SelectProps {
 export default function AppSelect({ value, onValueChange, placeholder, options, className }: SelectProps) {
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className={className}>
+      <SelectTrigger className={cn("cursor-pointer", className)}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
         {options.map((opt) => (
-          <SelectItem key={opt.value} value={opt.value}>
+          <SelectItem key={opt.value} value={opt.value} className="cursor-pointer">
             {opt.label}
           </SelectItem>
         ))}

@@ -1,11 +1,13 @@
 import { EllipsisIcon } from "@/app/components/icons";
 import { ButtonProps } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dropdown";
 import { default as Button } from "./default.button";
 
 interface DropdownButtonOption {
   label: ReactNode | string;
+  className?: string;
   action: () => void;
 }
 
@@ -22,13 +24,17 @@ export default function DropdownButton({ options, ...props }: DropdownButtonProp
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" {...props}>
-          <EllipsisIcon className="h-4 w-4" />
+          <EllipsisIcon className="h-4 w-4 text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-40">
+      <DropdownMenuContent align="end" className="min-w-40">
         {options.map((option, index) => (
-          <DropdownMenuItem key={index} onClick={option.action}>
+          <DropdownMenuItem
+            key={index}
+            className={cn("cursor-pointer", option.className || "")}
+            onClick={option.action}
+          >
             {option.label}
           </DropdownMenuItem>
         ))}

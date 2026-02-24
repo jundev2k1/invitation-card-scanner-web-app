@@ -3,8 +3,8 @@ export interface EventDetailDto {
   categoryId: string;
   title: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startAt: Date;
+  endAt: Date;
   locationName: string;
   address: string;
   mapUrl: string;
