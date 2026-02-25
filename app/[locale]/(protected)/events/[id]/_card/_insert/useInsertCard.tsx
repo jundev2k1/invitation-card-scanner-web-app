@@ -1,5 +1,8 @@
 "use client";
+import { Toast } from "@/app/components";
+import { useCreateEventCard } from "@/services";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -17,8 +20,10 @@ const insertEventCardSchema = z.object({
     .max(4000, { message: "Notes must be at most 4000 characters long" }),
 });
 
-export const useInsertCard = () => {
+export const useInsertCard = (eventId: string) => {
+  const t = useTranslations();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { mutateAsync } = useCreateEventCard();
   const form = useForm<CreateEventCardRequest>({
     resolver: zodResolver(insertEventCardSchema),
     defaultValues: {
@@ -34,7 +39,10 @@ export const useInsertCard = () => {
   }, [isOpen]);
 
   const onSubmit = useCallback(async (data: CreateEventCardRequest) => {
-    console.log(data);
+    await mutateAsync({ eventId, data });
+
+    Toast.showSuccess(t("common.messages.createSuccess"));
+    onClose();
   }, [isOpen]);
 
   return {

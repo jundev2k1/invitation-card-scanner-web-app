@@ -33,7 +33,7 @@ export const CardList = React.memo(({ eventId }: CardListProps) => {
 
         <div className="flex items-center gap-2">
           <RefreshButton onRefresh={onRefresh} />
-          <InsertCard />
+          <InsertCard key={eventId} eventId={eventId} />
         </div>
       </div>
 

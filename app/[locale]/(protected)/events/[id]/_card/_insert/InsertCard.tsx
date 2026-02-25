@@ -6,9 +6,13 @@ import React from "react";
 import { FormProvider } from "react-hook-form";
 import { useInsertCard } from "./useInsertCard";
 
-export const InsertCard = React.memo(() => {
+type InsertCardProps = {
+  eventId: string,
+};
+
+export const InsertCard = React.memo(({ eventId }: InsertCardProps) => {
   const t = useTranslations();
-  const { isOpen, onOpen, onClose, form, onSubmit } = useInsertCard();
+  const { isOpen, onOpen, onClose, form, onSubmit } = useInsertCard(eventId);
   return (
     <>
       <Button
