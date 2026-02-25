@@ -1,6 +1,6 @@
-import { Column, DropdownButton, EventCardStatusBadge, SmartDateTime, TruncatedText, useFilter } from "@/app/components";
+import { Column, DropdownButton, EventCardStatusBadge, SmartDateTime, Toast, TruncatedText, useFilter } from "@/app/components";
 import { ClockIcon } from "@/app/components/icons";
-import { useSearchEventCards } from "@/services";
+import { useDeleteEventCard, useSearchEventCards } from "@/services";
 import { defaultSearchResult, EventCardSearchItemDto, SearchResult } from "@/types";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
@@ -77,11 +77,20 @@ export const useCardList = ({ eventId }: { eventId: string }) => {
     eventId,
     { keyword: filter.keyword, page: filter.page, pageSize: filter.pageSize }
   );
+  const { mutateAsync: deleteEventCard } = useDeleteEventCard();
 
+  const onCloseModal = useCallback(() => { setPageAction([ListItemAction.NONE, null]); }, []);
   const onOpenDetail = useCallback((id: string) => { setPageAction([ListItemAction.DETAIL, id]); }, []);
   const onOpenEdit = useCallback((id: string) => { setPageAction([ListItemAction.EDIT, id]); }, []);
-  const onDeleteCard = useCallback(async (id: string) => { }, []);
-  const onCloseModal = useCallback(() => { setPageAction([ListItemAction.NONE, null]); }, []);
+  const onDeleteCard = useCallback(async (id: string) => {
+    if (!window.confirm(t('common.messages.confirmDelete')))
+      return;
+
+    await deleteEventCard({ eventId: eventId, id });
+    refetch();
+    
+    Toast.showSuccess(t('common.messages.deleteSuccess'));
+  }, []);
 
   const columns = useMemo(() => getColumns(t, onOpenDetail, onOpenEdit, onDeleteCard), [eventId]);
 
