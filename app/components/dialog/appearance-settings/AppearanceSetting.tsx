@@ -12,6 +12,7 @@ import { Label } from "@/app/components/label";
 import { Select } from "@/app/components/select";
 import { cn } from "@/lib/utils";
 import { Language, ThemeColor, ThemeMode } from "@/types";
+import { useTranslations } from "next-intl";
 import { ThemeColorStyles, useAppearanceSettings } from "./useAppearance-settings";
 
 type AppearanceSettingsProps = {
@@ -20,6 +21,7 @@ type AppearanceSettingsProps = {
 };
 
 export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) => {
+  const t = useTranslations();
   const {
     language,
     setLanguage,
@@ -36,11 +38,11 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
           <div className="flex items-center gap-2">
             <PaletteIcon className="h-5 w-5 text-primary" />
             <DialogTitle className="text-xl font-semibold dark:text-zinc-50">
-              Appearance
+              {t("common.appearance.title")}
             </DialogTitle>
           </div>
           <DialogDescription className="text-sm text-muted-foreground">
-            Customize colors, theme, and language.
+            {t("common.appearance.desc")}
           </DialogDescription>
         </DialogHeader>
 
@@ -48,7 +50,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
         <div className="space-y-7 mt-6">
           <div className="space-y-2">
             <Label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Language
+              {t('common.appearance.language.label')}
             </Label>
             <Select
               className={cn(
@@ -67,7 +69,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
 
           {/* Theme Mode */}
           <div className="space-y-2">
-            <Label className="text-sm font-medium dark:text-zinc-100">Theme Mode</Label>
+            <Label className="text-sm font-medium dark:text-zinc-100">{t('common.appearance.theme.label')}</Label>
             <RadioGroup
               value={theme}
               onValueChange={(v) => setMode(v as ThemeMode)}
@@ -83,7 +85,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
                   )}
                 >
                   <SunIcon className="mb-1.5 h-5 w-5" />
-                  <span className="text-sm font-medium">Light</span>
+                  <span className="text-sm font-medium">{t('common.appearance.theme.light')}</span>
                 </Label>
               </div>
 
@@ -97,7 +99,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
                   )}
                 >
                   <MoonIcon className="mb-1.5 h-5 w-5" />
-                  <span className="text-sm font-medium">Dark</span>
+                  <span className="text-sm font-medium">{t('common.appearance.theme.dark')}</span>
                 </Label>
               </div>
             </RadioGroup>
@@ -105,7 +107,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
 
           {/* Accent Color */}
           <div className="space-y-2">
-            <Label className="text-sm font-medium dark:text-zinc-100">Accent Color</Label>
+            <Label className="text-sm font-medium dark:text-zinc-100">{t('common.appearance.color.label')}</Label>
             <RadioGroup
               value={color}
               onValueChange={(v) => setColor(v as ThemeColor)}
@@ -141,7 +143,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
 
         <div className="flex justify-end pt-4">
           <Button variant="secondary" onClick={() => setOpen(false)}>
-            Close
+            {t('common.actions.cancel')}
           </Button>
         </div>
       </DialogContent>

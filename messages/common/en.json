@@ -110,5 +110,20 @@
   "map": {
     "noMap": "No map available",
     "noMapDesc": "Please select a location to view the map."
+  },
+  "appearance": {
+    "title": "Appearance",
+    "desc": "Customize the appearance of the application.",
+    "language": {
+      "label": "Language"
+    },
+    "theme": {
+      "label": "Theme",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "color": {
+      "label": "Accent color"
+    }
   }
 }

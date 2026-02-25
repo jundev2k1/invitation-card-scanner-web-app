@@ -110,5 +110,20 @@
   "map": {
     "noMap": "Bản đồ chưa sẵn sàng",
     "noMapDesc": "Vui lòng cung cấp mã nhúng (Embed URL) hợp lệ"
+  },
+  "appearance": {
+    "title": "Cài đặt giao diện",
+    "desc": "Tùy chỉnh giao diện của ứng dụng.",
+    "language": {
+      "label": "Ngôn ngữ"
+    },
+    "theme": {
+      "label": "Chủ đề",
+      "light": "Sáng",
+      "dark": "Tối"
+    },
+    "color": {
+      "label": "Màu sắc"
+    }
   }
 }
