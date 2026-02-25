@@ -1,7 +1,7 @@
 import { Column, DropdownButton, EventCardStatusBadge, SmartDateTime, TruncatedText, useFilter } from "@/app/components";
 import { ClockIcon } from "@/app/components/icons";
 import { useSearchEventCards } from "@/services";
-import { defaultSearchResult, EventCardSearchItemDto } from "@/types";
+import { defaultSearchResult, EventCardSearchItemDto, SearchResult } from "@/types";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 
@@ -88,7 +88,7 @@ export const useCardList = ({ eventId }: { eventId: string }) => {
   return {
     isLoading,
     onRefresh: refetch,
-    data: data?.data ?? defaultSearchResult,
+    data: data?.data ?? defaultSearchResult as SearchResult<EventCardSearchItemDto>,
     pageAction,
     onCloseModal,
     columns,

@@ -49,6 +49,13 @@ export function useInsertModal() {
   });
   const { mutateAsync } = useCreateEvent();
 
+  const onOpen = () => { setIsOpen(true); }
+
+  const onClose = () => {
+    form.reset();
+    setIsOpen(false);
+  }
+
   const onSubmit = async (data: CreateEventRequest) => {
     const { categoryId, endAt, ...params } = data;
     await mutateAsync({
@@ -57,14 +64,14 @@ export function useInsertModal() {
       ...params,
     });
 
-    setIsOpen(false);
-    form.reset();
+    onClose();
     Toast.showSuccess(t("common.messages.createSuccess"));
   }
+
   return {
     isOpen,
-    onOpen: () => { setIsOpen(true); },
-    onClose: () => { setIsOpen(false); },
+    onOpen,
+    onClose,
     form,
     onSubmit,
   };

@@ -3,6 +3,7 @@ import { DataList, RefreshButton, SearchTextbox } from "@/app/components";
 import React from "react";
 import { EventCardDetail } from "../_detail/DetailCard";
 import { InsertCard } from "../_insert/InsertCard";
+import { UpdateCard } from "../_update/UpdateCard";
 import { ListItemAction, useCardList } from "./useCardList";
 
 export type CardListProps = {
@@ -53,7 +54,14 @@ export const CardList = React.memo(({ eventId }: CardListProps) => {
       )}
 
       {/* Show Card Edit */}
-      {pageAction == ListItemAction.EDIT && <>Show Edit</>}
+      {pageAction == ListItemAction.EDIT && (
+        <UpdateCard
+          eventId={eventId}
+          detail={data.items.find((x) => x.id == targetId)!}
+          isOpen={true}
+          onClose={onCloseModal}
+        />
+      )}
     </>
   );
 });

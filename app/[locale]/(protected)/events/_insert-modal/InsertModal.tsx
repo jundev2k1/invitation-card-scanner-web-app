@@ -48,7 +48,7 @@ export function InsertModal() {
                   <TextBox name="status" label={t('event.insert.fields.status')} className="w-full" value={EventStatus.DRAFT} disabled />
                   <FormTextBox name="title" label={t('event.insert.fields.title')} containerClassName="md:col-span-2 w-full col" />
                   <FormDateTimePicker name="startAt" label={t('event.insert.fields.startAt')} />
-                  <FormDateTimePicker name="endAt" label={t('event.insert.fields.endAt')} />
+                  <FormDateTimePicker name="endAt" label={t('event.insert.fields.endAt')} nullable />
                   <FormTextBox name="locationName" label={t('event.insert.fields.location')} containerClassName="md:col-span-2 w-full col" />
                   <FormTextBox name="address" label={t('event.insert.fields.address')} containerClassName="md:col-span-2 w-full col" />
                   <FormTextBox name="mapUrl" label={t('event.insert.fields.mapUrl')} containerClassName="md:col-span-2 w-full col" />
@@ -61,7 +61,13 @@ export function InsertModal() {
               </div>
 
               <DialogFooter className="shrink-0 p-4 border-t">
-                <Button variant="outline" onClick={onClose}>{t("common.actions.cancel")}</Button>
+                <Button
+                  className="dark:text-muted-foreground"
+                  variant="outline"
+                  onClick={onClose}
+                >
+                  {t("common.actions.cancel")}
+                </Button>
                 <Button type="submit"
                   disabled={form.formState.isSubmitting}
                 >

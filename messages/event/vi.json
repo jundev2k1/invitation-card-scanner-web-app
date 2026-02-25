@@ -77,6 +77,13 @@
         "notes": "Ghi chú"
       }
     },
+    "update": {
+      "title": "Chỉnh sửa thiệp sự kiện",
+      "fields": {
+        "guestName": "Tên khách mời",
+        "notes": "Ghi chú"
+      }
+    },
     "detail": {
       "title": "Chi tiết thiệp sự kiện",
       "fields": {

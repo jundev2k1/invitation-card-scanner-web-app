@@ -12,7 +12,7 @@ export {
   Mail as MailIcon, MapPinOff as MapPinOffIcon, Menu as MenuIcon, Minus as MinusIcon, Moon as MoonIcon, NotebookPen as NotebookPenIcon, Palette as PaletteIcon,
   Phone as PhoneIcon, PlusCircle as PlusCircleIcon, Plus as PlusIcon, Save as SaveIcon, ScanQrCode as ScanQrCodeIcon, Search as SearchIcon, Settings as SettingsIcon, ShieldCheck as ShieldCheckIcon,
   ShieldUser as ShieldUserIcon, Sun as SunIcon,
-  Text as TextIcon, Trash2 as TrashIcon, UserCircle as UserCircleIcon, User as UserIcon, UserPlus as UserPlusIcon, UserRoundCheck as UserRoundCheckIcon, Users as UsersIcon, X as XIcon
+  Text as TextIcon, Trash2 as TrashIcon, UserCircle as UserCircleIcon, User as UserIcon, UserPlus as UserPlusIcon, UserRoundCheck as UserRoundCheckIcon, Users as UsersIcon, XCircle as XCircleIcon, X as XIcon
 } from "lucide-react";
 
 export {

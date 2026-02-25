@@ -77,6 +77,13 @@
         "notes": "Notes"
       }
     },
+    "update": {
+      "title": "Update event card",
+      "fields": {
+        "guestName": "Guest Name",
+        "notes": "Notes"
+      }
+    },
     "detail": {
       "title": "Event card detail",
       "fields": {
