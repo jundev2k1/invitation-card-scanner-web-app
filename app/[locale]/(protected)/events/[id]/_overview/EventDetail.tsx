@@ -66,7 +66,6 @@ export default function EventDetailLayout({ id, action }: EventDetailProps) {
       ) : (
         <>
           {action === PageAction.VIEW && <EventViewForm eventDetail={data} />}
-          {action === PageAction.EDIT && <></>}
         </>
       )}
     </PageContent>
