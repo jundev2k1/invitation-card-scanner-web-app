@@ -36,16 +36,15 @@ export default function EventDetailLayout({ id, action }: EventDetailProps) {
               <RefreshButton onRefresh={onPageRefresh} />
               <Button
                 leftIcon={<TrashIcon />}
-                className="dark:text-muted-foreground"
-                variant="outline"
+                variant="destructive"
                 onClick={handleDelete}
               >
                 {t('common.actions.delete')}
               </Button>
               <Button
                 leftIcon={<ClipboardPenIcon />}
-                className="dark:text-muted-foreground"
-                variant="outline"
+                className="dark:text-white"
+                variant="default"
                 onClick={redirectToEdit}
               >
                 {t('common.actions.edit')}

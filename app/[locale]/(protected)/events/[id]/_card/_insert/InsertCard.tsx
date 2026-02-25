@@ -39,7 +39,14 @@ export const InsertCard = React.memo(() => {
               </div>
 
               <DialogFooter className="shrink-0 p-4 border-t">
-                <Button variant="outline" onClick={onClose}>{t("common.actions.cancel")}</Button>
+                <Button
+                  className="dark:text-muted-foreground"
+                  variant="outline"
+                  onClick={onClose}
+                >
+                  {t("common.actions.cancel")}
+                </Button>
+
                 <Button type="submit"
                   disabled={form.formState.isSubmitting}
                 >

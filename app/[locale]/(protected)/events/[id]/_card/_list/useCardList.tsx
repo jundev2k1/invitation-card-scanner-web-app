@@ -53,6 +53,7 @@ const getColumns = (
         },
         {
           label: t('common.actions.delete'),
+          className: "text-red-600",
           action: () => { onDeleteCard(item.id) }
         },
       ];

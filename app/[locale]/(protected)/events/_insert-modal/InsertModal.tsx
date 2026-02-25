@@ -25,8 +25,7 @@ export function InsertModal() {
   return (
     <>
       <Button
-        variant="outline"
-        className="dark:text-muted-foreground"
+        className="dark:text-white"
         leftIcon={<PlusCircleIcon />}
         onClick={onOpen}
       >
