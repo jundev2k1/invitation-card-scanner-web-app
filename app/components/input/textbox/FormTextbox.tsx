@@ -24,7 +24,11 @@ export function FormTextBox({ name, label, isRequired, containerClassName, class
       <Input
         id={name}
         {...register(name)}
-        className={cn(error ? "border-destructive focus-visible:ring-destructive" : "", className)}
+        className={cn(
+          "dark:text-foreground",
+          error ? "border-destructive focus-visible:ring-destructive" : "",
+          className
+        )}
         required={isRequired}
         {...props}
       />

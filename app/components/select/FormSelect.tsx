@@ -16,7 +16,7 @@ export function FormSelect({ name, label, options, placeholder }: FormSelectProp
 
   return (
     <div className="space-y-1.5 w-full">
-      {label && <Label>{label}</Label>}
+      {label && <Label className="text-slate-900 dark:text-muted-foreground">{label}</Label>}
       <Controller
         control={control}
         name={name}

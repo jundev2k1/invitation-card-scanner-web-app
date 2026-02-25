@@ -1,6 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import { useFormContext } from "react-hook-form";
 
 interface FormNumberProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -19,7 +20,10 @@ export function FormNumber({ name, label, isRequired, ...props }: FormNumberProp
       <Input
         type="number"
         {...register(name, { valueAsNumber: true })}
-        className={error ? "border-destructive text-destructive" : "text-slate-900 dark:text-muted-foreground"}
+        className={cn(
+          "dark:text-foreground",
+          error ? "border-destructive text-destructive" : "text-slate-900 dark:text-muted-foreground"
+        )}
         required={isRequired}
         {...props}
       />

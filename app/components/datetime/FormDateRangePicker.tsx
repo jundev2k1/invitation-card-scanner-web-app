@@ -19,7 +19,11 @@ export function FormDateRangePicker({ name, label }: FormDateRangePickerProps) {
 
   return (
     <div className="space-y-1.5 flex flex-col">
-      {label && <Label>{label}</Label>}
+      {label && (
+        <Label className="text-slate-900 dark:text-muted-foreground">
+          {label}
+        </Label>
+      )}
       <Controller
         control={control}
         name={name}

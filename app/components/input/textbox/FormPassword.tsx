@@ -32,7 +32,11 @@ export function FormPassword({ name, label, className, isRequired, ...props }: F
           id={name}
           type={show ? "text" : "password"}
           {...register(name)}
-          className={cn("pr-10", error && "border-destructive", className)}
+          className={cn(
+            "pr-10 dark:text-foreground",
+            error && "border-destructive",
+            className
+          )}
           required={isRequired}
           {...props}
         />

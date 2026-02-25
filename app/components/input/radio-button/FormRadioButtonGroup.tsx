@@ -28,7 +28,7 @@ export function FormRadioGroup({ name, label, horizontal = false, options }: For
             {options.map((opt) => (
               <div key={opt.value} className="flex items-center gap-2">
                 <RadioGroupItem className="cursor-pointer text-muted-foreground" value={opt.value} id={`${name}-${opt.value}`} />
-                <Label htmlFor={`${name}-${opt.value}`} className="font-normal text-slate-400 cursor-pointer">{opt.label}</Label>
+                <Label htmlFor={`${name}-${opt.value}`} className="font-normal text-slate-400 dark:text-foreground cursor-pointer">{opt.label}</Label>
               </div>
             ))}
           </RadioGroup>

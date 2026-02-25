@@ -15,7 +15,7 @@ export function FormCheckboxGroup({ name, label, options }: FormCheckboxGroupPro
 
   return (
     <div className="space-y-3">
-      {label && <Label className="text-base">{label}</Label>}
+      {label && <Label className="text-base text-slate-900 dark:text-muted-foreground">{label}</Label>}
       <Controller
         control={control}
         name={name}
@@ -35,7 +35,7 @@ export function FormCheckboxGroup({ name, label, options }: FormCheckboxGroupPro
                       field.onChange(newValue);
                     }}
                   />
-                  <Label htmlFor={`${name}-${opt.value}`} className="font-normal">{opt.label}</Label>
+                  <Label htmlFor={`${name}-${opt.value}`} className="font-normal text-slate-400 dark:text-foreground">{opt.label}</Label>
                 </div>
               ))}
             </div>

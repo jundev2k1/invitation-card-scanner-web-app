@@ -22,7 +22,11 @@ export function FormDateTimePicker({ name, label }: FormDatePickerProps) {
 
   return (
     <div className="space-y-1.5 flex flex-col">
-      {label && <Label className={error ? "border-destructive text-destructive" : "text-slate-900 dark:text-muted-foreground"}>{label}</Label>}
+      {label && (
+        <Label className={error ? "border-destructive text-destructive" : "text-slate-900 dark:text-muted-foreground"}>
+          {label}
+        </Label>
+      )}
       <Controller
         control={control}
         name={name}

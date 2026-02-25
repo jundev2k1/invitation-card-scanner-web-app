@@ -15,7 +15,7 @@ export function FormCheckbox({ name, label }: { name: string; label: string }) {
         render={({ field }) => (
           <div className="flex items-center gap-2">
             <Checkbox id={name} checked={field.value} onCheckedChange={field.onChange} />
-            <Label htmlFor={name} className="cursor-pointer">{label}</Label>
+            <Label htmlFor={name} className="cursor-pointer text-slate-900 dark:text-muted-foreground">{label}</Label>
           </div>
         )}
       />

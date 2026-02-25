@@ -27,7 +27,7 @@ export function FormTextArea({ name, label, containerClassName, className, isReq
         id={name}
         {...register(name)}
         className={cn(
-          "min-height-[100px] resize-y",
+          "min-height-[100px] resize-y dark:text-foreground",
           error ? "border-destructive focus-visible:ring-destructive" : "", 
           className
         )}

@@ -12,7 +12,9 @@ export function FormSwitch({ name, label }: { name: string; label: string }) {
       render={({ field }) => (
         <div className="flex items-center gap-2">
           <Switch checked={field.value} onCheckedChange={field.onChange} />
-          <Label>{label}</Label>
+          <Label className="text-slate-900 dark:text-muted-foreground">
+            {label}
+          </Label>
         </div>
       )}
     />
