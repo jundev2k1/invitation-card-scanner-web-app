@@ -2,6 +2,7 @@
 import { DataList, PageContent, RefreshButton, TextBox } from "@/app/components";
 import { useTranslations } from "next-intl";
 import { InsertModal } from "./_insert-modal/InsertModal";
+import { EventScanner } from "./_shared";
 import { useEventPage } from "./useEventPage";
 
 export default function EventsPage() {
@@ -34,6 +35,7 @@ export default function EventsPage() {
       }
       actions={
         <>
+          <EventScanner />
           <RefreshButton onRefresh={onPageRefresh} />
           <InsertModal />
         </>

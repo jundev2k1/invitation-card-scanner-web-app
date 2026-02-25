@@ -10,6 +10,7 @@ export * from "./input";
 export * from "./label";
 export * from "./layout";
 export * from "./map";
+export * from "./qr";
 export * from "./select";
 export * from "./separator";
 export * from "./skeleton";

@@ -33,6 +33,7 @@ import {
   UserIcon,
   UserRoundCheckIcon,
 } from "@/app/components/icons";
+import QRCodeGenerator from "@/app/components/qr/QRCodeGenerator";
 import { formatDateTime } from "@/lib/datetime/date.util";
 import { useTranslations } from "next-intl";
 import React from "react";
@@ -55,6 +56,7 @@ export const EventCardDetail = React.memo(({ eventId, cardId, isOpen, onClose }:
     hoverInfoId,
     onHoverInfo,
     onHoverOutInfo,
+    createQrCodeContent,
   } = useEventCardDetail({ eventId, cardId });
 
   return (
@@ -117,8 +119,15 @@ export const EventCardDetail = React.memo(({ eventId, cardId, isOpen, onClose }:
                 </div>
 
               </div>
-              <div className="p-2">
-                {data?.accessToken}
+              <div className="p-4">
+                <QRCodeGenerator
+                  className="flex justify-center"
+                  value={createQrCodeContent()}
+                  size={200}
+                  isLoading={isLoading}
+                  onRefresh={() => { }}
+                  copyable
+                />
               </div>
             </div>
             <div className="flex flex-col gap-2">

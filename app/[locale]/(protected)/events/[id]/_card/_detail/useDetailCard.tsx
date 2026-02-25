@@ -12,6 +12,11 @@ export const useEventCardDetail = ({ eventId, cardId }: useEventCardDetailProps)
   const [hoverInfoId, setHoverInfoId] = useState<string | null>(null);
   const { data, isLoading } = useGetEventCardDetail(eventId, cardId);
 
+  const createQrCodeContent = useCallback(() => {
+    const qrCodeContent = `${window.location.origin}/events/${eventId}/card/${cardId}`;
+    return qrCodeContent;
+  }, [eventId, cardId]);
+
   const onOpenInfo = useCallback((id: string) => {
     setShowInfoId(id);
     setHoverInfoId(id);
@@ -30,5 +35,6 @@ export const useEventCardDetail = ({ eventId, cardId }: useEventCardDetailProps)
     hoverInfoId,
     onHoverInfo,
     onHoverOutInfo,
+    createQrCodeContent,
   };
 };
