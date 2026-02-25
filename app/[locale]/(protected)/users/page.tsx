@@ -6,7 +6,6 @@ import { useUserPage } from "./useUserPage";
 
 export default function UserPage() {
   const {
-    currentPage,
     breadcrumbs,
     columns,
     isLoading,
@@ -22,7 +21,7 @@ export default function UserPage() {
 
   return (
     <PageContent
-      title={currentPage ? t(currentPage) : 'User Management'}
+      title={t('user.list.title')}
       description={t('user.list.desc')}
       breadcrumbs={breadcrumbs}
       filters={

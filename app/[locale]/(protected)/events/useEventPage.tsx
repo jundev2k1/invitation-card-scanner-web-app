@@ -4,11 +4,10 @@ import { ClockIcon, MapPinHouseIcon } from "@/app/components/icons";
 import { RouteUtil } from "@/app/utils/route";
 import { formatDate } from "@/lib/datetime/date.util";
 import { useDeleteEvent, useSearchEvents, useUpdateEventStatus } from "@/services";
-import { useSidebarStore } from "@/store";
 import { defaultSearchResult, EventSearchItemDto, EventStatus } from "@/types";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 const getBreadcrumbs = (t: any, locale: string) => [
   { label: t('dashboard.title'), href: RouteUtil.getDashboardRoute(locale) },
@@ -109,18 +108,10 @@ export const useEventPage = () => {
   const router = useRouter();
   const t = useTranslations();
 
-  const { currentPage, setCurrentPage } = useSidebarStore();
   const { keyword, filter, setKeyword, onPageChange, onPageSizeChange } = useFilter();
   const { data, isLoading, refetch } = useSearchEvents({ keyword, page: filter.page, pageSize: filter.pageSize });
   const { mutateAsync: deleteEvent } = useDeleteEvent();
   const { mutateAsync: updateStatus } = useUpdateEventStatus();
-
-  useEffect(() => {
-    if (currentPage == "event.list.title")
-      return;
-
-    setCurrentPage("event.list.title");
-  }, [currentPage]);
 
   const redirectToDetail = useCallback((id: string) => router.push(RouteUtil.getEventDetailUrl(locale, id)), [locale]);
   const onDeleteEvent = useCallback(async (id: string) => {
@@ -139,7 +130,6 @@ export const useEventPage = () => {
   const onPageRefresh = useCallback(refetch, []);
 
   return {
-    currentPage,
     isLoading,
     data: data?.data ?? defaultSearchResult,
     breadcrumbs,

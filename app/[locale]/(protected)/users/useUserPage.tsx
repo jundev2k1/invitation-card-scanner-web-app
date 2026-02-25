@@ -4,12 +4,11 @@ import { RouteUtil } from "@/app/utils/route";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useGetUserSearch } from "@/services/user/useUserService";
-import { useSidebarStore } from "@/store";
 import { defaultSearchResult } from "@/types";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslations } from "use-intl";
 
 const getBreadcrumbs = (t: any, locale: string) => [
@@ -80,15 +79,8 @@ export const useUserPage = () => {
   const router = useRouter();
   const t = useTranslations();
 
-  const { currentPage, setCurrentPage } = useSidebarStore();
   const { keyword, filter, setKeyword, onPageChange, onPageSizeChange } = useFilter();
   const { data, isLoading, refetch } = useGetUserSearch(keyword, [], filter.page, filter.pageSize);
-
-  useEffect(() => {
-    if (currentPage == "user.list.title") return;
-
-    setCurrentPage("user.list.title");
-  }, [currentPage]);
 
   const redirectToDetail = useCallback((id: string) => router.push(RouteUtil.getUserDetailUrl(locale, id)), [locale]);
 
@@ -97,7 +89,6 @@ export const useUserPage = () => {
   const onPageRefresh = useCallback(refetch, []);
 
   return {
-    currentPage,
     breadcrumbs,
     columns,
     isLoading,

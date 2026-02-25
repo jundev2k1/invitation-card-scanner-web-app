@@ -7,7 +7,6 @@ import { useEventPage } from "./useEventPage";
 export default function EventsPage() {
   const t = useTranslations();
   const {
-    currentPage,
     breadcrumbs,
     columns,
     isLoading,
@@ -22,7 +21,7 @@ export default function EventsPage() {
 
   return (
     <PageContent
-      title={currentPage ? t(currentPage) : 'User Management'}
+      title={t('event.list.title')}
       description={t('user.list.desc')}
       breadcrumbs={breadcrumbs}
       filters={

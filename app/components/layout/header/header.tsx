@@ -6,10 +6,11 @@ import { useTranslations } from "next-intl";
 import { Notification } from "../../notification";
 import { ProfileMenu } from "../../profiles";
 import { ThemeToggleButton } from "../../theme";
+import { SearchBar } from "./search-bar/SearchBar";
 
 export default function PageHeader() {
   const t = useTranslations();
-  const { isCollapsed, toggleSidebar, currentPage } = useSidebarStore();
+  const { isCollapsed, toggleSidebar } = useSidebarStore();
 
   return (
     <header
@@ -25,9 +26,7 @@ export default function PageHeader() {
           onClick={() => toggleSidebar(!isCollapsed)}
           aria-label="Toggle sidebar" />
 
-        <h1 className="text-lg md:text-xl font-semibold tracking-tight">
-          {currentPage ? t(currentPage) : "Dashboard"}
-        </h1>
+        <SearchBar />
       </div>
 
       {/* Right: Actions */}
