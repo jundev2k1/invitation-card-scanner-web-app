@@ -1,7 +1,9 @@
+import { EventCardStatus } from "@/types/enum";
+
 export interface EventCardSearchItemDto {
   id: string,
   guestName: string,
-  status: number,
+  status: EventCardStatus,
   notes: string,
   createdAt: Date,
   updatedAt: Date

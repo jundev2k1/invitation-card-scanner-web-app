@@ -6,6 +6,10 @@
       "PUBLISHED": "Published",
       "COMPLETED": "Completed",
       "CANCELLED": "Cancelled"
+    },
+    "card-status": {
+      "INVALID": "Invalid",
+      "ACTIVE": "Active"
     }
   },
   "list": {
@@ -62,6 +66,7 @@
       "columns": {
         "id": "ID",
         "information": "Information",
+        "status": "Status",
         "action": "Action"
       }
     },

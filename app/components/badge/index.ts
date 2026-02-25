@@ -1,3 +1,4 @@
+export * from "./EventCardStatusBadge";
 export * from "./EventStatusBadge";
 export * from "./RoleBadge";
 export * from "./SexBadge";

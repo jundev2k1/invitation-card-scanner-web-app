@@ -5,6 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   Separator,
+  SkeletonListItem,
   SmartDateTime,
   Table,
   TableBody,
@@ -20,12 +21,14 @@ import React from "react";
 import { useEventCardDetail } from "./useDetailCard";
 
 type Props = {
-  isOpen: boolean;
-  onClose: () => void;
+  eventId: string,
+  cardId: string,
+  isOpen: boolean,
+  onClose: () => void,
 }
-export const EventCardDetail = React.memo(({ isOpen, onClose }: Props) => {
+export const EventCardDetail = React.memo(({ eventId, cardId, isOpen, onClose }: Props) => {
   const t = useTranslations();
-  const { data } = useEventCardDetail();
+  const { isLoading, data } = useEventCardDetail({ eventId, cardId });
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-4xl h-[90vh] p-0 flex flex-col" onOpenAutoFocus={(e) => e.preventDefault()}>
@@ -69,34 +72,42 @@ export const EventCardDetail = React.memo(({ isOpen, onClose }: Props) => {
               </TableHeader>
 
               <TableBody>
-                {data.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell width="40%">
-                      <div className="flex gap-2">
-                        <span className="flex items-center gap-1 dark:text-muted-foreground">
-                          <UserRoundCheckIcon size={14} />
-                          {t('event.cardList.detail.table.content.scannedByName')}:
-                        </span>
-
-                        <span className="font-medium dark:text-foreground">
-                          {item.scannedByName}
-                        </span>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <span className="flex items-center gap-1 dark:text-muted-foreground">
-                          <ClockIcon size={14} />
-                          {t('event.cardList.detail.table.content.scannedAt')}:
-                        </span>
-
-                        <SmartDateTime date={item.scanAt} />
-                      </div>
-                    </TableCell>
-                    <TableCell width="60%" className="font-medium dark:text-muted-foreground">
-                      <TruncatedText text={item.notes} />
+                {isLoading || !data ? (
+                  <TableRow>
+                    <TableCell colSpan={2} className="h-8 text-center font-medium dark:text-muted-foreground">
+                      <SkeletonListItem />
                     </TableCell>
                   </TableRow>
-                ))}
+                ) :
+                  data.scannedLogs.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell width="40%">
+                        <div className="flex gap-2">
+                          <span className="flex items-center gap-1 dark:text-muted-foreground">
+                            <UserRoundCheckIcon size={14} />
+                            {t('event.cardList.detail.table.content.scannedByName')}:
+                          </span>
+
+                          <span className="font-medium dark:text-foreground">
+                            {item.scannedBy.nickname}
+                          </span>
+                        </div>
+
+                        <div className="flex gap-2">
+                          <span className="flex items-center gap-1 dark:text-muted-foreground">
+                            <ClockIcon size={14} />
+                            {t('event.cardList.detail.table.content.scannedAt')}:
+                          </span>
+
+                          <SmartDateTime date={item.scanAt} />
+                        </div>
+                      </TableCell>
+                      <TableCell width="60%" className="font-medium dark:text-muted-foreground">
+                        <TruncatedText text={item.notes} />
+                      </TableCell>
+                    </TableRow>
+                  ))
+                }
               </TableBody>
             </Table>
           </div>

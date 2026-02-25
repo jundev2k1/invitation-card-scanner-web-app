@@ -11,8 +11,9 @@ export type CardListProps = {
 export const CardList = React.memo(({ eventId }: CardListProps) => {
   const {
     isLoading,
+    onRefresh,
     data,
-    pageAction,
+    pageAction: [pageAction, targetId],
     onCloseModal,
     columns,
     keyword,
@@ -31,7 +32,7 @@ export const CardList = React.memo(({ eventId }: CardListProps) => {
         />
 
         <div className="flex items-center gap-2">
-          <RefreshButton onRefresh={() => { }} />
+          <RefreshButton onRefresh={onRefresh} />
           <InsertCard />
         </div>
       </div>
@@ -46,7 +47,12 @@ export const CardList = React.memo(({ eventId }: CardListProps) => {
         pageSize={filter.pageSize}
       />
 
-      {pageAction == ListItemAction.DETAIL && <EventCardDetail isOpen={true} onClose={onCloseModal} />}
+      {/* Show Card Detail */}
+      {pageAction == ListItemAction.DETAIL && !!targetId && (
+        <EventCardDetail eventId={eventId} cardId={targetId} isOpen={true} onClose={onCloseModal} />
+      )}
+
+      {/* Show Card Edit */}
       {pageAction == ListItemAction.EDIT && <>Show Edit</>}
     </>
   );

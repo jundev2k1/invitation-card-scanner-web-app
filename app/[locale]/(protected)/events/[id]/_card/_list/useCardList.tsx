@@ -1,16 +1,9 @@
-import { Column, DropdownButton, SmartDateTime, TruncatedText, useFilter } from "@/app/components";
+import { Column, DropdownButton, EventCardStatusBadge, SmartDateTime, TruncatedText, useFilter } from "@/app/components";
 import { ClockIcon } from "@/app/components/icons";
-import { defaultSearchResult, SearchResult } from "@/types";
+import { useSearchEventCards } from "@/services";
+import { defaultSearchResult, EventCardSearchItemDto } from "@/types";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
-
-interface EventCardSearchItemDto {
-  id: string;
-  guestName: string;
-  notes: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 const getColumns = (
   t: any,
@@ -37,6 +30,11 @@ const getColumns = (
         </p>
       </div>
     )
+  },
+  {
+    key: "status",
+    label: t('event.cardList.table.columns.status'),
+    render: (_, item) => <EventCardStatusBadge status={item.status} />
   },
   {
     key: "actions",
@@ -71,48 +69,25 @@ export enum ListItemAction {
 
 export const useCardList = ({ eventId }: { eventId: string }) => {
   const t = useTranslations();
-  const [pageAction, setPageAction] = useState<ListItemAction>(ListItemAction.NONE);
-  const { keyword, setKeyword, filter, onPageChange, onPageSizeChange } = useFilter();
 
-  const onOpenDetail = useCallback((id: string) => { setPageAction(ListItemAction.DETAIL); }, []);
-  const onOpenEdit = useCallback((id: string) => { setPageAction(ListItemAction.EDIT); }, []);
+  const [pageAction, setPageAction] = useState<[ListItemAction, string | null]>([ListItemAction.NONE, null]);
+  const { keyword, setKeyword, filter, onPageChange, onPageSizeChange } = useFilter();
+  const { data, isLoading, refetch } = useSearchEventCards(
+    eventId,
+    { keyword: filter.keyword, page: filter.page, pageSize: filter.pageSize }
+  );
+
+  const onOpenDetail = useCallback((id: string) => { setPageAction([ListItemAction.DETAIL, id]); }, []);
+  const onOpenEdit = useCallback((id: string) => { setPageAction([ListItemAction.EDIT, id]); }, []);
   const onDeleteCard = useCallback(async (id: string) => { }, []);
-  const onCloseModal = useCallback(() => { setPageAction(ListItemAction.NONE); }, []);
+  const onCloseModal = useCallback(() => { setPageAction([ListItemAction.NONE, null]); }, []);
 
   const columns = useMemo(() => getColumns(t, onOpenDetail, onOpenEdit, onDeleteCard), [eventId]);
 
-  const mockData: SearchResult<EventCardSearchItemDto> = {
-    ...defaultSearchResult,
-    items: [
-      {
-        id: "1",
-        guestName: "John Doe",
-        notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        createdAt: "2022-01-01T00:00:00.000Z",
-        updatedAt: "2022-01-01T00:00:00.000Z",
-      },
-      {
-        id: "2",
-        guestName: "Jane Doe",
-        notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        createdAt: "2022-01-01T00:00:00.000Z",
-        updatedAt: "2022-01-01T00:00:00.000Z",
-      },
-      {
-        id: "3",
-        guestName: "John Doe",
-        notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        createdAt: "2022-01-01T00:00:00.000Z",
-        updatedAt: "2022-01-01T00:00:00.000Z",
-      },
-    ],
-    count: 3,
-    totalCount: 3,
-  }
-
   return {
-    isLoading: false,
-    data: mockData,
+    isLoading,
+    onRefresh: refetch,
+    data: data?.data ?? defaultSearchResult,
     pageAction,
     onCloseModal,
     columns,

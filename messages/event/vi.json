@@ -6,6 +6,10 @@
       "PUBLISHED": "Đã đăng",
       "COMPLETED": "Hoàn thành",
       "CANCELLED": "Đã hủy"
+    },
+    "card-status": {
+      "INVALID": "Bị vô khóa",
+      "ACTIVE": "Hoạt động"
     }
   },
   "list": {
@@ -62,6 +66,7 @@
       "columns": {
         "id": "ID",
         "information": "Thông tin",
+        "status": "Trạng thái",
         "action": "Hành động"
       }
     },
