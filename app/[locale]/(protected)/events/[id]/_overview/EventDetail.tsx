@@ -1,8 +1,9 @@
 "use client";
 import { Button, Card, CardContent, PageContent, RefreshButton, SkeletonCard, SkeletonProfile } from "@/app/components";
-import { ClipboardPenIcon, InfoIcon, TrashIcon } from "@/app/components/icons";
+import { InfoIcon, TrashIcon } from "@/app/components/icons";
 import { PageAction } from "@/types";
 import { useTranslations } from "next-intl";
+import { UpdateModal } from "../../_update-modal/UpdateModal";
 import { EventViewForm } from "../_view/ViewEventDetail";
 import { useEventDetail } from "./useEventDetail";
 
@@ -41,14 +42,7 @@ export default function EventDetailLayout({ id, action }: EventDetailProps) {
               >
                 {t('common.actions.delete')}
               </Button>
-              <Button
-                leftIcon={<ClipboardPenIcon />}
-                className="dark:text-white"
-                variant="default"
-                onClick={redirectToEdit}
-              >
-                {t('common.actions.edit')}
-              </Button>
+              <UpdateModal detail={data} />
             </>
           )}
           {action === PageAction.EDIT && (
