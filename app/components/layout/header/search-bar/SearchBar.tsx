@@ -20,15 +20,21 @@ export const SearchBar = React.memo(() => {
   const showEmpty = !isApiLoading && !hasApiResults && !hasFeatures && query.trim();
   return (
     <>
+
       <Button
         className="flex items-center justify-between w-64 px-3 py-1.5 text-sm text-muted-foreground border rounded-md bg-muted/50 hover:bg-muted transition-all"
         leftIcon={
-          <div className="flex items-center gap-1 font-medium">
-            <SearchIcon className="w-4 h-4" />
+          <div className="flex items-center gap-1">
+            <SearchIcon />
             <span>Search...</span>
           </div>
         }
-        rightIcon={<kbd className="font-sans text-[10px] border rounded bg-white px-1.5 opacity-70">⌘K</kbd>}
+        rightIcon={
+          <div className="flex items-center gap-1">
+            <kbd className="ml-auto font-sans text-xs border rounded bg-white px-1.5">⌘K</kbd>
+            <kbd className="ml-auto font-sans text-xs border rounded bg-white px-1.5">Ctrl K</kbd>
+          </div>
+        }
         onClick={onOpen}
       />
 
@@ -88,11 +94,6 @@ export const SearchBar = React.memo(() => {
             {/* QUICK ACCESS */}
             {hasFeatures && (
               <CommandGroup heading="Quick Access">
-                {/* Debug: in ra số lượng và nội dung */}
-                <CommandItem disabled className="text-xs text-muted-foreground pointer-events-none">
-                  Debug: {filteredFeatures.length} features found
-                </CommandItem>
-
                 {filteredFeatures.length === 0 ? (
                   <CommandItem disabled className="justify-center opacity-70">
                     No quick access matches
