@@ -19,7 +19,6 @@ export default function EventDetailLayout({ id, action }: EventDetailProps) {
     isLoading,
     data,
     onPageRefresh,
-    redirectToEdit,
     redirectToDetail,
     handleDelete,
   } = useEventDetail(id);

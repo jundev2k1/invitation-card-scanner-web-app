@@ -25,7 +25,6 @@ export const useEventDetail = (id: string) => {
     }
   }, [status, locale, router]);
 
-  const redirectToEdit = useCallback(() => router.push(RouteUtil.getEventDetailUrl(locale, id, PageAction.EDIT)), [locale]);
   const redirectToDetail = useCallback(() => router.push(RouteUtil.getEventDetailUrl(locale, id, PageAction.VIEW)), [locale]);
   const handleDelete = useCallback(async () => {
     if (!window.confirm(t('common.messages.confirmDelete'))) return;
@@ -43,7 +42,6 @@ export const useEventDetail = (id: string) => {
     isLoading: isLoading || isFetching,
     data: data?.data ?? null,
     onPageRefresh: refetch,
-    redirectToEdit,
     redirectToDetail,
     handleDelete,
   };
