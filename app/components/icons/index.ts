@@ -5,12 +5,12 @@ export {
   ChevronRight as ChevronRightIcon,
   ChevronsLeft as ChevronsLeftIcon,
   ChevronsRight as ChevronsRightIcon, Clock as ClockIcon, Copy as CopyIcon, CreditCard as CreditCardIcon, Crown as CrownIcon, Ellipsis as EllipsisIcon, Eye as EyeIcon,
-  EyeOff as EyeOffIcon, FilePlus as FilePlusIcon, Info as InfoIcon,
+  EyeOff as EyeOffIcon, FilePlus as FilePlusIcon, IdCard as IdCardIcon, Info as InfoIcon,
   Key as KeyIcon, LayoutDashboardIcon as LayoutDashboardIcon, Link as LinkIcon, Loader2 as LoaderIcon,
   LogIn as LogInIcon,
   LogOut as LogOutIcon,
   Mail as MailIcon, MapPinOff as MapPinOffIcon, Menu as MenuIcon, Minus as MinusIcon, Moon as MoonIcon, NotebookPen as NotebookPenIcon, Palette as PaletteIcon,
-  Phone as PhoneIcon, PlusCircle as PlusCircleIcon, Plus as PlusIcon, Save as SaveIcon, Search as SearchIcon, Settings as SettingsIcon, ShieldCheck as ShieldCheckIcon,
+  Phone as PhoneIcon, PlusCircle as PlusCircleIcon, Plus as PlusIcon, Save as SaveIcon, ScanQrCode as ScanQrCodeIcon, Search as SearchIcon, Settings as SettingsIcon, ShieldCheck as ShieldCheckIcon,
   ShieldUser as ShieldUserIcon, Sun as SunIcon,
   Text as TextIcon, Trash2 as TrashIcon, UserCircle as UserCircleIcon, User as UserIcon, UserPlus as UserPlusIcon, UserRoundCheck as UserRoundCheckIcon, Users as UsersIcon, X as XIcon
 } from "lucide-react";

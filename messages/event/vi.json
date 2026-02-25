@@ -80,8 +80,16 @@
     "detail": {
       "title": "Chi tiết thiệp sự kiện",
       "fields": {
+        "id": "Mã thiệp mời",
         "guestName": "Tên khách mời",
+        "status": "Trạng thái",
+        "firstScannedAt": "Quét lần đầu",
         "notes": "Ghi chú"
+      },
+      "placeholder": {
+        "notScanned": "Chưa được scan",
+        "noNotes": "Chưa ghi chú",
+        "noHistory": "Không có lịch sử quét"
       },
       "table": {
         "title": "Lịch sử quét mã",

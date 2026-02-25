@@ -21,14 +21,14 @@ export function SmartDateTime({ date, label, className, format }: SmartDateTimeP
   const absoluteTime = formatDateTime(d, format);
 
   return (
-    <div
+    <span
       className={cn("flex items-center gap-1 text-sm text-muted-foreground", className)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {label && <span>{label}</span>}
 
-      <div className="relative overflow-hidden inline-block h-5 min-w-29">
+      <span className="relative overflow-hidden inline-block h-5 min-w-29">
         <AnimatePresence mode="wait">
           {isHovered ? (
             <motion.span
@@ -54,7 +54,7 @@ export function SmartDateTime({ date, label, className, format }: SmartDateTimeP
             </motion.span>
           )}
         </AnimatePresence>
-      </div>
-    </div>
+      </span>
+    </span>
   );
 }

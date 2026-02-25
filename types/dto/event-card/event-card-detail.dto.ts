@@ -1,3 +1,4 @@
+import { EventCardStatus } from "@/types/enum";
 import { EventCardLogDto } from "./event-card-log.dto";
 
 export interface EventCardDetailDto {
@@ -7,7 +8,7 @@ export interface EventCardDetailDto {
   accessToken: string;
   isUsed: boolean;
   firstScannedAt: Date | null;
-  status: Date;
+  status: EventCardStatus;
   notes: string;
   createdAt: Date;
   updatedAt: Date;

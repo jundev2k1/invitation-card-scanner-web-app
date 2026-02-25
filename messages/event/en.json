@@ -80,8 +80,16 @@
     "detail": {
       "title": "Event card detail",
       "fields": {
-        "guestName": "Guest Name",
+        "id": "ID",
+        "guestName": "Guest name",
+        "status": "Status",
+        "firstScannedAt": "First scanned at",
         "notes": "Notes"
+      },
+      "placeholder": {
+        "notScanned": "Not scanned",
+        "noNotes": "No notes available",
+        "noHistory": "No scan history found"
       },
       "table": {
         "title": "Scan History",

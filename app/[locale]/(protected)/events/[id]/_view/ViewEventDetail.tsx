@@ -142,7 +142,7 @@ export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
           <CardDescription>{t('event.cardList.desc')}</CardDescription>
         </CardHeader>
         <CardContent className="p-4">
-          <CardList eventId={data.id} />
+          <CardList key={data.id} eventId={data.id} />
         </CardContent>
       </Card>
     </div>

@@ -8,13 +8,13 @@ import {
 
 const EVENT_CARD_KEYS = {
   all: ["event_cards"] as const,
-  list: (params: GetEventCardListRequest) => [...EVENT_CARD_KEYS.all, "list", params] as const,
+  list: (eventId: string, params: GetEventCardListRequest) => [...EVENT_CARD_KEYS.all, eventId, "list", params] as const,
   detail: (id: string) => [...EVENT_CARD_KEYS.all, "detail", id] as const
 };
 
 const useSearchEventCards = (eventId: string, params: GetEventCardListRequest) => {
   return useQuery({
-    queryKey: EVENT_CARD_KEYS.list(params),
+    queryKey: EVENT_CARD_KEYS.list(eventId, params),
     queryFn: () => eventCardService.searchEventCards(eventId, params),
     staleTime: 1000 * 60,
     retry: false
