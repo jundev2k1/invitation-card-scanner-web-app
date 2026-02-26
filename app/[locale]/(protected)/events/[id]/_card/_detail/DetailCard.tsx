@@ -21,6 +21,7 @@ import {
   TruncatedText
 } from "@/app/components";
 import {
+  CalendarClockIcon,
   ClockIcon,
   EyeIcon,
   EyeOffIcon,
@@ -74,11 +75,21 @@ export const EventCardDetail = React.memo(({ eventId, cardId, isOpen, onClose }:
               <div className="md:col-span-2 md:border-r flex flex-col gap-2">
                 <div className="flex gap-4">
                   <p className="flex items-center gap-2 text-muted-foreground">
+                    <CalendarClockIcon size={16} />
+                    {t('event.cardList.detail.fields.eventId')}
+                  </p>
+                  <p className="text-foreground font-bold">
+                    {data?.eventId}
+                  </p>
+                </div>
+
+                <div className="flex gap-4">
+                  <p className="flex items-center gap-2 text-muted-foreground">
                     <IdCardIcon size={16} />
                     {t('event.cardList.detail.fields.id')}
                   </p>
                   <p className="text-foreground font-bold">
-                    {data?.eventId}
+                    {data?.id}
                   </p>
                 </div>
 

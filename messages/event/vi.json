@@ -10,6 +10,10 @@
     "card-status": {
       "INVALID": "Bị vô khóa",
       "ACTIVE": "Hoạt động"
+    },
+    "isScanned": {
+      "NO": "Chưa quét",
+      "YES": "Đã quét"
     }
   },
   "list": {
@@ -87,6 +91,7 @@
     "detail": {
       "title": "Chi tiết thiệp sự kiện",
       "fields": {
+        "eventId": "Mã sự kiện",
         "id": "Mã thiệp mời",
         "guestName": "Tên khách mời",
         "status": "Trạng thái",
@@ -135,6 +140,11 @@
     },
     "tooltip": {
       "scanButton": "Quét thiệp mời"
+    },
+    "actions": {
+      "reScan": "Scan lại",
+      "approve": "Duyệt",
+      "quickApprove": "Duyệt nhanh"
     }
   }
 }

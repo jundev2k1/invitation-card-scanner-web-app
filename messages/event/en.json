@@ -10,6 +10,10 @@
     "card-status": {
       "INVALID": "Invalid",
       "ACTIVE": "Active"
+    },
+    "isScanned": {
+      "NO": "Not scan yet",
+      "YES": "Scanned"
     }
   },
   "list": {
@@ -87,6 +91,7 @@
     "detail": {
       "title": "Event card detail",
       "fields": {
+        "eventId": "Event ID",
         "id": "ID",
         "guestName": "Guest name",
         "status": "Status",
@@ -135,6 +140,11 @@
     },
     "tooltip": {
       "scanButton": "Scan event card"
+    },
+    "actions": {
+      "reScan": "Rescan",
+      "approve": "Approve",
+      "quickApprove": "Quick Approve"
     }
   }
 }

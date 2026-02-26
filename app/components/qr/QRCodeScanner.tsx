@@ -34,6 +34,7 @@ export default function QRCodeScanner({ onScanSuccess }: QRCodeScannerProps) {
     return () => {
       if (html5QrCode.isScanning) {
         html5QrCode.stop().then(() => html5QrCode.clear());
+        console.log(1);
       }
     };
   }, []);

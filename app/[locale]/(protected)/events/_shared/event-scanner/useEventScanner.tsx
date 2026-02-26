@@ -5,9 +5,17 @@ export const useEventScanner = () => {
   const [result, setResult] = useState<string>("");
 
   const onOpen = useCallback(() => { setIsOpen(true); }, [isOpen]);
-  const onClose = useCallback(() => { setIsOpen(false); }, [isOpen]);
+  const onClose = useCallback(() => {
+    setIsOpen(false);
+    setResult("");
+  }, [isOpen]);
 
-  const onScan = useCallback((result: string) => { setResult(result); }, []);
+  const onScan = useCallback((result: string) => {
+    setResult(result);
+  }, []);
+  const onReset = useCallback(() => {
+    setResult("");
+  }, []);
 
   return {
     isOpen,
@@ -15,5 +23,6 @@ export const useEventScanner = () => {
     onClose,
     result,
     onScan,
+    onReset,
   };
 };

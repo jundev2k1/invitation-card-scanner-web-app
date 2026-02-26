@@ -13,8 +13,7 @@ export const useEventCardDetail = ({ eventId, cardId }: useEventCardDetailProps)
   const { data, isLoading } = useGetEventCardDetail(eventId, cardId);
 
   const createQrCodeContent = useCallback(() => {
-    const qrCodeContent = `${window.location.origin}/events/${eventId}/card/${cardId}`;
-    return qrCodeContent;
+    return data?.data?.accessToken ?? "";
   }, [eventId, cardId]);
 
   const onOpenInfo = useCallback((id: string) => {
