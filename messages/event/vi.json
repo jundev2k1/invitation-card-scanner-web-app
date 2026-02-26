@@ -127,5 +127,14 @@
       "mapUrl": "Link bản đồ",
       "status": "Trạng thái"
     }
+  },
+  "scanner": {
+    "title": "Quét Thiệp Mời",
+    "placeholder": {
+      "waitForRecognition": "Đang chờ nhận diện..."
+    },
+    "tooltip": {
+      "scanButton": "Quét thiệp mời"
+    }
   }
 }

@@ -8,9 +8,11 @@ interface QRCodeScannerProps {
 }
 
 import { Html5Qrcode } from "html5-qrcode";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-export default function QRCodeScanner({ onScanSuccess }: { onScanSuccess: (text: string) => void }) {
+export default function QRCodeScanner({ onScanSuccess }: QRCodeScannerProps) {
+  const t = useTranslations();
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const [isActive, setIsActive] = useState(false);
 
@@ -56,7 +58,7 @@ export default function QRCodeScanner({ onScanSuccess }: { onScanSuccess: (text:
         <div className="absolute inset-0 flex items-center justify-center bg-slate-900 z-100">
           <div className="flex flex-col items-center gap-2">
             <div className="w-8 h-8 border-4 border-gray-400 dark:border-primary border-t-transparent rounded-full animate-spin" />
-            <p className="text-xs text-slate-400">Đang khởi tạo camera...</p>
+            <p className="text-xs text-slate-400">{t('common.scanner.placeholder.cameraLoading')}</p>
           </div>
         </div>
       )}

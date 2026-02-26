@@ -125,5 +125,10 @@
     "color": {
       "label": "Màu sắc"
     }
+  },
+  "scanner": {
+    "placeholder": {
+      "cameraLoading": "Đang tải camera..."
+    }
   }
 }

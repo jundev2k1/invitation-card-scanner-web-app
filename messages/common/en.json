@@ -125,5 +125,10 @@
     "color": {
       "label": "Accent color"
     }
+  },
+  "scanner": {
+    "placeholder": {
+      "cameraLoading": "Loading camera..."
+    }
   }
 }

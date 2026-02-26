@@ -127,5 +127,14 @@
       "mapUrl": "Map URL",
       "status": "Status"
     }
+  },
+  "scanner": {
+    "title": "Scan Event Card",
+    "placeholder": {
+      "waitForRecognition": "Waiting for recognition..."
+    },
+    "tooltip": {
+      "scanButton": "Scan event card"
+    }
   }
 }
