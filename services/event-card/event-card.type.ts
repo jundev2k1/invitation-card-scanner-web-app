@@ -13,3 +13,7 @@ export type UpdateEventCardRequest = {
   guestName: string,
   notes: string,
 }
+
+export type CheckInEventCardRequest = {
+  notes: string,
+}

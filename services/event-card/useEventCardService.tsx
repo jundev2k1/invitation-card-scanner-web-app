@@ -35,7 +35,7 @@ const useScanEventCard = (token: string) => {
   return useQuery({
     queryKey: ["scans", token],
     queryFn: () => eventCardService.scanCard(token),
-    staleTime: 1000 * 60,
+    staleTime: 1000 * 10,
     retry: false
   });
 }
@@ -66,11 +66,12 @@ const useUpdateEventCard = () => {
 const useCheckInEventCard = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ eventId, id }: { eventId: string, id: string }) =>
-      eventCardService.checkInCard(eventId, id),
+    mutationFn: ({ eventId, id, notes }: { eventId: string, id: string, notes: string }) =>
+      eventCardService.checkInCard(eventId, id, { notes }),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: EVENT_CARD_KEYS.all });
       queryClient.invalidateQueries({ queryKey: EVENT_CARD_KEYS.detail(variables.id) });
+      queryClient.invalidateQueries({ queryKey: ["scans"] });
     },
   });
 }

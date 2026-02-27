@@ -91,8 +91,14 @@
     "detail": {
       "title": "Chi tiết thiệp sự kiện",
       "fields": {
-        "eventId": "Mã sự kiện",
         "id": "Mã thiệp mời",
+        "eventId": "Mã sự kiện",
+        "eventTitle": "Event Title",
+        "eventStatus": "Trạng thái sự kiện",
+        "startAt": "Thời gian bắt đầu",
+        "endAt": "Thời gian kết thúc",
+        "location": "Địa điểm",
+        "address": "Địa chỉ",
         "guestName": "Tên khách mời",
         "status": "Trạng thái",
         "firstScannedAt": "Quét lần đầu",
@@ -141,10 +147,15 @@
     "tooltip": {
       "scanButton": "Quét thiệp mời"
     },
+    "text": {
+      "enterNotes": "Nhập ghi chú"
+    },
     "actions": {
       "reScan": "Scan lại",
       "approve": "Duyệt",
-      "quickApprove": "Duyệt nhanh"
+      "reApprove": "Duyệt lại",
+      "quickApprove": "Duyệt nhanh",
+      "approved": "Đã duyệt"
     }
   }
 }

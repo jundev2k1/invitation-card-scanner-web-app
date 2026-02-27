@@ -42,7 +42,9 @@
     "updateSuccess": "Cập nhật dữ liệu thành công.",
     "deleteSuccess": "Xóa thành công.",
     "updateStatusSuccess": "Cập nhật trạng thái thành công.",
-    "confirmDelete": "Bạn có chắc muốn xóa dữ liệu này?"
+    "confirmDelete": "Bạn có chắc muốn xóa dữ liệu này?",
+    "checkInSuccess": "Check-in thành công.",
+    "checkInFailed": "Check-in thất bại. Vui lòng thử lại."
   },
   "text": {
     "fromLower": "từ",

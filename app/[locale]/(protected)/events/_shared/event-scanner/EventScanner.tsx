@@ -57,19 +57,19 @@ export const EventScanner = () => {
           </DialogDescription>
 
           {!result ? (
-            <div className="p-8 flex flex-col items-center">
+            <div className="p-8 pt-0 flex flex-col items-center relative">
               {isOpen && (
                 <DynamicScanner onScanSuccess={onScan} />
               )}
 
-              <div className="mt-6 w-full min-h-10 flex items-center justify-center">
+              <div className="absolute w-full bottom-12.5 flex items-center justify-center">
                 <p className="text-sm text-muted-foreground animate-pulse">
                   {t('event.scanner.placeholder.waitForRecognition')}
                 </p>
               </div>
             </div>
           ) : (
-            <div className="px-8 py-4 grow overflow-y-auto">
+            <div className="p-8 pt-0 grow overflow-y-auto">
               <EventInformation token={result} onReset={onReset} />
             </div>
           )}

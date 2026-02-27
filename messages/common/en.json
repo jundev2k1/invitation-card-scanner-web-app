@@ -42,7 +42,9 @@
     "updateSuccess": "Update item successfully.",
     "deleteSuccess": "Delete item successfully.",
     "updateStatusSuccess": "Update status successfully.",
-    "confirmDelete": "Are you sure you want to delete this item?"
+    "confirmDelete": "Are you sure you want to delete this item?",
+    "checkInSuccess": "Check-in successfully.",
+    "checkInFailed": "Check-in failed. Please try again later."
   },
   "text": {
     "fromLower": "from",

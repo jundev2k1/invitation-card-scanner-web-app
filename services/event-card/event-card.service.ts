@@ -1,6 +1,6 @@
 import { api, baseQuery, mapToUrlSearchParams } from "@/lib/api-client";
-import { EventCardDetailDto, EventCardSearchItemDto, SearchResult } from "@/types";
-import { CreateEventCardRequest, GetEventCardListRequest, UpdateEventCardRequest } from "./event-card.type";
+import { EventCardDetailDto, EventCardDto, EventCardSearchItemDto, SearchResult } from "@/types";
+import { CheckInEventCardRequest, CreateEventCardRequest, GetEventCardListRequest, UpdateEventCardRequest } from "./event-card.type";
 
 export const eventCardService = {
   searchEventCards: (eventId: string, bodyReq: GetEventCardListRequest) => {
@@ -8,7 +8,7 @@ export const eventCardService = {
     return baseQuery(api.get<SearchResult<EventCardSearchItemDto>>(`/backoffice/events/${eventId}/cards`, { params: req }));
   },
   getEventCardDetail: (eventId: string, id: string) => {
-    return baseQuery(api.get<EventCardDetailDto>(`/backoffice/events/${eventId}/cards/${id}`));
+    return baseQuery(api.get<EventCardDto>(`/backoffice/events/${eventId}/cards/${id}`));
   },
   scanCard: (token: string) => {
     return baseQuery(api.get<EventCardDetailDto>(`/scans/${token}`));
@@ -22,7 +22,7 @@ export const eventCardService = {
   deleteEventCard: (eventId: string, id: string) => {
     return baseQuery(api.delete(`/backoffice/events/${eventId}/cards/${id}`));
   },
-  checkInCard: (eventId: string, id: string) => {
-    return baseQuery(api.post(`/events/${eventId}/cards/${id}/check-in`));
+  checkInCard: (eventId: string, id: string, data: CheckInEventCardRequest) => {
+    return baseQuery(api.post(`/events/${eventId}/cards/${id}/check-in`, data));
   },
 };

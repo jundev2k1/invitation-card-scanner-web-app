@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
   EventCardStatusBadge,
+  EventStatusBadge,
   IconButton,
   Separator,
   Skeleton,
@@ -19,20 +20,26 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  TruncatedText,
+  TextArea,
+  TruncatedText
 } from "@/app/components";
 import {
-  CalendarClockIcon,
+  CaptionsIcon,
   CheckCheckIcon,
+  CheckIcon,
   ClockIcon,
   EyeIcon,
   EyeOffIcon,
   IdCardIcon,
   InfoIcon,
   MailIcon,
+  MapPinHouseIcon,
   NotebookPenIcon,
+  PencilLineIcon,
   PhoneIcon,
   ScanQrCodeIcon,
+  TicketIcon,
+  TimerOffIcon,
   UserIcon,
   UserRoundCheckIcon,
 } from "@/app/components/icons";
@@ -57,14 +64,20 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
     hoverInfoId,
     onHoverInfo,
     onHoverOutInfo,
+    isApproved,
+    onApprove,
+    notes,
+    setNotes,
   } = useEventInformation({ token, onReset });
 
   return (
     <div className="flex flex-col gap-4">
-      <Card>
+      <Card className="gap-1">
         <CardHeader>
           <CardTitle className="flex items-start justify-between">
-            <h3>{t("event.cardList.detail.title")}</h3>
+            <h3 className="text-lg">
+              {t("event.cardList.detail.title")}
+            </h3>
             {data?.isUsed ? (
               <span className="flex flex-col items-end gap-1">
                 <Badge variant="default">{t("event.enum.isScanned.YES")}</Badge>
@@ -78,7 +91,19 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2 mb-4">
+            <IconButton
+              icon={<CheckCheckIcon size={16} />}
+              variant="outline"
+              size="sm"
+              onClick={onApprove}
+              tooltip={isApproved
+                ? t('event.scanner.actions.approved')
+                : t(data?.isUsed
+                  ? 'event.scanner.actions.reApprove'
+                  : 'event.scanner.actions.quickApprove')}
+              disabled={isApproved}
+            />
             <IconButton
               icon={<ScanQrCodeIcon size={16} />}
               variant="outline"
@@ -90,16 +115,91 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
             <div className="flex flex-col gap-1">
               <p className="flex items-center gap-2 text-muted-foreground text-sm">
-                <CalendarClockIcon size={16} />
+                <TicketIcon size={16} />
                 {t('event.cardList.detail.fields.eventId')}
               </p>
-              <p className="text-foreground font-bold w-full">
-                {data ? (
-                  <TruncatedText maxWidth="max-w-[200px]" text={data?.eventId} showCopy isUUID />
-                ) : (
-                  <SkeletonListItem />
-                )}
+              {data ? (
+                <p className="text-foreground font-bold w-full text-sm">
+                  <TruncatedText text={data?.eventId} showCopy isUUID />
+                </p>
+              ) : (
+                <SkeletonListItem />
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <p className="flex items-center gap-2 text-muted-foreground text-sm">
+                <InfoIcon size={16} />
+                {t('event.cardList.detail.fields.eventStatus')}
               </p>
+              {data ? (
+                <p className="text-foreground font-bold w-full text-sm">
+                  <EventStatusBadge status={data?.eventStatus} />
+                </p>
+              ) : (
+                <SkeletonListItem />
+              )}
+            </div>
+
+            <div className="md:col-span-2 flex flex-col gap-1">
+              <p className="flex items-center gap-2 text-muted-foreground text-sm">
+                <PencilLineIcon size={16} />
+                {t('event.cardList.detail.fields.eventTitle')}
+              </p>
+              {data ? (
+                <p className="text-foreground font-bold w-full text-sm">
+                  <TruncatedText text={data?.eventTitle} />
+                </p>
+              ) : (
+                <SkeletonListItem />
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <p className="flex items-center gap-2 text-muted-foreground text-sm">
+                <ClockIcon size={16} />
+                {t('event.cardList.detail.fields.startAt')}
+              </p>
+              {data ? (
+                <p className="text-foreground font-bold w-full text-sm">
+                  {formatDateTime(data?.startAt)}
+                </p>
+              ) : (
+                <SkeletonListItem />
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <p className="flex items-center gap-2 text-muted-foreground text-sm">
+                <TimerOffIcon size={16} />
+                {t('event.cardList.detail.fields.endAt')}
+              </p>
+              {data ? (
+                <p className="text-foreground font-bold w-full text-sm">
+                  {formatDateTime(data?.endAt)}
+                </p>
+              ) : (
+                <SkeletonListItem />
+              )}
+            </div>
+
+            <div className="md:col-span-2 flex flex-col gap-1">
+              <p className="flex items-center gap-2 text-muted-foreground text-sm">
+                <MapPinHouseIcon size={16} />
+                {t('event.cardList.detail.fields.location')}
+              </p>
+              {data ? (
+                <p className="text-foreground font-bold flex flex-col gap-1 text-sm">
+                  <span>
+                    {data.location}
+                  </span>
+                  <span className="font-light">
+                    {data.address}
+                  </span>
+                </p>
+              ) : (
+                <SkeletonListItem />
+              )}
             </div>
           </div>
 
@@ -111,13 +211,13 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
                 <IdCardIcon size={16} />
                 {t('event.cardList.detail.fields.id')}
               </p>
-              <p className="text-foreground font-bold w-full">
-                {data ? (
+              {data ? (
+                <p className="text-foreground font-bold w-full">
                   <TruncatedText maxWidth="max-w-[200px]" text={data.eventId} showCopy isUUID />
-                ) : (
-                  <Skeleton className="h-4 w-3/4" />
-                )}
-              </p>
+                </p>
+              ) : (
+                <Skeleton className="h-4 w-3/4" />
+              )}
             </div>
 
             <div className="flex flex-col gap-1 text-sm">
@@ -125,12 +225,13 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
                 <UserIcon size={16} />
                 {t('event.cardList.detail.fields.guestName')}
               </p>
-              <p className="text-foreground font-bold">
-                {data ? (
+              {data ? (
+                <p className="text-foreground font-bold">
                   <TruncatedText maxWidth="max-w-[200px]" text={data.guestName} />
-                ) : (
-                  <Skeleton className="h-4 w-3/4" />)}
-              </p>
+                </p>
+              ) : (
+                <Skeleton className="h-4 w-3/4" />
+              )}
             </div>
 
             <div className="flex flex-col gap-1 text-sm">
@@ -138,13 +239,13 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
                 <InfoIcon size={16} />
                 {t('event.cardList.detail.fields.status')}
               </p>
-              <p className="text-foreground font-bold">
-                {data?.status ? (
-                  <EventCardStatusBadge status={data?.status} />
-                ) : (
-                  <Skeleton className="h-4 w-3/4" />
-                )}
-              </p>
+              {data?.cardStatus ? (
+                <p className="text-foreground font-bold">
+                  <EventCardStatusBadge status={data?.cardStatus} />
+                </p>
+              ) : (
+                <Skeleton className="h-4 w-3/4" />
+              )}
             </div>
 
             <div className="flex flex-col gap-1 text-sm">
@@ -177,15 +278,19 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="gap-2">
         <CardHeader>
-          <CardTitle>{t('event.cardList.detail.table.title')}</CardTitle>
+          <CardTitle>
+            <h3 className="text-lg">
+              {t('event.cardList.detail.table.title')}
+            </h3>
+          </CardTitle>
         </CardHeader>
         <CardContent>
-
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>#</TableHead>
                 <TableHead>{t('event.cardList.detail.table.columns.information')}</TableHead>
                 <TableHead>{t('event.cardList.detail.table.columns.notes')}</TableHead>
               </TableRow>
@@ -199,16 +304,13 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
                   </TableCell>
                 </TableRow>
               ) : (
-                data.scannedLogs.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={2} className="h-8 text-center font-medium dark:text-muted-foreground">
-                      {t('event.cardList.detail.placeholder.noHistory')}
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  data.scannedLogs.map((item) => (
+                <>
+                  {data.scannedLogs.map((item, index) => (
                     <TableRow key={item.id}>
-                      <TableCell width="50%"
+                      <TableCell className="text-right">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell width="45%"
                         onMouseOver={() => onHoverInfo(item.id)}
                         onMouseOut={onHoverOutInfo}
                       >
@@ -267,8 +369,20 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
                         <TruncatedText text={item.notes} />
                       </TableCell>
                     </TableRow>
-                  ))
-                )
+                  ))}
+                  <TableRow>
+                    <TableCell width="5%"></TableCell>
+                    <TableCell width="45%">
+                      <span className="flex items-center gap-1 dark:text-muted-foreground">
+                        <CaptionsIcon size={14} />
+                        {t('event.scanner.text.enterNotes')}:
+                      </span>
+                    </TableCell>
+                    <TableCell width="50%" className="font-light dark:text-muted-foreground">
+                      <TextArea value={notes} onChange={(e) => { setNotes(e.target.value) }} />
+                    </TableCell>
+                  </TableRow>
+                </>
               )}
             </TableBody>
           </Table>
@@ -277,11 +391,17 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
 
       <div className="flex justify-center gap-2">
         <Button
-          leftIcon={<CheckCheckIcon size={16} />}
+          leftIcon={<CheckIcon size={16} />}
           size="sm"
-          onClick={() => { }}
+          onClick={onApprove}
+          disabled={isApproved}
         >
-          {t('event.scanner.actions.approve')}
+          {isApproved
+            ? t('event.scanner.actions.approved')
+            : t(data?.isUsed
+              ? 'event.scanner.actions.reApprove'
+              : 'event.scanner.actions.approve')
+          }
         </Button>
 
         <Button
@@ -293,8 +413,7 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
         >
           {t('event.scanner.actions.reScan')}
         </Button>
-
       </div>
-    </div>
+    </div >
   );
 };

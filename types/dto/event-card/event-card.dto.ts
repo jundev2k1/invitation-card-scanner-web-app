@@ -1,20 +1,14 @@
-import { EventCardStatus, EventStatus } from "@/types/enum";
+import { EventCardStatus } from "@/types/enum";
 import { EventCardLogDto } from "./event-card-log.dto";
 
-export interface EventCardDetailDto {
+export interface EventCardDto {
   id: string;
   eventId: string;
-  eventTitle: string;
-  eventStatus: EventStatus;
-  startAt: Date;
-  endAt: Date;
-  location: string;
-  address: string;
   guestName: string;
   accessToken: string;
   isUsed: boolean;
   firstScannedAt: Date | null;
-  cardStatus: EventCardStatus;
+  status: EventCardStatus;
   notes: string;
   createdAt: Date;
   updatedAt: Date;
