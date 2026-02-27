@@ -19,7 +19,7 @@ const userEditSchema = z.object({
   nickName: z.string().min(3, { message: "Nickname must be at least 3 characters long" }).max(30, { message: "Nickname must be at most 30 characters long" }),
   phoneNumber: z.string()
     .min(3, { message: "Phone number must be at least 3 characters long" })
-    .max(20, { message: "Phone number must be at most 20 characters long" })
+    .max(15, { message: "Phone number must be at most 15 characters long" })
     .regex(phoneNumberRegex, "Invalid phone number"),
   sex: z.enum([Sex.MALE, Sex.FEMALE, Sex.OTHER]),
   bio: z.string(),
