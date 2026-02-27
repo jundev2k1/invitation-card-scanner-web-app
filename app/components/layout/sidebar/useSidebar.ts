@@ -4,7 +4,7 @@ import {
   FolderOpenIcon,
   LayoutDashboardIcon,
   UsersIcon, type IconType
-} from "@/app/components/icons";
+} from "@/icons";
 
 export interface PageInfo {
   title: string;

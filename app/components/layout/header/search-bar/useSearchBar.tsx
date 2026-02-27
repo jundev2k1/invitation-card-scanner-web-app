@@ -1,4 +1,11 @@
-import { BellIcon, CalendarClockIcon, CreditCardIcon, SearchIcon, SettingsIcon, UserCircleIcon } from "@/app/components/icons";
+import {
+  BellIcon,
+  CalendarClockIcon,
+  CreditCardIcon,
+  SearchIcon,
+  SettingsIcon,
+  UserCircleIcon,
+} from "@/icons";
 import { Role, UserStatus } from "@/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 

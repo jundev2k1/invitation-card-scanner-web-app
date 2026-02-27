@@ -1,32 +1,35 @@
 "use client";
-import { Column, DropdownButton, Select, SmartDateTime, Toast, TruncatedText, useFilter } from "@/app/components";
-import { ClockIcon, MapPinHouseIcon } from "@/app/components/icons";
-import { RouteUtil } from "@/app/utils/route";
+import {
+  Column,
+  DropdownButton,
+  Select,
+  SmartDateTime,
+  Toast,
+  TruncatedText,
+  useFilter,
+} from "@/components";
 import { TranslateFn } from "@/i18n/type";
+import { ClockIcon, MapPinHouseIcon } from "@/icons";
 import { formatDate } from "@/lib/datetime/date.util";
 import { useDeleteEvent, useSearchEvents, useUpdateEventStatus } from "@/services";
-import { defaultSearchResult, EventSearchItemDto, EventStatus } from "@/types";
+import { defaultSearchResult, EventSearchItemDto, EventStatus, InputOption } from "@/types";
+import { RouteUtil } from "@/utils/route";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
+import { getEventStatusOptions } from "./_shared";
 
 const getBreadcrumbs = (t: TranslateFn, locale: string) => [
   { label: t('dashboard.title'), href: RouteUtil.getDashboardRoute(locale) },
   { label: t('event.list.title') },
 ];
 
-const statusOptions = [
-  { label: "event.enum.status.DRAFT", value: EventStatus.DRAFT },
-  { label: "event.enum.status.PUBLISHED", value: EventStatus.PUBLISHED },
-  { label: "event.enum.status.COMPLETED", value: EventStatus.COMPLETED },
-  { label: "event.enum.status.CANCELLED", value: EventStatus.CANCELLED },
-];
-
 const getColumns = (
-  t: any,
+  t: TranslateFn,
   redirectToDetail: (id: string) => void,
   onDeleteEvent: (id: string) => void,
-  onUpdateStatus: (id: string, status: EventStatus) => Promise<void>
+  onUpdateStatus: (id: string, status: EventStatus) => Promise<void>,
+  eventStatusOptions: InputOption[]
 ): Column<EventSearchItemDto>[] => [
     {
       key: "id",
@@ -81,7 +84,7 @@ const getColumns = (
       render: (_, item) => (
         <Select
           className="dark:text-muted-foreground"
-          options={statusOptions.map(i => ({ label: t(i.label), value: i.value.toString() }))}
+          options={eventStatusOptions}
           value={item.status.toString()}
           onValueChange={async (value) => await onUpdateStatus(item.id, parseInt(value) as EventStatus)}
         />
@@ -130,8 +133,15 @@ export const useEventPage = () => {
     Toast.showSuccess(t('common.messages.updateStatusSuccess'));
   }, [locale]);
 
+  const eventStatusOptions = useMemo(() => getEventStatusOptions(t), [locale]);
   const breadcrumbs = useMemo(() => getBreadcrumbs(t, locale), [locale]);
-  const columns = useMemo(() => getColumns(t, redirectToDetail, onDeleteEvent, onUpdateStatus), [locale]);
+  const columns = useMemo(() => getColumns(
+    t,
+    redirectToDetail,
+    onDeleteEvent,
+    onUpdateStatus,
+    eventStatusOptions
+  ), [locale]);
   const onPageRefresh = useCallback(refetch, []);
 
   return {

@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/shadcn/skeleton";
 
 export function SkeletonListItem() {
   return (

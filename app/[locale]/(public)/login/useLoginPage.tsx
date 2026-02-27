@@ -1,8 +1,8 @@
 "use client";
-import { RouteUtil } from "@/app/utils/route";
 import { CookieStore } from "@/lib/cookies";
 import { authService } from "@/services";
 import { useAuthStore } from "@/store";
+import { RouteUtil } from "@/utils/route";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";

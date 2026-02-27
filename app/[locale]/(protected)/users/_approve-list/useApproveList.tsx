@@ -1,7 +1,6 @@
-import { Button, IconButton, SmartDateTime, TruncatedText, useFilter } from "@/app/components";
-import { CheckCheckIcon, CheckIcon, EyeIcon } from "@/app/components/icons";
-import { RouteUtil } from "@/app/utils/route";
+import { Button, IconButton, SmartDateTime, TruncatedText, useFilter } from "@/components";
 import { TranslateFn } from "@/i18n/type";
+import { CheckCheckIcon, CheckIcon, EyeIcon } from "@/icons";
 import { userService } from "@/services";
 import {
   defaultSearchResult,
@@ -9,6 +8,7 @@ import {
   UserSearchItemDto,
   UserStatus
 } from "@/types";
+import { RouteUtil } from "@/utils/route";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";

@@ -1,4 +1,4 @@
-import { Toast } from "@/app/components";
+import { Toast } from "@/components";
 import { useCheckInEventCard, useScanEventCard } from "@/services";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";

@@ -1,6 +1,6 @@
 "use client";
-import { Button, ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Button, ButtonProps } from "@/shadcn/button";
 import { Loader2 } from "lucide-react";
 import * as React from "react";
 import { useFormContext } from "react-hook-form";

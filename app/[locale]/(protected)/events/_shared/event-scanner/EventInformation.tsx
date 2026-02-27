@@ -23,7 +23,7 @@ import {
   TableRow,
   TextArea,
   TruncatedText
-} from "@/app/components";
+} from "@/components";
 import {
   CaptionsIcon,
   CheckCheckIcon,
@@ -45,9 +45,9 @@ import {
   UserIcon,
   UserRoundCheckIcon,
   XCircleIcon,
-} from "@/app/components/icons";
-import { Badge } from "@/components/ui/badge";
+} from "@/icons";
 import { formatDateTime } from "@/lib/datetime/date.util";
+import { Badge } from "@/shadcn/badge";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { useEventInformation } from "./useEventInformation";

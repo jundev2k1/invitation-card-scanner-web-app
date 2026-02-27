@@ -1,6 +1,6 @@
-import { eventCardMapper } from "@/app/utils/mappers";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/shadcn/badge";
 import { EventCardStatus } from "@/types";
+import { eventCardMapper } from "@/utils/mappers";
 import { useTranslations } from "next-intl";
 
 type EventCardStatusBadgeProps = {

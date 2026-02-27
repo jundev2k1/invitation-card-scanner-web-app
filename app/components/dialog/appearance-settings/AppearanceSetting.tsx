@@ -1,19 +1,19 @@
-import { Button } from "@/app/components/button";
+import { Button } from "@/components/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/app/components/dialog";
-import { MoonIcon, PaletteIcon, SunIcon } from "@/app/components/icons";
-import { RadioGroup, RadioGroupItem } from "@/app/components/input";
-import { Label } from "@/app/components/label";
-import { Select } from "@/app/components/select";
+} from "@/components/dialog";
+import { ThemeColorStyles, useAppearanceSettings } from "@/components/dialog/appearance-settings/useAppearance-settings";
+import { RadioGroup, RadioGroupItem } from "@/components/input";
+import { Label } from "@/components/label";
+import { Select } from "@/components/select";
+import { MoonIcon, PaletteIcon, SunIcon } from "@/icons";
 import { cn } from "@/lib/utils";
 import { Language, ThemeColor, ThemeMode } from "@/types";
 import { useTranslations } from "next-intl";
-import { ThemeColorStyles, useAppearanceSettings } from "./useAppearance-settings";
 
 type AppearanceSettingsProps = {
   open: boolean;

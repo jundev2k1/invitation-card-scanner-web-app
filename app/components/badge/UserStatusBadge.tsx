@@ -1,6 +1,6 @@
 import { userMapper } from "@/app/utils/mappers";
 import { getUserStatusKey } from "@/app/utils/mappers/user.mapper";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/shadcn/badge";
 import { UserStatus } from "@/types";
 import { useTranslations } from "next-intl";
 

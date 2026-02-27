@@ -1,7 +1,6 @@
 "use client";
-import { Toast } from "@/app/components";
-import { useCreateEvent } from "@/services";
-import { CreateEventRequest } from "@/services/event/event.type";
+import { Toast } from "@/components";
+import { CreateEventRequest, useCreateEvent } from "@/services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useState } from "react";

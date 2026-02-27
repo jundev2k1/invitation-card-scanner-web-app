@@ -1,10 +1,18 @@
 "use client";
-import { Button, Card, CardContent, PageContent, RefreshButton, SkeletonCard, SkeletonProfile } from "@/app/components";
-import { InfoIcon, TrashIcon } from "@/app/components/icons";
+import {
+  Button,
+  Card,
+  CardContent,
+  PageContent,
+  RefreshButton,
+  SkeletonCard,
+  SkeletonProfile,
+} from "@/components";
+import { EventScanner } from "@/events/_shared";
+import { UpdateModal } from "@/events/_update-modal/UpdateModal";
+import { InfoIcon, TrashIcon } from "@/icons";
 import { PageAction } from "@/types";
 import { useTranslations } from "next-intl";
-import { EventScanner } from "../../_shared";
-import { UpdateModal } from "../../_update-modal/UpdateModal";
 import { EventViewForm } from "../_view/ViewEventDetail";
 import { useEventDetail } from "./useEventDetail";
 

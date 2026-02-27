@@ -1,12 +1,20 @@
-import { BaseFilter, Column, defaultBaseFilter, SexBadge, SmartDateTime, TruncatedText, useFilter, UserStatusBadge } from "@/app/components";
-import { ClockIcon, InfoIcon, MailIcon, PhoneIcon, UserIcon } from "@/app/components/icons";
-import { RouteUtil } from "@/app/utils/route";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import {
+  Avatar, AvatarFallback, AvatarImage,
+  BaseFilter,
+  Column,
+  defaultBaseFilter,
+  IconButton,
+  SexBadge,
+  SmartDateTime,
+  TruncatedText,
+  useFilter,
+  UserStatusBadge
+} from "@/components";
 import { TranslateFn } from "@/i18n/type";
-import { useGetUserSearch } from "@/services/user/useUserService";
-import { defaultSearchResult, UserStatus } from "@/types";
-import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
+import { ClockIcon, InfoIcon, MailIcon, PhoneIcon, UserIcon } from "@/icons";
+import { useGetUserSearch } from "@/services";
+import { defaultSearchResult, UserSearchItemDto, UserStatus } from "@/types";
+import { RouteUtil } from "@/utils/route";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
@@ -66,12 +74,12 @@ const getColumns = (t: TranslateFn, redirectToDetail: (id: string) => void): Col
     key: "action",
     label: t('user.list.table.columns.action'),
     render: (_, item) => (
-      <Button
+      <IconButton
+        variant="ghost"
+        icon={<InfoIcon />}
         className="cursor-pointer dark:text-muted-foreground"
-        variant="outline"
-        onClick={() => redirectToDetail(item.id)}>
-        <InfoIcon />
-      </Button>
+        onClick={() => redirectToDetail(item.id)}
+      />
     )
   },
 ];

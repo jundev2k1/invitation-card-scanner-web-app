@@ -1,4 +1,4 @@
-import { MapPinOffIcon } from "@/app/components/icons";
+import { MapPinOffIcon } from "@/icons";
 import { useTranslations } from "next-intl";
 
 type MapCardProps = {

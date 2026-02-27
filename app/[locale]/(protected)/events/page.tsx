@@ -1,5 +1,5 @@
 "use client";
-import { DataList, PageContent, RefreshButton, SearchTextbox } from "@/app/components";
+import { DataList, PageContent, RefreshButton, SearchTextbox } from "@/components";
 import { useTranslations } from "next-intl";
 import { InsertModal } from "./_insert-modal/InsertModal";
 import { EventScanner } from "./_shared";

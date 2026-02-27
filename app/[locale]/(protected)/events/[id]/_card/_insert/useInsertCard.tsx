@@ -1,5 +1,5 @@
 "use client";
-import { Toast } from "@/app/components";
+import { Toast } from "@/components";
 import { useCreateEventCard } from "@/services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";

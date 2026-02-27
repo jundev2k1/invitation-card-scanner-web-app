@@ -1,15 +1,13 @@
-import { IconButton } from "@/app/components/button";
+import { IconButton } from "@/components/button";
+import { Notification } from "@/components/notification";
+import { ProfileMenu } from "@/components/profiles";
+import { ThemeToggleButton } from "@/components/theme";
+import { MenuIcon } from "@/icons";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/store";
-import { MenuIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { Notification } from "../../notification";
-import { ProfileMenu } from "../../profiles";
-import { ThemeToggleButton } from "../../theme";
 import { SearchBar } from "./search-bar/SearchBar";
 
 export default function PageHeader() {
-  const t = useTranslations();
   const { isCollapsed, toggleSidebar } = useSidebarStore();
 
   return (

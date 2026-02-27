@@ -1,7 +1,4 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Check, UserPlus } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { IconButton } from "../button";
+import { IconButton } from "@/components/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,8 +6,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from "../dropdown";
-import { BellIcon } from "../icons";
+} from "@/components/dropdown";
+import { BellIcon, CheckIcon, UserPlusIcon } from "@/icons";
+import { ScrollArea } from "@/shadcn/scroll-area";
+import { useTranslations } from "next-intl";
 import { NotificationItem } from "./NotificationItem";
 
 export const Notification = () => {
@@ -43,13 +42,13 @@ export const Notification = () => {
 
         <ScrollArea className="h-87.5">
           <NotificationItem
-            icon={<UserPlus />}
+            icon={<UserPlusIcon />}
             title="New user"
             desc="Nguyễn Văn A registered."
             time="2 minute ago"
           />
           <NotificationItem
-            icon={<Check />}
+            icon={<CheckIcon />}
             title="System updates"
             desc="System updates have been applied."
             time="Yesterday"

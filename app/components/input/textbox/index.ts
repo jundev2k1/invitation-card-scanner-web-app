@@ -1,4 +1,4 @@
-export { Input } from "@/components/ui/input";
+export { Input } from "@/shadcn/input";
 export { FormNumber } from "./FormNumber";
 export { FormPassword } from "./FormPassword";
 export { FormTextArea } from "./FormTextarea";

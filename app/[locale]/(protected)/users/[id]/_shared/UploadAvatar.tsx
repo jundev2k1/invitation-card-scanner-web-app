@@ -1,6 +1,6 @@
-import { Avatar, AvatarFallback, AvatarImage, Toast } from "@/app/components";
-import { CameraIcon } from "@/app/components/icons";
-import { Input } from "@/app/components/input";
+import { Avatar, AvatarFallback, AvatarImage, Toast } from "@/components";
+import { Input } from "@/components/input";
+import { CameraIcon } from "@/icons";
 import { userService } from "@/services";
 import React, { useCallback, useState } from "react";
 

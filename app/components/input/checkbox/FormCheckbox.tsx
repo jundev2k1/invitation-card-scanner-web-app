@@ -1,6 +1,6 @@
 "use client";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/shadcn/checkbox";
+import { Label } from "@/shadcn/label";
 import { Controller, useFormContext } from "react-hook-form";
 
 export function FormCheckbox({ name, label }: { name: string; label: string }) {

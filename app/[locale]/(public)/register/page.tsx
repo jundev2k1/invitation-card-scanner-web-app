@@ -1,7 +1,4 @@
 "use client";
-import { FormPassword, FormRadioGroup, FormTextArea, FormTextBox } from "@/app/components";
-import { LoaderIcon } from "@/app/components/icons";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,8 +6,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+  FormPassword,
+  FormRadioGroup,
+  FormTextArea,
+  FormTextBox,
+} from "@/components";
+import { LoaderIcon } from "@/icons";
 import { cn } from "@/lib/utils";
+import { Button } from "@/shadcn/button";
 import { Sex } from "@/types";
 import { useTranslations } from "next-intl";
 import { FormProvider } from "react-hook-form";

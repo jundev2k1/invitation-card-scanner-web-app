@@ -8,8 +8,8 @@ import {
   EventStatusBadge,
   MapCard,
   Separator
-} from "@/app/components";
-import { CalendarClockIcon, ClockIcon, MapPinHouseIcon } from "@/app/components/icons";
+} from "@/components";
+import { CalendarClockIcon, ClockIcon, MapPinHouseIcon } from "@/icons";
 import { formatDateTime } from "@/lib/datetime/date.util";
 import { EventDetailDto } from "@/types";
 import { useTranslations } from "next-intl";

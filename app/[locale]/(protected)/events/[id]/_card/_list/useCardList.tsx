@@ -1,12 +1,21 @@
-import { Column, DropdownButton, EventCardStatusBadge, SmartDateTime, Toast, TruncatedText, useFilter } from "@/app/components";
-import { ClockIcon } from "@/app/components/icons";
+import {
+  Column,
+  DropdownButton,
+  EventCardStatusBadge,
+  SmartDateTime,
+  Toast,
+  TruncatedText,
+  useFilter,
+} from "@/components";
+import { ClockIcon } from "@/icons";
+import { TranslateFn } from "@/root/i18n/type";
 import { useDeleteEventCard, useSearchEventCards } from "@/services";
 import { defaultSearchResult, EventCardSearchItemDto, SearchResult } from "@/types";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 
 const getColumns = (
-  t: any,
+  t: TranslateFn,
   onOpenDetail: (id: string) => void,
   onOpenEdit: (id: string) => void,
   onDeleteCard: (id: string) => void

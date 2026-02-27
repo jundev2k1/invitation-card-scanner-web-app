@@ -1,2 +1,1 @@
-export * from './Toast';
-
+export * as Toast from './Toast';

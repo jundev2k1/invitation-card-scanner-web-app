@@ -1,5 +1,7 @@
 "use client";
 
+import { LoaderIcon } from "@/icons";
+import { cn } from "@/lib/utils";
 import {
   Combobox,
   ComboboxCollection,
@@ -11,10 +13,8 @@ import {
   ComboboxLabel,
   ComboboxList,
   ComboboxSeparator,
-} from "@/components/ui/combobox";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+} from "@/shadcn/combobox";
+import { Label } from "@/shadcn/label";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 
@@ -122,7 +122,7 @@ export default function GroupedCombobox<T = string>({
                     return (
                       <ComboboxItem key={val} value={val}>
                         {getOptionLabel(item)}
-                        {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+                        {loading && <LoaderIcon className="ml-2 h-4 w-4 animate-spin" />}
                       </ComboboxItem>
                     );
                   }}

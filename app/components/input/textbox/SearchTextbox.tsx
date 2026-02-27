@@ -1,9 +1,9 @@
 "use client";
-import { Input } from "@/components/ui/input";
+import { SearchIcon, XIcon } from "@/icons";
 import { cn } from "@/lib/utils";
+import { Input } from "@/shadcn/input";
 import { useEffect, useState } from "react";
 import { useDebounce } from "../../hooks";
-import { SearchIcon, XIcon } from "../../icons";
 
 interface SearchInputProps {
   containerClassName?: string;

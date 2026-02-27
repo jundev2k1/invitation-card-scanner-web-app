@@ -5,4 +5,5 @@ export {
   AvatarGroup,
   AvatarGroupCount,
   AvatarImage
-} from "@/components/ui/avatar";
+} from "@/shadcn/avatar";
+

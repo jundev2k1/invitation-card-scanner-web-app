@@ -1,6 +1,6 @@
-import { EllipsisIcon } from "@/app/components/icons";
-import { ButtonProps } from "@/components/ui/button";
+import { EllipsisIcon } from "@/icons";
 import { cn } from "@/lib/utils";
+import { ButtonProps } from "@/shadcn/button";
 import { ReactNode } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../dropdown";
 import { default as Button } from "./default.button";

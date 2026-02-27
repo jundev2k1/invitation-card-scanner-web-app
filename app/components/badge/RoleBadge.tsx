@@ -1,11 +1,11 @@
+import { roleMapper } from "@/app/utils/mappers";
 import {
   BriefcaseIcon,
   CrownIcon,
   ShieldUserIcon,
   UserIcon
-} from "@/app/components/icons";
-import { roleMapper } from "@/app/utils/mappers";
-import { Badge } from "@/components/ui/badge";
+} from "@/icons";
+import { Badge } from "@/shadcn/badge";
 import { Role } from "@/types";
 import { useTranslations } from "next-intl";
 

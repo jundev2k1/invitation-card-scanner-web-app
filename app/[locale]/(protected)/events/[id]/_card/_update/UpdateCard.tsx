@@ -1,5 +1,14 @@
 "use client";
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, FormTextArea, FormTextBox } from "@/app/components";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  FormTextArea,
+  FormTextBox,
+} from "@/components";
 import { EventCardSearchItemDto } from "@/types";
 import { useTranslations } from "next-intl";
 import React from "react";

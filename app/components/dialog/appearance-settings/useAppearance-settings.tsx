@@ -1,6 +1,6 @@
 "use client";
 import { CookieStore } from "@/lib/cookies";
-import { useAppStore } from "@/store/useAppStore";
+import { useThemeStore } from "@/store";
 import { Language, ThemeColor, ThemeMode } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -27,7 +27,7 @@ export const useAppearanceSettings = () => {
     setLanguage,
     color,
     setColor,
-  } = useAppStore();
+  } = useThemeStore();
 
   const updateThemeMode = (mode: ThemeMode) => {
     setTheme(mode);

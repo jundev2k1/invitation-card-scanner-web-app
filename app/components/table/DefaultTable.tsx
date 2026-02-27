@@ -7,5 +7,4 @@ export {
   TableHead,
   TableHeader,
   TableRow
-} from "@/components/ui/table";
-
+} from "@/shadcn/table";

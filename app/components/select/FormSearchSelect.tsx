@@ -1,9 +1,9 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { Label } from "@/components/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { Button } from "@/shadcn/button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/shadcn/command";
+import { Label } from "@/shadcn/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/popover";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";
 

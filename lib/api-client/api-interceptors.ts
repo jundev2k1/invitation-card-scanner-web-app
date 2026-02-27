@@ -1,10 +1,10 @@
-import { Toast } from "@/app/components";
-import { RouteUtil } from "@/app/utils/route";
+import { Toast } from "@/components";
 import { getTranslator } from "@/i18n/request";
 import { api } from "@/lib/api-client/api";
 import { CookieStore } from "@/lib/cookies";
 import { useAuthStore } from '@/store';
 import { HttpCode } from "@/types";
+import { RouteUtil } from "@/utils/route";
 import { redirect } from "next/navigation";
 import { AUTH_ROUTES } from "../routes";
 

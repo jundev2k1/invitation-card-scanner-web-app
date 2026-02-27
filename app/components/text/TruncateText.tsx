@@ -1,13 +1,13 @@
 "use client";
-import { IconButton } from "@/app/components/button";
-import { CheckIcon, CopyIcon } from "@/app/components/icons";
-import * as Toast from "@/app/components/toast";
+import { Toast } from "@/components";
+import { IconButton } from "@/components/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/app/components/tooltip";
+} from "@/components/tooltip";
+import { CheckIcon, CopyIcon } from "@/icons";
 import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 

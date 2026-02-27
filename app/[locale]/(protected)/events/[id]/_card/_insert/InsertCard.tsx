@@ -1,6 +1,15 @@
 "use client";
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, FormTextArea, FormTextBox } from "@/app/components";
-import { FilePlusIcon } from "@/app/components/icons";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  FormTextArea,
+  FormTextBox,
+} from "@/components";
+import { FilePlusIcon } from "@/icons";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { FormProvider } from "react-hook-form";

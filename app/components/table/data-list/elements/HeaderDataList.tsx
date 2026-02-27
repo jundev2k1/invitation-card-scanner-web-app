@@ -1,6 +1,6 @@
+import { TableHead, TableHeader, TableRow } from "@/components/table/DefaultTable";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { TableHead, TableHeader, TableRow } from "../../DefaultTable";
 import { Column } from "../DataList";
 
 type HeaderDataListProps<T> = {

@@ -1,9 +1,9 @@
 "use client";
-import { Button } from "@/app/components/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Label } from "@/components/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/button";
 import { cn } from "@/lib/utils";
+import { Calendar } from "@/shadcn/calendar";
+import { Label } from "@/shadcn/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/popover";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";

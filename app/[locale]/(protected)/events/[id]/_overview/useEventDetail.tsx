@@ -1,8 +1,8 @@
-import { Toast } from "@/app/components";
-import { RouteUtil } from "@/app/utils/route";
+import { Toast } from "@/components";
 import { TranslateFn } from "@/i18n/type";
 import { useDeleteEvent, useGetEventDetail } from "@/services";
 import { PageAction } from "@/types";
+import { RouteUtil } from "@/utils/route";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo } from "react";

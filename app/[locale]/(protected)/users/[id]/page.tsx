@@ -1,5 +1,4 @@
 "use client";
-
 import { PageAction } from "@/types";
 import UserDetailLayout from "./_overview/userDetail";
 

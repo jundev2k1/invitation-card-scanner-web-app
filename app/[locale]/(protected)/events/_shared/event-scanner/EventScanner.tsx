@@ -1,12 +1,19 @@
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, IconButton } from "@/app/components";
-import { ScanQrCodeIcon } from "@/app/components/icons";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  IconButton,
+} from "@/components";
+import { ScanQrCodeIcon } from "@/icons";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { EventInformation } from "./EventInformation";
 import { useEventScanner } from "./useEventScanner";
 
-const DynamicScanner = dynamic(() => import("@/app/components/qr/QRCodeScanner"), {
+const DynamicScanner = dynamic(() => import("@/components/qr/QRCodeScanner"), {
   ssr: false,
   loading: () => (
     <div className="h-64 bg-muted animate-pulse flex items-center justify-center">

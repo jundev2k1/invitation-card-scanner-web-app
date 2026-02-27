@@ -1,11 +1,11 @@
-import { Toast } from "@/app/components";
-import { RouteUtil } from "@/app/utils/route";
+import { Toast } from "@/components";
 import { phoneNumberRegex } from "@/lib/validation";
-import { userService } from "@/services";
-import { UpdateUserRequest } from "@/services/user/user.type";
+import { UpdateUserRequest, userService } from "@/services";
 import { PageAction, Sex, UserDetailDto } from "@/types";
+import { getSexOptions } from "@/users/_shared/options";
+import { RouteUtil } from "@/utils/route";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
@@ -25,15 +25,12 @@ const userEditSchema = z.object({
   bio: z.string(),
 });
 
-export const sexOptions = [
-  { value: Sex.MALE, label: "Male" },
-  { value: Sex.FEMALE, label: "Female" },
-  { value: Sex.OTHER, label: "Other" },
-];
-
 export const useUserEditForm = (userDetail: UserDetailDto, onPageRefresh: () => void) => {
+  const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
+
+  const sexOptions = getSexOptions(t);
 
   const form = useForm<UpdateUserRequest>({
     resolver: zodResolver(userEditSchema),
@@ -49,7 +46,7 @@ export const useUserEditForm = (userDetail: UserDetailDto, onPageRefresh: () => 
   const handleSubmit = async (data: UpdateUserRequest) => {
     try {
       await userService.updateUser(userDetail.id, data);
-      Toast.showSuccess("Update user successfully.");
+      Toast.showSuccess(t("common.messages.updateSuccess"));
       onPageRefresh();
     } catch (err) {
       console.error(err);
@@ -62,7 +59,7 @@ export const useUserEditForm = (userDetail: UserDetailDto, onPageRefresh: () => 
 
   return {
     form,
-    userDetail,
+    sexOptions,
     handleSubmit,
     redirectToDetail,
   };

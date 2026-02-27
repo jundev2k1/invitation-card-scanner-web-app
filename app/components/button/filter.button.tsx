@@ -1,5 +1,5 @@
-import { Button, ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Button, ButtonProps } from "@/shadcn/button";
 import { Filter } from "lucide-react";
 
 interface AppFilterButtonProps extends ButtonProps {

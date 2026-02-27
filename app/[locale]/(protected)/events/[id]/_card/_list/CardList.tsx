@@ -1,5 +1,5 @@
 "use client";
-import { DataList, RefreshButton, SearchTextbox } from "@/app/components";
+import { DataList, RefreshButton, SearchTextbox } from "@/components";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { EventCardDetail } from "../_detail/DetailCard";

@@ -19,7 +19,21 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/root/*": ["./*"],
+      "@/public/*": ["./public/*"],
+      "@/types": ["./types"],
+      "@/i18n/*": ["./i18n/*"],
+      "@/services": ["./services"],
+      "@/store": ["./store"],
+      "@/lib/*": ["./lib/*"],
+      "@/shadcn/*": ["./components/ui/*"],
+      "@/components": ["./app/components"],
+      "@/components/*": ["./app/components/*"],
+      "@/icons": ["./app/components/icons"],
+      "@/utils/*": ["./app/utils/*"],
+      "@/users/*": ["./app/[locale]/(protected)/users/*"],
+      "@/events/*": ["./app/[locale]/(protected)/events/*"],
+      "@/event-cards/*": ["./app/[locale]/(protected)/invitation-cards/*"],
     }
   },
   "include": [

@@ -1,5 +1,5 @@
-import { AlertDescription, AlertTitle, Alert as AlertWapper } from "@/components/ui/alert";
-import { InfoIcon } from "../icons";
+import { InfoIcon } from "@/icons";
+import { AlertDescription, AlertTitle, Alert as AlertWapper } from "@/shadcn/alert";
 
 type AlertProps = {
   icon?: React.ReactNode;

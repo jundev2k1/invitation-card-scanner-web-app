@@ -1,12 +1,12 @@
 "use client";
-import { MoonIcon, SunIcon } from "@/app/components/icons";
-import { Button } from "@/components/ui/button";
+import { MoonIcon, SunIcon } from "@/icons";
 import { CookieStore } from "@/lib/cookies";
-import { useAppStore } from "@/store/useAppStore";
+import { Button } from "@/shadcn/button";
+import { useThemeStore } from "@/store";
 import { ThemeMode } from "@/types";
 
 export default function ThemeToggleButton() {
-  const { theme, setTheme } = useAppStore();
+  const { theme, setTheme } = useThemeStore();
   const isDarkMode = theme === ThemeMode.DARK;
 
   const toggle = () => {

@@ -1,9 +1,19 @@
 'use client';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, RoleBadge, Separator, SexBadge, UserStatusBadge } from "@/app/components";
-import { CalendarClockIcon, MailIcon, PhoneIcon, UserIcon } from "@/app/components/icons";
-import { userMapper } from "@/app/utils/mappers";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  RoleBadge,
+  Separator,
+  SexBadge,
+  UserStatusBadge,
+} from "@/components";
+import { CalendarClockIcon, MailIcon, PhoneIcon, UserIcon } from "@/icons";
 import { formatDateTime } from "@/lib/datetime/date.util";
 import { UserDetailDto } from "@/types";
+import { userMapper } from "@/utils/mappers";
 import { useTranslations } from "next-intl";
 import { AvatarUpload } from "../_shared";
 

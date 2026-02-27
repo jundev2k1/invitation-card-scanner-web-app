@@ -1,10 +1,7 @@
 "use client";
-
-import { SearchResult } from "@/types/search-result";
+import { SearchResult } from "@/types";
 import { ReactNode } from "react";
-import {
-  Table
-} from "../DefaultTable";
+import { Table } from "../DefaultTable";
 import { BodyDataList } from "./elements/BodyDataList";
 import { FooterDataList } from "./elements/FooterDataList";
 import { HeaderDataList } from "./elements/HeaderDataList";

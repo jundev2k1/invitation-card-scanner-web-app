@@ -1,7 +1,7 @@
 'use client';
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
+import { Label } from "@/shadcn/label";
+import { RadioGroup, RadioGroupItem } from "@/shadcn/radio-group";
 import { Controller, useFormContext } from "react-hook-form";
 
 interface FormRadioGroupProps extends React.HTMLAttributes<HTMLDivElement> {

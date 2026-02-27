@@ -1,6 +1,6 @@
 "use client";
-import { Button, PageContent, RefreshButton, SkeletonProfile } from "@/app/components";
-import { ClipboardPenIcon } from "@/app/components/icons";
+import { Button, PageContent, RefreshButton, SkeletonProfile } from "@/components";
+import { ClipboardPenIcon } from "@/icons";
 import { PageAction } from "@/types";
 import { useTranslations } from "next-intl";
 import { UserEditForm } from "../_edit/EditUserDetail";

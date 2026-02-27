@@ -1,5 +1,6 @@
 "use client";
-
+import { LoaderIcon } from "@/icons";
+import { cn } from "@/lib/utils";
 import {
   Combobox,
   ComboboxChip,
@@ -14,10 +15,8 @@ import {
   ComboboxSeparator,
   ComboboxValue,
   useComboboxAnchor,
-} from "@/components/ui/combobox";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import { Check, Loader2 } from "lucide-react";
+} from "@/shadcn/combobox";
+import { Label } from "@/shadcn/label";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -166,7 +165,6 @@ export function FormMultiCombobox<T = string>({
                     return (
                       <ComboboxItem key={val} value={val}>
                         {getOptionLabel(opt)}
-                        {selected && <Check className="ml-auto h-4 w-4" />}
                       </ComboboxItem>
                     );
                   })}
@@ -182,8 +180,7 @@ export function FormMultiCombobox<T = string>({
                 return (
                   <ComboboxItem key={val} value={val}>
                     {getOptionLabel(opt)}
-                    {selected && <Check className="ml-auto h-4 w-4" />}
-                    {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+                    {loading && <LoaderIcon className="ml-2 h-4 w-4 animate-spin" />}
                   </ComboboxItem>
                 );
               })

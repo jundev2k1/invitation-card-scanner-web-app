@@ -1,6 +1,6 @@
+import { ThemeWrapper, Toast } from "@/components";
 import { defaultLocale } from "@/i18n/request";
 import { CookieStore } from "@/lib/cookies";
-import { ThemeWrapper, Toast } from "./components";
 import "./globals.css";
 
 // export const metadata: Metadata = {

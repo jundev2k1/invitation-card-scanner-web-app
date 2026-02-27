@@ -1,4 +1,4 @@
-import { ChevronRightIcon, HomeIcon } from "lucide-react";
+import { ChevronRightIcon, HomeIcon } from "@/icons";
 import Link from "next/link";
 import { ReactNode } from "react";
 

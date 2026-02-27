@@ -1,9 +1,8 @@
-import { Toast } from "@/app/components";
-import { RouteUtil } from "@/app/utils/route";
+import { Toast } from "@/components";
 import { CookieStore } from "@/lib/cookies";
-import { authService } from "@/services";
-import { RegisterRequest } from "@/services/auth/auth.type";
+import { authService, RegisterRequest } from "@/services";
 import { Sex } from "@/types";
+import { RouteUtil } from "@/utils/route";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";

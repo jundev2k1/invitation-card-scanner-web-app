@@ -1,6 +1,6 @@
 import { userMapper } from "@/app/utils/mappers";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/shadcn/badge";
 import { Sex } from "@/types";
 import { FemaleIcon, MaleIcon, OtherIcon } from "../icons";
 

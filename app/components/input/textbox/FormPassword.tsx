@@ -1,8 +1,8 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { Button } from "@/shadcn/button";
+import { Input } from "@/shadcn/input";
+import { Label } from "@/shadcn/label";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";

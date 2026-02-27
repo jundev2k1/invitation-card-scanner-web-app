@@ -1,8 +1,12 @@
-import { Skeleton } from "@/app/components/skeleton";
+import { Skeleton } from "@/components/skeleton";
+import {
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@/components/table/DefaultTable";
 import { cn } from "@/lib/utils";
-import { SearchResult } from "@/types/search-result";
+import { SearchResult } from "@/types";
 import React from "react";
-import { TableBody, TableCell, TableRow } from "../../DefaultTable";
 import { Column } from "../DataList";
 
 interface BodyDataListProps<T> {

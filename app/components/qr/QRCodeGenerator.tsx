@@ -1,10 +1,10 @@
 "use client";
+import { IconButton } from "@/components/button";
+import { CopyIcon, LoaderIcon, RefreshIcon } from "@/icons";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
-import { IconButton } from "../button";
-import { CopyIcon, LoaderIcon, RefreshIcon } from "../icons";
 
 interface QRCodeGeneratorProps {
   value?: string;
@@ -16,7 +16,7 @@ interface QRCodeGeneratorProps {
   className?: string;
 }
 
-export default function QRCodeGenerator({
+export function QRCodeGenerator({
   value,
   size = 200,
   logo,

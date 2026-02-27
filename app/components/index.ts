@@ -19,5 +19,5 @@ export * from "./skeleton";
 export * from "./table";
 export * from "./text";
 export * from "./theme";
-export * as Toast from "./toast";
+export * from "./toast";
 export * from "./tooltip";

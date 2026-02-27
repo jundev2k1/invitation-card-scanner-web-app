@@ -9,6 +9,7 @@ import {
   DialogTitle,
   EventCardStatusBadge,
   IconButton,
+  QRCodeGenerator,
   Separator,
   SkeletonListItem,
   SmartDateTime,
@@ -19,7 +20,7 @@ import {
   TableHeader,
   TableRow,
   TruncatedText
-} from "@/app/components";
+} from "@/components";
 import {
   CalendarClockIcon,
   ClockIcon,
@@ -33,8 +34,7 @@ import {
   ScanQrCodeIcon,
   UserIcon,
   UserRoundCheckIcon,
-} from "@/app/components/icons";
-import QRCodeGenerator from "@/app/components/qr/QRCodeGenerator";
+} from "@/icons";
 import { formatDateTime } from "@/lib/datetime/date.util";
 import { useTranslations } from "next-intl";
 import React from "react";
@@ -253,4 +253,4 @@ export const EventCardDetail = React.memo(({ eventId, cardId, isOpen, onClose }:
       </DialogContent>
     </Dialog>
   );
-}, (prevProps, nextProps) => prevProps.eventId === nextProps.eventId && prevProps.cardId === nextProps.cardId);
+})

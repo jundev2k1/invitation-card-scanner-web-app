@@ -1,10 +1,8 @@
 "use client";
-
+import { LoaderIcon } from "@/icons";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-
-import { LoaderIcon } from "../icons";
 
 interface QRCodeScannerProps {
   onScanSuccess: (decodedText: string) => void;
@@ -15,7 +13,6 @@ const SCANNER_CONSTRAINTS = {
   facingMode: "environment",
 } as const;
 
-// Delay between scans (ms) - balance speed & performance
 const SCAN_DELAY_MS = 300;
 
 export default function QRCodeScanner({ onScanSuccess, onScanError }: QRCodeScannerProps) {

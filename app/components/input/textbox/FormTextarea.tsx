@@ -1,7 +1,7 @@
 'use client';
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { Label } from "@/shadcn/label";
+import { Textarea } from "@/shadcn/textarea";
 import { useFormContext } from "react-hook-form";
 
 interface FormTextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {

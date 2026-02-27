@@ -1,4 +1,4 @@
-import { DropdownMenuItem } from "../dropdown";
+import { DropdownMenuItem } from "@/components/dropdown";
 
 export const NotificationItem = ({ icon, title, desc, time, isUnread = false }: any) => (
   <DropdownMenuItem className={`flex gap-3 p-4 cursor-pointer focus:bg-accent ${isUnread ? "bg-accent/40" : ""}`}>

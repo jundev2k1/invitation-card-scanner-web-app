@@ -1,13 +1,13 @@
-import { IconButton } from "@/app/components/button";
-import { Select } from "@/app/components/select";
-import { useTranslations } from "next-intl";
-import React from "react";
+import { IconButton } from "@/components/button";
+import { Select } from "@/components/select";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronsLeftIcon,
   ChevronsRightIcon
-} from "../../../icons";
+} from "@/icons";
+import { useTranslations } from "next-intl";
+import React from "react";
 
 const pageSizeOptions = [
   { label: "5", value: "5" },

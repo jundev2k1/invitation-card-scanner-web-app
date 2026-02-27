@@ -1,3 +1,3 @@
-export { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+export { RadioGroup, RadioGroupItem } from "@/shadcn/radio-group";
 export { FormRadioGroup } from "./FormRadioButtonGroup";
 

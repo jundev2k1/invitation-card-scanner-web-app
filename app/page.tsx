@@ -1,7 +1,7 @@
 import { defaultLocale } from "@/i18n/request";
 import { CookieStore } from "@/lib/cookies";
+import { RouteUtil } from "@/utils/route";
 import { useRouter } from "next/navigation";
-import { RouteUtil } from "./utils/route";
 
 export default function Home() {
   const locale = CookieStore.language || defaultLocale;

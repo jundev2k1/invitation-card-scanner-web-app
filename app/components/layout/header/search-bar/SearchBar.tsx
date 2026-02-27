@@ -1,9 +1,23 @@
 "use client";
-import { CalendarClockIcon, LoaderIcon, SearchIcon, UserCircleIcon } from "@/app/components/icons";
-import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
+import { Button } from "@/components/button";
+import {
+  CalendarClockIcon,
+  LoaderIcon,
+  SearchIcon,
+  UserCircleIcon,
+} from "@/icons";
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/shadcn/command";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { Button } from "../../../button";
 import { useSearchBar } from "./useSearchBar";
 
 export const SearchBar = React.memo(() => {
@@ -20,7 +34,6 @@ export const SearchBar = React.memo(() => {
   const showEmpty = !isApiLoading && !hasApiResults && !hasFeatures && query.trim();
   return (
     <>
-
       <Button
         className="flex items-center justify-between w-64 px-3 py-1.5 text-sm text-muted-foreground border rounded-md bg-muted/50 hover:bg-muted transition-all"
         leftIcon={

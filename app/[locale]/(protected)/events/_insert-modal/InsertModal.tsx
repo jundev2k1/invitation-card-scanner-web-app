@@ -11,8 +11,8 @@ import {
   FormTextBox,
   Separator,
   TextBox
-} from "@/app/components";
-import { PlusCircleIcon } from "@/app/components/icons";
+} from "@/components";
+import { PlusCircleIcon } from "@/icons";
 import { EventStatus } from "@/types";
 import { useTranslations } from "next-intl";
 import { FormProvider } from "react-hook-form";

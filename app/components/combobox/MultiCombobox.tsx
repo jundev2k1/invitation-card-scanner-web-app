@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
   Combobox,
   ComboboxChip,
@@ -14,9 +15,8 @@ import {
   ComboboxSeparator,
   ComboboxValue,
   useComboboxAnchor,
-} from "@/components/ui/combobox";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+} from "@/shadcn/combobox";
+import { Label } from "@/shadcn/label";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";

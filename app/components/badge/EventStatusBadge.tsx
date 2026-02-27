@@ -1,5 +1,5 @@
 import { eventMapper } from "@/app/utils/mappers";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/shadcn/badge";
 import { EventStatus } from "@/types";
 import { useTranslations } from "next-intl";
 

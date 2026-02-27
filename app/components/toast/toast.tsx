@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-export { Toaster } from '@/components/ui/sonner';
+export { Toaster } from '@/shadcn/sonner';
 
 type ToastPosition = 'top-center' | 'top-left' | 'top-right'
   | 'bottom-center' | 'bottom-left' | 'bottom-right';

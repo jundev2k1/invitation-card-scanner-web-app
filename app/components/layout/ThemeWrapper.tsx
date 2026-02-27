@@ -1,11 +1,11 @@
 "use client";
-import Providers from "@/app/providers";
-import { useAppStore } from "@/store/useAppStore";
+import Providers from "@/root/app/providers";
+import { useThemeStore } from "@/store";
 import { ThemeColor, ThemeMode } from "@/types";
 import { useEffect, useState } from "react";
 
 export function ThemeWrapper({ children }: { children: React.ReactNode }) {
-  const { theme, color } = useAppStore();
+  const { theme, color } = useThemeStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

@@ -1,12 +1,24 @@
 'use client';
-
-import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, FormRadioGroup, FormTextArea, FormTextBox, RoleBadge, Separator, UserStatusBadge } from "@/app/components";
-import { SaveIcon, XIcon } from "@/app/components/icons";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  FormRadioGroup,
+  FormTextArea,
+  FormTextBox,
+  RoleBadge,
+  Separator,
+  UserStatusBadge,
+} from "@/components";
+import { SaveIcon, XIcon } from "@/icons";
 import { UserDetailDto } from "@/types";
 import { useTranslations } from "next-intl";
 import { FormProvider } from "react-hook-form";
 import { AvatarUpload } from "../_shared";
-import { sexOptions, useUserEditForm } from "./useEditUserDetail";
+import { useUserEditForm } from "./useEditUserDetail";
 
 type UserEditFormProps = {
   userDetail: UserDetailDto;
@@ -15,7 +27,12 @@ type UserEditFormProps = {
 
 export const UserEditForm = ({ userDetail, onPageRefresh }: UserEditFormProps) => {
   const t = useTranslations();
-  const { form, handleSubmit, redirectToDetail } = useUserEditForm(userDetail, onPageRefresh);
+  const {
+    form,
+    sexOptions,
+    handleSubmit,
+    redirectToDetail
+  } = useUserEditForm(userDetail, onPageRefresh);
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">

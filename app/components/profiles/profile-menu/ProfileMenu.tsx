@@ -1,17 +1,23 @@
 "use client";
 import {
-  AppearanceSettings,
   Avatar,
   AvatarFallback,
   AvatarImage,
+} from "@/components/avatar";
+import { AppearanceSettings } from "@/components/dialog/appearance-settings";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/app/components";
-import { LogOutIcon, SettingsIcon, UserIcon } from "@/app/components/icons";
+} from "@/components/dropdown";
+import {
+  LogOutIcon,
+  SettingsIcon,
+  UserIcon,
+} from "@/icons";
 import { useTranslations } from "next-intl";
 import { useProfileMenu } from "./useProfileMenu";
 

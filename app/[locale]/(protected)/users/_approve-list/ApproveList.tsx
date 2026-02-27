@@ -7,8 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
   SearchTextbox
-} from "@/app/components";
-import { ClipboardPenIcon } from "@/app/components/icons";
+} from "@/components";
+import { ClipboardPenIcon } from "@/icons";
 import { useTranslations } from "next-intl";
 import { useApproveList } from "./useApproveList";
 

@@ -1,6 +1,4 @@
 "use client";
-
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,11 +6,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+  Label,
+} from "@/components";
+import { EyeIcon, EyeOffIcon, LoaderIcon } from "@/icons";
 import { cn } from "@/lib/utils";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Button } from "@/shadcn/button";
+import { Input } from "@/shadcn/input";
 import { useTranslations } from "next-intl";
 import { useLoginPage } from "./useLoginPage";
 
@@ -99,7 +98,7 @@ export default function LoginPage() {
                     className="absolute right-0 top-0 h-full px-3 text-slate-400 hover:text-slate-200 hover:bg-transparent"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    {showPassword ? <EyeOffIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
                   </Button>
                 </div>
                 <div className="flex justify-end">
@@ -122,7 +121,7 @@ export default function LoginPage() {
                 isLoading && "opacity-70 cursor-not-allowed"
               )}
             >
-              {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
+              {isLoading && <LoaderIcon className="mr-2 h-5 w-5 animate-spin" />}
               {isLoading ? t('auth.login.form.btnSignInLoading') : t('auth.login.form.btnSignIn')}
             </Button>
           </CardContent>

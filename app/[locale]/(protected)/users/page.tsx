@@ -1,5 +1,11 @@
 'use client';
-import { DataList, MultiCombobox, PageContent, RefreshButton, SearchTextbox } from "@/app/components";
+import {
+  DataList,
+  MultiCombobox,
+  PageContent,
+  RefreshButton,
+  SearchTextbox,
+} from "@/components";
 import { useTranslations } from "next-intl";
 import { ApproveList } from "./_approve-list/ApproveList";
 import { useUserPage } from "./useUserPage";

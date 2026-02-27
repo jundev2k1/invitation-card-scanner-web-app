@@ -1,6 +1,6 @@
 "use client";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
+import { Label } from "@/shadcn/label";
+import { Switch } from "@/shadcn/switch";
 import { Controller, useFormContext } from "react-hook-form";
 
 export function FormSwitch({ name, label }: { name: string; label: string }) {

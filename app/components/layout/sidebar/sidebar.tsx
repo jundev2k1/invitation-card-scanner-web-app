@@ -1,5 +1,5 @@
-import { IconButton } from "@/app/components/button";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/app/components/icons";
+import { IconButton } from "@/components/button";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/icons";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/store";
 import { useTranslations } from "next-intl";
