@@ -21,31 +21,31 @@ import { Check, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 
-type Option = string | { value: string; label: string };
+type Option<T = string> = T | { value: T; label: string };
 
-interface OptionGroup {
+interface OptionGroup<T = string> {
   label: string;
-  options: Option[];
+  options: Option<T>[];
 }
 
-interface AppMultiComboboxProps {
-  value: string[];
-  onValueChange: (value: string[]) => void;
+interface AppMultiComboboxProps<T = string> {
+  value: T[];
+  onValueChange: (value: T[]) => void;
   placeholder?: string;
-  groups?: OptionGroup[];
-  options?: Option[];
-  fetchOptions?: (query: string) => Promise<Option[]>;
+  groups?: OptionGroup<T>[];
+  options?: Option<T>[];
+  fetchOptions?: (query: string) => Promise<Option<T>[]>;
   debounceMs?: number;
   disabled?: boolean;
   className?: string;
   contentClassName?: string;
   label?: string;
   helperText?: string;
-  getOptionLabel?: (option: Option) => string;
-  getOptionValue?: (option: Option) => string;
+  getOptionLabel?: (option: Option<T>) => string;
+  getOptionValue?: (option: Option<T>) => string;
 }
 
-export default function AppMultiCombobox({
+export default function AppMultiCombobox<T = string>({
   value = [],
   onValueChange,
   placeholder = "Select options...",
@@ -58,13 +58,19 @@ export default function AppMultiCombobox({
   contentClassName,
   label,
   helperText,
-  getOptionLabel = (opt) => (typeof opt === "string" ? opt : opt.label),
-  getOptionValue = (opt) => (typeof opt === "string" ? opt : opt.value),
-}: AppMultiComboboxProps) {
+  getOptionLabel = (opt: Option<T>) =>
+    typeof opt === "object" && opt !== null && "label" in opt
+      ? opt.label
+      : String(opt),
+  getOptionValue = (opt: Option<T>) =>
+    typeof opt === "object" && opt !== null && "value" in opt
+      ? String(opt.value)
+      : String(opt),
+}: AppMultiComboboxProps<T>) {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [dynamicOptions, setDynamicOptions] = useState<Option[]>([]);
+  const [dynamicOptions, setDynamicOptions] = useState<Option<T>[]>([]);
   const [loading, setLoading] = useState(false);
 
   const anchor = useComboboxAnchor();
@@ -103,8 +109,12 @@ export default function AppMultiCombobox({
       <Combobox
         multiple
         items={itemValues}
-        value={value}
-        onValueChange={onValueChange}
+        value={value.map((v) => getOptionValue(v as any))}
+        onValueChange={(newStrValues: string[]) => {
+          const newValues = newStrValues.map((str) => str as T);
+          onValueChange(newValues);
+          setOpen(false);
+        }}
         disabled={disabled}
         open={open}
         onOpenChange={setOpen}
@@ -137,7 +147,9 @@ export default function AppMultiCombobox({
                   <ComboboxLabel>{group.label}</ComboboxLabel>
                   {group.options.map((opt) => {
                     const val = getOptionValue(opt);
-                    const selected = value.includes(val);
+                    const selected = value.some(
+                      (v) => getOptionValue(v as any) === val
+                    );
                     return (
                       <ComboboxItem key={val} value={val}>
                         {getOptionLabel(opt)}
@@ -151,7 +163,9 @@ export default function AppMultiCombobox({
             ) : (
               finalOptions.map((opt) => {
                 const val = getOptionValue(opt);
-                const selected = value.includes(val);
+                const selected = value.some(
+                  (v) => getOptionValue(v as any) === val
+                );
                 return (
                   <ComboboxItem key={val} value={val}>
                     {getOptionLabel(opt)}

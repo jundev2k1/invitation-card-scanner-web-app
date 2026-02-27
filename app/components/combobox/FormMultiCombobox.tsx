@@ -22,31 +22,31 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-type Option = string | { value: string; label: string };
+type Option<T = string> = T | { value: T; label: string };
 
-interface OptionGroup {
+interface OptionGroup<T = string> {
   label: string;
-  options: Option[];
+  options: Option<T>[];
 }
 
-interface FormMultiComboboxProps {
+interface FormMultiComboboxProps<T = string> {
   name: string;
   label?: string;
   placeholder?: string;
-  groups?: OptionGroup[];
-  options?: Option[];
-  fetchOptions?: (query: string) => Promise<Option[]>;
+  groups?: OptionGroup<T>[];
+  options?: Option<T>[];
+  fetchOptions?: (query: string) => Promise<Option<T>[]>;
   debounceMs?: number;
   isRequired?: boolean;
   disabled?: boolean;
   className?: string;
   contentClassName?: string;
   containerClassName?: string;
-  getOptionLabel?: (option: Option) => string;
-  getOptionValue?: (option: Option) => string;
+  getOptionLabel?: (option: Option<T>) => string;
+  getOptionValue?: (option: Option<T>) => string;
 }
 
-export function FormMultiCombobox({
+export function FormMultiCombobox<T = string>({
   name,
   label,
   placeholder = "Select options...",
@@ -59,22 +59,28 @@ export function FormMultiCombobox({
   className,
   contentClassName,
   containerClassName,
-  getOptionLabel = (opt) => (typeof opt === "string" ? opt : opt.label),
-  getOptionValue = (opt) => (typeof opt === "string" ? opt : opt.value),
-}: FormMultiComboboxProps) {
+  getOptionLabel = (opt: Option<T>) =>
+    typeof opt === "object" && opt !== null && "label" in opt
+      ? opt.label
+      : String(opt),
+  getOptionValue = (opt: Option<T>) =>
+    typeof opt === "object" && opt !== null && "value" in opt
+      ? String(opt.value)
+      : String(opt),
+}: FormMultiComboboxProps<T>) {
   const t = useTranslations();
   const { register, setValue, watch, formState: { errors } } = useFormContext();
-  const selectedValues = (watch(name) as string[]) ?? [];
+  const selectedValues = (watch(name) as T[]) ?? [];
   const error = errors[name]?.message as string | undefined;
 
   register(name, {
-    required: isRequired ? t("common.combobox.requiredMulti") : false,
+    required: isRequired ? t("common.form.requiredMulti") : false,
   });
 
   const anchor = useComboboxAnchor();
 
   const [query, setQuery] = useState("");
-  const [dynamicOptions, setDynamicOptions] = useState<Option[]>([]);
+  const [dynamicOptions, setDynamicOptions] = useState<Option<T>[]>([]);
   const [loading, setLoading] = useState(false);
 
   const isAsync = !!fetchOptions;
@@ -116,8 +122,11 @@ export function FormMultiCombobox({
       <Combobox
         multiple
         items={itemValues}
-        value={selectedValues}
-        onValueChange={(newValues: string[]) => setValue(name, newValues, { shouldValidate: true })}
+        value={selectedValues.map((v) => getOptionValue(v as any))}
+        onValueChange={(newStrValues: string[]) => {
+          const newValues = newStrValues.map((str) => str as T);
+          setValue(name, newValues, { shouldValidate: true });
+        }}
         disabled={disabled}
       >
         <ComboboxChips
@@ -151,7 +160,9 @@ export function FormMultiCombobox({
                   <ComboboxLabel>{group.label}</ComboboxLabel>
                   {group.options.map((opt) => {
                     const val = getOptionValue(opt);
-                    const selected = selectedValues.includes(val);
+                    const selected = selectedValues.some(
+                      (v) => getOptionValue(v as any) === val
+                    );
                     return (
                       <ComboboxItem key={val} value={val}>
                         {getOptionLabel(opt)}
@@ -165,7 +176,9 @@ export function FormMultiCombobox({
             ) : (
               finalOptions.map((opt) => {
                 const val = getOptionValue(opt);
-                const selected = selectedValues.includes(val);
+                const selected = selectedValues.some(
+                  (v) => getOptionValue(v as any) === val
+                );
                 return (
                   <ComboboxItem key={val} value={val}>
                     {getOptionLabel(opt)}

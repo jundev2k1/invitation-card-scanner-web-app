@@ -18,26 +18,28 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 
-interface Group {
+interface Group<T = string> {
   value: string;
-  items: string[];
+  items: T[];
 }
 
-interface GroupedComboboxProps {
-  value?: string;
-  onValueChange?: (value: string) => void;
+interface GroupedComboboxProps<T = string> {
+  value?: T;
+  onValueChange?: (value: T) => void;
   placeholder?: string;
-  groups?: Group[];
-  fetchOptions?: (query: string) => Promise<Group[]>;
+  groups?: Group<T>[];
+  fetchOptions?: (query: string) => Promise<Group<T>[]>;
   debounceMs?: number;
   disabled?: boolean;
   className?: string;
   contentClassName?: string;
   label?: string;
   helperText?: string;
+  getOptionLabel?: (item: T) => string;
+  getOptionValue?: (item: T) => string;
 }
 
-export default function GroupedCombobox({
+export default function GroupedCombobox<T = string>({
   value,
   onValueChange,
   placeholder = "Select a timezone...",
@@ -49,16 +51,19 @@ export default function GroupedCombobox({
   contentClassName,
   label,
   helperText,
-}: GroupedComboboxProps) {
+  getOptionLabel = (item: T) => String(item),
+  getOptionValue = (item: T) => String(item),
+}: GroupedComboboxProps<T>) {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [dynamicGroups, setDynamicGroups] = useState<Group[]>([]);
+  const [dynamicGroups, setDynamicGroups] = useState<Group<T>[]>([]);
   const [loading, setLoading] = useState(false);
 
   const isAsync = !!fetchOptions;
   const finalGroups = isAsync ? dynamicGroups : groups || [];
   const allItems = finalGroups.flatMap((g) => g.items);
+  const allValues = allItems.map(getOptionValue);
 
   const debouncedQuery = useDebounce(query, debounceMs);
 
@@ -85,10 +90,10 @@ export default function GroupedCombobox({
       {label && <Label>{label}</Label>}
 
       <Combobox
-        items={allItems}
-        value={value}
-        onValueChange={(val) => {
-          onValueChange?.(val ?? "");
+        items={allValues}
+        value={value !== undefined ? getOptionValue(value) : undefined}
+        onValueChange={(strVal) => {
+          onValueChange?.(strVal as T);
           setOpen(false);
         }}
         open={open}
@@ -112,12 +117,15 @@ export default function GroupedCombobox({
               <ComboboxGroup key={group.value}>
                 <ComboboxLabel>{group.value}</ComboboxLabel>
                 <ComboboxCollection>
-                  {(item) => (
-                    <ComboboxItem key={item} value={item}>
-                      {item}
-                      {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
-                    </ComboboxItem>
-                  )}
+                  {(item) => {
+                    const val = getOptionValue(item);
+                    return (
+                      <ComboboxItem key={val} value={val}>
+                        {getOptionLabel(item)}
+                        {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+                      </ComboboxItem>
+                    );
+                  }}
                 </ComboboxCollection>
                 {index < finalGroups.length - 1 && <ComboboxSeparator />}
               </ComboboxGroup>

@@ -19,26 +19,28 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-interface Group {
+interface Group<T = string> {
   value: string;
-  items: string[];
+  items: T[];
 }
 
-interface FormGroupedComboboxProps {
+interface FormGroupedComboboxProps<T = string> {
   name: string;
   label?: string;
   placeholder?: string;
-  groups?: Group[];
-  fetchOptions?: (query: string) => Promise<Group[]>;
+  groups?: Group<T>[];
+  fetchOptions?: (query: string) => Promise<Group<T>[]>;
   debounceMs?: number;
   isRequired?: boolean;
   disabled?: boolean;
   className?: string;
   contentClassName?: string;
   containerClassName?: string;
+  getOptionLabel?: (item: T) => string;
+  getOptionValue?: (item: T) => string;
 }
 
-export function FormGroupedCombobox({
+export function FormGroupedCombobox<T = string>({
   name,
   label,
   placeholder = "Select a timezone...",
@@ -50,21 +52,24 @@ export function FormGroupedCombobox({
   className,
   contentClassName,
   containerClassName,
-}: FormGroupedComboboxProps) {
+  getOptionLabel = (item: T) => String(item),
+  getOptionValue = (item: T) => String(item),
+}: FormGroupedComboboxProps<T>) {
   const t = useTranslations();
   const { register, setValue, watch, formState: { errors } } = useFormContext();
-  const selectedValue = watch(name) as string | undefined;
+  const selectedValue = watch(name) as T | undefined;
   const error = errors[name]?.message as string | undefined;
 
-  register(name, { required: isRequired ? t("common.combobox.required") : false });
+  register(name, { required: isRequired ? t("common.form.required") : false });
 
   const [query, setQuery] = useState("");
-  const [dynamicGroups, setDynamicGroups] = useState<Group[]>([]);
+  const [dynamicGroups, setDynamicGroups] = useState<Group<T>[]>([]);
   const [loading, setLoading] = useState(false);
 
   const isAsync = !!fetchOptions;
   const finalGroups = isAsync ? dynamicGroups : groups || [];
   const allItems = finalGroups.flatMap((g) => g.items);
+  const allValues = allItems.map(getOptionValue);
 
   const debouncedQuery = useDebounce(query, debounceMs);
 
@@ -96,9 +101,11 @@ export function FormGroupedCombobox({
       )}
 
       <Combobox
-        items={allItems}
-        value={selectedValue}
-        onValueChange={(val) => setValue(name, val ?? "", { shouldValidate: true })}
+        items={allValues}
+        value={selectedValue !== undefined ? getOptionValue(selectedValue) : undefined}
+        onValueChange={(strVal) => {
+          setValue(name, strVal as T, { shouldValidate: true });
+        }}
         disabled={disabled}
       >
         <ComboboxInput
@@ -122,12 +129,15 @@ export function FormGroupedCombobox({
               <ComboboxGroup key={group.value}>
                 <ComboboxLabel>{group.value}</ComboboxLabel>
                 <ComboboxCollection>
-                  {(item) => (
-                    <ComboboxItem key={item} value={item}>
-                      {item}
-                      {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
-                    </ComboboxItem>
-                  )}
+                  {(item) => {
+                    const val = getOptionValue(item);
+                    return (
+                      <ComboboxItem key={val} value={val}>
+                        {getOptionLabel(item)}
+                        {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+                      </ComboboxItem>
+                    );
+                  }}
                 </ComboboxCollection>
                 {index < finalGroups.length - 1 && <ComboboxSeparator />}
               </ComboboxGroup>

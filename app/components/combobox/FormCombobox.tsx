@@ -18,23 +18,23 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-type Option = string | { value: string; label: string };
+type Option<T = string> = T | { value: T; label: string };
 
-interface FormAsyncComboboxProps {
+interface FormAsyncComboboxProps<T = string> {
   name: string;
   label?: string;
   placeholder?: string;
-  fetchOptions: (query: string) => Promise<Option[]>;
+  fetchOptions: (query: string) => Promise<Option<T>[]>;
   debounceMs?: number;
   isRequired?: boolean;
   disabled?: boolean;
   className?: string;
   containerClassName?: string;
-  getOptionLabel?: (opt: Option) => string;
-  getOptionValue?: (opt: Option) => string;
+  getOptionLabel?: (opt: Option<T>) => string;
+  getOptionValue?: (opt: Option<T>) => string;
 }
 
-export function FormAsyncCombobox({
+export function FormAsyncCombobox<T = string>({
   name,
   label,
   placeholder = "Search and select...",
@@ -44,18 +44,24 @@ export function FormAsyncCombobox({
   disabled = false,
   className,
   containerClassName,
-  getOptionLabel = (opt) => (typeof opt === "string" ? opt : opt.label),
-  getOptionValue = (opt) => (typeof opt === "string" ? opt : opt.value),
-}: FormAsyncComboboxProps) {
+  getOptionLabel = (opt: Option<T>) =>
+    typeof opt === "object" && opt !== null && "label" in opt
+      ? opt.label
+      : String(opt),
+  getOptionValue = (opt: Option<T>) =>
+    typeof opt === "object" && opt !== null && "value" in opt
+      ? String(opt.value)
+      : String(opt),
+}: FormAsyncComboboxProps<T>) {
   const t = useTranslations();
   const { register, setValue, watch, formState: { errors } } = useFormContext();
-  const selectedValue = watch(name) as string | undefined;
+  const selectedValue = watch(name) as T | undefined;
   const error = errors[name]?.message as string | undefined;
 
-  register(name, { required: isRequired ? t("common.combobox.required") : false });
+  register(name, { required: isRequired ? t("common.form.required") : false });
 
   const [query, setQuery] = useState("");
-  const [options, setOptions] = useState<Option[]>([]);
+  const [options, setOptions] = useState<Option<T>[]>([]);
   const [loading, setLoading] = useState(false);
 
   const debouncedQuery = useDebounce(query, debounceMs);
@@ -78,8 +84,15 @@ export function FormAsyncCombobox({
   }, [loadOptions]);
 
   const displayOptions = selectedValue
-    ? [...new Set([...options.map(getOptionValue), selectedValue])].map(
-        (val) => options.find((o) => getOptionValue(o) === val) || val
+    ? [
+        ...new Set([
+          ...options.map(getOptionValue),
+          getOptionValue(selectedValue as any),
+        ]),
+      ].map(
+        (val) =>
+          options.find((o) => getOptionValue(o) === val) ||
+          (selectedValue as any)
       )
     : options;
 
@@ -94,15 +107,25 @@ export function FormAsyncCombobox({
 
       <Combobox
         items={displayOptions.map(getOptionValue)}
-        value={selectedValue}
-        onValueChange={(val) => setValue(name, val ?? "", { shouldValidate: true })}
+        value={
+          selectedValue !== undefined
+            ? getOptionValue(selectedValue as any)
+            : undefined
+        }
+        onValueChange={(strVal) => {
+          setValue(name, strVal as T, { shouldValidate: true });
+        }}
         disabled={disabled}
       >
         <ComboboxInput
           placeholder={placeholder}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className={cn("w-full", error && "border-destructive focus-visible:ring-destructive", className)}
+          className={cn(
+            "w-full",
+            error && "border-destructive focus-visible:ring-destructive",
+            className
+          )}
         >
           <ComboboxValue placeholder={placeholder} />
           <ComboboxClear />
