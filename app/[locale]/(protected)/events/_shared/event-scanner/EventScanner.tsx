@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, IconButton } from "@/app/components";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, IconButton } from "@/app/components";
 import { ScanQrCodeIcon } from "@/app/components/icons";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
@@ -10,7 +10,7 @@ const DynamicScanner = dynamic(() => import("@/app/components/qr/QRCodeScanner")
   ssr: false,
   loading: () => (
     <div className="h-64 bg-muted animate-pulse flex items-center justify-center">
-      Đang khởi động camera...
+      Camera loading...
     </div>
   )
 });
@@ -52,6 +52,9 @@ export const EventScanner = () => {
               <span className="dark:text-foreground">{t('event.scanner.title')}</span>
             </DialogTitle>
           </DialogHeader>
+
+          <DialogDescription>
+          </DialogDescription>
 
           {!result ? (
             <div className="p-8 flex flex-col items-center">
