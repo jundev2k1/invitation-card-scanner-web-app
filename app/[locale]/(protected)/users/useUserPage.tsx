@@ -1,22 +1,24 @@
-import { Column, SexBadge, SmartDateTime, TruncatedText, useFilter, UserStatusBadge } from "@/app/components";
+import { BaseFilter, Column, defaultBaseFilter, SexBadge, SmartDateTime, TruncatedText, useFilter, UserStatusBadge } from "@/app/components";
 import { ClockIcon, InfoIcon, MailIcon, PhoneIcon, UserIcon } from "@/app/components/icons";
 import { RouteUtil } from "@/app/utils/route";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { TranslateFn } from "@/i18n/type";
 import { useGetUserSearch } from "@/services/user/useUserService";
-import { defaultSearchResult } from "@/types";
+import { defaultSearchResult, UserStatus } from "@/types";
 import { UserSearchItemDto } from "@/types/dto/user/user-search-item.dto";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { useTranslations } from "use-intl";
+import { getUserStatusOptions } from "./_shared";
 
-const getBreadcrumbs = (t: any, locale: string) => [
+const getBreadcrumbs = (t: TranslateFn, locale: string) => [
   { label: t('dashboard.title'), href: RouteUtil.getDashboardRoute(locale) },
   { label: t('user.list.title') },
 ];
 
-const getColumns = (t: any, redirectToDetail: (id: string) => void): Column<UserSearchItemDto>[] => [
+const getColumns = (t: TranslateFn, redirectToDetail: (id: string) => void): Column<UserSearchItemDto>[] => [
   {
     key: "id",
     label: t('user.list.table.columns.id'),
@@ -74,29 +76,57 @@ const getColumns = (t: any, redirectToDetail: (id: string) => void): Column<User
   },
 ];
 
+interface UserFilters extends BaseFilter {
+  statuses: UserStatus[]
+}
+
+const getSearchParams = (filter: UserFilters) => {
+  return {
+    keyword: filter.keyword || '',
+    statuses: filter.statuses || [],
+    page: filter.page || 1,
+    pageSize: filter.pageSize || 20,
+  }
+}
+
 export const useUserPage = () => {
   const locale = useLocale();
   const router = useRouter();
   const t = useTranslations();
 
-  const { keyword, filter, setKeyword, onPageChange, onPageSizeChange } = useFilter();
-  const { data, isLoading, refetch } = useGetUserSearch(keyword, [], filter.page, filter.pageSize);
+  const {
+    filter,
+    updateFilter,
+    onKeywordChange,
+    onPageChange,
+    onPageSizeChange
+  } = useFilter<UserFilters>({ ...defaultBaseFilter, statuses: [] });
+  const {
+    data,
+    isLoading,
+    refetch
+  } = useGetUserSearch(getSearchParams(filter));
 
   const redirectToDetail = useCallback((id: string) => router.push(RouteUtil.getUserDetailUrl(locale, id)), [locale]);
+  const onStatusChange = useCallback((statuses: UserStatus[]) => {
+    updateFilter({ ...filter, page: 1, statuses });
+  }, [locale]);
 
   const breadcrumbs = useMemo(() => getBreadcrumbs(t, locale), [locale]);
   const columns = useMemo(() => getColumns(t, redirectToDetail), [locale]);
   const onPageRefresh = useCallback(refetch, []);
+  const useStatusOptions = useMemo(() => getUserStatusOptions(t), [t]);
 
   return {
     breadcrumbs,
     columns,
     isLoading,
     onPageRefresh,
-    keyword,
     data: data?.data ?? defaultSearchResult,
+    useStatusOptions,
     filter,
-    setKeyword,
+    onStatusChange,
+    onKeywordChange,
     onPageChange,
     onPageSizeChange
   }

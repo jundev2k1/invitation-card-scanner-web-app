@@ -137,6 +137,7 @@
     "required": "Please select an option",
     "requiredMulti": "Please select at least one option",
     "noResults": "No results found.",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "moreItems": "+{count} more"
   }
 }

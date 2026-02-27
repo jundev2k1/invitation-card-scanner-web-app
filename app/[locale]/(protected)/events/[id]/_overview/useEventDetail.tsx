@@ -1,12 +1,13 @@
 import { Toast } from "@/app/components";
 import { RouteUtil } from "@/app/utils/route";
+import { TranslateFn } from "@/i18n/type";
 import { useDeleteEvent, useGetEventDetail } from "@/services";
 import { PageAction } from "@/types";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo } from "react";
 
-const getBreadcrumbs = (t: any, dashboardUrl: string, eventListUrl: string, pageTitle: string) => [
+const getBreadcrumbs = (t: TranslateFn, dashboardUrl: string, eventListUrl: string, pageTitle: string) => [
   { label: t('dashboard.title'), href: dashboardUrl },
   { label: t('event.list.title'), href: eventListUrl },
   { label: pageTitle },

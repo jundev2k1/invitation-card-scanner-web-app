@@ -1,5 +1,5 @@
 'use client';
-import { DataList, PageContent, RefreshButton, TextBox } from "@/app/components";
+import { DataList, MultiCombobox, PageContent, RefreshButton, SearchTextbox } from "@/app/components";
 import { useTranslations } from "next-intl";
 import { ApproveList } from "./_approve-list/ApproveList";
 import { useUserPage } from "./useUserPage";
@@ -10,12 +10,13 @@ export default function UserPage() {
     columns,
     isLoading,
     onPageRefresh,
-    keyword,
     data,
+    useStatusOptions,
     filter,
+    onStatusChange,
+    onKeywordChange,
     onPageChange,
     onPageSizeChange,
-    setKeyword
   } = useUserPage();
   const t = useTranslations();
 
@@ -25,12 +26,21 @@ export default function UserPage() {
       description={t('user.list.desc')}
       breadcrumbs={breadcrumbs}
       filters={
-        <TextBox
-          value={keyword}
-          placeholder={t('user.list.filter.search.placeholder')}
-          className="w-75"
-          onChange={(e) => setKeyword(e.currentTarget.value)}
-        />
+        <>
+          <SearchTextbox
+            value={filter.keyword}
+            placeholder={t('user.list.filter.search.placeholder')}
+            onTextChange={onKeywordChange}
+          />
+          <MultiCombobox
+            className="flex-nowrap max-w-75 overflow-hidden"
+            value={filter.statuses}
+            onValueChange={onStatusChange}
+            placeholder={t('user.list.filter.statusList.placeholder')}
+            options={useStatusOptions}
+            displayCount={2}
+          />
+        </>
       }
       actions={
         <>

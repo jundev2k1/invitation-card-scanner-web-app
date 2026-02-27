@@ -72,7 +72,7 @@ export const useCardList = ({ eventId }: { eventId: string }) => {
   const t = useTranslations();
 
   const [pageAction, setPageAction] = useState<[ListItemAction, string | null]>([ListItemAction.NONE, null]);
-  const { keyword, setKeyword, filter, onPageChange, onPageSizeChange } = useFilter();
+  const { filter, onKeywordChange, onPageChange, onPageSizeChange } = useFilter();
   const { data, isLoading, refetch } = useSearchEventCards(
     eventId,
     { keyword: filter.keyword, page: filter.page, pageSize: filter.pageSize }
@@ -88,7 +88,7 @@ export const useCardList = ({ eventId }: { eventId: string }) => {
 
     await deleteEventCard({ eventId: eventId, id });
     refetch();
-    
+
     Toast.showSuccess(t('common.messages.deleteSuccess'));
   }, []);
 
@@ -101,8 +101,7 @@ export const useCardList = ({ eventId }: { eventId: string }) => {
     pageAction,
     onCloseModal,
     columns,
-    keyword,
-    setKeyword,
+    onKeywordChange,
     filter,
     onPageChange,
     onPageSizeChange,

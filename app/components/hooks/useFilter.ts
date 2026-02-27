@@ -1,32 +1,32 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
-type SearchFilter = {
-  keyword: string,
-  page: number,
-  pageSize: number,
+export interface BaseFilter {
+  keyword: string;
+  page: number;
+  pageSize: number;
 }
 
-export const useFilter = (defaultFilter?: SearchFilter) => {
-  const [keyword, setKeyword] = useState('');
-  const [filter, setFilter] = useState<SearchFilter>(defaultFilter ??
-  {
-    keyword: '',
-    page: 1,
-    pageSize: 20
-  });
+export const defaultBaseFilter = {
+  keyword: '',
+  page: 1,
+  pageSize: 20
+}
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setFilter({
-        keyword: keyword,
-        page: keyword.trim() === '' ? filter.page : 1,
-        pageSize: filter.pageSize
-      });
-    }, 300);
+export const useFilter = <T extends BaseFilter>(defaultFilter?: T) => {
+  const [filter, setFilter] = useState<T>(defaultFilter ?? { ...defaultBaseFilter } as T);
 
-    return () => clearTimeout(handler);
-  }, [keyword]);
+  const updateFilter = useCallback((fieldsToUpdate: Partial<T>) => {
+    setFilter((prev) => ({
+      ...prev,
+      ...fieldsToUpdate,
+      page: fieldsToUpdate.page ?? 1
+    }));
+  }, []);
+
+  const onKeywordChange = useCallback((keyword: string) => {
+    setFilter({ ...filter, keyword });
+  }, [filter]);
 
   const onPageChange = useCallback((page: number) => {
     setFilter({ ...filter, page });
@@ -37,9 +37,9 @@ export const useFilter = (defaultFilter?: SearchFilter) => {
   }, [filter]);
 
   return ({
-    keyword,
     filter,
-    setKeyword,
+    updateFilter,
+    onKeywordChange,
     onPageChange,
     onPageSizeChange
   });

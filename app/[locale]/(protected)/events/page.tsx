@@ -1,5 +1,5 @@
 "use client";
-import { DataList, PageContent, RefreshButton, TextBox } from "@/app/components";
+import { DataList, PageContent, RefreshButton, SearchTextbox } from "@/app/components";
 import { useTranslations } from "next-intl";
 import { InsertModal } from "./_insert-modal/InsertModal";
 import { EventScanner } from "./_shared";
@@ -12,12 +12,11 @@ export default function EventsPage() {
     columns,
     isLoading,
     onPageRefresh,
-    keyword,
     data,
     filter,
     onPageChange,
     onPageSizeChange,
-    setKeyword
+    onKeywordChange,
   } = useEventPage();
 
   return (
@@ -26,11 +25,10 @@ export default function EventsPage() {
       description={t('user.list.desc')}
       breadcrumbs={breadcrumbs}
       filters={
-        <TextBox
-          value={keyword}
+        <SearchTextbox
+          value={filter.keyword}
           placeholder={t('event.list.filter.search.placeholder')}
-          className="w-75"
-          onChange={(e) => setKeyword(e.currentTarget.value)}
+          onTextChange={onKeywordChange}
         />
       }
       actions={

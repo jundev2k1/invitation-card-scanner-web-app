@@ -6,7 +6,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  TextBox
+  SearchTextbox
 } from "@/app/components";
 import { ClipboardPenIcon } from "@/app/components/icons";
 import { useTranslations } from "next-intl";
@@ -27,8 +27,7 @@ export function ApproveList({ onPageRefresh, tooltip }: ApproveListProps) {
     isLoading,
     data,
     filter,
-    keyword,
-    setKeyword,
+    onKeywordChange,
     onPageChange,
     onPageSizeChange
   } = useApproveList({ onPageRefresh });
@@ -54,13 +53,13 @@ export function ApproveList({ onPageRefresh, tooltip }: ApproveListProps) {
 
           <DialogDescription className="px-6 pt-2 pb-6 max-h-[calc(90vh-90px)] overflow-y-auto">
             <div className="mb-3">
-              <TextBox
-                value={keyword}
+              <SearchTextbox
+                value={filter.keyword}
                 placeholder={t('user.approveList.filter.search.placeholder')}
-                className="w-75"
-                onChange={(e) => setKeyword(e.currentTarget.value)}
+                onTextChange={onKeywordChange}
               />
             </div>
+
             <DataList
               data={data}
               columns={columns}

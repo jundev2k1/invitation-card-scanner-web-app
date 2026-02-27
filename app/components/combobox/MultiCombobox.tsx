@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/combobox";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Check, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 
@@ -43,6 +43,7 @@ interface AppMultiComboboxProps<T = string> {
   helperText?: string;
   getOptionLabel?: (option: Option<T>) => string;
   getOptionValue?: (option: Option<T>) => string;
+  displayCount?: number;
 }
 
 export default function AppMultiCombobox<T = string>({
@@ -66,6 +67,7 @@ export default function AppMultiCombobox<T = string>({
     typeof opt === "object" && opt !== null && "value" in opt
       ? String(opt.value)
       : String(opt),
+  displayCount = 3,
 }: AppMultiComboboxProps<T>) {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
@@ -113,7 +115,6 @@ export default function AppMultiCombobox<T = string>({
         onValueChange={(newStrValues: string[]) => {
           const newValues = newStrValues.map((str) => str as T);
           onValueChange(newValues);
-          setOpen(false);
         }}
         disabled={disabled}
         open={open}
@@ -121,14 +122,26 @@ export default function AppMultiCombobox<T = string>({
       >
         <ComboboxChips ref={anchor} className={cn("w-full", className)}>
           <ComboboxValue>
-            {(values: string[]) =>
-              values.map((val) => {
-                const opt = finalOptions.find((o) => getOptionValue(o) === val);
-                return opt ? <ComboboxChip key={val}>{getOptionLabel(opt)}</ComboboxChip> : null;
-              })
-            }
+            {(values: string[]) => {
+              const visible = values.slice(0, displayCount);
+              const remaining = values.length - displayCount;
+              return (
+                <>
+                  {visible.map((val) => {
+                    const opt = finalOptions.find((o) => getOptionValue(o) === val);
+                    return opt ? <ComboboxChip className="bg-gray-200 dark:bg-gray-700" key={val}>{getOptionLabel(opt)}</ComboboxChip> : null;
+                  })}
+                  {remaining > 0 && (
+                    <span className="text-muted-foreground text-sm px-2 text-nowrap" onClick={() => setOpen(true)}>
+                      {t('common.combobox.moreItems', { count: remaining })}
+                    </span>
+                  )}
+                </>
+              )
+            }}
           </ComboboxValue>
           <ComboboxChipsInput
+            className="dark:text-foreground"
             placeholder={value.length ? "" : placeholder}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -147,13 +160,9 @@ export default function AppMultiCombobox<T = string>({
                   <ComboboxLabel>{group.label}</ComboboxLabel>
                   {group.options.map((opt) => {
                     const val = getOptionValue(opt);
-                    const selected = value.some(
-                      (v) => getOptionValue(v as any) === val
-                    );
                     return (
                       <ComboboxItem key={val} value={val}>
                         {getOptionLabel(opt)}
-                        {selected && <Check className="ml-auto h-4 w-4" />}
                       </ComboboxItem>
                     );
                   })}
@@ -163,13 +172,9 @@ export default function AppMultiCombobox<T = string>({
             ) : (
               finalOptions.map((opt) => {
                 const val = getOptionValue(opt);
-                const selected = value.some(
-                  (v) => getOptionValue(v as any) === val
-                );
                 return (
                   <ComboboxItem key={val} value={val}>
                     {getOptionLabel(opt)}
-                    {selected && <Check className="ml-auto h-4 w-4" />}
                     {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
                   </ComboboxItem>
                 );

@@ -26,6 +26,9 @@
     "filter": {
       "search": {
         "placeholder": "Search by username, email,..."
+      },
+      "statusList": {
+        "placeholder": "Select status..."
       }
     },
     "table": {

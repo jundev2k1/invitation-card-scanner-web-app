@@ -1,5 +1,6 @@
 "use client";
 import { DataList, RefreshButton, SearchTextbox } from "@/app/components";
+import { useTranslations } from "next-intl";
 import React from "react";
 import { EventCardDetail } from "../_detail/DetailCard";
 import { InsertCard } from "../_insert/InsertCard";
@@ -10,6 +11,7 @@ export type CardListProps = {
   eventId: string;
 };
 export const CardList = React.memo(({ eventId }: CardListProps) => {
+  const t = useTranslations();
   const {
     isLoading,
     onRefresh,
@@ -17,9 +19,8 @@ export const CardList = React.memo(({ eventId }: CardListProps) => {
     pageAction: [pageAction, targetId],
     onCloseModal,
     columns,
-    keyword,
-    setKeyword,
     filter,
+    onKeywordChange,
     onPageChange,
     onPageSizeChange
   } = useCardList({ eventId });
@@ -27,9 +28,9 @@ export const CardList = React.memo(({ eventId }: CardListProps) => {
     <>
       <div className="flex justify-between gap-1 mb-3">
         <SearchTextbox
-          placeholder="Search..."
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
+          placeholder={t('user.list.filter.search.placeholder')}
+          value={filter.keyword}
+          onTextChange={onKeywordChange}
         />
 
         <div className="flex items-center gap-2">

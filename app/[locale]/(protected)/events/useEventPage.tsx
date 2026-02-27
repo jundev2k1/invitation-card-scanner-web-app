@@ -2,6 +2,7 @@
 import { Column, DropdownButton, Select, SmartDateTime, Toast, TruncatedText, useFilter } from "@/app/components";
 import { ClockIcon, MapPinHouseIcon } from "@/app/components/icons";
 import { RouteUtil } from "@/app/utils/route";
+import { TranslateFn } from "@/i18n/type";
 import { formatDate } from "@/lib/datetime/date.util";
 import { useDeleteEvent, useSearchEvents, useUpdateEventStatus } from "@/services";
 import { defaultSearchResult, EventSearchItemDto, EventStatus } from "@/types";
@@ -9,7 +10,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
-const getBreadcrumbs = (t: any, locale: string) => [
+const getBreadcrumbs = (t: TranslateFn, locale: string) => [
   { label: t('dashboard.title'), href: RouteUtil.getDashboardRoute(locale) },
   { label: t('event.list.title') },
 ];
@@ -108,8 +109,12 @@ export const useEventPage = () => {
   const router = useRouter();
   const t = useTranslations();
 
-  const { keyword, filter, setKeyword, onPageChange, onPageSizeChange } = useFilter();
-  const { data, isLoading, refetch } = useSearchEvents({ keyword, page: filter.page, pageSize: filter.pageSize });
+  const { filter, onKeywordChange, onPageChange, onPageSizeChange } = useFilter();
+  const { data, isLoading, refetch } = useSearchEvents({
+    keyword: filter.keyword.trim(),
+    page: filter.page,
+    pageSize: filter.pageSize
+  });
   const { mutateAsync: deleteEvent } = useDeleteEvent();
   const { mutateAsync: updateStatus } = useUpdateEventStatus();
 
@@ -135,10 +140,9 @@ export const useEventPage = () => {
     breadcrumbs,
     columns,
     onPageRefresh,
-    keyword,
     filter,
     onPageChange,
     onPageSizeChange,
-    setKeyword
+    onKeywordChange,
   }
 }

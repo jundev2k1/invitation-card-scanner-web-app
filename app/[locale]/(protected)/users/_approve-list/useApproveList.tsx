@@ -1,6 +1,7 @@
 import { Button, IconButton, SmartDateTime, TruncatedText, useFilter } from "@/app/components";
 import { CheckCheckIcon, CheckIcon, EyeIcon } from "@/app/components/icons";
 import { RouteUtil } from "@/app/utils/route";
+import { TranslateFn } from "@/i18n/type";
 import { userService } from "@/services";
 import {
   defaultSearchResult,
@@ -12,7 +13,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-const getColumns = (t: any, handleApprove: (id: string) => void, redirectToUserDetail: (id: string) => void) => [
+const getColumns = (t: TranslateFn, handleApprove: (id: string) => void, redirectToUserDetail: (id: string) => void) => [
   {
     key: "id",
     label: t('user.list.table.columns.id'),
@@ -82,7 +83,7 @@ export const useApproveList = ({ onPageRefresh }: ApproveListProps) => {
 
   const [unApprovedCount, setUnApprovedCount] = useState<number>(0);
   const [data, setData] = useState<SearchResult<UserSearchItemDto>>(defaultSearchResult);
-  const { filter, keyword, setKeyword, onPageChange, onPageSizeChange } = useFilter({ keyword: '', page: 1, pageSize: 5 });
+  const { filter, onKeywordChange, onPageChange, onPageSizeChange } = useFilter({ keyword: '', page: 1, pageSize: 5 });
 
   const onRefresh = () => {
     setIsRefresh(isRefresh + 1);
@@ -149,8 +150,7 @@ export const useApproveList = ({ onPageRefresh }: ApproveListProps) => {
     isLoading,
     data,
     filter,
-    keyword,
-    setKeyword,
+    onKeywordChange,
     onPageChange,
     onPageSizeChange
   };

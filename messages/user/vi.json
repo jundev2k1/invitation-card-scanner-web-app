@@ -26,6 +26,9 @@
     "filter": {
       "search": {
         "placeholder": "Tìm kiếm theo tài khoản, email,..."
+      },
+      "statusList": {
+        "placeholder": "Chọn trạng thái..."
       }
     },
     "table": {
