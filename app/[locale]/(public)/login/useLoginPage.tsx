@@ -2,6 +2,7 @@
 import { RouteUtil } from "@/app/utils/route";
 import { CookieStore } from "@/lib/cookies";
 import { authService } from "@/services";
+import { useAuthStore } from "@/store";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -9,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 export const useLoginPage = () => {
   const locale = useLocale();
   const router = useRouter();
+  const { logout } = useAuthStore();
 
   useEffect(() => {
     if (CookieStore.accessToken) {
@@ -41,7 +43,11 @@ export const useLoginPage = () => {
       if (response.statusCode == 200) {
         CookieStore.accessToken = response.data!.accessToken;
         CookieStore.refreshToken = response.data!.refreshToken;
+        
+        // Clear previous user info then set new user info by get profile API
+        logout();
 
+        // Redirect to dashboard
         router.push(RouteUtil.getDashboardRoute(locale));
       } else {
         setError(response.message);
