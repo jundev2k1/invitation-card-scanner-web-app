@@ -3,6 +3,7 @@ import { Button, Card, CardContent, PageContent, RefreshButton, SkeletonCard, Sk
 import { InfoIcon, TrashIcon } from "@/app/components/icons";
 import { PageAction } from "@/types";
 import { useTranslations } from "next-intl";
+import { EventScanner } from "../../_shared";
 import { UpdateModal } from "../../_update-modal/UpdateModal";
 import { EventViewForm } from "../_view/ViewEventDetail";
 import { useEventDetail } from "./useEventDetail";
@@ -33,6 +34,7 @@ export default function EventDetailLayout({ id, action }: EventDetailProps) {
         <>
           {action === PageAction.VIEW && (
             <>
+              <EventScanner eventId={data?.id} />
               <RefreshButton onRefresh={onPageRefresh} />
               <Button
                 leftIcon={<TrashIcon />}

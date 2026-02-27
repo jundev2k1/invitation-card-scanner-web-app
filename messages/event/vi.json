@@ -148,7 +148,10 @@
       "scanButton": "Quét thiệp mời"
     },
     "text": {
-      "enterNotes": "Nhập ghi chú"
+      "enterNotes": "Nhập ghi chú",
+      "notMatchTitle": "Cảnh báo: Sai lệch sự kiện!",
+      "notMatchMessage": "Thiệp mời này thuộc về một sự kiện khác. Dữ liệu quét được không khớp với sự kiện hiện tại mà bạn đang quản lý. Vui lòng kiểm tra lại ID sự kiện để tránh ghi nhận sai lệch dữ liệu check-in.",
+      "confirmReScan": "Thiệp mời này đã được quét trước đó. Bạn có muốn thực hiện quét lại không?"
     },
     "actions": {
       "reScan": "Scan lại",

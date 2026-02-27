@@ -15,7 +15,11 @@ const DynamicScanner = dynamic(() => import("@/app/components/qr/QRCodeScanner")
   )
 });
 
-export const EventScanner = () => {
+type EventScannerProps = {
+  eventId?: string | null
+}
+
+export const EventScanner = ({ eventId }: EventScannerProps) => {
   const t = useTranslations();
   const {
     isOpen,
@@ -70,7 +74,7 @@ export const EventScanner = () => {
             </div>
           ) : (
             <div className="p-8 pt-0 grow overflow-y-auto">
-              <EventInformation token={result} onReset={onReset} />
+              <EventInformation eventId={eventId} token={result} onReset={onReset} />
             </div>
           )}
         </DialogContent>

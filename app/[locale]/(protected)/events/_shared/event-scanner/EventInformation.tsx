@@ -1,4 +1,5 @@
 import {
+  Alert,
   Avatar,
   AvatarFallback,
   AvatarImage,
@@ -39,24 +40,29 @@ import {
   PhoneIcon,
   ScanQrCodeIcon,
   TicketIcon,
+  TimerIcon,
   TimerOffIcon,
   UserIcon,
   UserRoundCheckIcon,
+  XCircleIcon,
 } from "@/app/components/icons";
 import { Badge } from "@/components/ui/badge";
 import { formatDateTime } from "@/lib/datetime/date.util";
 import { useTranslations } from "next-intl";
+import React from "react";
 import { useEventInformation } from "./useEventInformation";
 
 type EventInformationProps = {
+  eventId?: string | null,
   token: string,
-  onReset: () => void
+  onReset: () => void,
 }
 
-export const EventInformation = ({ token, onReset }: EventInformationProps) => {
+export const EventInformation = React.memo(({ eventId, token, onReset }: EventInformationProps) => {
   const t = useTranslations();
   const {
     data,
+    scanLogs,
     isLoading,
     showInfoId,
     onOpenInfo,
@@ -66,10 +72,9 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
     onHoverOutInfo,
     isApproved,
     onApprove,
-    notes,
-    setNotes,
-  } = useEventInformation({ token, onReset });
-
+    noteInputRef,
+    isTargetEvent,
+  } = useEventInformation({ eventId, token, onReset });
   return (
     <div className="flex flex-col gap-4">
       <Card className="gap-1">
@@ -92,25 +97,41 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
         </CardHeader>
         <CardContent>
           <div className="flex justify-end gap-2 mb-4">
-            <IconButton
-              icon={<CheckCheckIcon size={16} />}
-              variant="outline"
-              size="sm"
-              onClick={onApprove}
-              tooltip={isApproved
-                ? t('event.scanner.actions.approved')
-                : t(data?.isUsed
-                  ? 'event.scanner.actions.reApprove'
-                  : 'event.scanner.actions.quickApprove')}
-              disabled={isApproved}
-            />
+            {isTargetEvent && (
+              <IconButton
+                icon={<CheckCheckIcon size={16} />}
+                variant="outline"
+                size="sm"
+                onClick={onApprove}
+                tooltip={isApproved
+                  ? t('event.scanner.actions.approved')
+                  : t(data?.isUsed
+                    ? 'event.scanner.actions.reApprove'
+                    : 'event.scanner.actions.quickApprove')}
+                disabled={isApproved}
+              />
+            )}
             <IconButton
               icon={<ScanQrCodeIcon size={16} />}
               variant="outline"
               size="sm"
               onClick={onReset}
+              tooltip={t('event.scanner.actions.reScan')}
             />
           </div>
+
+          {!isTargetEvent && (
+            <div className="mb-4 ">
+              <Alert
+                containerClassName="border-red-600 bg-gray-100 dark:bg-gray-800"
+                variant="destructive"
+                icon={<XCircleIcon size={16} />}
+                title={t('event.scanner.text.notMatchTitle')}
+              >
+                {t('event.scanner.text.notMatchMessage')}
+              </Alert>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
             <div className="flex flex-col gap-1">
@@ -148,7 +169,7 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
               </p>
               {data ? (
                 <p className="text-foreground font-bold w-full text-sm">
-                  <TruncatedText text={data?.eventTitle} />
+                  {data?.eventTitle}
                 </p>
               ) : (
                 <SkeletonListItem />
@@ -157,7 +178,7 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
 
             <div className="flex flex-col gap-1">
               <p className="flex items-center gap-2 text-muted-foreground text-sm">
-                <ClockIcon size={16} />
+                <TimerIcon size={16} />
                 {t('event.cardList.detail.fields.startAt')}
               </p>
               {data ? (
@@ -227,7 +248,7 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
               </p>
               {data ? (
                 <p className="text-foreground font-bold">
-                  <TruncatedText maxWidth="max-w-[200px]" text={data.guestName} />
+                  {data.guestName}
                 </p>
               ) : (
                 <Skeleton className="h-4 w-3/4" />
@@ -305,7 +326,7 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
                 </TableRow>
               ) : (
                 <>
-                  {data.scannedLogs.map((item, index) => (
+                  {scanLogs.map((item, index) => (
                     <TableRow key={item.id}>
                       <TableCell className="text-right">
                         {index + 1}
@@ -327,8 +348,8 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
                           {(hoverInfoId === item.id || showInfoId === item.id) && (
                             <IconButton
                               className="dark:text-muted-foreground"
-                              icon={showInfoId ? <EyeOffIcon size={14} /> : <EyeIcon size={14} />}
-                              onClick={() => !showInfoId ? onOpenInfo(item.id) : onCloseInfo()}
+                              icon={showInfoId == item.id ? <EyeOffIcon size={14} /> : <EyeIcon size={14} />}
+                              onClick={() => showInfoId == item.id ? onCloseInfo() : onOpenInfo(item.id)}
                               size="xs"
                             />
                           )}
@@ -366,22 +387,25 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
                         </div>
                       </TableCell>
                       <TableCell width="50%" className="font-medium dark:text-muted-foreground">
-                        <TruncatedText text={item.notes} />
+                        <p className="text-wrap">{item.notes}</p>
                       </TableCell>
                     </TableRow>
                   ))}
-                  <TableRow>
-                    <TableCell width="5%"></TableCell>
-                    <TableCell width="45%">
-                      <span className="flex items-center gap-1 dark:text-muted-foreground">
-                        <CaptionsIcon size={14} />
-                        {t('event.scanner.text.enterNotes')}:
-                      </span>
-                    </TableCell>
-                    <TableCell width="50%" className="font-light dark:text-muted-foreground">
-                      <TextArea value={notes} onChange={(e) => { setNotes(e.target.value) }} />
-                    </TableCell>
-                  </TableRow>
+
+                  {!isApproved && isTargetEvent && (
+                    <TableRow>
+                      <TableCell width="5%"></TableCell>
+                      <TableCell width="45%">
+                        <span className="flex items-center gap-1 dark:text-muted-foreground">
+                          <CaptionsIcon size={14} />
+                          {t('event.scanner.text.enterNotes')}:
+                        </span>
+                      </TableCell>
+                      <TableCell width="50%" className="font-light dark:text-muted-foreground">
+                        <TextArea ref={noteInputRef} />
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </>
               )}
             </TableBody>
@@ -390,19 +414,21 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
       </Card>
 
       <div className="flex justify-center gap-2">
-        <Button
-          leftIcon={<CheckIcon size={16} />}
-          size="sm"
-          onClick={onApprove}
-          disabled={isApproved}
-        >
-          {isApproved
-            ? t('event.scanner.actions.approved')
-            : t(data?.isUsed
-              ? 'event.scanner.actions.reApprove'
-              : 'event.scanner.actions.approve')
-          }
-        </Button>
+        {isTargetEvent && (
+          <Button
+            leftIcon={<CheckIcon size={16} />}
+            size="sm"
+            onClick={onApprove}
+            disabled={isApproved}
+          >
+            {isApproved
+              ? t('event.scanner.actions.approved')
+              : t(data?.isUsed
+                ? 'event.scanner.actions.reApprove'
+                : 'event.scanner.actions.approve')
+            }
+          </Button>
+        )}
 
         <Button
           className="dark:text-muted-foreground"
@@ -416,4 +442,4 @@ export const EventInformation = ({ token, onReset }: EventInformationProps) => {
       </div>
     </div >
   );
-};
+});

@@ -9,7 +9,7 @@ export {
   Key as KeyIcon, LayoutDashboardIcon as LayoutDashboardIcon, Link as LinkIcon, Loader2 as LoaderIcon,
   LogIn as LogInIcon, LogOut as LogOutIcon, Mail as MailIcon, MapPinOff as MapPinOffIcon, Menu as MenuIcon, Minus as MinusIcon, Moon as MoonIcon, NotebookPen as NotebookPenIcon, Palette as PaletteIcon, PencilLine as PencilLineIcon, Phone as PhoneIcon, PlusCircle as PlusCircleIcon, Plus as PlusIcon, RefreshCw as RefreshIcon, Save as SaveIcon, ScanQrCode as ScanQrCodeIcon, Search as SearchIcon, Settings as SettingsIcon, ShieldCheck as ShieldCheckIcon,
   ShieldUser as ShieldUserIcon, Sun as SunIcon,
-  Text as TextIcon, Ticket as TicketIcon, TimerOff as TimerOffIcon, Trash2 as TrashIcon, UserCircle as UserCircleIcon, User as UserIcon, UserPlus as UserPlusIcon, UserRoundCheck as UserRoundCheckIcon, Users as UsersIcon, XCircle as XCircleIcon, X as XIcon
+  Text as TextIcon, Ticket as TicketIcon, Timer as TimerIcon, TimerOff as TimerOffIcon, Trash2 as TrashIcon, UserCircle as UserCircleIcon, User as UserIcon, UserPlus as UserPlusIcon, UserRoundCheck as UserRoundCheckIcon, Users as UsersIcon, XCircle as XCircleIcon, X as XIcon
 } from "lucide-react";
 
 export {

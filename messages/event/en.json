@@ -148,7 +148,10 @@
       "scanButton": "Scan event card"
     },
     "text": {
-      "enterNotes": "Enter notes"
+      "enterNotes": "Enter notes",
+      "notMatchTitle": "Event Mismatch Warning!",
+      "notMatchMessage": "This invitation card belongs to a different event. The scanned data does not match the current event details. Please verify the Event ID to prevent incorrect check-in records.",
+      "confirmReScan": "This invitation has already been scanned. Do you want to scan it again?"
     },
     "actions": {
       "reScan": "Rescan",

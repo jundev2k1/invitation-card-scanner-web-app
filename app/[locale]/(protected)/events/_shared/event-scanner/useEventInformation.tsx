@@ -1,14 +1,20 @@
 import { Toast } from "@/app/components";
 import { useCheckInEventCard, useScanEventCard } from "@/services";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-export const useEventInformation = ({ token, onReset }: { token: string, onReset: () => void }) => {
+type UseEventInformationProps = {
+  eventId?: string | null;
+  token: string;
+  onReset: () => void;
+}
+
+export const useEventInformation = ({ eventId, token, onReset }: UseEventInformationProps) => {
   const t = useTranslations();
   const [showInfoId, setShowInfoId] = useState<string | null>(null);
   const [hoverInfoId, setHoverInfoId] = useState<string | null>(null);
   const [isApproved, setIsApproved] = useState<boolean>(false);
-  const [notes, setNotes] = useState<string>("");
+  const noteInputRef = useRef<HTMLTextAreaElement>(null!);
   const { data, isLoading, isError } = useScanEventCard(token);
   const { mutateAsync } = useCheckInEventCard();
 
@@ -18,6 +24,14 @@ export const useEventInformation = ({ token, onReset }: { token: string, onReset
 
     onReset();
   }, [token, onReset, isError, isLoading]);
+
+  const scanLogs = useMemo(() => data?.data?.scannedLogs
+    .sort((a, b) => new Date(a.scannedAt).getTime() - new Date(b.scannedAt).getTime()) ?? [],
+    [data]);
+  const isTargetEvent = useMemo(
+    () => !isLoading && !eventId || eventId === data?.data?.eventId,
+    [data, token, eventId]);
+
 
   const onOpenInfo = useCallback((id: string) => {
     setShowInfoId(id);
@@ -34,18 +48,22 @@ export const useEventInformation = ({ token, onReset }: { token: string, onReset
       return;
     }
 
+    if (data.data.isUsed && !window.confirm(t('event.scanner.text.confirmReScan')))
+      return;
+
     await mutateAsync({
-      eventId: data?.data?.eventId ?? "",
-      id: data?.data?.id ?? "",
-      notes: notes.trim()
+      eventId: data.data.eventId,
+      id: data.data.id,
+      notes: noteInputRef.current.value.trim()
     });
     setIsApproved(true);
-    setNotes("");
+    noteInputRef.current.value = '';
     Toast.showSuccess(t('common.messages.checkInSuccess'));
-  }, []);
+  }, [data]);
 
   return {
     data: data?.data ?? null,
+    scanLogs,
     isLoading,
     showInfoId,
     onOpenInfo,
@@ -55,7 +73,7 @@ export const useEventInformation = ({ token, onReset }: { token: string, onReset
     onHoverOutInfo,
     isApproved,
     onApprove,
-    notes,
-    setNotes,
+    noteInputRef,
+    isTargetEvent,
   };
 };
