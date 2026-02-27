@@ -132,5 +132,11 @@
     "placeholder": {
       "cameraLoading": "Đang tải camera..."
     }
+  },
+  "combobox": {
+    "required": "Vui lòng chọn một mục",
+    "requiredMulti": "Vui lòng chọn ít nhất một mục",
+    "noResults": "Không tìm thấy kết quả.",
+    "loading": "Đang tải..."
   }
 }

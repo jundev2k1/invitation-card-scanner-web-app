@@ -132,5 +132,11 @@
     "placeholder": {
       "cameraLoading": "Loading camera..."
     }
+  },
+  "combobox": {
+    "required": "Please select an option",
+    "requiredMulti": "Please select at least one option",
+    "noResults": "No results found.",
+    "loading": "Loading..."
   }
 }
