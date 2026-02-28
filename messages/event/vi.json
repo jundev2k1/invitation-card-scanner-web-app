@@ -139,6 +139,20 @@
       "status": "Trạng thái"
     }
   },
+  "update": {
+    "title": "Cập nhật sự kiện",
+    "fields": {
+      "category": "Loại sự kiện",
+      "title": "Tiêu đề",
+      "description": "Mô tả",
+      "startAt": "Bắt đầu lúc",
+      "endAt": "Kết thúc lúc",
+      "location": "Tên địa điểm",
+      "address": "Địa chỉ",
+      "mapUrl": "Link bản đồ",
+      "status": "Trạng thái"
+    }
+  },
   "scanner": {
     "title": "Quét Thiệp Mời",
     "placeholder": {

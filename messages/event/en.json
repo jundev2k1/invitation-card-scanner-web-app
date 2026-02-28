@@ -139,6 +139,20 @@
       "status": "Status"
     }
   },
+  "update": {
+    "title": "Update Event",
+    "fields": {
+      "category": "Category",
+      "title": "Title",
+      "description": "Description",
+      "startAt": "Start at",
+      "endAt": "End at",
+      "location": "Location name",
+      "address": "Address",
+      "mapUrl": "Map URL",
+      "status": "Status"
+    }
+  },
   "scanner": {
     "title": "Scan Event Card",
     "placeholder": {
