@@ -14,7 +14,7 @@ export const useEventCardDetail = ({ eventId, cardId }: useEventCardDetailProps)
 
   const createQrCodeContent = useCallback(() => {
     return data?.data?.accessToken ?? "";
-  }, [eventId, cardId]);
+  }, [eventId, cardId, data]);
 
   const onOpenInfo = useCallback((id: string) => {
     setShowInfoId(id);

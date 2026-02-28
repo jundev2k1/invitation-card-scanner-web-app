@@ -44,16 +44,20 @@
     "updateStatusSuccess": "Cập nhật trạng thái thành công.",
     "confirmDelete": "Bạn có chắc muốn xóa dữ liệu này?",
     "checkInSuccess": "Check-in thành công.",
-    "checkInFailed": "Check-in thất bại. Vui lòng thử lại."
+    "checkInFailed": "Check-in thất bại. Vui lòng thử lại.",
+    "copySuccess": "Sao chép thành công.",
+    "copyFailed": "Sao chép thất bại, vui lòng thử lại."
   },
   "text": {
     "fromLower": "từ",
     "fromUpper": "Từ",
     "toLower": "đến",
-    "toUpper": "Đến"
+    "toUpper": "Đến",
+    "copyContent": "Sao chép nội dung"
   },
   "placeholder": {
-    "notSet": "Chưa chỉ định"
+    "notSet": "Chưa chỉ định",
+    "waitLoading": "Đang tải dữ liệu..."
   },
   "actions": {
     "view": "Chi tiết",

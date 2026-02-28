@@ -1,10 +1,12 @@
 "use client";
+import { Toast } from "@/components";
 import { IconButton } from "@/components/button";
 import { CopyIcon, LoaderIcon, RefreshIcon } from "@/icons";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { QRCodeSVG } from "qrcode.react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface QRCodeGeneratorProps {
   value?: string;
@@ -25,15 +27,45 @@ export function QRCodeGenerator({
   onRefresh,
   className,
 }: QRCodeGeneratorProps) {
+  const t = useTranslations();
   const [isHovered, setIsHovered] = useState(false);
+  const qrRef = useRef<SVGSVGElement>(null);
 
   const qrValue = value || "https://your-placeholder-link.com";
   const isPlaceholder = !value || isLoading;
 
-  const handleCopy = () => {
-    if (value) {
-      navigator.clipboard.writeText(value);
-      alert("Đã sao chép nội dung mã QR!");
+  const handleCopy = async () => {
+    if (!qrRef.current) return;
+
+    try {
+      const svgString = new XMLSerializer().serializeToString(qrRef.current);
+      const svgBlob = new Blob([svgString], { type: "image/svg+xml" });
+
+      const canvas = document.createElement("canvas");
+      canvas.width = size + 20;
+      canvas.height = size + 20;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("Cannot get canvas context");
+
+      const img = new Image();
+      img.src = "data:image/svg+xml;base64," + btoa(svgString);
+      await new Promise((r) => (img.onload = r));
+      ctx.drawImage(img, 10, 10, size, size);
+      const pngBlob = await new Promise<Blob>((res) =>
+        canvas.toBlob((b) => res(b!), "image/png")
+      );
+
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "image/svg+xml": svgBlob,
+          "image/png": pngBlob,
+        }),
+      ]);
+
+      Toast.showSuccess(t('common.messages.copySuccess'));
+    } catch (err) {
+      console.error("Copy image failed:", err);
+      Toast.showError(t('common.messages.copyFailed'));
     }
   };
 
@@ -48,6 +80,7 @@ export function QRCodeGenerator({
         isPlaceholder ? "opacity-20 blur-[2px]" : "opacity-100"
       )}>
         <QRCodeSVG
+          ref={qrRef}
           value={qrValue}
           size={size}
           level="H"
@@ -81,7 +114,7 @@ export function QRCodeGenerator({
                 icon={<RefreshIcon size={20} />}
                 onClick={onRefresh}
                 className="p-3 bg-white rounded-full text-gray-700 hover:text-primary transition-colors shadow-lg active:scale-90 cursor-pointer"
-                tooltip="Refresh QR"
+                tooltip={t('common.actions.refresh')}
               />
             )}
 
@@ -90,7 +123,7 @@ export function QRCodeGenerator({
                 className="p-3 bg-white rounded-full text-gray-700 hover:text-primary transition-colors shadow-lg active:scale-90 cursor-pointer"
                 icon={<CopyIcon size={20} />}
                 onClick={handleCopy}
-                tooltip="Sao chép nội dung"
+                tooltip={t('common.text.copyContent')}
               />
             )}
           </motion.div>
@@ -100,7 +133,7 @@ export function QRCodeGenerator({
       {!value && !isLoading && (
         <div className="absolute bottom-2 left-0 right-0 text-center">
           <span className="text-[10px] text-gray-400 uppercase tracking-widest font-medium">
-            Waiting for data...
+            {t('common.placeholder.waitLoading')}
           </span>
         </div>
       )}
