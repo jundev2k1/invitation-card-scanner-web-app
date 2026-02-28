@@ -56,8 +56,11 @@
     "copyContent": "Copy content"
   },
   "placeholder": {
+    "globalSearch": "Search...",
     "notSet": "Not set",
-    "waitLoading": "Loading..."
+    "waitLoading": "Loading...",
+    "noResultsFound": "No results found...",
+    "noResultsFoundFor": "No results found for \"{key}\"..."
   },
   "actions": {
     "view": "View Detail",
@@ -67,6 +70,18 @@
     "delete": "Delete",
     "save": "Save Changes",
     "cancel": "Cancel"
+  },
+  "globalSearch": {
+    "placeholder": {
+      "searchWith": "Search with system features, users or events...",
+      "systemRecords": "System Records",
+      "quickAccess": "Quick Access",
+      "systemSearching": "Searching system...",
+      "noSystemResultFound": "No system records found...",
+      "notSet": "Not set",
+      "waitLoading": "Loading...",
+      "noQuickAcessMatches": "No quick access matches..."
+    }
   },
   "sidebar": {
     "dashboard": {

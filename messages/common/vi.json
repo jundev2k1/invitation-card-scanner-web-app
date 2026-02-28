@@ -56,8 +56,11 @@
     "copyContent": "Sao chép nội dung"
   },
   "placeholder": {
+    "globalSearch": "Tìm kiếm...",
     "notSet": "Chưa chỉ định",
-    "waitLoading": "Đang tải dữ liệu..."
+    "waitLoading": "Đang tải dữ liệu...",
+    "noResultFound": "Không tìm thấy kết quả nào...",
+    "noResultFoundFor": "Không tìm thấy kết quả cho \"{key}\"..."
   },
   "actions": {
     "view": "Chi tiết",
@@ -67,6 +70,18 @@
     "delete": "Xóa",
     "save": "Lưu thay đổi",
     "cancel": "Hủy bỏ"
+  },
+  "globalSearch": {
+    "placeholder": {
+      "searchWith": "Tìm kiếm với tính năng hệ thống, người dùng hoặc sự kiện...",
+      "systemRecords": "Kết quả hệ thống",
+      "quickAccess": "Truy cập nhanh",
+      "systemSearching": "Đang tìm kiếm tính năng trong hệ thống...",
+      "noSystemResultFound": "Không có tính năng nào được tìm thấy...",
+      "notSet": "Chưa chỉ định",
+      "waitLoading": "Đang tải dữ liệu...",
+      "noQuickAcessMatches": "Không có truy cập nhanh nào phụ hợp..."
+    }
   },
   "sidebar": {
     "dashboard": {
