@@ -17,6 +17,7 @@ export * from "./select";
 export * from "./separator";
 export * from "./skeleton";
 export * from "./table";
+export * from "./tabs";
 export * from "./text";
 export * from "./theme";
 export * from "./toast";

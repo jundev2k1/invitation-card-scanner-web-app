@@ -66,6 +66,10 @@
       "viewMap": "View Map"
     }
   },
+  "memberList": {
+    "title": "Member List",
+    "desc": "View, edit, and manage all event members."
+  },
   "cardList": {
     "title": "Invitation Card List",
     "desc": "View, edit, and manage invitation cards.",

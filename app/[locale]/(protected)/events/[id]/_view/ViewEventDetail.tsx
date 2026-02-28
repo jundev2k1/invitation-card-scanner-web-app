@@ -2,19 +2,19 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
   CounterUp,
   EventStatusBadge,
   MapCard,
-  Separator
+  Separator,
+  Tabs
 } from "@/components";
 import { CalendarClockIcon, ClockIcon, MailIcon, MapPinHouseIcon, ScanQrCodeIcon, UsersIcon } from "@/icons";
 import { formatDateTime } from "@/lib/datetime/date.util";
 import { EventDetailDto } from "@/types";
 import { useTranslations } from "next-intl";
-import { CardList } from "../_card/_list/CardList";
+import { TabNames, useViewEventDetail } from "./useViewEventDetail";
 
 type EventViewFormProps = {
   eventDetail: EventDetailDto,
@@ -23,6 +23,7 @@ type EventViewFormProps = {
 
 export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
   const t = useTranslations();
+  const { statistics, tabOptions } = useViewEventDetail({ detail: data });
   return (
     <div className="space-y-8">
       <Card className="overflow-hidden">
@@ -133,7 +134,7 @@ export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
                 </p>
 
                 <p className="text-xl font-bold text-center text-foreground">
-                  <CounterUp value={20} duration={3} />
+                  {statistics ? (<CounterUp value={statistics.totalCards ?? 0} duration={2} />) : '-'}
                 </p>
               </div>
             </div>
@@ -146,9 +147,9 @@ export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
                 </p>
 
                 <p className="text-xl font-bold text-center text-foreground">
-                  <CounterUp value={12} duration={3} />
+                  {statistics ? (<CounterUp value={statistics.scannedCount ?? 0} duration={2} />) : '-'}
                   /
-                  <CounterUp value={20} duration={3} />
+                  {statistics ? (<CounterUp value={statistics.totalCards ?? 0} duration={2} />) : '-'}
                 </p>
               </div>
             </div>
@@ -161,7 +162,7 @@ export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
                 </p>
 
                 <p className="text-xl font-bold text-center text-foreground">
-                  <CounterUp value={4} duration={3} />
+                  {statistics ? (<CounterUp value={statistics.totalMembers ?? 0} duration={2} />) : '-'}
                 </p>
               </div>
             </div>
@@ -178,14 +179,15 @@ export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>{t('event.cardList.title')}</CardTitle>
-          <CardDescription>{t('event.cardList.desc')}</CardDescription>
-        </CardHeader>
-        <CardContent className="p-4">
-          <CardList key={data.id} eventId={data.id} />
-        </CardContent>
+      <Card className="p-6 pt-0">
+        <Tabs
+          variant="line"
+          items={tabOptions}
+          defaultValue={TabNames.CARD_LIST}
+          className="mt-4"
+          listClassName="border-b mb-4 flex flex-wrap"
+          itemClassName="cursor-pointer"
+        />
       </Card>
     </div>
   );

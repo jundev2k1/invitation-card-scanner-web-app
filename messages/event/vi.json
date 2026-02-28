@@ -66,6 +66,10 @@
       "viewMap": "Xem bản đồ"
     }
   },
+  "memberList": {
+    "title": "Danh sách thành viên",
+    "desc": "Xem, sửa và quản lý thành viên."
+  },
   "cardList": {
     "title": "Danh sách thiệp mời",
     "desc": "Xem, sửa và quản lý thiệp mời.",
