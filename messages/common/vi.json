@@ -69,7 +69,8 @@
     "edit": "Chỉnh Sửa",
     "delete": "Xóa",
     "save": "Lưu thay đổi",
-    "cancel": "Hủy bỏ"
+    "cancel": "Hủy bỏ",
+    "close" : "Đóng"
   },
   "globalSearch": {
     "placeholder": {

@@ -143,7 +143,7 @@ export const AppearanceSettings = ({ open, setOpen }: AppearanceSettingsProps) =
 
         <div className="flex justify-end pt-4">
           <Button variant="secondary" onClick={() => setOpen(false)}>
-            {t('common.actions.cancel')}
+            {t('common.actions.close')}
           </Button>
         </div>
       </DialogContent>
