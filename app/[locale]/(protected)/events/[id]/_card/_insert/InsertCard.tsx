@@ -35,7 +35,7 @@ export const InsertCard = React.memo(({ eventId }: InsertCardProps) => {
       </Button>
 
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-4xl h-[90vh] p-0 flex flex-col" onOpenAutoFocus={(e) => e.preventDefault()}>
+        <DialogContent className="sm:max-w-xl h-[90vh] p-0 flex flex-col" onOpenAutoFocus={(e) => e.preventDefault()}>
           <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <DialogHeader className="shrink-0 px-6 pt-6 pb-4 border-b text-foreground">

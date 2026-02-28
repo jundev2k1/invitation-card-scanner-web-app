@@ -13,7 +13,11 @@ const AppTextArea = forwardRef<HTMLTextAreaElement, AppTextAreaProps>(
   ({ label, helperText, className, id, ...props }, ref) => {
     return (
       <div className="grid w-full items-center gap-1.5">
-        {label && <Label htmlFor={id}>{label}</Label>}
+        {label && (
+          <Label className="text-slate-900 dark:text-muted-foreground" htmlFor={id}>
+            {label}
+          </Label>
+        )}
         <Textarea
           ref={ref}
           className={cn("focus-visible:ring-2 dark:text-muted-foreground", className)}

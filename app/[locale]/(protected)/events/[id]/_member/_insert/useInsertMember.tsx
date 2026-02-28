@@ -1,45 +1,28 @@
 "use client";
 import { Toast } from "@/components";
-import { useCreateEventCard } from "@/services";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
 
-interface CreateEventMemberRequest {
-  guestName: string;
-  notes: string
+interface FormValues {
+  memberId: string;
+  assignedRole: string;
 }
-
-const insertEventMemberSchema = z.object({
-  guestName: z.string()
-    .nonempty({ message: "Guest name is required" })
-    .max(50, { message: "Guest name must be at most 50 characters long" }),
-  notes: z.string()
-    .max(4000, { message: "Notes must be at most 4000 characters long" }),
-});
 
 export const useInsertMember = (eventId: string) => {
   const t = useTranslations();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { mutateAsync } = useCreateEventCard();
-  const form = useForm<CreateEventMemberRequest>({
-    resolver: zodResolver(insertEventMemberSchema),
-    defaultValues: {
-      guestName: "",
-      notes: "",
-    },
-  });
+  const [input, setInput] = useState<FormValues>({ memberId: "", assignedRole: "" });
 
   const onOpen = useCallback(() => { setIsOpen(true); }, [isOpen]);
   const onClose = useCallback(() => {
-    form.reset();
     setIsOpen(false);
+    setInput({ memberId: "", assignedRole: "" });
   }, [isOpen]);
 
-  const onSubmit = useCallback(async (data: CreateEventMemberRequest) => {
-    await mutateAsync({ eventId, data });
+  const onMemberChange = useCallback((memberId: string) => setInput((prev) => ({ ...prev, memberId })), []);
+  const onRoleChange = useCallback((assignedRole: string) => setInput((prev) => ({ ...prev, assignedRole })), []);
+
+  const onSubmit = useCallback(async () => {
 
     Toast.showSuccess(t("common.messages.createSuccess"));
     onClose();
@@ -49,7 +32,10 @@ export const useInsertMember = (eventId: string) => {
     isOpen,
     onOpen,
     onClose,
-    form,
+    memberId: input.memberId,
+    onMemberChange,
+    assignedRole: input.assignedRole,
+    onRoleChange,
     onSubmit,
   };
 }

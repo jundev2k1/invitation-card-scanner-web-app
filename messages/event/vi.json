@@ -76,6 +76,16 @@
         "memberRole": "Vai trò",
         "action": "Hành động"
       }
+    },
+    "insert": {
+      "title": "Thêm thành viên",
+      "fields": {
+        "memberInfo": "Thông tin thành viên",
+        "memberRole": "Mô tả vai trò"
+      }
+    },
+    "actions": {
+      "add": "Thêm thành viên"
     }
   },
   "cardList": {

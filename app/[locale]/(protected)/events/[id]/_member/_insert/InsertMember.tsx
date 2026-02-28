@@ -6,13 +6,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  FormTextArea,
-  FormTextBox,
+  TextArea
 } from "@/components";
 import { FilePlusIcon } from "@/icons";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { FormProvider } from "react-hook-form";
+import { UserSuggestionInput } from "../../../../users/_shared";
 import { useInsertMember } from "./useInsertMember";
 
 type InsertCardProps = {
@@ -21,7 +20,16 @@ type InsertCardProps = {
 
 export const InsertMember = React.memo(({ eventId }: InsertCardProps) => {
   const t = useTranslations();
-  const { isOpen, onOpen, onClose, form, onSubmit } = useInsertMember(eventId);
+  const {
+    isOpen,
+    onOpen,
+    onClose,
+    memberId,
+    onMemberChange,
+    assignedRole,
+    onRoleChange,
+    onSubmit,
+  } = useInsertMember(eventId);
   return (
     <>
       <Button
@@ -31,43 +39,46 @@ export const InsertMember = React.memo(({ eventId }: InsertCardProps) => {
         disabled={isOpen}
         onClick={onOpen}
       >
-        {t("event.cardList.actions.add")}
+        {t("event.memberList.actions.add")}
       </Button>
 
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-4xl h-[90vh] p-0 flex flex-col" onOpenAutoFocus={(e) => e.preventDefault()}>
-          <FormProvider {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <DialogHeader className="shrink-0 px-6 pt-6 pb-4 border-b text-foreground">
-                <DialogTitle className="text-xl font-semibold text-accent-foreground">
-                  {t("event.cardList.insert.title")}
-                </DialogTitle>
-              </DialogHeader>
+        <DialogContent className="max-w-sm h-[90vh] p-0 flex flex-col" onOpenAutoFocus={(e) => e.preventDefault()}>
+          <DialogHeader className="shrink-0 px-6 pt-6 pb-4 border-b text-foreground">
+            <DialogTitle className="text-xl font-semibold text-accent-foreground">
+              {t("event.memberList.insert.title")}
+            </DialogTitle>
+          </DialogHeader>
 
-              <div className="px-6 pt-2 pb-6 h-[calc(90vh-140px)] overflow-y-auto">
-                <div className="flex flex-col gap-4">
-                  <FormTextBox name="guestName" label={t('event.cardList.insert.fields.guestName')} containerClassName="w-full" />
-                  <FormTextArea name="notes" label={t('event.cardList.insert.fields.notes')} className="w-full min-h-50" />
-                </div>
-              </div>
+          <div className="px-6 pt-2 pb-6 h-[calc(90vh-140px)] overflow-y-auto">
+            <div className="flex flex-col gap-4">
+              <UserSuggestionInput
+                label={t('event.memberList.insert.fields.memberInfo')}
+                value={memberId}
+                onValueChange={onMemberChange}
+              />
+              <TextArea
+                label={t('event.memberList.insert.fields.memberRole')}
+                className="w-full min-h-50"
+                value={assignedRole}
+                onChange={(e) => onRoleChange(e.target.value)}
+              />
+            </div>
+          </div>
 
-              <DialogFooter className="shrink-0 p-4 border-t">
-                <Button
-                  className="dark:text-muted-foreground"
-                  variant="outline"
-                  onClick={onClose}
-                >
-                  {t("common.actions.cancel")}
-                </Button>
+          <DialogFooter className="shrink-0 p-4 border-t">
+            <Button
+              className="dark:text-muted-foreground"
+              variant="outline"
+              onClick={onClose}
+            >
+              {t("common.actions.cancel")}
+            </Button>
 
-                <Button type="submit"
-                  disabled={form.formState.isSubmitting}
-                >
-                  {t("common.actions.save")}
-                </Button>
-              </DialogFooter>
-            </form>
-          </FormProvider>
+            <Button type="submit">
+              {t("common.actions.save")}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>

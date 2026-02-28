@@ -76,6 +76,16 @@
         "memberRole": "Member's role",
         "action": "Action"
       }
+    },
+    "insert": {
+      "title": "Add member",
+      "fields": {
+        "memberInfo": "Member information",
+        "memberRole": "Member's role"
+      }
+    },
+    "actions": {
+      "add": "Add Member"
     }
   },
   "cardList": {

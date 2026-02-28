@@ -21,7 +21,7 @@ import { useDebounce } from "../hooks";
 
 type Option<T = unknown> = T | { value: T; label: string | React.ReactNode };
 
-interface FormAsyncComboboxProps<T = unknown> {
+interface FormComboboxProps<T = unknown> {
   name: string;
   label?: string | React.ReactNode;
   placeholder?: string;
@@ -36,7 +36,7 @@ interface FormAsyncComboboxProps<T = unknown> {
   getOptionKey?: (option: T) => string | number;
 }
 
-export function FormAsyncCombobox<T = unknown>({
+export function FormCombobox<T = unknown>({
   name,
   label,
   placeholder = "Search and select...",
@@ -54,7 +54,7 @@ export function FormAsyncCombobox<T = unknown>({
     }
     return String(option);
   },
-}: FormAsyncComboboxProps<T>) {
+}: FormComboboxProps<T>) {
   const t = useTranslations();
   const { register, setValue, watch, formState: { errors } } = useFormContext();
 
