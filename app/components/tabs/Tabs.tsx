@@ -15,6 +15,7 @@ export interface TabsProps {
   listClassName?: string;
   itemClassName?: string;
   contentClassName?: string;
+  onChange?: (value: string) => void;
 }
 
 export default function AppTabs({
@@ -25,9 +26,10 @@ export default function AppTabs({
   listClassName,
   itemClassName,
   contentClassName,
+  onChange,
 }: TabsProps) {
   return (
-    <Tabs defaultValue={defaultValue || items[0]?.value} className={className}>
+    <Tabs defaultValue={defaultValue || items[0]?.value} className={className} onValueChange={onChange}>
       <TabsList variant={variant} className={cn("grid w-full grid-cols-3", listClassName)}>
         {items.map((tab) => (
           <TabsTrigger key={tab.value} value={tab.value} className={itemClassName}>

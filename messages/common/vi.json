@@ -60,7 +60,8 @@
     "notSet": "Chưa chỉ định",
     "waitLoading": "Đang tải dữ liệu...",
     "noResultFound": "Không tìm thấy kết quả nào...",
-    "noResultFoundFor": "Không tìm thấy kết quả cho \"{key}\"..."
+    "noResultFoundFor": "Không tìm thấy kết quả cho \"{key}\"...",
+    "loading": "Đang tải..."
   },
   "actions": {
     "view": "Chi tiết",

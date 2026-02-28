@@ -1,3 +1,43 @@
 {
-  "title": "Dashboard"
+  "title": "Dashboard",
+  "overview": "Overview of today's activity",
+  "stats": {
+    "totalUsers": "Total Users",
+    "pendingUsers": "Pending Approvals",
+    "totalEvents": "Total Events",
+    "totalInvitations": "Total Invitations"
+  },
+  "eventTrends": {
+    "title": "Event Trends",
+    "description": "Number of events over time",
+    "period": {
+      "day": "Day",
+      "week": "Week",
+      "month": "Month",
+      "year": "Year"
+    }
+  },
+  "invitationMetrics": {
+    "title": "Invitation Metrics",
+    "created": "Created",
+    "draft": "Drafts",
+    "used": "Used",
+    "disabled": "Disabled",
+    "conversionRate": "Creation to Participant Ratio"
+  },
+  "pendingUsers": {
+    "title": "Pending Users",
+    "viewAll": "View All",
+    "noPending": "No pending approvals"
+  },
+  "upcomingEvents": {
+    "title": "Upcoming Events",
+    "viewAll": "View All",
+    "noUpcoming": "No upcoming events"
+  },
+  "quickActions": {
+    "createEvent": "Create Event",
+    "createInvitation": "Create Invitation",
+    "manageUsers": "Manage Users"
+  }
 }

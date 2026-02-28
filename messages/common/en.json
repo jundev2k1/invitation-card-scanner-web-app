@@ -60,7 +60,8 @@
     "notSet": "Not set",
     "waitLoading": "Loading...",
     "noResultsFound": "No results found...",
-    "noResultsFoundFor": "No results found for \"{key}\"..."
+    "noResultsFoundFor": "No results found for \"{key}\"...",
+    "loading": "Loading..."
   },
   "actions": {
     "view": "View Detail",

@@ -1,3 +1,43 @@
 {
-  "title": "Trang chính"
+  "title": "Bảng điều khiển",
+  "overview": "Tổng quan hoạt động hôm nay",
+  "stats": {
+    "totalUsers": "Tổng số người dùng",
+    "pendingUsers": "Chờ duyệt",
+    "totalEvents": "Tổng sự kiện",
+    "totalInvitations": "Tổng thiệp mời"
+  },
+  "eventTrends": {
+    "title": "Xu hướng sự kiện",
+    "description": "Số lượng sự kiện theo thời gian",
+    "period": {
+      "day": "Ngày",
+      "week": "Tuần",
+      "month": "Tháng",
+      "year": "Năm"
+    }
+  },
+  "invitationMetrics": {
+    "title": "Thống kê thiệp mời",
+    "created": "Đã tạo",
+    "draft": "Nháp",
+    "used": "Đã sử dụng",
+    "disabled": "Vô hiệu hóa",
+    "conversionRate": "Tỷ lệ tạo so với người tham gia"
+  },
+  "pendingUsers": {
+    "title": "Người dùng chờ duyệt",
+    "viewAll": "Xem tất cả",
+    "noPending": "Không có người dùng chờ duyệt"
+  },
+  "upcomingEvents": {
+    "title": "Sự kiện sắp diễn ra",
+    "viewAll": "Xem tất cả",
+    "noUpcoming": "Không có sự kiện sắp tới"
+  },
+  "quickActions": {
+    "createEvent": "Tạo sự kiện",
+    "createInvitation": "Tạo thiệp mời",
+    "manageUsers": "Quản lý người dùng"
+  }
 }
