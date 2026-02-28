@@ -25,6 +25,7 @@ const getColumns = (
   {
     key: "id",
     label: t('event.cardList.table.columns.id'),
+    className: "w-[20%]",
     render: (_, item) => <TruncatedText className="dark:text-muted-foreground" text={item.id} isUUID showCopy />
   },
   {
@@ -38,7 +39,7 @@ const getColumns = (
         </Avatar>
         <div className="flex flex-col gap-1">
           <p className="flex items-center gap-1 dark:text-muted-foreground text-sm">
-            <UserIcon />
+            <UserIcon size={12} />
             <span className="text-sm">Nick name</span>
           </p>
           <p className="flex items-center gap-1 dark:text-muted-foreground text-sm">
@@ -53,7 +54,7 @@ const getColumns = (
     key: "member-role",
     label: t('event.memberList.table.columns.memberRole'),
     align: "left",
-    className: "w-[30%]",
+    className: "w-[35%]",
     render: (_, item) => (
       <UpdateMember eventId={eventId} memberId={item.id} assignedRole={"123123"} assignedAt={new Date()} />
     )
