@@ -12,11 +12,11 @@ export const QuickActions = React.memo(() => {
   const locale = useLocale();
   const router = useRouter();
 
-  const redirectToEventList = () => useCallback(() => {
+  const redirectToEventList = useCallback(() => {
     router.push(RouteUtil.getEventListRoute(locale));
   }, []);
 
-  const redirectToUserList = () => useCallback(() => {
+  const redirectToUserList = useCallback(() => {
     router.push(RouteUtil.getUserListRoute(locale));
   }, []);
 

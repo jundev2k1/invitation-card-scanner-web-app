@@ -9,7 +9,7 @@ export const useUpcomingEventsList = () => {
   const router = useRouter();
   const { data, isLoading } = useSearchEvents({ keyword: '', page: 1, pageSize: 8 });
 
-  const redirectToList = () => useCallback(() => {
+  const redirectToList = useCallback(() => {
     router.push(RouteUtil.getEventListRoute(locale));
   }, []);
 

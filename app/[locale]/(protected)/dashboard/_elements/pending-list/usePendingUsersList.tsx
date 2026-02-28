@@ -16,7 +16,7 @@ export const usePendingUsersList = () => {
     pageSize: 8,
   });
 
-  const redirectToList = () => useCallback(() => {
+  const redirectToList = useCallback(() => {
     router.push(RouteUtil.getUserListRoute(locale));
   }, []);
 
