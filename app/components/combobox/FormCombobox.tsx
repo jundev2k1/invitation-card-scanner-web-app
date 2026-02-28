@@ -1,4 +1,5 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import {
   Combobox,
@@ -12,17 +13,17 @@ import {
   ComboboxValue,
 } from "@/shadcn/combobox";
 import { Label } from "@/shadcn/label";
-import { Loader2 } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDebounce } from "../hooks";
 
-type Option<T = string> = T | { value: T; label: string };
+type Option<T = unknown> = T | { value: T; label: string | React.ReactNode };
 
-interface FormAsyncComboboxProps<T = string> {
+interface FormAsyncComboboxProps<T = unknown> {
   name: string;
-  label?: string;
+  label?: string | React.ReactNode;
   placeholder?: string;
   fetchOptions: (query: string) => Promise<Option<T>[]>;
   debounceMs?: number;
@@ -30,11 +31,12 @@ interface FormAsyncComboboxProps<T = string> {
   disabled?: boolean;
   className?: string;
   containerClassName?: string;
-  getOptionLabel?: (opt: Option<T>) => string;
-  getOptionValue?: (opt: Option<T>) => string;
+  getOptionLabel: (option: T) => string | React.ReactNode;
+  getDisplayValue?: (option: T) => string | React.ReactNode;
+  getOptionKey?: (option: T) => string | number;
 }
 
-export function FormCombobox<T = string>({
+export function FormAsyncCombobox<T = unknown>({
   name,
   label,
   placeholder = "Search and select...",
@@ -44,24 +46,28 @@ export function FormCombobox<T = string>({
   disabled = false,
   className,
   containerClassName,
-  getOptionLabel = (opt: Option<T>) =>
-    typeof opt === "object" && opt !== null && "label" in opt
-      ? opt.label
-      : String(opt),
-  getOptionValue = (opt: Option<T>) =>
-    typeof opt === "object" && opt !== null && "value" in opt
-      ? String(opt.value)
-      : String(opt),
+  getOptionLabel,
+  getDisplayValue = getOptionLabel,
+  getOptionKey = (option) => {
+    if (typeof option === "object" && option !== null && "value" in option) {
+      return String((option as any).value);
+    }
+    return String(option);
+  },
 }: FormAsyncComboboxProps<T>) {
   const t = useTranslations();
   const { register, setValue, watch, formState: { errors } } = useFormContext();
-  const selectedValue = watch(name) as T | undefined;
+
+  const selectedValue = watch(name) as T | null | undefined;
   const error = errors[name]?.message as string | undefined;
 
-  register(name, { required: isRequired ? t("common.form.required") : false });
+  register(name, {
+    required: isRequired ? t("common.form.required") : false,
+  });
 
+  const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [options, setOptions] = useState<Option<T>[]>([]);
+  const [dynamicOptions, setDynamicOptions] = useState<Option<T>[]>([]);
   const [loading, setLoading] = useState(false);
 
   const debouncedQuery = useDebounce(query, debounceMs);
@@ -70,10 +76,10 @@ export function FormCombobox<T = string>({
     setLoading(true);
     try {
       const fetched = await fetchOptions(debouncedQuery);
-      setOptions(fetched);
+      setDynamicOptions(fetched);
     } catch (err) {
-      console.error("Fetch options error:", err);
-      setOptions([]);
+      console.error("Failed to load options:", err);
+      setDynamicOptions([]);
     } finally {
       setLoading(false);
     }
@@ -83,38 +89,46 @@ export function FormCombobox<T = string>({
     loadOptions();
   }, [loadOptions]);
 
-  const displayOptions = selectedValue
-    ? [
-        ...new Set([
-          ...options.map(getOptionValue),
-          getOptionValue(selectedValue as any),
-        ]),
-      ].map(
-        (val) =>
-          options.find((o) => getOptionValue(o) === val) ||
-          (selectedValue as any)
-      )
-    : options;
+  const selectedOption = useMemo(() => {
+    if (selectedValue == null) return null;
+
+    return dynamicOptions.find(
+      (opt) => getOptionKey(opt as any) === getOptionKey(selectedValue as any)
+    ) as T | null;
+  }, [dynamicOptions, selectedValue, getOptionKey]);
 
   return (
     <div className={cn("space-y-1.5", containerClassName)}>
       {label && (
-        <Label className={cn(error && "text-destructive", disabled && "opacity-70")}>
+        <Label
+          className={cn(
+            error && "text-destructive",
+            disabled && "opacity-70"
+          )}
+        >
           {label}
           {isRequired && <span className="text-destructive ml-1">*</span>}
         </Label>
       )}
 
       <Combobox
-        items={displayOptions.map(getOptionValue)}
-        value={
-          selectedValue !== undefined
-            ? getOptionValue(selectedValue as any)
-            : undefined
-        }
-        onValueChange={(strVal) => {
-          setValue(name, strVal as T, { shouldValidate: true });
+        value={selectedOption ? getOptionKey(selectedOption as any).toString() : ""}
+        onValueChange={(key) => {
+          if (!key) {
+            setValue(name, null, { shouldValidate: true });
+            setQuery("");
+            return;
+          }
+
+          const matched = dynamicOptions.find(
+            (opt) => getOptionKey(opt as any) === key
+          ) as T | undefined;
+
+          setValue(name, matched ?? null, { shouldValidate: true });
+          setOpen(false);
         }}
+        open={open}
+        onOpenChange={setOpen}
         disabled={disabled}
       >
         <ComboboxInput
@@ -127,26 +141,43 @@ export function FormCombobox<T = string>({
             className
           )}
         >
-          <ComboboxValue placeholder={placeholder} />
-          <ComboboxClear />
+          <ComboboxValue placeholder={placeholder}>
+            {selectedOption ? getDisplayValue(selectedOption) : null}
+          </ComboboxValue>
+
+          <ComboboxClear
+            onClick={() => {
+              setValue(name, null, { shouldValidate: true });
+              setQuery("");
+            }}
+          />
           <ComboboxTrigger />
         </ComboboxInput>
 
         <ComboboxContent>
           <ComboboxEmpty>
-            {loading ? t("common.combobox.loading") : t("common.combobox.noResults")}
+            {loading
+              ? t("common.combobox.loading")
+              : t("common.combobox.noResults")}
           </ComboboxEmpty>
 
           <ComboboxList>
-            {(val) => {
-              const opt = displayOptions.find((o) => getOptionValue(o) === val);
-              return (
-                <ComboboxItem key={val} value={val}>
-                  {opt ? getOptionLabel(opt) : val}
-                  {loading && <Loader2 className="ml-auto h-4 w-4 animate-spin" />}
-                </ComboboxItem>
-              );
-            }}
+            {dynamicOptions.map((opt, i) => (
+              <ComboboxItem key={i} value={getOptionKey(opt as any)}>
+                {getOptionLabel(opt as any)}
+                <Check
+                  className={cn(
+                    "ml-auto h-4 w-4",
+                    selectedOption &&
+                      getOptionKey(selectedOption as any) ===
+                        getOptionKey(opt as any) &&
+                      "opacity-100",
+                    "opacity-0"
+                  )}
+                />
+                {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+              </ComboboxItem>
+            ))}
           </ComboboxList>
         </ComboboxContent>
       </Combobox>

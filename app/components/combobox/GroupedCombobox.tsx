@@ -1,10 +1,9 @@
 "use client";
 
-import { LoaderIcon } from "@/icons";
 import { cn } from "@/lib/utils";
 import {
   Combobox,
-  ComboboxCollection,
+  ComboboxClear,
   ComboboxContent,
   ComboboxEmpty,
   ComboboxGroup,
@@ -13,20 +12,24 @@ import {
   ComboboxLabel,
   ComboboxList,
   ComboboxSeparator,
+  ComboboxTrigger,
+  ComboboxValue,
 } from "@/shadcn/combobox";
 import { Label } from "@/shadcn/label";
+import { Check, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebounce } from "../hooks";
 
-interface Group<T = string> {
+interface Group<T = unknown> {
   value: string;
+  label?: string | React.ReactNode;
   items: T[];
 }
 
-interface GroupedComboboxProps<T = string> {
-  value?: T;
-  onValueChange?: (value: T) => void;
+interface GroupedComboboxProps<T = unknown> {
+  value?: T | null;
+  onChange?: (value: T | null) => void;
   placeholder?: string;
   groups?: Group<T>[];
   fetchOptions?: (query: string) => Promise<Group<T>[]>;
@@ -34,16 +37,17 @@ interface GroupedComboboxProps<T = string> {
   disabled?: boolean;
   className?: string;
   contentClassName?: string;
-  label?: string;
+  label?: string | React.ReactNode;
   helperText?: string;
-  getOptionLabel?: (item: T) => string;
-  getOptionValue?: (item: T) => string;
+  getOptionLabel: (item: T) => string | React.ReactNode;
+  getDisplayValue?: (item: T) => string | React.ReactNode;
+  getOptionKey?: (item: T) => string | number;
 }
 
-export default function GroupedCombobox<T = string>({
+export default function GroupedCombobox<T = unknown>({
   value,
-  onValueChange,
-  placeholder = "Select a timezone...",
+  onChange,
+  placeholder = "Select an option...",
   groups,
   fetchOptions,
   debounceMs = 300,
@@ -52,8 +56,17 @@ export default function GroupedCombobox<T = string>({
   contentClassName,
   label,
   helperText,
-  getOptionLabel = (item: T) => String(item),
-  getOptionValue = (item: T) => String(item),
+  getOptionLabel,
+  getDisplayValue = getOptionLabel,
+  getOptionKey = (item) => {
+    if (typeof item === "object" && item !== null && "id" in item) {
+      return String((item as any).id);
+    }
+    if (typeof item === "object" && item !== null && "value" in item) {
+      return String((item as any).value);
+    }
+    return String(item);
+  },
 }: GroupedComboboxProps<T>) {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
@@ -62,20 +75,16 @@ export default function GroupedCombobox<T = string>({
   const [loading, setLoading] = useState(false);
 
   const isAsync = !!fetchOptions;
-  const finalGroups = isAsync ? dynamicGroups : groups || [];
-  const allItems = finalGroups.flatMap((g) => g.items);
-  const allValues = allItems.map(getOptionValue);
-
   const debouncedQuery = useDebounce(query, debounceMs);
 
   const loadOptions = useCallback(async () => {
-    if (!isAsync) return;
+    if (!isAsync || !fetchOptions) return;
     setLoading(true);
     try {
       const fetched = await fetchOptions(debouncedQuery);
       setDynamicGroups(fetched);
     } catch (err) {
-      console.error("Fetch grouped options error:", err);
+      console.error("Failed to load grouped options:", err);
       setDynamicGroups([]);
     } finally {
       setLoading(false);
@@ -86,15 +95,41 @@ export default function GroupedCombobox<T = string>({
     if (isAsync) loadOptions();
   }, [loadOptions, isAsync]);
 
+  const finalGroups = isAsync ? dynamicGroups : groups || [];
+
+  const selectedItem = useMemo(() => {
+    if (value == null) return null;
+    for (const group of finalGroups) {
+      const found = group.items.find(
+        (item) => getOptionKey(item) === getOptionKey(value as any)
+      );
+      if (found) return found;
+    }
+    return null;
+  }, [finalGroups, value, getOptionKey]);
+
   return (
     <div className="grid w-full items-center gap-1.5">
       {label && <Label>{label}</Label>}
 
       <Combobox
-        items={allValues}
-        value={value !== undefined ? getOptionValue(value) : undefined}
-        onValueChange={(strVal) => {
-          onValueChange?.(strVal as T);
+        value={selectedItem ? getOptionKey(selectedItem).toString() : ""}
+        onValueChange={(key) => {
+          if (!key) {
+            onChange?.(null);
+            setQuery("");
+            return;
+          }
+
+          let matched: T | undefined;
+          for (const group of finalGroups) {
+            matched = group.items.find(
+              (item) => getOptionKey(item) === key
+            ) as T | undefined;
+            if (matched) break;
+          }
+
+          onChange?.(matched ?? null);
           setOpen(false);
         }}
         open={open}
@@ -105,32 +140,50 @@ export default function GroupedCombobox<T = string>({
           placeholder={placeholder}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className={cn("w-full", className)}
-        />
+          className={cn("w-full dark:text-foreground", className)}
+        >
+          <ComboboxValue placeholder={placeholder}>
+            {selectedItem ? getDisplayValue(selectedItem) : null}
+          </ComboboxValue>
+
+          <ComboboxClear
+            onClick={() => {
+              onChange?.(null);
+              setQuery("");
+            }}
+          />
+          <ComboboxTrigger />
+        </ComboboxInput>
 
         <ComboboxContent className={contentClassName}>
           <ComboboxEmpty>
-            {loading ? t("common.combobox.loading") : t("common.combobox.noResults")}
+            {loading
+              ? t("common.combobox.loading")
+              : t("common.combobox.noResults")}
           </ComboboxEmpty>
 
           <ComboboxList>
-            {(group, index) => (
-              <ComboboxGroup key={group.value}>
-                <ComboboxLabel>{group.value}</ComboboxLabel>
-                <ComboboxCollection>
-                  {(item) => {
-                    const val = getOptionValue(item);
-                    return (
-                      <ComboboxItem key={val} value={val}>
-                        {getOptionLabel(item)}
-                        {loading && <LoaderIcon className="ml-2 h-4 w-4 animate-spin" />}
-                      </ComboboxItem>
-                    );
-                  }}
-                </ComboboxCollection>
-                {index < finalGroups.length - 1 && <ComboboxSeparator />}
+            {finalGroups.map((group, gIdx) => (
+              <ComboboxGroup key={group.value || gIdx}>
+                <ComboboxLabel>{group.label ?? group.value}</ComboboxLabel>
+                {group.items.map((item, i) => (
+                  <ComboboxItem key={i} value={getOptionKey(item)}>
+                    {getOptionLabel(item)}
+                    <Check
+                      className={cn(
+                        "ml-auto h-4 w-4",
+                        selectedItem &&
+                          getOptionKey(selectedItem) === getOptionKey(item) &&
+                          "opacity-100",
+                        "opacity-0"
+                      )}
+                    />
+                    {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+                  </ComboboxItem>
+                ))}
+                {gIdx < finalGroups.length - 1 && <ComboboxSeparator />}
               </ComboboxGroup>
-            )}
+            ))}
           </ComboboxList>
         </ComboboxContent>
       </Combobox>
