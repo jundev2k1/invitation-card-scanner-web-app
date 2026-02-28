@@ -197,7 +197,7 @@ export const EventInformation = React.memo(({ eventId, token, onReset }: EventIn
               </p>
               {data ? (
                 <p className="text-foreground font-bold w-full text-sm">
-                  {formatDateTime(data?.endAt)}
+                  {data?.endAt ? formatDateTime(data?.endAt) : `(${t('common.placeholder.notSet')})`}
                 </p>
               ) : (
                 <SkeletonListItem />

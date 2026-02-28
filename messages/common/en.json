@@ -52,6 +52,9 @@
     "toLower": "to",
     "toUpper": "To"
   },
+  "placeholder": {
+    "notSet": "Not set"
+  },
   "actions": {
     "view": "View Detail",
     "refresh": "Refresh",

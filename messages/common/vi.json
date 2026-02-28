@@ -52,6 +52,9 @@
     "toLower": "đến",
     "toUpper": "Đến"
   },
+  "placeholder": {
+    "notSet": "Chưa chỉ định"
+  },
   "actions": {
     "view": "Chi tiết",
     "refresh": "Làm mới",
