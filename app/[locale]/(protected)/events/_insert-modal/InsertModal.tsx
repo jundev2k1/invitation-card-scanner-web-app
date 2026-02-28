@@ -13,6 +13,7 @@ import {
   TextBox
 } from "@/components";
 import { PlusCircleIcon } from "@/icons";
+import { getEventStatusTransKey } from "@/root/app/utils/mappers/event.mapper";
 import { EventStatus } from "@/types";
 import { useTranslations } from "next-intl";
 import { FormProvider } from "react-hook-form";
@@ -43,17 +44,17 @@ export function InsertModal() {
               </DialogHeader>
 
               <div className="px-6 pt-2 pb-6 h-[calc(90vh-140px)] overflow-y-auto">
-                <div className="grid md:grid-cols-2 gap-3">
-                  <FormTextBox name="categoryId" label={t('event.insert.fields.category')} containerClassName="w-full" disabled />
-                  <TextBox name="status" label={t('event.insert.fields.status')} className="w-full" value={EventStatus.DRAFT} disabled />
-                  <FormTextBox name="title" label={t('event.insert.fields.title')} containerClassName="md:col-span-2 w-full col" />
-                  <FormDateTimePicker name="startAt" label={t('event.insert.fields.startAt')} />
-                  <FormDateTimePicker name="endAt" label={t('event.insert.fields.endAt')} nullable />
-                  <FormTextBox name="locationName" label={t('event.insert.fields.location')} containerClassName="md:col-span-2 w-full col" />
-                  <FormTextBox name="address" label={t('event.insert.fields.address')} containerClassName="md:col-span-2 w-full col" />
-                  <FormTextBox name="mapUrl" label={t('event.insert.fields.mapUrl')} containerClassName="md:col-span-2 w-full col" />
+                <div className="grid md:grid-cols-6 gap-3">
+                  <FormTextBox name="categoryId" label={t('event.insert.fields.category')} containerClassName="md:col-span-4 w-full" disabled />
+                  <TextBox name="status" label={t('event.insert.fields.status')} containerClassName="md:col-span-2 w-full" value={t(getEventStatusTransKey(EventStatus.DRAFT))} disabled />
+                  <FormTextBox name="title" label={t('event.insert.fields.title')} containerClassName="md:col-span-6 w-full col" />
+                  <FormDateTimePicker name="startAt" label={t('event.insert.fields.startAt')} containerClassName="md:col-span-3 w-full col" />
+                  <FormDateTimePicker name="endAt" label={t('event.insert.fields.endAt')} containerClassName="md:col-span-3 w-full col" nullable />
+                  <FormTextBox name="locationName" label={t('event.insert.fields.location')} containerClassName="md:col-span-6 w-full col" />
+                  <FormTextBox name="address" label={t('event.insert.fields.address')} containerClassName="md:col-span-6 w-full col" />
+                  <FormTextBox name="mapUrl" label={t('event.insert.fields.mapUrl')} containerClassName="md:col-span-6 w-full col" />
 
-                  <div className="col-span-2">
+                  <div className="col-span-6">
                     <Separator className="my-4" />
                     <FormTextArea name="description" label={t('event.insert.fields.description')} className="col-span-2 w-full" />
                   </div>

@@ -17,10 +17,11 @@ interface FormDatePickerProps {
   name: string;
   label?: string;
   captionLayout?: "dropdown" | "label" | "dropdown-months" | "dropdown-years";
-  nullable?: boolean
+  nullable?: boolean,
+  containerClassName?: string
 }
 
-export function FormDateTimePicker({ name, label, nullable = false, captionLayout = "label" }: FormDatePickerProps) {
+export function FormDateTimePicker({ name, label, nullable = false, captionLayout = "label", containerClassName }: FormDatePickerProps) {
   const t = useTranslations();
   const timeInputRef = useRef<HTMLInputElement>(null);
   const { control, formState: { errors } } = useFormContext();
@@ -32,7 +33,7 @@ export function FormDateTimePicker({ name, label, nullable = false, captionLayou
     }
   }, []);
   return (
-    <div className="space-y-1.5 flex flex-col">
+    <div className={cn("space-y-1.5 flex flex-col", containerClassName)}>
       {label && (
         <Label className={error ? "border-destructive text-destructive" : "text-slate-900 dark:text-muted-foreground"}>
           {label}
