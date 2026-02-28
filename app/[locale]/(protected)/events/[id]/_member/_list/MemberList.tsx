@@ -2,10 +2,8 @@
 import { DataList, RefreshButton, SearchTextbox } from "@/components";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { EventMemberDetail } from "../_detail/DetailMember";
 import { InsertMember } from "../_insert/InsertMember";
-import { UpdateMember } from "../_update/UpdateMember";
-import { ListItemAction, useMemberList } from "./useMemberList";
+import { useMemberList } from "./useMemberList";
 
 export type MemberListProps = {
   eventId: string;
@@ -48,21 +46,6 @@ export const MemberList = React.memo(({ eventId }: MemberListProps) => {
         page={filter.page}
         pageSize={filter.pageSize}
       />
-
-      {/* Show Card Detail */}
-      {pageAction == ListItemAction.DETAIL && !!targetId && (
-        <EventMemberDetail eventId={eventId} cardId={targetId} isOpen={true} onClose={onCloseModal} />
-      )}
-
-      {/* Show Card Edit */}
-      {pageAction == ListItemAction.EDIT && (
-        <UpdateMember
-          eventId={eventId}
-          detail={data.items.find((x) => x.id == targetId)!}
-          isOpen={true}
-          onClose={onCloseModal}
-        />
-      )}
     </>
   );
 });

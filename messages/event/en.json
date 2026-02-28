@@ -68,7 +68,15 @@
   },
   "memberList": {
     "title": "Member List",
-    "desc": "View, edit, and manage all event members."
+    "desc": "View, edit, and manage all event members.",
+    "table": {
+      "columns": {
+        "id": "ID",
+        "information": "Information",
+        "memberRole": "Member's role",
+        "action": "Action"
+      }
+    }
   },
   "cardList": {
     "title": "Invitation Card List",

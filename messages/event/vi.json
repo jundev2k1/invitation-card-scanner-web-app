@@ -68,7 +68,15 @@
   },
   "memberList": {
     "title": "Danh sách thành viên",
-    "desc": "Xem, sửa và quản lý thành viên."
+    "desc": "Xem, sửa và quản lý thành viên.",
+    "table": {
+      "columns": {
+        "id": "ID",
+        "information": "Thông tin",
+        "memberRole": "Vai trò",
+        "action": "Hành động"
+      }
+    }
   },
   "cardList": {
     "title": "Danh sách thiệp mời",

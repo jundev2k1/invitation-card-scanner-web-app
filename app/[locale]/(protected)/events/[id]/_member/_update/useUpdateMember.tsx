@@ -1,11 +1,8 @@
 "use client";
 import { Toast } from "@/components";
-import { UpdateEventCardRequest, useUpdateEventCard } from "@/services";
-import { EventCardSearchItemDto } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useUpdateEventCard } from "@/services";
 import { useTranslations } from "next-intl";
-import { useCallback } from "react";
-import { useForm } from "react-hook-form";
+import { useCallback, useState } from "react";
 import z from "zod";
 
 const updateEventMemberSchema = z.object({
@@ -16,26 +13,35 @@ const updateEventMemberSchema = z.object({
     .max(4000, { message: "Notes must be at most 4000 characters long" }),
 });
 
-export const useUpdateMember = (eventId: string, detail: EventCardSearchItemDto, onClose: () => void) => {
+export const useUpdateMember = (eventId: string, memberId: string, assignedRole: string) => {
   const t = useTranslations();
+  const [value, setValue] = useState<string>(assignedRole);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
+
   const { mutateAsync } = useUpdateEventCard();
-  const form = useForm<UpdateEventCardRequest>({
-    resolver: zodResolver(updateEventMemberSchema),
-    defaultValues: {
-      guestName: detail.guestName,
-      notes: detail.notes,
-    },
-  });
 
-  const onSubmit = useCallback(async (data: UpdateEventCardRequest) => {
-    await mutateAsync({ eventId, id: detail.id, data });
+  const onOpen = useCallback(() => { setEditMode(true); }, [editMode]);
+  const onClose = useCallback(() => { setEditMode(false); }, [editMode]);
+  const onCancel = useCallback(() => {
+    setValue(assignedRole);
+    onClose();
+  }, [assignedRole]);
 
+  const onSubmit = useCallback(async () => {
     Toast.showSuccess(t("common.messages.updateSuccess"));
     onClose();
-  }, [eventId, detail.id]);
+  }, [eventId, memberId, assignedRole]);
+
 
   return {
-    form,
+    visible,
+    setVisible,
+    value,
+    setValue,
+    onCancel,
+    editMode,
+    onOpen,
     onSubmit,
   };
 }

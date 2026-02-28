@@ -1,23 +1,24 @@
 import {
-  Badge,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   Column,
-  DropdownButton,
-  EventCardStatusBadge,
-  SmartDateTime,
+  IconButton,
   Toast,
   TruncatedText,
-  useFilter,
+  useFilter
 } from "@/components";
-import { ClockIcon } from "@/icons";
+import { PhoneIcon, TrashIcon, UserIcon } from "@/icons";
 import { TranslateFn } from "@/root/i18n/type";
 import { useDeleteEventCard, useSearchEventCards } from "@/services";
 import { defaultSearchResult, EventCardSearchItemDto, SearchResult } from "@/types";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
+import { UpdateMember } from "../_update/UpdateMember";
 
 const getColumns = (
   t: TranslateFn,
-  onOpenDetail: (id: string) => void,
+  eventId: string,
   onOpenEdit: (id: string) => void,
   onDeleteCard: (id: string) => void
 ): Column<EventCardSearchItemDto>[] => ([
@@ -28,66 +29,43 @@ const getColumns = (
   },
   {
     key: "information",
-    label: t('event.cardList.table.columns.information'),
+    label: t('event.memberList.table.columns.information'),
     render: (_, item) => (
-      <div className="flex flex-col gap-1">
-        <p className="flex gap-2">
-          <span className="font-medium dark:text-muted-foreground">{item.guestName}</span>
-        </p>
-        <p className="flex items-center gap-1 dark:text-muted-foreground">
-          <ClockIcon size={12} />
-          <SmartDateTime date={item.createdAt} label={t('common.datetime.createdAt')} />
-        </p>
+      <div className="flex items-center gap-1">
+        <Avatar size="lg">
+          <AvatarImage src={""} />
+          <AvatarFallback>{"user".substring(0, 2).toUpperCase()}</AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col gap-1">
+          <p className="flex items-center gap-1 dark:text-muted-foreground text-sm">
+            <UserIcon />
+            <span className="text-sm">Nick name</span>
+          </p>
+          <p className="flex items-center gap-1 dark:text-muted-foreground text-sm">
+            <PhoneIcon size={12} />
+            <span className="text-sm dark:text-muted-foreground">0969 969 969</span>
+          </p>
+        </div>
       </div>
     )
   },
   {
-    key: "scan-status",
-    label: t('event.cardList.table.columns.isScanned'),
+    key: "member-role",
+    label: t('event.memberList.table.columns.memberRole'),
     align: "left",
+    className: "w-[30%]",
     render: (_, item) => (
-      <span className="flex flex-col gap-1">
-        {item.isUsed ? (
-          <Badge variant="default">{t("event.enum.isScanned.YES")}</Badge>
-        ) : (
-          <Badge variant="destructive">{t("event.enum.isScanned.NO")}</Badge>
-        )}
-        {item.firstScannedAt && (
-          <SmartDateTime date={item.firstScannedAt} />
-        )}
-      </span>
+      <UpdateMember eventId={eventId} memberId={item.id} assignedRole={"123123"} assignedAt={new Date()} />
     )
   },
   {
-    key: "status",
-    label: t('event.cardList.table.columns.status'),
-    className: "text-center",
-    align: "center",
-    render: (_, item) => <EventCardStatusBadge status={item.status} />
-  },
-  {
     key: "actions",
-    className: "w-48 text-right",
+    className: "w-[10%] text-right",
     align: "right",
-    label: t('event.cardList.table.columns.action'),
-    render: (_, item) => {
-      const options = [
-        {
-          label: t('common.actions.view'),
-          action: () => { onOpenDetail(item.id) }
-        },
-        {
-          label: t('common.actions.edit'),
-          action: () => { onOpenEdit(item.id) }
-        },
-        {
-          label: t('common.actions.delete'),
-          className: "text-red-600",
-          action: () => { onDeleteCard(item.id) }
-        },
-      ];
-      return <DropdownButton options={options} />
-    }
+    label: t('event.memberList.table.columns.action'),
+    render: (_, item) => (
+      <IconButton variant="destructive" icon={<TrashIcon />} onClick={() => onDeleteCard(item.id)} />
+    )
   },
 ]);
 
@@ -109,7 +87,6 @@ export const useMemberList = ({ eventId }: { eventId: string }) => {
   const { mutateAsync: deleteEventCard } = useDeleteEventCard();
 
   const onCloseModal = useCallback(() => { setPageAction([ListItemAction.NONE, null]); }, []);
-  const onOpenDetail = useCallback((id: string) => { setPageAction([ListItemAction.DETAIL, id]); }, []);
   const onOpenEdit = useCallback((id: string) => { setPageAction([ListItemAction.EDIT, id]); }, []);
   const onDeleteCard = useCallback(async (id: string) => {
     if (!window.confirm(t('common.messages.confirmDelete')))
@@ -121,7 +98,7 @@ export const useMemberList = ({ eventId }: { eventId: string }) => {
     Toast.showSuccess(t('common.messages.deleteSuccess'));
   }, []);
 
-  const columns = useMemo(() => getColumns(t, onOpenDetail, onOpenEdit, onDeleteCard), [eventId]);
+  const columns = useMemo(() => getColumns(t, eventId, onOpenEdit, onDeleteCard), [eventId]);
 
   return {
     isLoading,

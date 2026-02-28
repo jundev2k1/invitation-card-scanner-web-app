@@ -28,7 +28,7 @@ export function SmartDateTime({ date, label, className, format }: SmartDateTimeP
     >
       {label && <span>{label}</span>}
 
-      <span className="relative overflow-hidden inline-block h-5 min-w-32">
+      <span className="relative overflow-hidden inline-block h-5 min-w-35">
         <AnimatePresence mode="wait">
           {isHovered ? (
             <motion.span
