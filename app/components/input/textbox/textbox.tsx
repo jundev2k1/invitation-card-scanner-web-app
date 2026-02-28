@@ -10,8 +10,12 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export default function AppInput({ label, helperText, className, id, containerClassName, ...props }: InputProps) {
   return (
-    <div className={cn("grid w-full items-center gap-1.5", containerClassName)}>
-      {label && <Label htmlFor={id}>{label}</Label>}
+    <div className={cn("grid w-full items-center gap-1.5 ", containerClassName)}>
+      {label && (
+        <Label htmlFor={id} className="text-slate-900 dark:text-muted-foreground">
+          {label}
+        </Label>
+      )}
       <Input className={cn("focus-visible:ring-2 dark:text-muted-foreground", className)} id={id} {...props} />
       {helperText && <div className="text-xs text-muted-foreground">{helperText}</div>}
     </div>
