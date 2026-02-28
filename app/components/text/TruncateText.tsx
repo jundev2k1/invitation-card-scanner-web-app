@@ -9,6 +9,7 @@ import {
 } from "@/components/tooltip";
 import { CheckIcon, CopyIcon } from "@/icons";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 
 interface TruncatedTextProps {
@@ -28,6 +29,7 @@ export function TruncatedText({
   isTruncate = true,
   isUUID = false
 }: TruncatedTextProps) {
+  const t = useTranslations();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async (e: React.MouseEvent) => {
@@ -37,7 +39,7 @@ export function TruncatedText({
     setTimeout(() => setCopied(false), 2000);
 
     if (!showCopy)
-      Toast.showSuccess("Copied", "top-right");
+      Toast.showSuccess(t('common.message.copySuccess'), "top-right");
   };
 
   const textShow = isTruncate && isUUID
@@ -62,7 +64,7 @@ export function TruncatedText({
 
           <TooltipContent>
             <p className="max-w-xs break-all">
-              {isTruncate ? text : "copy"}
+              {isTruncate ? text : t('common.actions.copy')}
             </p>
           </TooltipContent>
         </Tooltip>
