@@ -201,8 +201,8 @@ export const EventCardDetail = React.memo(({ eventId, cardId, isOpen, onClose }:
                             {(hoverInfoId === item.id || showInfoId === item.id) && (
                               <IconButton
                                 className="dark:text-muted-foreground"
-                                icon={showInfoId ? <EyeOffIcon size={14} /> : <EyeIcon size={14} />}
-                                onClick={() => !showInfoId ? onOpenInfo(item.id) : onCloseInfo()}
+                                icon={showInfoId === item.id ? <EyeOffIcon size={14} /> : <EyeIcon size={14} />}
+                                onClick={() => showInfoId === item.id ? onCloseInfo() : onOpenInfo(item.id)}
                                 size="xs"
                               />
                             )}
