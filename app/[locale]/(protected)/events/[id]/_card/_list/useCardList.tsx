@@ -1,4 +1,5 @@
 import {
+  Badge,
   Column,
   DropdownButton,
   EventCardStatusBadge,
@@ -41,8 +42,27 @@ const getColumns = (
     )
   },
   {
+    key: "scan-status",
+    label: t('event.cardList.table.columns.isScanned'),
+    align: "left",
+    render: (_, item) => (
+      <span className="flex flex-col gap-1">
+        {item.isUsed ? (
+          <Badge variant="default">{t("event.enum.isScanned.YES")}</Badge>
+        ) : (
+          <Badge variant="destructive">{t("event.enum.isScanned.NO")}</Badge>
+        )}
+        {item.firstScannedAt && (
+          <SmartDateTime date={item.firstScannedAt} />
+        )}
+      </span>
+    )
+  },
+  {
     key: "status",
     label: t('event.cardList.table.columns.status'),
+    className: "text-center",
+    align: "center",
     render: (_, item) => <EventCardStatusBadge status={item.status} />
   },
   {

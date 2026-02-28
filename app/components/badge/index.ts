@@ -1,3 +1,4 @@
+export { Badge, badgeVariants } from "@/shadcn/badge";
 export * from "./EventCardStatusBadge";
 export * from "./EventStatusBadge";
 export * from "./RoleBadge";

@@ -71,6 +71,8 @@
         "id": "ID",
         "information": "Information",
         "status": "Status",
+        "isScanned": "Scan status",
+        "scannedAt": "Scanned at",
         "action": "Action"
       }
     },

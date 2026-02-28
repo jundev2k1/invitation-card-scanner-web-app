@@ -3,6 +3,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  Badge,
   Button,
   Card,
   CardContent,
@@ -22,7 +23,7 @@ import {
   TableHeader,
   TableRow,
   TextArea,
-  TruncatedText
+  TruncatedText,
 } from "@/components";
 import {
   CaptionsIcon,
@@ -47,7 +48,6 @@ import {
   XCircleIcon,
 } from "@/icons";
 import { formatDateTime } from "@/lib/datetime/date.util";
-import { Badge } from "@/shadcn/badge";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { useEventInformation } from "./useEventInformation";

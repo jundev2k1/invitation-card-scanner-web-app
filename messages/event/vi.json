@@ -71,6 +71,8 @@
         "id": "ID",
         "information": "Thông tin",
         "status": "Trạng thái",
+        "isScanned": "Trạng thái quét",
+        "scannedAt": "Quét lúc",
         "action": "Hành động"
       }
     },
