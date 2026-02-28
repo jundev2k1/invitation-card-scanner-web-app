@@ -20,6 +20,7 @@ import { Label } from "@/shadcn/label";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
+import { useDebounce } from "../hooks";
 
 type Option<T = string> = T | { value: T; label: string };
 
@@ -187,13 +188,4 @@ export default function AppMultiCombobox<T = string>({
       {helperText && <p className="text-xs text-muted-foreground">{helperText}</p>}
     </div>
   );
-}
-
-function useDebounce<T>(value: T, delay: number): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const timer = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-  return debounced;
 }

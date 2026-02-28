@@ -17,6 +17,7 @@ import {
 import { Label } from "@/shadcn/label";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
+import { useDebounce } from "../hooks";
 
 interface Group<T = string> {
   value: string;
@@ -137,13 +138,4 @@ export default function GroupedCombobox<T = string>({
       {helperText && <p className="text-xs text-muted-foreground">{helperText}</p>}
     </div>
   );
-}
-
-function useDebounce<T>(value: T, delay: number): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const timer = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-  return debounced;
 }

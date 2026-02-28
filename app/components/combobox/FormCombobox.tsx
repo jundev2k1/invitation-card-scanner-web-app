@@ -16,6 +16,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { useDebounce } from "../hooks";
 
 type Option<T = string> = T | { value: T; label: string };
 
@@ -33,7 +34,7 @@ interface FormAsyncComboboxProps<T = string> {
   getOptionValue?: (opt: Option<T>) => string;
 }
 
-export function FormAsyncCombobox<T = string>({
+export function FormCombobox<T = string>({
   name,
   label,
   placeholder = "Search and select...",
@@ -153,13 +154,4 @@ export function FormAsyncCombobox<T = string>({
       {error && <p className="text-sm font-medium text-destructive">{error}</p>}
     </div>
   );
-}
-
-function useDebounce<T>(value: T, delay: number): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const timer = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-  return debounced;
 }

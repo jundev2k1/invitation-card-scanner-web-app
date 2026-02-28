@@ -17,6 +17,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { useDebounce } from "../hooks";
 
 interface Group<T = string> {
   value: string;
@@ -148,13 +149,4 @@ export function FormGroupedCombobox<T = string>({
       {error && <p className="text-sm font-medium text-destructive">{error}</p>}
     </div>
   );
-}
-
-function useDebounce<T>(value: T, delay: number): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const timer = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-  return debounced;
 }
