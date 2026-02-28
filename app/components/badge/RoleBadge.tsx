@@ -1,4 +1,3 @@
-import { roleMapper } from "@/app/utils/mappers";
 import {
   BriefcaseIcon,
   CrownIcon,
@@ -7,6 +6,7 @@ import {
 } from "@/icons";
 import { Badge } from "@/shadcn/badge";
 import { Role } from "@/types";
+import { roleMapper } from "@/utils/mappers";
 import { useTranslations } from "next-intl";
 
 type RoleBadgeProps = {

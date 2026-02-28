@@ -18,6 +18,7 @@ import {
 } from "@/shadcn/command";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { Kbd } from "../../../kdb";
 import { useSearchBar } from "./useSearchBar";
 
 export const SearchBar = React.memo(() => {
@@ -44,8 +45,8 @@ export const SearchBar = React.memo(() => {
         }
         rightIcon={
           <div className="flex items-center gap-1">
-            <kbd className="ml-auto font-sans text-xs border rounded bg-white px-1.5">⌘K</kbd>
-            <kbd className="ml-auto font-sans text-xs border rounded bg-white px-1.5">Ctrl K</kbd>
+            <Kbd>⌘K</Kbd>
+            <Kbd>Ctrl+K</Kbd>
           </div>
         }
         onClick={onOpen}

@@ -1,7 +1,7 @@
-import { userMapper } from "@/app/utils/mappers";
-import { getUserStatusKey } from "@/app/utils/mappers/user.mapper";
 import { Badge } from "@/shadcn/badge";
 import { UserStatus } from "@/types";
+import { userMapper } from "@/utils/mappers";
+import { getUserStatusKey } from "@/utils/mappers/user.mapper";
 import { useTranslations } from "next-intl";
 
 type UserStatusBadgeProps = {

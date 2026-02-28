@@ -1,7 +1,7 @@
-import { userMapper } from "@/app/utils/mappers";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/shadcn/badge";
 import { Sex } from "@/types";
+import { userMapper } from "@/utils/mappers";
 import { FemaleIcon, MaleIcon, OtherIcon } from "../icons";
 
 type SexBadgeProps = {

@@ -1,6 +1,6 @@
-import { eventMapper } from "@/app/utils/mappers";
 import { Badge } from "@/shadcn/badge";
 import { EventStatus } from "@/types";
+import { eventMapper } from "@/utils/mappers";
 import { useTranslations } from "next-intl";
 
 type EventStatusBadgeProps = {

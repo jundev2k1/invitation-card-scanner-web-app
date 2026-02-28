@@ -1,6 +1,6 @@
-import { RouteUtil } from "@/app/utils/route";
 import { useGetUserDetail } from "@/services";
 import { PageAction } from "@/types";
+import { RouteUtil } from "@/utils/route";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
