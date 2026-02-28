@@ -57,7 +57,10 @@
       "dateInfo": "Thông tin ngày tháng",
       "settings": "Cài đặt",
       "createdAt": "Ngày tạo",
-      "updatedAt": "Cập nhật lần cuối"
+      "updatedAt": "Cập nhật lần cuối",
+      "cardCount": "Tổng số thiệp mời",
+      "scannedCount": "Thiệp đã xác thực",
+      "memberCount": "Ban tổ chức"
     },
     "actions": {
       "viewMap": "Xem bản đồ"

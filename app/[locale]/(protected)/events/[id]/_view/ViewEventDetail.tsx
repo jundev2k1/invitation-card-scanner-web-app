@@ -5,11 +5,12 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CounterUp,
   EventStatusBadge,
   MapCard,
   Separator
 } from "@/components";
-import { CalendarClockIcon, ClockIcon, MapPinHouseIcon } from "@/icons";
+import { CalendarClockIcon, ClockIcon, MailIcon, MapPinHouseIcon, ScanQrCodeIcon, UsersIcon } from "@/icons";
 import { formatDateTime } from "@/lib/datetime/date.util";
 import { EventDetailDto } from "@/types";
 import { useTranslations } from "next-intl";
@@ -120,6 +121,47 @@ export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
                 <p className="text-sm text-muted-foreground">
                   {t('event.detail.fields.updatedAt')}:
                   <span className="text-foreground font-bold ml-2">{formatDateTime(data.updatedAt)}</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <MailIcon className="h-5 w-5 text-muted-foreground mt-0.5" />
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">
+                  {t('event.detail.fields.cardCount')}
+                </p>
+
+                <p className="text-xl font-bold text-center text-foreground">
+                  <CounterUp value={20} duration={3} />
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <ScanQrCodeIcon className="h-5 w-5 text-muted-foreground mt-0.5" />
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">
+                  {t('event.detail.fields.scannedCount')}
+                </p>
+
+                <p className="text-xl font-bold text-center text-foreground">
+                  <CounterUp value={12} duration={3} />
+                  /
+                  <CounterUp value={20} duration={3} />
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <UsersIcon className="h-5 w-5 text-muted-foreground mt-0.5" />
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">
+                  {t('event.detail.fields.memberCount')}
+                </p>
+
+                <p className="text-xl font-bold text-center text-foreground">
+                  <CounterUp value={4} duration={3} />
                 </p>
               </div>
             </div>

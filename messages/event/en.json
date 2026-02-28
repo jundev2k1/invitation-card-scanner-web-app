@@ -57,7 +57,10 @@
       "dateInfo": "Date Info",
       "settings": "Settings",
       "createdAt": "Created At",
-      "updatedAt": "Last Updated At"
+      "updatedAt": "Last Updated At",
+      "cardCount": "Total Invitations",
+      "scannedCount": "Confirmed Guests",
+      "memberCount": "Organizers"
     },
     "actions": {
       "viewMap": "View Map"
