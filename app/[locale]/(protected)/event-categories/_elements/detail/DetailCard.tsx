@@ -12,25 +12,21 @@ import {
   IconButton
 } from "@/components";
 import { XIcon } from "@/icons";
-import { PageAction } from "@/types";
+import { EventCategorySearchItemDto, PageAction } from "@/types";
 import { useTranslations } from "next-intl";
 import { FormProvider } from "react-hook-form";
-import { findNodeById } from "../mockCategories";
-import { useInsertCategory } from "./useInsertCategory";
-import { useUpdatetCategory } from "./useUpdateCategory";
+import { useDetailCard } from "./useDetailCard";
 
 interface DetailCardProps {
   action: PageAction | null;
-  selectedId: string | null;
-  parentIdForInsert: string | null;
+  selectedItem: EventCategorySearchItemDto | null;
+  nextId: string | null;
   onClose: () => void;
 }
 
-export function DetailCard({ action, selectedId, parentIdForInsert, onClose }: DetailCardProps) {
+export function DetailCard({ action, selectedItem, nextId, onClose }: DetailCardProps) {
   const t = useTranslations("eventCategory");
-  const { form, onSubmit } = action == PageAction.CREATE
-    ? useInsertCategory()
-    : useUpdatetCategory();
+  const { form, onSubmit, onDelete } = useDetailCard({ selectedItem, action, nextId, onClose });
 
   if (!action) {
     return (
@@ -40,7 +36,6 @@ export function DetailCard({ action, selectedId, parentIdForInsert, onClose }: D
     );
   }
 
-  const node = selectedId ? findNodeById(selectedId) : null;
   const isInsert = action === PageAction.CREATE;
 
   const title =
@@ -58,12 +53,13 @@ export function DetailCard({ action, selectedId, parentIdForInsert, onClose }: D
           <IconButton
             icon={<XIcon />}
             variant="ghost"
-            size="icon" onClick={onClose}
+            size="icon"
+            onClick={onClose}
           />
         </div>
-        {isInsert && parentIdForInsert && (
+        {isInsert && (
           <p className="text-sm text-muted-foreground">
-            {t("card.insert.underParent")}: {findNodeById(parentIdForInsert)?.name || t("placeholder.root")}
+            {t("card.insert.underParent")}: {selectedItem?.name || t("placeholder.root")}
           </p>
         )}
       </CardHeader>
@@ -89,17 +85,9 @@ export function DetailCard({ action, selectedId, parentIdForInsert, onClose }: D
               <FormTextArea
                 name="description"
                 label={t("card.fields.description.label")}
-                defaultValue={node?.description || ""}
                 readOnly={!canEdit}
                 rows={4}
                 placeholder={t("card.fields.description.placeholder")}
-              />
-
-              <FormTextBox
-                name="imageUrl"
-                label={t("card.fields.imageUrl.label")}
-                placeholder={t("card.fields.imageUrl.placeholder")}
-                readOnly={!canEdit}
               />
 
               <FormSwitch
@@ -120,6 +108,13 @@ export function DetailCard({ action, selectedId, parentIdForInsert, onClose }: D
             )}
           </form>
         </FormProvider>
+        {action === PageAction.VIEW && (
+          <div className="flex justify-end gap-3 pt-4">
+            <Button variant="destructive" onClick={onDelete}>
+              {t("actions.delete")}
+            </Button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

@@ -1,17 +1,16 @@
 import {
-  BaseFilter,
   Button,
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-  Skeleton,
+  IconButton,
+  Skeleton
 } from "@/components";
-import { PlusIcon } from "@/icons";
+import { ListCollapseIcon, ListTreeIcon, PlusIcon } from "@/icons";
 import { useTranslations } from "next-intl";
 import { CategoryTree } from "../category-tree/CategoryTree";
 import { useCategoryTree } from "../hooks/useCategoryTree";
-import { TreePagination } from "./TreePagination";
 
 type TreeHookReturn = ReturnType<typeof useCategoryTree>;
 
@@ -22,10 +21,6 @@ interface TreePanelProps {
   onAddRoot: () => void;
   onAddChild: (parentId: string) => void;
   selectedId: string | null;
-  filter: BaseFilter;
-  totalPage: number;
-  onPageChange: (page: number) => void;
-  onPageSizeChange: (pageSize: number) => void;
 }
 
 export function TreePanel({
@@ -35,10 +30,6 @@ export function TreePanel({
   onAddRoot,
   onAddChild,
   selectedId,
-  filter,
-  totalPage,
-  onPageChange,
-  onPageSizeChange,
 }: TreePanelProps) {
   const t = useTranslations("eventCategory");
 
@@ -75,30 +66,47 @@ export function TreePanel({
   return (
     <Card className="h-full">
       <CardHeader>
-        <CardTitle>{t("tree.title")}</CardTitle>
+        <div className="flex items-center justify-between">
+          <h4 className="text-lg">
+            {t("tree.title")}
+          </h4>
+          <div className="flex items-center gap-2">
+            <IconButton
+              variant="outline"
+              icon={<ListTreeIcon />}
+              size="sm"
+              onClick={tree.expandAll}
+              tooltip={t('actions.expandAll')}
+            />
+            <IconButton
+              variant="outline"
+              icon={<ListCollapseIcon />}
+              size="sm"
+              onClick={tree.collapseAll}
+              tooltip={t('actions.collapseAll')}
+            />
+            <Button
+              className="text-sm"
+              size="sm"
+              leftIcon={<PlusIcon />}
+              onClick={onAddRoot}
+            >
+              {t("actions.addRoot")}
+            </Button>
+          </div>
+        </div>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2 h-full">
-        <div className="grow">
-          <CategoryTree
-            nodes={tree.roots}
-            expanded={tree.expanded}
-            loading={tree.loading}
-            toggleExpand={tree.toggleExpand}
-            onView={onView}
-            onEdit={onEdit}
-            onAddChild={onAddChild}
-            selectedId={selectedId}
-          />
-        </div>
-        <div className="mt-20 flex justify-end">
-          <TreePagination
-            page={filter.page}
-            totalPage={totalPage}
-            pageSize={filter.pageSize}
-            onPageChange={onPageChange}
-            onPageSizeChange={onPageSizeChange}
-          />
-        </div>
+      <CardContent>
+        <CategoryTree
+          nodes={tree.roots}
+          expanded={tree.expanded}
+          loading={tree.loading}
+          toggleExpand={tree.toggleExpand}
+          onView={onView}
+          onEdit={onEdit}
+          onAddChild={onAddChild}
+          selectedId={selectedId}
+        />
       </CardContent>
     </Card>
   );

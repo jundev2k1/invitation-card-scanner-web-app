@@ -1,32 +1,28 @@
 "use client";
 
 import { BaseFilter } from "@/components";
-
 import { DetailCard } from "./detail/DetailCard";
 import { usePageAction } from "./hooks/usePageAction";
 import { TreePanel } from "./tree-panel/TreePanel";
 
 type CategoryManagerProps = {
   filter: BaseFilter;
-  onPageChange: (page: number) => void;
-  onPageSizeChange: (pageSize: number) => void;
 };
 
 export function CategoryManager({
   filter,
-  onPageChange,
-  onPageSizeChange,
 }: CategoryManagerProps) {
   const {
     tree,
-    selectedId,
+    selectedItem,
+    nextId,
     action,
     handleView,
     handleEdit,
     handleAddChild,
     handleAddRoot,
     handleCloseCard,
-  } = usePageAction();
+  } = usePageAction({ filter });
 
   return (
     <div className="space-y-6">
@@ -38,19 +34,15 @@ export function CategoryManager({
             onEdit={handleEdit}
             onAddRoot={handleAddRoot}
             onAddChild={handleAddChild}
-            selectedId={selectedId}
-            filter={filter}
-            totalPage={tree.totalPage}
-            onPageChange={onPageChange}
-            onPageSizeChange={onPageSizeChange}
+            selectedId={selectedItem?.id ?? null}
           />
         </div>
 
         <div className="lg:col-span-1">
           <DetailCard
             action={action}
-            selectedId={selectedId}
-            parentIdForInsert={null}
+            selectedItem={selectedItem}
+            nextId={nextId}
             onClose={handleCloseCard}
           />
         </div>

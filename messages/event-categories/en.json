@@ -4,10 +4,13 @@
   "actions": {
     "addRoot": "Add Root Category",
     "addChild": "Add Child Category",
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All",
     "view": "View Details",
     "edit": "Edit",
     "create": "Create",
     "save": "Save Changes",
+    "delete": "Delete",
     "cancel": "Cancel",
     "close": "Close"
   },
@@ -57,6 +60,9 @@
       "status": {
         "label": "Status"
       }
+    },
+    "messages": {
+      "confirmDelete": "This category contains {count} sub-items. Are you sure you want to delete it and all its contents?"
     }
   },
   "form": {

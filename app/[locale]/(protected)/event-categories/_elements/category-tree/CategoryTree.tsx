@@ -1,8 +1,8 @@
+import { EventCategorySearchItemDto } from "@/root/types/dto/event-category/event-category-search-item.dto";
 import { TreeItem } from "../tree-item/TreeItem";
-import type { CategoryNode } from "../types";
 
 interface CategoryTreeProps {
-  nodes: CategoryNode[];
+  nodes: EventCategorySearchItemDto[];
   expanded: Set<string>;
   loading: Set<string>;
   toggleExpand: (id: string) => void;

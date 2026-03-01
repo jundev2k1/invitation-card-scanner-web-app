@@ -1,4 +1,4 @@
-import { EventStatus } from "@/types/enum";
+import { EventStatus } from "@/types";
 
 export interface EventSearchItemDto {
   id: string;

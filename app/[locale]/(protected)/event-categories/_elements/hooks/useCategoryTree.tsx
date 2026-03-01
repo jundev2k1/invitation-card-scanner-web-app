@@ -1,59 +1,86 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { findNodeById, getChildren, getRoots } from "../mockCategories";
-import type { CategoryNode } from "../types";
+import { BaseFilter } from "@/components";
+import { useSearchEventCategories } from "@/services";
+import { EventCategorySearchItemDto } from "@/types";
+import { useEffect, useState } from "react";
 
-export function useCategoryTree() {
-  const [roots, setRoots] = useState<CategoryNode[]>([]);
+export function useCategoryTree({ filter }: { filter: BaseFilter }) {
+  const { data, isLoading } = useSearchEventCategories({ keyword: filter.keyword });
+
+  const [roots, setRoots] = useState<EventCategorySearchItemDto[]>([]);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState<Set<string>>(new Set());
 
-  useMemo(() => {
-    setRoots(getRoots());
-  }, []);
+  useEffect(() => {
+    if (!isLoading && data?.data) {
+      setRoots(data.data);
+    }
+  }, [isLoading, data]);
 
-  const toggleExpand = (id: string) => {
-    setLoading(prev => new Set([...prev, id]));
+  const expandAll = () => {
+    const allIds = new Set<string>();
 
-    setTimeout(() => {
-      const children = getChildren(id);
-
-      setRoots(prev =>
-        prev.map(node => {
-          if (node.id === id) {
-            return { ...node, items: children };
-          }
-          return node;
-        })
-      );
-
-      setExpanded(prev => {
-        const next = new Set(prev);
-        if (next.has(id)) {
-          next.delete(id);
-        } else {
-          next.add(id);
-        }
-        return next;
+    const collectIds = (nodes: EventCategorySearchItemDto[]) => {
+      nodes.forEach(node => {
+        allIds.add(node.id);
+        if (node.items) collectIds(node.items);
       });
+    };
 
-      setLoading(prev => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
-    }, 1000);
+    collectIds(roots);
+    setExpanded(allIds);
   };
 
-  const getDetail = (id: string | null) => (id ? findNodeById(id) : undefined);
+  const collapseAll = () => {
+    setExpanded(new Set());
+  };
+
+  const toggleExpand = (id: string) => {
+    setExpanded(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+
+    // setLoading(prev => new Set([...prev, id]));
+    // setTimeout(() => {
+    //   setLoading(prev => {
+    //     const next = new Set(prev);
+    //     next.delete(id);
+    //     return next;
+    //   });
+    // }, 150);
+  };
+
+  const getDetail = (id: string | null): EventCategorySearchItemDto | undefined => {
+    if (!id) return undefined;
+
+    const findNode = (nodes: EventCategorySearchItemDto[]): EventCategorySearchItemDto | undefined => {
+      for (const node of nodes) {
+        if (node.id === id) return node;
+        if (node.items) {
+          const found = findNode(node.items);
+          if (found) return found;
+        }
+      }
+      return undefined;
+    };
+
+    return findNode(roots);
+  };
 
   return {
     roots,
-    totalPage: 1,
     expanded,
     loading,
     toggleExpand,
     getDetail,
+    expandAll,
+    collapseAll,
   };
 }

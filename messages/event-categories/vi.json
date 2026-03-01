@@ -4,10 +4,13 @@
   "actions": {
     "addRoot": "Thêm danh mục gốc",
     "addChild": "Thêm danh mục con",
+    "expandAll": "Mở rộng danh sách",
+    "collapseAll": "Thu hẹp danh sách",
     "view": "Xem chi tiết",
     "edit": "Chỉnh sửa",
     "create": "Tạo mới",
     "save": "Lưu thay đổi",
+    "delete": "Xóa",
     "cancel": "Hủy",
     "close": "Đóng"
   },
@@ -57,6 +60,9 @@
       "status": {
         "label": "Trạng thái"
       }
+    },
+    "messages": {
+      "confirmDelete": "Danh mục này chứa {count} mục con. Bạn có chắc chắn muốn xóa danh mục này cùng toàn bộ nội dung bên trong không?"
     }
   },
   "form": {
