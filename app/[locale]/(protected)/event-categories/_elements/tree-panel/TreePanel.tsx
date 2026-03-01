@@ -1,4 +1,5 @@
 import {
+  BaseFilter,
   Button,
   Card,
   CardContent,
@@ -10,6 +11,7 @@ import { PlusIcon } from "@/icons";
 import { useTranslations } from "next-intl";
 import { CategoryTree } from "../category-tree/CategoryTree";
 import { useCategoryTree } from "../hooks/useCategoryTree";
+import { TreePagination } from "./TreePagination";
 
 type TreeHookReturn = ReturnType<typeof useCategoryTree>;
 
@@ -20,6 +22,10 @@ interface TreePanelProps {
   onAddRoot: () => void;
   onAddChild: (parentId: string) => void;
   selectedId: string | null;
+  filter: BaseFilter;
+  totalPage: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
 }
 
 export function TreePanel({
@@ -29,6 +35,10 @@ export function TreePanel({
   onAddRoot,
   onAddChild,
   selectedId,
+  filter,
+  totalPage,
+  onPageChange,
+  onPageSizeChange,
 }: TreePanelProps) {
   const t = useTranslations("eventCategory");
 
@@ -67,17 +77,28 @@ export function TreePanel({
       <CardHeader>
         <CardTitle>{t("tree.title")}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <CategoryTree
-          nodes={tree.roots}
-          expanded={tree.expanded}
-          loading={tree.loading}
-          toggleExpand={tree.toggleExpand}
-          onView={onView}
-          onEdit={onEdit}
-          onAddChild={onAddChild}
-          selectedId={selectedId}
-        />
+      <CardContent className="flex flex-col gap-2 h-full">
+        <div className="grow">
+          <CategoryTree
+            nodes={tree.roots}
+            expanded={tree.expanded}
+            loading={tree.loading}
+            toggleExpand={tree.toggleExpand}
+            onView={onView}
+            onEdit={onEdit}
+            onAddChild={onAddChild}
+            selectedId={selectedId}
+          />
+        </div>
+        <div className="mt-20 flex justify-end">
+          <TreePagination
+            page={filter.page}
+            totalPage={totalPage}
+            pageSize={filter.pageSize}
+            onPageChange={onPageChange}
+            onPageSizeChange={onPageSizeChange}
+          />
+        </div>
       </CardContent>
     </Card>
   );

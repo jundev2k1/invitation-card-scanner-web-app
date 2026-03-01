@@ -50,6 +50,7 @@ export function useCategoryTree() {
 
   return {
     roots,
+    totalPage: 1,
     expanded,
     loading,
     toggleExpand,

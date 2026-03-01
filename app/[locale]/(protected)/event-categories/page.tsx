@@ -26,7 +26,7 @@ export default function EventCategoriesPage() {
         />
       }
     >
-      <CategoryManager filter={filter} />
+      <CategoryManager filter={filter} onPageChange={onPageChange} onPageSizeChange={onPageSizeChange} />
     </PageContent>
   );
 }

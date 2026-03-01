@@ -8,9 +8,15 @@ import { TreePanel } from "./tree-panel/TreePanel";
 
 type CategoryManagerProps = {
   filter: BaseFilter;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
 };
 
-export function CategoryManager({ filter }: CategoryManagerProps) {
+export function CategoryManager({
+  filter,
+  onPageChange,
+  onPageSizeChange,
+}: CategoryManagerProps) {
   const {
     tree,
     selectedId,
@@ -33,6 +39,10 @@ export function CategoryManager({ filter }: CategoryManagerProps) {
             onAddRoot={handleAddRoot}
             onAddChild={handleAddChild}
             selectedId={selectedId}
+            filter={filter}
+            totalPage={tree.totalPage}
+            onPageChange={onPageChange}
+            onPageSizeChange={onPageSizeChange}
           />
         </div>
 
