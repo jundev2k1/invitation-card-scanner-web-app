@@ -1,0 +1,71 @@
+{
+  "title": "Quản lý danh mục sự kiện",
+  "desc": "Xem, chỉnh sửa và quản lý cấu trúc danh mục.",
+  "actions": {
+    "addRoot": "Thêm danh mục gốc",
+    "addChild": "Thêm danh mục con",
+    "view": "Xem chi tiết",
+    "edit": "Chỉnh sửa",
+    "create": "Tạo mới",
+    "save": "Lưu thay đổi",
+    "cancel": "Hủy",
+    "close": "Đóng"
+  },
+  "placeholder": {
+    "selectOrAdd": "Chọn một danh mục hoặc thêm mới để chỉnh sửa",
+    "hint": "Nhấp vào danh mục trong cây bên trái để bắt đầu",
+    "noName": "(Chưa có tên)",
+    "noData": "Chưa có danh mục nào",
+    "root": "Root"
+  },
+  "tree": {
+    "title": "Cấu trúc danh mục",
+    "loading": "Đang tải...",
+    "noChildren": "Không có danh mục con"
+  },
+  "treeItem": {
+    "slugPrefix": "/"
+  },
+  "card": {
+    "view": {
+      "title": "Xem chi tiết danh mục"
+    },
+    "edit": {
+      "title": "Chỉnh sửa danh mục"
+    },
+    "insert": {
+      "title": "Thêm danh mục mới",
+      "underParent": "Thuộc danh mục cha"
+    },
+    "fields": {
+      "name": {
+        "label": "Tên danh mục",
+        "placeholder": "Nhập tên danh mục..."
+      },
+      "slug": {
+        "label": "Slug (đường dẫn thân thiện)",
+        "placeholder": "Ví dụ: su-kien-cong-nghe"
+      },
+      "description": {
+        "label": "Mô tả",
+        "placeholder": "Nhập mô tả..."
+      },
+      "imageUrl": {
+        "label": "URL hình ảnh",
+        "placeholder": "https://example.com/image.jpg"
+      },
+      "status": {
+        "label": "Trạng thái"
+      }
+    }
+  },
+  "form": {
+    "selectOrAdd": "Chọn một danh mục hoặc thêm mới để chỉnh sửa"
+  },
+  "enum": {
+    "status": {
+      "0": "Không hoạt động",
+      "1": "Hoạt động"
+    }
+  }
+}

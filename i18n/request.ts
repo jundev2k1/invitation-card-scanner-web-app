@@ -13,7 +13,8 @@ async function getMessages(locale: Locale) {
     auth: (await import(`../messages/auth/${locale}.json`)).default,
     dashboard: (await import(`../messages/dashboard/${locale}.json`)).default,
     user: (await import(`../messages/user/${locale}.json`)).default,
-    event: (await import(`../messages/event/${locale}.json`)).default
+    event: (await import(`../messages/event/${locale}.json`)).default,
+    eventCategory: (await import(`../messages/event-categories/${locale}.json`)).default
   }
 }
 

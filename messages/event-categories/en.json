@@ -1,0 +1,71 @@
+{
+  "title": "Event Category Management",
+  "desc": "View, edit, and manage category structure.",
+  "actions": {
+    "addRoot": "Add Root Category",
+    "addChild": "Add Child Category",
+    "view": "View Details",
+    "edit": "Edit",
+    "create": "Create",
+    "save": "Save Changes",
+    "cancel": "Cancel",
+    "close": "Close"
+  },
+  "placeholder": {
+    "selectOrAdd": "Select a category or add a new one to edit",
+    "hint": "Click on a category in the tree on the left to start",
+    "noName": "(No name)",
+    "noData": "No categories yet",
+    "root": "Root"
+  },
+  "tree": {
+    "title": "Category Structure",
+    "loading": "Loading...",
+    "noChildren": "No child categories"
+  },
+  "treeItem": {
+    "slugPrefix": "/"
+  },
+  "card": {
+    "view": {
+      "title": "View Category Details"
+    },
+    "edit": {
+      "title": "Edit Category"
+    },
+    "insert": {
+      "title": "Add New Category",
+      "underParent": "Under parent category"
+    },
+    "fields": {
+      "name": {
+        "label": "Category Name",
+        "placeholder": "Enter category name..."
+      },
+      "slug": {
+        "label": "Slug (friendly URL)",
+        "placeholder": "Example: tech-events"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Short description of the category..."
+      },
+      "imageUrl": {
+        "label": "Representative Image URL",
+        "placeholder": "https://example.com/image.jpg"
+      },
+      "status": {
+        "label": "Status"
+      }
+    }
+  },
+  "form": {
+    "selectOrAdd": "Select a category or add a new one to edit"
+  },
+  "enum": {
+    "status": {
+      "0": "Inactive",
+      "1": "Active"
+    }
+  }
+}
