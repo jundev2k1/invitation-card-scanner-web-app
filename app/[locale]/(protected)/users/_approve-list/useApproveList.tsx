@@ -17,7 +17,6 @@ const getColumns = (t: TranslateFn, handleApprove: (id: string) => void, redirec
   {
     key: "id",
     label: t('user.list.table.columns.id'),
-    className: "w-32 font-mono text-muted-foreground",
     render: (_: any, item: UserSearchItemDto) =>
       <TruncatedText className="dark:text-muted-foreground" text={item.id} isUUID showCopy />
   },
