@@ -16,7 +16,7 @@ import {
   useComboboxAnchor
 } from "@/shadcn/combobox";
 import { Label } from "@/shadcn/label";
-import { Check, Loader2, X } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebounce } from "../hooks";
@@ -44,6 +44,7 @@ interface AppMultiComboboxProps<T = unknown> {
   getOptionLabel: (option: T) => string | React.ReactNode;
   getDisplayValue?: (option: T) => string | React.ReactNode;
   getOptionKey?: (option: T) => string | number;
+  getOptionValue?: (option: T) => string | number;
   displayCount?: number;
 }
 
@@ -62,12 +63,8 @@ export default function AppMultiCombobox<T = unknown>({
   helperText,
   getOptionLabel,
   getDisplayValue = getOptionLabel,
-  getOptionKey = (option) => {
-    if (typeof option === "object" && option !== null && "value" in option) {
-      return String((option as any).value);
-    }
-    return String(option);
-  },
+  getOptionKey = (option) => String(option),
+  getOptionValue = getOptionKey,
   displayCount = 3,
 }: AppMultiComboboxProps<T>) {
   const t = useTranslations();
@@ -104,25 +101,12 @@ export default function AppMultiCombobox<T = unknown>({
     return groups ? groups.flatMap((g) => g.options) : options || [];
   }, [isAsync, dynamicOptions, groups, options]);
 
-  const selectedOptions = useMemo(() => {
-    return value
-      .map((val) =>
-        finalOptions.find(
-          (opt) => getOptionKey(opt as any) === getOptionKey(val as any)
-        )
-      )
-      .filter((opt): opt is T => opt !== undefined);
-  }, [finalOptions, value, getOptionKey]);
+  const selectedKeys = useMemo(() => {
+    return value.map(getOptionValue);
+  }, [value, getOptionValue]);
 
-  const visibleSelected = selectedOptions.slice(0, displayCount);
-  const remainingCount = selectedOptions.length - displayCount;
-
-  const handleRemove = (keyToRemove: string | number) => {
-    const updated = value.filter(
-      (v) => getOptionKey(v as any) !== keyToRemove
-    );
-    onChange(updated);
-  };
+  const visibleSelected = value.slice(0, displayCount);
+  const remainingCount = value.length - displayCount;
 
   return (
     <div className="grid w-full items-center gap-1.5">
@@ -130,13 +114,19 @@ export default function AppMultiCombobox<T = unknown>({
 
       <Combobox
         multiple
-        value={selectedOptions.map((opt) => getOptionKey(opt))}
+        value={selectedKeys}
         onValueChange={(newKeys: (string | number)[]) => {
           const newSelected = newKeys
-            .map((key) =>
-              finalOptions.find((opt) => getOptionKey(opt as any) === key)
-            )
-            .filter((opt): opt is T => opt !== undefined);
+            .map((key) => {
+              const opt = finalOptions.find((o) => {
+                if (typeof o === "object" && o !== null && "value" in o) {
+                  return getOptionValue((o as any).value) === key;
+                }
+                return getOptionValue(o as T) === key;
+              });
+              return opt ? (typeof opt === "object" && opt !== null && "value" in opt ? (opt as any).value : opt) : null;
+            })
+            .filter((v): v is T => v !== null);
           onChange(newSelected);
         }}
         open={open}
@@ -152,22 +142,11 @@ export default function AppMultiCombobox<T = unknown>({
           )}
         >
           {visibleSelected.map((opt) => {
-            const key = getOptionKey(opt);
+            const key = getOptionValue(opt);
             return (
-              <ComboboxChip key={key}>
+              <ComboboxChip key={String(key)}>
                 <div className="flex items-center gap-1.5">
                   {getDisplayValue(opt)}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleRemove(key);
-                    }}
-                    className="ml-1 rounded-full hover:bg-muted/80 p-0.5 transition-colors"
-                    aria-label="Remove"
-                  >
-                    <X className="h-3.5 w-3.5" />
-                  </button>
                 </div>
               </ComboboxChip>
             );
@@ -191,11 +170,16 @@ export default function AppMultiCombobox<T = unknown>({
         </ComboboxChips>
 
         <ComboboxContent anchor={anchor} className={contentClassName}>
-          <ComboboxEmpty>
-            {loading
-              ? t("common.combobox.loading")
-              : t("common.combobox.noResults")}
-          </ComboboxEmpty>
+          {loading && (
+            <ComboboxEmpty>
+              {t("common.combobox.loading")}
+            </ComboboxEmpty>
+          )}
+          {(!isAsync && groups?.length === 0) || (isAsync && finalOptions.length === 0)  && (
+            <ComboboxEmpty>
+              {t("common.combobox.noResults")}
+            </ComboboxEmpty>
+          )}
 
           <ComboboxList>
             {groups && !isAsync ? (
@@ -205,19 +189,10 @@ export default function AppMultiCombobox<T = unknown>({
                 >
                   <ComboboxLabel>{group.label}</ComboboxLabel>
                   {group.options.map((opt, i) => {
-                    const key = getOptionKey(opt as any);
-                    const isSelected = selectedOptions.some(
-                      (s) => getOptionKey(s) === key
-                    );
+                    const key = getOptionValue(typeof opt === "object" && opt !== null && "value" in opt ? (opt as any).value : opt);
                     return (
                       <ComboboxItem key={i} value={key}>
-                        {getOptionLabel(opt as any)}
-                        <Check
-                          className={cn(
-                            "ml-auto h-4 w-4",
-                            isSelected ? "opacity-100" : "opacity-0"
-                          )}
-                        />
+                        {getOptionLabel(typeof opt === "object" && opt !== null && "value" in opt ? (opt as any).value : opt)}
                       </ComboboxItem>
                     );
                   })}
@@ -226,19 +201,10 @@ export default function AppMultiCombobox<T = unknown>({
               ))
             ) : (
               finalOptions.map((opt, i) => {
-                const key = getOptionKey(opt as any);
-                const isSelected = selectedOptions.some(
-                  (s) => getOptionKey(s) === key
-                );
+                const key = getOptionValue(typeof opt === "object" && opt !== null && "value" in opt ? (opt as any).value : opt);
                 return (
                   <ComboboxItem key={i} value={key}>
-                    {getOptionLabel(opt as any)}
-                    <Check
-                      className={cn(
-                        "ml-auto h-4 w-4",
-                        isSelected ? "opacity-100" : "opacity-0"
-                      )}
-                    />
+                    {getOptionLabel(typeof opt === "object" && opt !== null && "value" in opt ? (opt as any).value : opt)}
                     {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
                   </ComboboxItem>
                 );

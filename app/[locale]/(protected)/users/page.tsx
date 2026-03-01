@@ -4,8 +4,9 @@ import {
   MultiCombobox,
   PageContent,
   RefreshButton,
-  SearchTextbox,
+  SearchTextbox
 } from "@/components";
+import { getUserStatusKey } from "@/root/app/utils/mappers/user.mapper";
 import { useTranslations } from "next-intl";
 import { ApproveList } from "./_approve-list/ApproveList";
 import { useUserPage } from "./useUserPage";
@@ -41,10 +42,12 @@ export default function UserPage() {
           <MultiCombobox
             className="flex-nowrap max-w-75 overflow-hidden"
             value={filter.statuses}
-            onValueChange={onStatusChange}
+            onChange={onStatusChange}
             placeholder={t('user.list.filter.statusList.placeholder')}
             options={useStatusOptions}
             displayCount={2}
+            getOptionLabel={(status) => t(getUserStatusKey(status))}
+            getDisplayValue={(status) => t(getUserStatusKey(status))}
           />
         </>
       }
