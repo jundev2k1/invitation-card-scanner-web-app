@@ -1,6 +1,7 @@
 "use client";
 import { Toast } from "@/components";
-import { CreateEventRequest, eventCategoryService, useCreateEvent } from "@/services";
+import { EventStatus } from "@/root/types";
+import { CreateEventRequest, useCreateEvent } from "@/services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
@@ -14,6 +15,7 @@ const insertModalSchema = z.object({
     .max(30, { message: "Title must be at most 30 characters long" }),
   description: z.string()
     .max(4000, { message: "Description must be at most 4000 characters long" }),
+  status: z.string(),
   startAt: z.date({ message: "Start date must be date type" }),
   endAt: z.date({ message: "End date must be date type" }).nullable(),
   locationName: z.string()
@@ -29,15 +31,29 @@ const insertModalSchema = z.object({
   path: ["endAt"],
 });
 
+export type CreateEventInput = {
+  categoryId: string | null,
+  title: string,
+  description: string,
+  status: string,
+  startAt: Date,
+  endAt: Date | null,
+  locationName: string,
+  address: string,
+  mapUrl: string,
+  thumbnailUrl: string
+}
+
 export function useInsertModal() {
   const t = useTranslations();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const form = useForm<CreateEventRequest>({
+  const form = useForm<CreateEventInput>({
     resolver: zodResolver(insertModalSchema),
     defaultValues: {
       categoryId: "",
       title: "",
       description: "",
+      status: EventStatus.DRAFT.toString(),
       startAt: new Date(),
       endAt: null,
       locationName: "",
@@ -46,10 +62,12 @@ export function useInsertModal() {
       thumbnailUrl: "",
     },
   });
-  console.log(form.getValues());
   const { mutateAsync } = useCreateEvent();
 
-  const onOpen = () => { setIsOpen(true); }
+  const onOpen = () => {
+    setIsOpen(true);
+    form.reset();
+  }
 
   const onClose = useCallback(() => {
     form.reset();
@@ -57,10 +75,12 @@ export function useInsertModal() {
   }, []);
 
   const onSubmit = useCallback(async (data: CreateEventRequest) => {
-    const { categoryId, endAt, ...params } = data;
+    const { categoryId, endAt, status, ...params } = data;
+    
     await mutateAsync({
       categoryId: categoryId || null,
       endAt: endAt || null,
+      status: Number(status),
       ...params,
     });
 
@@ -68,10 +88,12 @@ export function useInsertModal() {
     Toast.showSuccess(t("common.messages.createSuccess"));
   }, []);
 
-  const onCategoryChange = useCallback(async (keyword: string) => {
-    const res = await eventCategoryService.getEventCategorySuggestions({ keyword });
-    return res.data ?? [];
-  }, []);
+  const statusOptions = [
+    { label: t("event.enum.status.DRAFT"), value: EventStatus.DRAFT.toString() },
+    { label: t("event.enum.status.PUBLISHED"), value: EventStatus.PUBLISHED.toString() },
+    { label: t("event.enum.status.COMPLETED"), value: EventStatus.COMPLETED.toString() },
+    { label: t("event.enum.status.CANCELLED"), value: EventStatus.CANCELLED.toString() },
+  ];
 
   return {
     isOpen,
@@ -79,6 +101,6 @@ export function useInsertModal() {
     onClose,
     form,
     onSubmit,
-    onCategoryChange,
+    statusOptions,
   };
 }

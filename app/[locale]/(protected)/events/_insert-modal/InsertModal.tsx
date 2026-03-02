@@ -7,14 +7,12 @@ import {
   DialogHeader,
   DialogTitle,
   FormDateTimePicker,
+  FormSelect,
   FormTextArea,
   FormTextBox,
-  Separator,
-  TextBox
+  Separator
 } from "@/components";
 import { PlusCircleIcon } from "@/icons";
-import { getEventStatusTransKey } from "@/root/app/utils/mappers/event.mapper";
-import { EventStatus } from "@/types";
 import { useTranslations } from "next-intl";
 import { FormProvider } from "react-hook-form";
 import { FormCategorySelect } from "../../event-categories/_shared";
@@ -28,13 +26,13 @@ export function InsertModal() {
     onClose,
     form,
     onSubmit,
-    onCategoryChange,
+    statusOptions,
   } = useInsertModal();
 
   return (
     <>
       <Button
-        className="dark:text-white"
+        className="dark:text-foreground"
         leftIcon={<PlusCircleIcon />}
         onClick={onOpen}
       >
@@ -59,12 +57,12 @@ export function InsertModal() {
                     containerClassName="md:col-span-4 w-full"
                   />
 
-                  <TextBox
+                  <FormSelect
                     name="status"
                     label={t('event.insert.fields.status')}
-                    containerClassName="md:col-span-2 gap-0 mb-1"
-                    value={t(getEventStatusTransKey(EventStatus.DRAFT))}
-                    disabled
+                    className="w-full"
+                    containerClassName="md:col-span-2 gap-0 mb-1 w-full"
+                    options={statusOptions}
                   />
 
                   <FormTextBox
