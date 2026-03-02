@@ -112,6 +112,7 @@ export function FormMultiCombobox<T = unknown>({
   }, [isAsync, dynamicOptions, groups, options]);
 
   const selectedOptions = useMemo(() => {
+    if (!selectedValues) return [];
     return selectedValues
       .map((val) =>
         finalOptions.find(
@@ -213,7 +214,7 @@ export function FormMultiCombobox<T = unknown>({
                       (s) => getOptionKey(s) === key
                     );
                     return (
-                      <ComboboxItem key={i} value={key}>
+                      <ComboboxItem key={getOptionKey(opt as any)} value={key}>
                         {getOptionLabel(opt as any)}
                         <Check
                           className={cn(
