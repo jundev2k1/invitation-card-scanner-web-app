@@ -11,7 +11,7 @@ import {
 import { TranslateFn } from "@/i18n/type";
 import { ClockIcon, MapPinHouseIcon } from "@/icons";
 import { formatDate } from "@/lib/datetime/date.util";
-import { useDeleteEvent, useSearchEvents, useUpdateEventStatus } from "@/services";
+import { GetEventListRequest, useDeleteEvent, useSearchEvents, useUpdateEventStatus } from "@/services";
 import { defaultSearchResult, EventSearchItemDto, EventStatus, InputOption } from "@/types";
 import { RouteUtil } from "@/utils/route";
 import { useLocale, useTranslations } from "next-intl";
@@ -112,9 +112,17 @@ export const useEventPage = () => {
   const router = useRouter();
   const t = useTranslations();
 
-  const { filter, onKeywordChange, onPageChange, onPageSizeChange } = useFilter();
+  const { filter, onKeywordChange, onPageChange, onPageSizeChange } = useFilter<GetEventListRequest>();
   const { data, isLoading, refetch } = useSearchEvents({
     keyword: filter.keyword.trim(),
+    categoryIds: filter.categoryIds,
+    statuses: filter.statuses,
+    startFrom: filter.startFrom,
+    startTo: filter.startTo,
+    endFrom: filter.endFrom,
+    endTo: filter.endTo,
+    sortBy: filter.sortBy || 'createdAt',
+    sortOrder: filter.sortOrder || 'desc',
     page: filter.page,
     pageSize: filter.pageSize
   });

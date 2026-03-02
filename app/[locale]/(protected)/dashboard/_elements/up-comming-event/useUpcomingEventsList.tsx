@@ -7,7 +7,19 @@ import { useCallback } from "react";
 export const useUpcomingEventsList = () => {
   const locale = useLocale();
   const router = useRouter();
-  const { data, isLoading } = useSearchEvents({ keyword: '', page: 1, pageSize: 8 });
+  const { data, isLoading } = useSearchEvents({
+    keyword: '',
+    categoryIds: [],
+    statuses: [],
+    startFrom: new Date(),
+    startTo: null,
+    endFrom: null,
+    endTo: null,
+    sortBy: 'startAt',
+    sortOrder: 'asc',
+    page: 1,
+    pageSize: 8,
+  });
 
   const redirectToList = useCallback(() => {
     router.push(RouteUtil.getEventListRoute(locale));

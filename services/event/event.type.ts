@@ -1,7 +1,15 @@
-export type GetEventListRequest = {
-  keyword: string,
-  page: number,
-  pageSize: number
+import { BaseFilter } from "@/root/app/components"
+import { EventStatus } from "@/root/types"
+
+export interface GetEventListRequest extends BaseFilter {
+  categoryIds?: string[],
+  statuses?: EventStatus[],
+  startFrom?: Date | null,
+  startTo?: Date | null,
+  endFrom?: Date | null,
+  endTo?: Date | null,
+  sortBy?: "createdAt" | "startAt" | "status",
+  sortOrder?: "asc" | "desc"
 }
 
 export type CreateEventRequest = {
