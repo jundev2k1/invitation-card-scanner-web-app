@@ -32,6 +32,7 @@ export const mapToUrlSearchParams = (data: Record<string, any>) => {
       }
       continue;
     }
+    if (value === undefined) continue;
 
     urlSearchParams.append(key, value);
   }
