@@ -1,6 +1,5 @@
 import {
   Avatar, AvatarFallback, AvatarImage,
-  BaseFilter,
   Column,
   defaultBaseFilter,
   DropdownButton,
@@ -12,7 +11,7 @@ import {
 } from "@/components";
 import { TranslateFn } from "@/i18n/type";
 import { ClockIcon, MailIcon, PhoneIcon, UserIcon } from "@/icons";
-import { useGetUserSearch } from "@/services";
+import { GetUserListRequest, useGetUserSearch } from "@/services";
 import { defaultSearchResult, PageAction, UserSearchItemDto, UserStatus } from "@/types";
 import { RouteUtil } from "@/utils/route";
 import { useLocale } from "next-intl";
@@ -93,14 +92,13 @@ const getColumns = (
     },
   ];
 
-interface UserFilters extends BaseFilter {
-  statuses: UserStatus[]
-}
 
-const getSearchParams = (filter: UserFilters) => {
+const getSearchParams = (filter: GetUserListRequest) => {
   return {
     keyword: filter.keyword || '',
     statuses: filter.statuses || [],
+    sortBy: filter.sortBy || 'createdAt',
+    sortOrder: filter.sortOrder || 'desc',
     page: filter.page || 1,
     pageSize: filter.pageSize || 20,
   }
@@ -117,7 +115,7 @@ export const useUserPage = () => {
     onKeywordChange,
     onPageChange,
     onPageSizeChange
-  } = useFilter<UserFilters>({ ...defaultBaseFilter, statuses: [] });
+  } = useFilter<GetUserListRequest>({ ...defaultBaseFilter, statuses: [], sortBy: 'createdAt', sortOrder: 'desc' });
   const {
     data,
     isLoading,

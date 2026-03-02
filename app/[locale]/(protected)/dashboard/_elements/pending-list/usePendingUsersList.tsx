@@ -12,6 +12,8 @@ export const usePendingUsersList = () => {
   const { data, isLoading } = useGetUserSearch({
     keyword: '',
     statuses: [UserStatus.WAITING_FOR_APPROVE],
+    sortBy: 'createdAt',
+    sortOrder: 'desc',
     page: 1,
     pageSize: 8,
   });

@@ -1,10 +1,10 @@
-import { Sex, UserStatus } from "@/types"
+import { BaseFilter } from "@/root/app/components";
+import { Sex, UserStatus } from "@/types";
 
-export type GetUserListRequest = {
-  keyword: string,
-  statuses?: UserStatus[] | undefined,
-  page: number,
-  pageSize: number
+export interface GetUserListRequest extends BaseFilter {
+  statuses?: UserStatus[] | undefined;
+  sortBy?: 'createdAt' | 'nickname' | 'status',
+  sortOrder?: 'asc' | 'desc'
 }
 
 export type UpdateUserRequest = {
