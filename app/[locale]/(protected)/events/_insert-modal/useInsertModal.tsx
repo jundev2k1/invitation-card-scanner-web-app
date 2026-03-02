@@ -1,9 +1,9 @@
 "use client";
 import { Toast } from "@/components";
-import { CreateEventRequest, useCreateEvent } from "@/services";
+import { CreateEventRequest, eventCategoryService, useCreateEvent } from "@/services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
@@ -46,16 +46,17 @@ export function useInsertModal() {
       thumbnailUrl: "",
     },
   });
+  console.log(form.getValues());
   const { mutateAsync } = useCreateEvent();
 
   const onOpen = () => { setIsOpen(true); }
 
-  const onClose = () => {
+  const onClose = useCallback(() => {
     form.reset();
     setIsOpen(false);
-  }
+  }, []);
 
-  const onSubmit = async (data: CreateEventRequest) => {
+  const onSubmit = useCallback(async (data: CreateEventRequest) => {
     const { categoryId, endAt, ...params } = data;
     await mutateAsync({
       categoryId: categoryId || null,
@@ -65,7 +66,12 @@ export function useInsertModal() {
 
     onClose();
     Toast.showSuccess(t("common.messages.createSuccess"));
-  }
+  }, []);
+
+  const onCategoryChange = useCallback(async (keyword: string) => {
+    const res = await eventCategoryService.getEventCategorySuggestions({ keyword });
+    return res.data ?? [];
+  }, []);
 
   return {
     isOpen,
@@ -73,5 +79,6 @@ export function useInsertModal() {
     onClose,
     form,
     onSubmit,
+    onCategoryChange,
   };
 }

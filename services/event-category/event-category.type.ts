@@ -4,6 +4,11 @@ export interface GetEventCategoryListRequest {
   keyword?: string;
 }
 
+export interface getEventCategorySuggesttionsRequest {
+  keyword?: string;
+  pageSize?: number;
+}
+
 export interface CreateEventCategoryRequest {
   parentId: string;
   cateId: string;
