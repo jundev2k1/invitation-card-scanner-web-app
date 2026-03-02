@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   FormDateTimePicker,
+  FormSelect,
   FormTextArea,
   FormTextBox,
   Separator,
@@ -15,6 +16,7 @@ import { PlusCircleIcon } from "@/icons";
 import { EventDetailDto } from "@/types";
 import { useTranslations } from "next-intl";
 import { FormProvider } from "react-hook-form";
+import { FormCategorySelect } from "../../event-categories/_shared";
 import { useUpdateModal } from "./useUpdateModal";
 
 type UpdateModalProps = {
@@ -23,7 +25,7 @@ type UpdateModalProps = {
 
 export function UpdateModal({ detail }: UpdateModalProps) {
   const t = useTranslations();
-  const { isOpen, onOpen, onClose, form, onSubmit } = useUpdateModal(detail);
+  const { isOpen, onOpen, onClose, form, onSubmit, statusOptions } = useUpdateModal(detail);
 
   return (
     <>
@@ -49,13 +51,50 @@ export function UpdateModal({ detail }: UpdateModalProps) {
 
               <div className="px-6 pt-2 pb-6 h-[calc(90vh-140px)] overflow-y-auto">
                 <div className="grid md:grid-cols-6 gap-3">
-                  <FormTextBox name="categoryId" label={t('event.update.fields.category')} containerClassName="md:col-span-6 w-full" disabled />
-                  <FormTextBox name="title" label={t('event.update.fields.title')} containerClassName="md:col-span-6 w-full col" />
-                  <FormDateTimePicker name="startAt" label={t('event.update.fields.startAt')} containerClassName="md:col-span-3" />
-                  <FormDateTimePicker name="endAt" label={t('event.update.fields.endAt')} containerClassName="md:col-span-3" nullable />
-                  <FormTextBox name="locationName" label={t('event.update.fields.location')} containerClassName="md:col-span-6 w-full col" />
-                  <FormTextBox name="address" label={t('event.update.fields.address')} containerClassName="md:col-span-6 w-full col" />
-                  <FormTextBox name="mapUrl" label={t('event.update.fields.mapUrl')} containerClassName="md:col-span-6 w-full col" />
+                  <FormCategorySelect
+                    name="categoryId"
+                    label={t('event.update.fields.category')}
+                    containerClassName="md:col-span-4 w-full"
+                  />
+
+                  <FormSelect
+                    name="status"
+                    label={t('event.update.fields.status')}
+                    className="w-full"
+                    containerClassName="md:col-span-2 gap-0 mb-1 w-full"
+                    options={statusOptions}
+                  />
+
+                  <FormDateTimePicker
+                    name="startAt"
+                    label={t('event.update.fields.startAt')}
+                    containerClassName="md:col-span-3"
+                  />
+
+                  <FormDateTimePicker
+                    name="endAt"
+                    label={t('event.update.fields.endAt')}
+                    containerClassName="md:col-span-3"
+                    nullable
+                  />
+
+                  <FormTextBox
+                    name="locationName"
+                    label={t('event.update.fields.location')}
+                    containerClassName="md:col-span-6 w-full col"
+                  />
+
+                  <FormTextBox
+                    name="address"
+                    label={t('event.update.fields.address')}
+                    containerClassName="md:col-span-6 w-full col"
+                  />
+
+                  <FormTextBox
+                    name="mapUrl"
+                    label={t('event.update.fields.mapUrl')}
+                    containerClassName="md:col-span-6 w-full col"
+                  />
 
                   <div className="col-span-6">
                     <Separator className="my-4" />

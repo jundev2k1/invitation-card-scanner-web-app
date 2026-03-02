@@ -41,6 +41,7 @@ export type UpdateEventRequest = {
   categoryId: string | null,
   title: string,
   description: string,
+  status: string | EventStatus,
   startAt: Date,
   endAt: Date | null,
   locationName: string,
