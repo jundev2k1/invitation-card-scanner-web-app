@@ -59,8 +59,11 @@
       "createdAt": "Ngày tạo",
       "updatedAt": "Cập nhật lần cuối",
       "cardCount": "Tổng số thiệp mời",
+      "cardCountNote": "Đã kích hoạt / Tổng số thiệp mời",
       "scannedCount": "Thiệp đã xác thực",
-      "memberCount": "Ban tổ chức"
+      "scannedCountNote": "Đã Check-in / Tổng thiệp mời",
+      "memberCount": "Ban tổ chức",
+      "memberCountNote": "Nhân sự tham gia"
     },
     "actions": {
       "viewMap": "Xem bản đồ"

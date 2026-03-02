@@ -6,6 +6,7 @@ import {
   CardTitle,
   CounterUp,
   EventStatusBadge,
+  Loader,
   MapCard,
   Separator,
   Tabs
@@ -23,7 +24,7 @@ type EventViewFormProps = {
 
 export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
   const t = useTranslations();
-  const { statistics, tabOptions } = useViewEventDetail({ detail: data });
+  const { statistics, isStatsLoading, tabOptions } = useViewEventDetail({ detail: data });
   return (
     <div className="space-y-8">
       <Card className="overflow-hidden">
@@ -133,8 +134,13 @@ export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
                   {t('event.detail.fields.cardCount')}
                 </p>
 
-                <p className="text-xl font-bold text-center text-foreground">
-                  {statistics ? (<CounterUp value={statistics.totalCards ?? 0} duration={2} />) : '-'}
+                <p className="text-4xl font-medium text-center text-foreground">
+                  {!isStatsLoading && statistics ? (<CounterUp value={statistics.cardStats.availableCards ?? 0} duration={2} />) : (<Loader />)}
+                  /
+                  {!isStatsLoading && statistics ? (<CounterUp value={statistics.cardStats.totalCards ?? 0} duration={2} />) : (<Loader />)}
+                </p>
+                <p className="text-center text-xs italic text-muted-foreground mt-1">
+                  ({t('event.detail.fields.cardCountNote')})
                 </p>
               </div>
             </div>
@@ -146,10 +152,13 @@ export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
                   {t('event.detail.fields.scannedCount')}
                 </p>
 
-                <p className="text-xl font-bold text-center text-foreground">
-                  {statistics ? (<CounterUp value={statistics.scannedCount ?? 0} duration={2} />) : '-'}
+                <p className="text-4xl font-medium text-center text-foreground">
+                  {!isStatsLoading && statistics ? (<CounterUp value={statistics.cardStats.usedCards ?? 0} duration={2} />) : <Loader />}
                   /
-                  {statistics ? (<CounterUp value={statistics.totalCards ?? 0} duration={2} />) : '-'}
+                  {!isStatsLoading && statistics ? (<CounterUp value={statistics.cardStats.availableCards ?? 0} duration={2} />) : '-'}
+                </p>
+                <p className="text-center text-xs italic text-muted-foreground mt-1">
+                  ({t('event.detail.fields.scannedCountNote')})
                 </p>
               </div>
             </div>
@@ -161,8 +170,11 @@ export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
                   {t('event.detail.fields.memberCount')}
                 </p>
 
-                <p className="text-xl font-bold text-center text-foreground">
-                  {statistics ? (<CounterUp value={statistics.totalMembers ?? 0} duration={2} />) : '-'}
+                <p className="text-4xl font-medium text-center text-foreground">
+                  {!isStatsLoading && statistics ? (<CounterUp value={statistics.memberStats.totalMembers ?? 0} duration={2} />) : <Loader />}
+                </p>
+                <p className="text-center text-xs italic text-muted-foreground mt-1">
+                  ({t('event.detail.fields.memberCountNote')})
                 </p>
               </div>
             </div>
@@ -185,8 +197,8 @@ export const EventViewForm = ({ eventDetail: data }: EventViewFormProps) => {
           items={tabOptions}
           defaultValue={TabNames.CARD_LIST}
           className="mt-4"
-          listClassName="border-b mb-4 flex flex-wrap"
-          itemClassName="cursor-pointer"
+          listClassName="border-b mb-4 w-full inline-block"
+          itemClassName="cursor-pointer px-6"
         />
       </Card>
     </div>

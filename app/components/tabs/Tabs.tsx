@@ -1,4 +1,3 @@
-import { cn } from "@/root/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/tabs";
 
 export interface TabItem {
@@ -30,7 +29,7 @@ export default function AppTabs({
 }: TabsProps) {
   return (
     <Tabs defaultValue={defaultValue || items[0]?.value} className={className} onValueChange={onChange}>
-      <TabsList variant={variant} className={cn("grid w-full grid-cols-3", listClassName)}>
+      <TabsList variant={variant} className={listClassName}>
         {items.map((tab) => (
           <TabsTrigger key={tab.value} value={tab.value} className={itemClassName}>
             {tab.label}

@@ -1,11 +1,14 @@
 import { api, baseQuery, mapToUrlSearchParams } from "@/lib/api-client";
 import { EventDetailDto, EventSearchItemDto, EventStatus, SearchResult } from "@/types";
-import { CreateEventRequest, GetEventListRequest, UpdateEventRequest } from "./event.type";
+import { CreateEventRequest, EventStatsDto, GetEventListRequest, UpdateEventRequest } from "./event.type";
 
 export const eventService = {
   searchEvents: (props: GetEventListRequest) => {
     const req = mapToUrlSearchParams(props);
     return baseQuery(api.get<SearchResult<EventSearchItemDto>>('/backoffice/events', { params: req }));
+  },
+  getEventStats: (id: string) => {
+    return baseQuery(api.get<EventStatsDto>(`/backoffice/events/${id}/stats`));
   },
   getEventDetail: (id: string) => {
     return baseQuery(api.get<EventDetailDto>(`/backoffice/events/${id}`));

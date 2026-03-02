@@ -1,5 +1,17 @@
-import { BaseFilter } from "@/root/app/components"
-import { EventStatus } from "@/root/types"
+import { BaseFilter } from "@/root/app/components";
+import { EventStatus } from "@/root/types";
+
+export interface EventStatsDto {
+  eventId: string;
+  cardStats: {
+    totalCards: number;
+    availableCards: number;
+    usedCards: number;
+  };
+  memberStats: {
+    totalMembers: number;
+  }
+}
 
 export interface GetEventListRequest extends BaseFilter {
   categoryIds?: string[],

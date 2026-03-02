@@ -18,6 +18,15 @@ const useSearchEvents = (params: GetEventListRequest) => {
   });
 }
 
+const useGetEventStats = (id: string) => {
+  return useQuery({
+    queryKey: EVENT_KEYS.all,
+    queryFn: () => eventService.getEventStats(id),
+    staleTime: 1000 * 15,
+    retry: false
+  });
+}
+
 const useGetEventDetail = (id: string, seconds?: number) => {
   return useQuery({
     queryKey: EVENT_KEYS.detail(id),
@@ -73,6 +82,11 @@ const useDeleteEvent = () => {
 };
 
 export {
-  useCreateEvent, useDeleteEvent, useGetEventDetail, useSearchEvents, useUpdateEvent,
+  useCreateEvent,
+  useDeleteEvent,
+  useGetEventDetail,
+  useGetEventStats,
+  useSearchEvents,
+  useUpdateEvent,
   useUpdateEventStatus
 };

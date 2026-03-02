@@ -11,6 +11,7 @@ export * from "./hooks";
 export * from "./input";
 export * from "./label";
 export * from "./layout";
+export * from "./loading";
 export * from "./map";
 export * from "./qr";
 export * from "./select";

@@ -59,8 +59,11 @@
       "createdAt": "Created At",
       "updatedAt": "Last Updated At",
       "cardCount": "Total Invitations",
+      "cardCountNote": "Active / Total Generated",
       "scannedCount": "Confirmed Guests",
-      "memberCount": "Organizers"
+      "scannedCountNote": "Checked-in / Active",
+      "memberCount": "Organizers",
+      "memberCountNote": "Total Staff"
     },
     "actions": {
       "viewMap": "View Map"

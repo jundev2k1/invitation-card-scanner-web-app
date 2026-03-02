@@ -1,6 +1,7 @@
 import { MailIcon, UsersIcon } from "@/icons";
-import { Badge, CardContent, CardDescription, CardHeader, TabItem } from "@/root/app/components";
+import { CardContent, CardDescription, CardHeader, TabItem } from "@/root/app/components";
 import { TranslateFn } from "@/root/i18n/type";
+import { useGetEventStats } from "@/root/services";
 import { EventDetailDto } from "@/root/types";
 import { useTranslations } from "next-intl";
 import { CardList } from "../_card/_list/CardList";
@@ -13,19 +14,14 @@ export enum TabNames {
 
 const getTabContents = (
   t: TranslateFn,
-  data: EventDetailDto,
-  cardCount: number,
-  memberCount: number
+  data: EventDetailDto
 ): TabItem[] => {
   return [
     {
       label: (
         <div className="flex items-center gap-2">
           <MailIcon />
-          <span>
-            {t('event.cardList.title')}
-          </span>
-          <Badge className="text-xs">{cardCount}</Badge>
+          {t('event.cardList.title')}
         </div >
       ),
       value: TabNames.CARD_LIST,
@@ -44,10 +40,7 @@ const getTabContents = (
       label: (
         <div className="flex items-center gap-2">
           <UsersIcon />
-          <span>
-            {t('event.memberList.title')}
-          </span>
-          <Badge className="text-xs">{memberCount}</Badge>
+          {t('event.memberList.title')}
         </div>
       ),
       value: TabNames.MEMBER_LIST,
@@ -71,14 +64,15 @@ type ViewEventDetailProps = {
 
 export const useViewEventDetail = ({ detail }: ViewEventDetailProps) => {
   const t = useTranslations();
-  const statistics = {
-    totalCards: 100,
-    scannedCount: 83,
-    totalMembers: 6,
-  };
-  const tabOptions = getTabContents(t, detail, statistics.totalCards, statistics.totalMembers);
+  const { data, isLoading } = useGetEventStats(detail.id);
+  const statistics = data?.data;
+  const tabOptions = getTabContents(
+    t,
+    detail
+  );
   return {
     tabOptions,
     statistics,
+    isStatsLoading: isLoading,
   };
 };
