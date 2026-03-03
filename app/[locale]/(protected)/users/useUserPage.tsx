@@ -135,7 +135,7 @@ export const useUserPage = () => {
   const breadcrumbs = useMemo(() => getBreadcrumbs(t, locale), [locale]);
   const columns = useMemo(() => getColumns(t, redirectToDetail, redirectToEdit), [locale]);
   const onPageRefresh = useCallback(refetch, []);
-  const useStatusOptions = useMemo(() => getUserStatusOptions(t), [t]);
+  const userStatusOptions = useMemo(() => getUserStatusOptions(t), [t]);
 
   return {
     breadcrumbs,
@@ -143,7 +143,7 @@ export const useUserPage = () => {
     isLoading,
     onPageRefresh,
     data: data?.data ?? defaultSearchResult,
-    useStatusOptions,
+    userStatusOptions,
     filter,
     onStatusChange,
     onKeywordChange,

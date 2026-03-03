@@ -18,7 +18,7 @@ export default function UserPage() {
     isLoading,
     onPageRefresh,
     data,
-    useStatusOptions,
+    userStatusOptions,
     filter,
     onStatusChange,
     onKeywordChange,
@@ -41,10 +41,10 @@ export default function UserPage() {
           />
           <MultiCombobox
             className="flex-nowrap max-w-75 overflow-hidden"
-            value={filter.statuses}
+            value={filter.statuses || []}
             onChange={onStatusChange}
             placeholder={t('user.list.filter.statusList.placeholder')}
-            options={useStatusOptions}
+            options={userStatusOptions}
             displayCount={2}
             getOptionLabel={(status) => t(getUserStatusKey(status))}
             getDisplayValue={(status) => t(getUserStatusKey(status))}
