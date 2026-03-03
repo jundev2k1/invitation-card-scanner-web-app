@@ -20,7 +20,7 @@ export interface GetEventListRequest extends BaseFilter {
   startTo?: Date | null,
   endFrom?: Date | null,
   endTo?: Date | null,
-  sortBy?: "createdAt" | "startAt" | "status",
+  sortBy?: "created_at" | "start_at" | "status",
   sortOrder?: "asc" | "desc"
 }
 

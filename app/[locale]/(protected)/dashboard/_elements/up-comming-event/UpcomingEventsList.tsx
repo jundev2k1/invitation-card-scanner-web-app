@@ -1,12 +1,13 @@
 "use client";
 
 import {
-  Badge,
   Button,
   Card,
   CardContent,
   CardHeader,
   CardTitle,
+  EventStatusBadge,
+  SmartDateTime
 } from "@/components";
 import { CalendarDays } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -31,7 +32,7 @@ export function UpcomingEventsList() {
       <CardContent>
         {isLoading ? (
           <div className="space-y-4">
-            {[...Array(5)].map((_, i) => (
+            {[...Array(8)].map((_, i) => (
               <div key={i} className="flex items-center gap-4 animate-pulse">
                 <div className="h-10 w-10 rounded bg-muted" />
                 <div className="space-y-2 flex-1">
@@ -53,10 +54,10 @@ export function UpcomingEventsList() {
                 <div className="flex-1 space-y-1">
                   <p className="text-sm font-medium leading-none">{event.title}</p>
                   <p className="text-sm text-muted-foreground">
-                    {new Date(event.startAt).toLocaleDateString()}
+                    <SmartDateTime date={event.startAt} />
                   </p>
                 </div>
-                <Badge variant="outline">{event.status}</Badge>
+                <EventStatusBadge status={event.status} />
               </div>
             ))}
           </div>

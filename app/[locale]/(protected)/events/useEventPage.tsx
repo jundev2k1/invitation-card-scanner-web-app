@@ -121,7 +121,7 @@ export const useEventPage = () => {
     startTo: filter.startTo,
     endFrom: filter.endFrom,
     endTo: filter.endTo,
-    sortBy: filter.sortBy || 'createdAt',
+    sortBy: filter.sortBy || 'created_at',
     sortOrder: filter.sortOrder || 'desc',
     page: filter.page,
     pageSize: filter.pageSize

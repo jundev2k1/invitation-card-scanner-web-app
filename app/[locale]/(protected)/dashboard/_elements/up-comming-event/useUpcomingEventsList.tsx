@@ -1,25 +1,23 @@
 import { RouteUtil } from "@/root/app/utils/route";
-import { useSearchEvents } from "@/root/services";
+import { GetEventListRequest, useSearchEvents } from "@/root/services";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 export const useUpcomingEventsList = () => {
   const locale = useLocale();
   const router = useRouter();
-  const { data, isLoading } = useSearchEvents({
+
+  const queryParams: GetEventListRequest = useMemo(() => ({
     keyword: '',
-    categoryIds: [],
-    statuses: [],
-    startFrom: new Date(),
-    startTo: null,
-    endFrom: null,
-    endTo: null,
-    sortBy: 'startAt',
-    sortOrder: 'asc',
     page: 1,
     pageSize: 8,
-  });
+    sortBy: 'start_at',
+    sortOrder: 'asc',
+    startFrom: new Date(),
+  }), [locale]);
+
+  const { data, isLoading } = useSearchEvents(queryParams);
 
   const redirectToList = useCallback(() => {
     router.push(RouteUtil.getEventListRoute(locale));
@@ -27,7 +25,7 @@ export const useUpcomingEventsList = () => {
 
   return {
     isLoading,
-    upcomingEvents: data?.data?.items,
+    upcomingEvents: data?.data?.items ?? [],
     redirectToList,
   }
 }
