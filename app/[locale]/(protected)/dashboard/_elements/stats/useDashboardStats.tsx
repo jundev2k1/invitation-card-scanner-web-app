@@ -1,11 +1,14 @@
-export const useDashboardStats = () => {
+import { useGetGeneralStats } from "@/services";
+
+interface useDashboardStatsProps {
+  startDate: Date | undefined;
+  endDate: Date | undefined;
+}
+
+export const useDashboardStats = ({ startDate, endDate }: useDashboardStatsProps) => {
+  const { isLoading, data } = useGetGeneralStats({ startDate, endDate });
   return {
-    isLoading: false,
-    stats: {
-      totalUsers: 34,
-      pendingUsers: 12,
-      totalEvents: 47,
-      totalInvitations: 324,
-    }
+    isLoading: isLoading,
+    stats: data?.data
   };
 }

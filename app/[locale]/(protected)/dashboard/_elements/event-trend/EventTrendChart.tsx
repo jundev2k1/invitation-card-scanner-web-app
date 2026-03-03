@@ -8,6 +8,7 @@ import {
   Tabs,
 } from "@/components";
 import { useTranslations } from "next-intl";
+import React from "react";
 import {
   CartesianGrid,
   Line,
@@ -19,7 +20,7 @@ import {
 } from "recharts";
 import { PeriodValues, useEventTrendChart } from "./useEventTrendChart";
 
-export function EventTrendChart() {
+export const EventTrendChart = React.memo(() => {
   const t = useTranslations();
   const {
     chartData,
@@ -60,4 +61,4 @@ export function EventTrendChart() {
       </CardContent>
     </Card>
   );
-}
+});

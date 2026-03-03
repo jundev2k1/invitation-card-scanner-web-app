@@ -1,11 +1,27 @@
 {
   "title": "Bảng điều khiển",
   "overview": "Tổng quan hoạt động hôm nay",
+  "enum": {
+    "period": {
+      "day": "hôm",
+      "week": "tuần",
+      "month": "tháng",
+      "year": "năm"
+    },
+    "status": {
+      "published": "đã đăng",
+      "completed": "hoàn thành"
+    }
+  },
   "stats": {
     "totalUsers": "Tổng số người dùng",
     "pendingUsers": "Chờ duyệt",
     "totalEvents": "Tổng sự kiện",
-    "totalInvitations": "Tổng thiệp mời"
+    "totalInvitations": "Tổng thiệp mời",
+    "vs_last_period": "so với {period} trước",
+    "percentOfTotal": "{percent}% tổng số",
+    "percentOfTotalUsers": "{percent}% tổng người dùng",
+    "percentOfTotalCards": "{percent}% tổng thẻ"
   },
   "eventTrends": {
     "title": "Xu hướng sự kiện",
@@ -17,13 +33,20 @@
       "year": "Năm"
     }
   },
-  "invitationMetrics": {
-    "title": "Thống kê thiệp mời",
-    "created": "Đã tạo",
-    "draft": "Nháp",
-    "used": "Đã sử dụng",
-    "disabled": "Vô hiệu hóa",
-    "conversionRate": "Tỷ lệ tạo so với người tham gia"
+  "quickOverview": {
+    "title": "Tổng quan nhanh",
+    "activeUsers": "Người dùng hoạt động",
+    "activeUsersSubtitle": "{rate}% tổng người dùng",
+    "pendingApproval": "Chờ duyệt",
+    "pendingApprovalSubtitle": "{rate}% tổng số",
+    "usedCards": "Thẻ đã sử dụng",
+    "usedCardsSubtitle": "{rate}% tổng thẻ",
+    "completedEvents": "Sự kiện hoàn thành",
+    "completedEventsSubtitle": "kỳ này",
+    "growthSummary": "Tổng tăng trưởng",
+    "usersGrowth": "Người dùng",
+    "eventsGrowth": "Sự kiện",
+    "cardsGrowth": "Thẻ"
   },
   "pendingUsers": {
     "title": "Người dùng chờ duyệt",
@@ -33,6 +56,7 @@
   "upcomingEvents": {
     "title": "Sự kiện sắp diễn ra",
     "viewAll": "Xem tất cả",
+    "viewDetail": "Xem chi tiết",
     "noUpcoming": "Không có sự kiện sắp tới"
   },
   "quickActions": {

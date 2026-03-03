@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/tabs";
 export interface TabItem {
   value: string;
   label: string | React.ReactNode;
-  content: React.ReactNode;
+  content?: React.ReactNode | undefined;
 }
 
 export interface TabsProps {

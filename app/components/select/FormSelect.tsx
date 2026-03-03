@@ -32,7 +32,7 @@ export function FormSelect({ name, label, containerClassName, className, options
         name={name}
         render={({ field }) => (
           <Select onValueChange={field.onChange} value={field.value} disabled={disabled}>
-            <SelectTrigger className={cn(error ? "border-destructive" : "", className)}>
+            <SelectTrigger className={cn('text-foreground', error ? "border-destructive" : "", className)}>
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent>

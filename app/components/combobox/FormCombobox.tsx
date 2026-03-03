@@ -106,7 +106,11 @@ export function FormCombobox<T = unknown>({
   return (
     <div className={cn("space-y-1.5", containerClassName)}>
       {label && (
-        <Label className={cn(error && "text-destructive", disabled && "opacity-70")}>
+        <Label className={cn(
+          "text-slate-900 dark:text-muted-foreground",
+          error && "text-destructive",
+          disabled && "opacity-70"
+        )}>
           {label}
           {isRequired && <span className="text-destructive ml-1">*</span>}
         </Label>
@@ -151,7 +155,7 @@ export function FormCombobox<T = unknown>({
             setQuery(e.target.value);
           }}
           className={cn(
-            "w-full cursor-default",
+            "w-full cursor-default text-foreground",
             effectiveDisabled && "cursor-default bg-muted/50 opacity-80",
             error && "border-destructive focus-visible:ring-destructive",
             className
@@ -180,11 +184,13 @@ export function FormCombobox<T = unknown>({
           "z-999 pointer-events-auto max-h-75 overflow-y-auto",
           selectedItem && "hidden")}
         >
-          <ComboboxEmpty>
-            {loading
-              ? t("common.combobox.loading")
-              : t("common.combobox.noResults")}
-          </ComboboxEmpty>
+          {!selectedItem || loading && (
+            <ComboboxEmpty>
+              {loading
+                ? t("common.combobox.loading")
+                : t("common.combobox.noResults")}
+            </ComboboxEmpty>
+          )}
 
           <ComboboxList>
             {options.map((opt) => {

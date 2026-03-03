@@ -57,10 +57,10 @@ export const useEventTrendChart = () => {
   const [period, setPeriod] = useState<PeriodValues>(PeriodValues.MONTH);
 
   const periodOptions = [
-    { label: t("period.day"), value: "day", content: <></> },
-    { label: t("period.week"), value: "week", content: <></> },
-    { label: t("period.month"), value: "month", content: <></> },
-    { label: t("period.year"), value: "year", content: <></> },
+    { label: t("period.day"), value: "day" },
+    { label: t("period.week"), value: "week" },
+    { label: t("period.month"), value: "month" },
+    { label: t("period.year"), value: "year" },
   ];
   return {
     isLoading: false,

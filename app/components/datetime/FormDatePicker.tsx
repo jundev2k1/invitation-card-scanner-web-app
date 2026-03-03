@@ -50,7 +50,7 @@ export function FormDateTimePicker({ name, label, nullable = false, captionLayou
                 !field.value && "text-muted-foreground",
                 error && "border-destructive")}
               >
-                {field.value ? formatDate(field.value, "PPP HH:mm") : <span>{t("common.datetime.placeholder")}</span>}
+                {field.value ? formatDate(field.value, "PPP HH:mm") : <span className="text-muted-foreground">{t("common.datetime.placeholder")}</span>}
                 <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
               </Button>
             </PopoverTrigger>

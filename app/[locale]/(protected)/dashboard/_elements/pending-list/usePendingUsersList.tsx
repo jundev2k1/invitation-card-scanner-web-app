@@ -1,6 +1,6 @@
-import { RouteUtil } from "@/root/app/utils/route";
-import { useGetUserSearch } from "@/root/services";
-import { UserStatus } from "@/root/types";
+import { useGetUserSearch } from "@/services";
+import { PageAction, UserStatus } from "@/types";
+import { RouteUtil } from "@/utils/route";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
@@ -15,16 +15,21 @@ export const usePendingUsersList = () => {
     sortBy: 'createdAt',
     sortOrder: 'desc',
     page: 1,
-    pageSize: 8,
+    pageSize: 5,
   });
 
   const redirectToList = useCallback(() => {
     router.push(RouteUtil.getUserListRoute(locale));
   }, []);
 
+  const redirectToDetail = useCallback((id: string) => {
+    router.push(RouteUtil.getUserDetailUrl(locale, id, PageAction.VIEW));
+  }, []);
+
   return {
     isLoading,
     pendingUsers: data?.data?.items ?? [],
     redirectToList,
+    redirectToDetail,
   }
 }

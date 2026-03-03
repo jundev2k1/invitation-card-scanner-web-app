@@ -12,14 +12,16 @@ import {
   UserStatusBadge
 } from "@/components";
 import { useTranslations } from "next-intl";
+import React from "react";
 import { usePendingUsersList } from "./usePendingUsersList";
 
-export function PendingUsersList() {
+export const PendingUsersList = React.memo(() => {
   const t = useTranslations("dashboard.pendingUsers");
   const {
     isLoading,
     pendingUsers,
     redirectToList,
+    redirectToDetail,
   } = usePendingUsersList();
 
   return (
@@ -54,7 +56,9 @@ export function PendingUsersList() {
                   <AvatarFallback>{user.nickname?.[0]}</AvatarFallback>
                 </Avatar>
                 <div className="flex-1 space-y-1">
-                  <p className="text-sm font-medium leading-none">{user.nickname}</p>
+                  <p className="text-sm font-medium leading-none cursor-pointer" onClick={() => redirectToDetail(user.id)}>
+                    {user.nickname}
+                  </p>
                   <p className="text-sm text-muted-foreground">{user.email}</p>
                 </div>
                 <UserStatusBadge status={user.status} />
@@ -65,4 +69,4 @@ export function PendingUsersList() {
       </CardContent>
     </Card>
   );
-}
+})

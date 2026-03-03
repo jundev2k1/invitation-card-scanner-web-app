@@ -1,11 +1,27 @@
 {
   "title": "Dashboard",
   "overview": "Overview of today's activity",
+  "enum": {
+    "period": {
+      "day": "day",
+      "week": "week",
+      "month": "month",
+      "year": "year"
+    },
+    "status": {
+      "published": "published",
+      "completed": "completed"
+    }
+  },
   "stats": {
     "totalUsers": "Total Users",
     "pendingUsers": "Pending Approvals",
     "totalEvents": "Total Events",
-    "totalInvitations": "Total Invitations"
+    "totalInvitations": "Total Invitations",
+    "vs_last_period": "vs previous {period}",
+    "percentOfTotal": "{percent}% of total",
+    "percentOfTotalUsers": "{percent}% of total users",
+    "percentOfTotalCards": "{percent}% of total cards"
   },
   "eventTrends": {
     "title": "Event Trends",
@@ -17,13 +33,20 @@
       "year": "Year"
     }
   },
-  "invitationMetrics": {
-    "title": "Invitation Metrics",
-    "created": "Created",
-    "draft": "Drafts",
-    "used": "Used",
-    "disabled": "Disabled",
-    "conversionRate": "Creation to Participant Ratio"
+  "quickOverview": {
+    "title": "Quick Overview",
+    "activeUsers": "Active Users",
+    "activeUsersSubtitle": "{rate}% of total users",
+    "pendingApproval": "Pending Approval",
+    "pendingApprovalSubtitle": "{rate}% of total",
+    "usedCards": "Used Cards",
+    "usedCardsSubtitle": "{rate}% of total cards",
+    "completedEvents": "Completed Events",
+    "completedEventsSubtitle": "this period",
+    "growthSummary": "Growth Summary",
+    "usersGrowth": "Users",
+    "eventsGrowth": "Events",
+    "cardsGrowth": "Cards"
   },
   "pendingUsers": {
     "title": "Pending Users",
@@ -33,6 +56,7 @@
   "upcomingEvents": {
     "title": "Upcoming Events",
     "viewAll": "View All",
+    "viewDetail": "View Detail",
     "noUpcoming": "No upcoming events"
   },
   "quickActions": {

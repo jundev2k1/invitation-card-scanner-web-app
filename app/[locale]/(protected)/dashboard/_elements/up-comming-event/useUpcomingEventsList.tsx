@@ -1,5 +1,6 @@
-import { RouteUtil } from "@/root/app/utils/route";
-import { GetEventListRequest, useSearchEvents } from "@/root/services";
+import { GetEventListRequest, useSearchEvents } from "@/services";
+import { EventStatus, PageAction } from "@/types";
+import { RouteUtil } from "@/utils/route";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
@@ -11,7 +12,8 @@ export const useUpcomingEventsList = () => {
   const queryParams: GetEventListRequest = useMemo(() => ({
     keyword: '',
     page: 1,
-    pageSize: 8,
+    pageSize: 5,
+    statuses: [EventStatus.PUBLISHED],
     sortBy: 'start_at',
     sortOrder: 'asc',
     startFrom: new Date(),
@@ -23,9 +25,14 @@ export const useUpcomingEventsList = () => {
     router.push(RouteUtil.getEventListRoute(locale));
   }, []);
 
+  const redirectToDetail = useCallback((id: string) => {
+    router.push(RouteUtil.getEventDetailUrl(locale, id, PageAction.VIEW));
+  }, []);
+
   return {
     isLoading,
     upcomingEvents: data?.data?.items ?? [],
     redirectToList,
+    redirectToDetail,
   }
 }

@@ -6,19 +6,21 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  EventStatusBadge,
+  IconButton,
   SmartDateTime
 } from "@/components";
-import { CalendarDays } from "lucide-react";
+import { CalendarDaysIcon, InfoIcon } from "@/icons";
 import { useTranslations } from "next-intl";
+import React from "react";
 import { useUpcomingEventsList } from "./useUpcomingEventsList";
 
-export function UpcomingEventsList() {
+export const UpcomingEventsList = React.memo(() => {
   const t = useTranslations("dashboard.upcomingEvents");
   const {
     upcomingEvents,
     isLoading,
     redirectToList,
+    redirectToDetail,
   } = useUpcomingEventsList();
 
   return (
@@ -32,7 +34,7 @@ export function UpcomingEventsList() {
       <CardContent>
         {isLoading ? (
           <div className="space-y-4">
-            {[...Array(8)].map((_, i) => (
+            {[...Array(5)].map((_, i) => (
               <div key={i} className="flex items-center gap-4 animate-pulse">
                 <div className="h-10 w-10 rounded bg-muted" />
                 <div className="space-y-2 flex-1">
@@ -49,15 +51,23 @@ export function UpcomingEventsList() {
             {upcomingEvents?.map(event => (
               <div key={event.id} className="flex items-center gap-4">
                 <div className="h-10 w-10 rounded bg-primary/10 flex items-center justify-center">
-                  <CalendarDays className="h-5 w-5 text-primary" />
+                  <CalendarDaysIcon className="h-5 w-5 text-primary" />
                 </div>
-                <div className="flex-1 space-y-1">
-                  <p className="text-sm font-medium leading-none">{event.title}</p>
+                <div className="flex-1 space-y-1 overflow-hidden">
+                  <p className="text-sm font-medium leading-none text-nowrap truncate">
+                    {event.title}
+                  </p>
                   <p className="text-sm text-muted-foreground">
                     <SmartDateTime date={event.startAt} />
                   </p>
                 </div>
-                <EventStatusBadge status={event.status} />
+                <IconButton
+                  icon={<InfoIcon className="h-4 w-4" />}
+                  onClick={() => redirectToDetail(event.id)}
+                  size="icon"
+                  variant="secondary"
+                  tooltip={t("viewDetail")}
+                />
               </div>
             ))}
           </div>
@@ -65,4 +75,4 @@ export function UpcomingEventsList() {
       </CardContent>
     </Card>
   );
-}
+});
