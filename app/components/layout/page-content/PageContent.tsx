@@ -12,6 +12,7 @@ interface AdminContentLayoutProps {
   }[];
   filters?: ReactNode;
   actions?: ReactNode;
+  noWrapper?: boolean;
 }
 
 export const PageContent = ({
@@ -21,6 +22,7 @@ export const PageContent = ({
   breadcrumbs = [],
   filters,
   actions,
+  noWrapper,
 }: AdminContentLayoutProps) => {
   return (
     <div className="flex flex-col min-h-full space-y-6">
@@ -74,12 +76,18 @@ export const PageContent = ({
       )}
 
       {/* Main content */}
-      <div className="flex-1 bg-background rounded-lg border border-border shadow-sm">
-
-        <div className="p-6 md:p-8">
+      {noWrapper ? (
+        <>
           {children}
+        </>
+      ) : (
+        <div className="flex-1 bg-background rounded-lg border border-border shadow-sm">
+
+          <div className="p-6 md:p-8">
+            {children}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -1,0 +1,106 @@
+{
+  "title": "Cài đặt chung",
+  "description": "Quản lý thông tin cơ bản, thương hiệu và metadata của website",
+  "general": {
+    "title": "Cơ bản",
+    "desc": "Cài đặt mặc định cho hệ thống và người dùng",
+    "branding": {
+      "title": "Thương hiệu",
+      "desc": "Logo và favicon hiển thị trên trình duyệt, email, các trang công khai"
+    },
+    "logo": {
+      "label": "Logo chính",
+      "upload": "Tải lên logo",
+      "hint": "Định dạng: PNG, SVG hoặc JPG. Khuyến nghị: 200×60px"
+    },
+    "favicon": {
+      "label": "Favicon",
+      "upload": "Tải lên favicon",
+      "hint": "Định dạng: ICO, PNG (32×32 hoặc 64×64px)"
+    },
+    "siteName": {
+      "label": "Tên website",
+      "placeholder": "Ví dụ: My Awesome Platform",
+      "desc": "Hiển thị ở tiêu đề trang, header và email"
+    },
+    "slogan": {
+      "label": "Slogan",
+      "placeholder": "Ví dụ: Xây dựng tương lai cùng công nghệ"
+    },
+    "metadata": {
+      "title": "Metadata & SEO",
+      "desc": "Thông tin hỗ trợ công cụ tìm kiếm và hiển thị đẹp khi chia sẻ link"
+    },
+    "description": {
+      "label": "Mô tả website",
+      "placeholder": "Mô tả ngắn gọn về nền tảng của bạn...",
+      "desc": "Dùng cho meta description, tối đa 160 ký tự"
+    },
+    "keywords": {
+      "label": "Từ khóa",
+      "desc": "Phân cách bằng dấu phẩy, hỗ trợ SEO cơ bản"
+    },
+    "ogImage": {
+      "label": "OG Image URL",
+      "desc": "Hình ảnh hiển thị khi chia sẻ link trên mạng xã hội (khuyến nghị 1200×630px)"
+    },
+    "additional": {
+      "title": "Thông tin bổ sung",
+      "desc": "Cài đặt mặc định cho hệ thống và người dùng"
+    },
+    "timezone": {
+      "label": "Múi giờ mặc định"
+    },
+    "currency": {
+      "label": "Đơn vị tiền tệ"
+    },
+    "supportEmail": {
+      "label": "Email hỗ trợ"
+    },
+    "saveChanges": "Lưu thay đổi",
+    "saving": "Đang lưu..."
+  },
+  "notifications": {
+    "title": "Cài đặt thông báo",
+    "description": "Cấu hình kênh gửi email và Zalo OA để hệ thống gửi thông báo đến người dùng",
+    "smtp": {
+      "title": "Cấu hình SMTP",
+      "desc": "Dùng để gửi email giao dịch, thông báo, khôi phục mật khẩu...",
+      "host": {
+        "label": "SMTP Host",
+        "desc": "Ví dụ: smtp.gmail.com hoặc smtp.sendgrid.net"
+      },
+      "port": {
+        "label": "Cổng SMTP",
+        "desc": "Thường là 587 (TLS) hoặc 465 (SSL)"
+      }
+    },
+    "fromEmail": {
+      "label": "Email gửi đi",
+      "desc": "Địa chỉ email hiển thị khi người nhận nhận thư (nên verify domain)"
+    },
+    "zaloOA": {
+      "title": "Zalo Official Account (ZNS / Tin nhắn OA)",
+      "desc": "Gửi thông báo Zalo đến người dùng Việt Nam (ZNS rất hiệu quả)",
+      "help": {
+        "title": "Cách lấy Access Token",
+        "desc": "Truy cập Zalo Developers → Official Account → API → OA Access Token",
+        "link": "Xem hướng dẫn chi tiết"
+      },
+      "token": {
+        "label": "OA Access Token",
+        "desc": "Token dùng để gửi tin nhắn qua API Zalo OA"
+      },
+      "oaId": {
+        "label": "OA ID",
+        "desc": "ID của Official Account (thường bắt đầu bằng 24xxxx)"
+      }
+    },
+    "enableZalo": {
+      "label": "Bật gửi thông báo qua Zalo OA",
+      "desc": "Cho phép hệ thống sử dụng Zalo để gửi ZNS hoặc tin nhắn OA"
+    },
+    "saveChanges": "Lưu thay đổi",
+    "saving": "Đang lưu..."
+  }
+}

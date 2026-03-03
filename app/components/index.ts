@@ -7,6 +7,7 @@ export * from "./combobox";
 export * from "./datetime";
 export * from "./dialog";
 export * from "./dropdown";
+export * from "./field";
 export * from "./hooks";
 export * from "./input";
 export * from "./label";

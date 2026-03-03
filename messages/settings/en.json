@@ -1,0 +1,106 @@
+{
+  "title": "General Settings",
+  "description": "Manage basic information, branding, and website metadata",
+  "general": {
+    "title": "General",
+    "desc": "Default settings for the system and users",
+    "branding": {
+      "title": "Branding",
+      "desc": "Logo and favicon displayed in browser, emails, and public pages"
+    },
+    "logo": {
+      "label": "Main Logo",
+      "upload": "Upload logo",
+      "hint": "Format: PNG, SVG or JPG. Recommended: 200×60px"
+    },
+    "favicon": {
+      "label": "Favicon",
+      "upload": "Upload favicon",
+      "hint": "Format: ICO, PNG (32×32 or 64×64px)"
+    },
+    "siteName": {
+      "label": "Website Name",
+      "placeholder": "Example: My Awesome Platform",
+      "desc": "Displayed in page title, header, and emails"
+    },
+    "slogan": {
+      "label": "Slogan",
+      "placeholder": "Example: Building the future with technology"
+    },
+    "metadata": {
+      "title": "Metadata & SEO",
+      "desc": "Information to help search engines and improve link preview when shared"
+    },
+    "description": {
+      "label": "Website Description",
+      "placeholder": "A short description of your platform...",
+      "desc": "Used for meta description, maximum 160 characters"
+    },
+    "keywords": {
+      "label": "Keywords",
+      "desc": "Separated by commas, supports basic SEO"
+    },
+    "ogImage": {
+      "label": "OG Image URL",
+      "desc": "Image displayed when sharing links on social media (recommended 1200×630px)"
+    },
+    "additional": {
+      "title": "Additional Information",
+      "desc": "Default settings for the system and users"
+    },
+    "timezone": {
+      "label": "Default Timezone"
+    },
+    "currency": {
+      "label": "Currency"
+    },
+    "supportEmail": {
+      "label": "Support Email"
+    },
+    "saveChanges": "Save Changes",
+    "saving": "Saving..."
+  },
+  "notifications": {
+    "title": "Notification Settings",
+    "description": "Configure email and Zalo OA channels for the system to send notifications to users",
+    "smtp": {
+      "title": "SMTP Configuration",
+      "desc": "Used to send transactional emails, notifications, password resets, etc.",
+      "host": {
+        "label": "SMTP Host",
+        "desc": "Example: smtp.gmail.com or smtp.sendgrid.net"
+      },
+      "port": {
+        "label": "SMTP Port",
+        "desc": "Usually 587 (TLS) or 465 (SSL)"
+      }
+    },
+    "fromEmail": {
+      "label": "From Email",
+      "desc": "The email address shown to recipients (should verify domain)"
+    },
+    "zaloOA": {
+      "title": "Zalo Official Account (ZNS / OA Messages)",
+      "desc": "Send Zalo notifications to Vietnamese users (ZNS is very effective)",
+      "help": {
+        "title": "How to Get Access Token",
+        "desc": "Go to Zalo Developers → Official Account → API → OA Access Token",
+        "link": "View detailed guide"
+      },
+      "token": {
+        "label": "OA Access Token",
+        "desc": "Token used to send messages via Zalo OA API"
+      },
+      "oaId": {
+        "label": "OA ID",
+        "desc": "ID of the Official Account (usually starts with 24xxxx)"
+      }
+    },
+    "enableZalo": {
+      "label": "Enable notifications via Zalo OA",
+      "desc": "Allow the system to use Zalo to send ZNS or OA messages"
+    },
+    "saveChanges": "Save Changes",
+    "saving": "Saving..."
+  }
+}

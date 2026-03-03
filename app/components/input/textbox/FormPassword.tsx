@@ -4,12 +4,12 @@ import { Button } from "@/shadcn/button";
 import { Input } from "@/shadcn/input";
 import { Label } from "@/shadcn/label";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface FormPasswordProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  label?: string;
+  label?: string | React.ReactNode;
   className?: string;
   isRequired?: boolean;
 };

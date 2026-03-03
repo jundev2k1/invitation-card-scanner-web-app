@@ -3,7 +3,13 @@ import { Label } from "@/shadcn/label";
 import { Switch } from "@/shadcn/switch";
 import { Controller, useFormContext } from "react-hook-form";
 
-export function FormSwitch({ name, label, disabled }: { name: string; label: string, disabled?: boolean }) {
+interface FormSwitchProps {
+  name: string;
+  label: string | React.ReactNode;
+  disabled?: boolean;
+}
+
+export function FormSwitch({ name, label, disabled }: FormSwitchProps) {
   const { control } = useFormContext();
   return (
     <Controller

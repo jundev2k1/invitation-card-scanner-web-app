@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 import Providers from "@/root/app/providers";
 import { useThemeStore } from "@/store";
 import { ThemeColor, ThemeMode } from "@/types";
@@ -16,7 +17,7 @@ export function ThemeWrapper({ children }: { children: React.ReactNode }) {
     ? `${theme} ${color}`
     : `${ThemeMode.LIGHT} ${ThemeColor.DEFAULT}`;
   return (
-    <body className={themeClass}>
+    <body className={cn(themeClass, "overflow-hidden")}>
       <Providers>
         {children}
       </Providers>
