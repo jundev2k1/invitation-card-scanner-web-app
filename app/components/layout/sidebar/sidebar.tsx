@@ -7,7 +7,7 @@ import Link from "next/link";
 import { SIDEBAR_GROUPS } from "./useSidebar";
 
 export const Sidebar = () => {
-  const t = useTranslations();
+  const tSidebar = useTranslations("common.sidebar");
   const { isCollapsed, toggleSidebar } = useSidebarStore();
   return (
     <aside
@@ -49,7 +49,6 @@ export const Sidebar = () => {
         <ul className="space-y-6 px-3">
           {SIDEBAR_GROUPS.map((group, groupIndex) => (
             <li key={groupIndex}>
-              {/* Group Title - hidden when collapsed */}
               <div
                 className={cn(
                   "mb-2 px-3 text-xs font-semibold uppercase tracking-wider transition-all duration-300 ease-in-out",
@@ -60,12 +59,12 @@ export const Sidebar = () => {
                     : "opacity-100 max-h-10 mb-2"
                 )}
               >
-                {t(group.title)}
+                {tSidebar(group.title)}
               </div>
 
               <ul className="space-y-1">
                 {group.items.map((item) => (
-                  <li key={item.path}>
+                  <li key={!item.isDisabled ? item.path : '#'}>
                     <Link
                       href={item.path}
                       className={cn(
@@ -73,7 +72,7 @@ export const Sidebar = () => {
                         "text-gray-700 hover:bg-gray-100 hover:text-gray-900",
                         "dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-100",
                         isCollapsed ? "justify-center" : "justify-start",
-                        item.isDisabled && 'disabled-link'
+                        item.isDisabled && 'cursor-default text-gray-400 dark:text-gray-500'
                       )}
                     >
                       <item.icon className="h-5 w-5 shrink-0 text-gray-500 dark:text-gray-400" />
@@ -81,7 +80,7 @@ export const Sidebar = () => {
                         "transition-all duration-300 ease-in-out whitespace-nowrap overflow-hidden",
                         isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
                       )}>
-                        {t(item.title)}
+                        {tSidebar(item.title)}
                       </span>
                     </Link>
                   </li>

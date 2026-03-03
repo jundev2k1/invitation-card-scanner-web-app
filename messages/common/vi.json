@@ -89,9 +89,9 @@
   },
   "sidebar": {
     "dashboard": {
-      "title": "Bảng điều khiển",
+      "title": "Chung",
       "items": {
-        "dashboard": "Thống kê"
+        "dashboard": "Bảng điều khiển"
       }
     },
     "users": {
@@ -105,7 +105,15 @@
       "items": {
         "categoryList": "Danh mục",
         "eventList": "Danh sách sự kiện",
-        "cardList": "Danh sách thiệp mời"
+        "eventTemplates": "Mẫu thiệp mời"
+      }
+    },
+    "systems": {
+      "title": "Hệ thống",
+      "items": {
+        "roleManagement": "Danh sách vai trò",
+        "systemConfig": "Cài đặt hệ thống",
+        "dataTransfer": "Nhập/Xuất"
       }
     }
   },

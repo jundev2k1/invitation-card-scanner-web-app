@@ -5,6 +5,7 @@ export class RouteUtil {
   private static readonly DASHBOARD = "/dashboard";
   private static readonly USERS = "/users";
   private static readonly EVENTS = "/events";
+  private static readonly ROLES = "/roles";
 
   // Build with locale
   private static withLocale(locale: string, path: string) {
@@ -52,6 +53,21 @@ export class RouteUtil {
     return this.withLocale(
       locale,
       `/events/${id}?action=${action || PageAction.VIEW}`
+    );
+  }
+
+  public static getRoleGroupRoute(locale: string) {
+    return this.withLocale(locale, `${this.ROLES}?action=group`);
+  }
+
+  public static getRoleListRoute(locale: string) {
+    return this.withLocale(locale, `${this.ROLES}?action=list`);
+  }
+
+  public static getRoleDetailUrl(locale: string, id: string) {
+    return this.withLocale(
+      locale,
+      `${this.ROLES}/${id}`
     );
   }
 }

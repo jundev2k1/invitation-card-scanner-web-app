@@ -1,0 +1,104 @@
+{
+  "common": {
+    "admin": "Quản trị",
+    "dashboard": "Bảng điều khiển",
+    "no_results": "Không tìm thấy kết quả",
+    "confirm_delete": "Bạn có chắc chắn muốn xóa mục này?",
+    "actions": {
+      "view": "Xem",
+      "delete": "Xóa"
+    }
+  },
+  "roles_list": {
+    "title": "Vai trò & Phân quyền",
+    "description": "Quản lý vai trò và gán quyền chi tiết",
+    "search_placeholder": "Tìm vai trò..."
+  },
+  "role": {
+    "create_new": "Tạo vai trò mới",
+    "system": "Hệ thống",
+    "no_description": "Không có mô tả",
+    "user_count": "{count} người dùng",
+    "tabs": {
+      "list": "Danh sách vai trò",
+      "group": "Nhóm vai trò"
+    },
+    "list": {
+      "title": "Tất cả vai trò",
+      "desc": "Xem và quản lý các vai trò riêng lẻ trong hệ thống",
+      "table": {
+        "columns": {
+          "id": "ID",
+          "information": "Thông tin",
+          "createdAt": "Tạo lúc",
+          "action": "Hành động"
+        },
+        "empty_placeholder": "Chưa có vai trò nào trong hệ thống",
+        "search_placeholder": "Tìm vai trò theo tên hoặc mô tả..."
+      }
+    },
+    "group": {
+      "title": "Nhóm vai trò",
+      "desc": "Gom nhóm nhiều vai trò để gán nhanh cho người dùng",
+      "create_new": "Tạo nhóm mới",
+      "no_description": "Không có mô tả",
+      "user_count": "{count} người dùng",
+      "role_count": "{count} vai trò",
+      "table": {
+        "columns": {
+          "id": "ID",
+          "information": "Thông tin nhóm",
+          "roleCount": "Vai trò",
+          "createdAt": "Tạo lúc",
+          "action": "Hành động"
+        },
+        "empty_placeholder": "Chưa tạo nhóm vai trò nào",
+        "search_placeholder": "Tìm nhóm vai trò theo tên..."
+      }
+    }
+  },
+  "role_detail": {
+    "pageTitle": "Vai trò: {roleName}",
+    "pageDesc": "Chỉnh sửa thông tin vai trò và quyền hạn",
+    "backToList": "Quay lại danh sách",
+    "tabOverview": "Tổng quan",
+    "tabPermissions": "Quyền hạn"
+  },
+  "role_overview": {
+    "title": "Tổng quan vai trò",
+    "description": "Thông tin cơ bản và cài đặt của vai trò này",
+    "name_label": "Tên vai trò",
+    "description_label": "Mô tả",
+    "created": "Tạo lúc:",
+    "updated": "Cập nhật lần cuối:",
+    "saving": "Đang lưu...",
+    "save": "Lưu thay đổi",
+    "system_role_note": "Đây là vai trò hệ thống được bảo vệ, không thể chỉnh sửa",
+    "system_protected": "Vai trò hệ thống được bảo vệ"
+  },
+  "permissions_editor": {
+    "title": "Cấu hình quyền hạn",
+    "description": "Thiết lập những gì vai trò này có thể làm",
+    "saving": "Đang lưu...",
+    "save_changes": "Lưu thay đổi"
+  },
+  "permission_groups": {
+    "dashboard": "Dashboard",
+    "user_management": "Quản lý người dùng",
+    "event_management": "Quản lý sự kiện",
+    "event_card_management": "Quản lý thẻ sự kiện",
+    "event_card_template": "Mẫu thiết kế thẻ sự kiện"
+  },
+  "permission_items": {
+    "view": "Xem",
+    "edit": "Chỉnh sửa",
+    "approve": "Phê duyệt",
+    "category_crud": "Quản lý danh mục (CRUD)",
+    "create": "Tạo mới",
+    "update": "Cập nhật",
+    "delete": "Xóa",
+    "scan": "Scan / Check-in",
+    "assign_member": "Chỉ định thành viên",
+    "remove_member": "Xóa chỉ định thành viên"
+  }
+}

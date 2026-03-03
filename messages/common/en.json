@@ -89,7 +89,7 @@
   },
   "sidebar": {
     "dashboard": {
-      "title": "Dashboard",
+      "title": "General",
       "items": {
         "dashboard": "Dashboard"
       }
@@ -105,7 +105,15 @@
       "items": {
         "categoryList": "Category List",
         "eventList": "Event List",
-        "cardList": "Invitation Card List"
+        "eventTemplates": "Invite Templates"
+      }
+    },
+    "systems": {
+      "title": "Systems",
+      "items": {
+        "roleManagement": "Role Management",
+        "systemConfig": "System Settings",
+        "dataTransfer": "Data Transfer"
       }
     }
   },

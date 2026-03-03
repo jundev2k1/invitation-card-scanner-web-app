@@ -1,9 +1,13 @@
 import {
   CalendarClockIcon,
-  ClipboardPenIcon,
+  FileOutputIcon,
   FolderOpenIcon,
-  LayoutDashboardIcon,
-  UsersIcon, type IconType
+  GaugeIcon,
+  LayoutTemplateIcon,
+  SettingsIcon,
+  ShieldUserIcon,
+  UsersIcon,
+  type IconType
 } from "@/icons";
 
 export interface PageInfo {
@@ -19,20 +23,27 @@ export interface SidebarGroupInfo {
 
 export const SIDEBAR_GROUPS: SidebarGroupInfo[] = [
   {
-    title: "common.sidebar.dashboard.title", items: [
-      { title: "common.sidebar.dashboard.items.dashboard", path: "/dashboard", icon: LayoutDashboardIcon },
+    title: "dashboard.title", items: [
+      { title: "dashboard.items.dashboard", path: "/dashboard", icon: GaugeIcon },
     ]
   },
   {
-    title: "common.sidebar.users.title", items: [
-      { title: "common.sidebar.users.items.userList", path: "/users", icon: UsersIcon },
+    title: "users.title", items: [
+      { title: "users.items.userList", path: "/users", icon: UsersIcon },
     ]
   },
   {
-    title: "common.sidebar.events.title", items: [
-      { title: "common.sidebar.events.items.categoryList", path: "/event-categories", icon: FolderOpenIcon, isDisabled: true },
-      { title: "common.sidebar.events.items.eventList", path: "/events", icon: CalendarClockIcon },
-      { title: "common.sidebar.events.items.cardList", path: "/invitation-cards", icon: ClipboardPenIcon },
+    title: "events.title", items: [
+      { title: "events.items.categoryList", path: "/event-categories", icon: FolderOpenIcon },
+      { title: "events.items.eventList", path: "/events", icon: CalendarClockIcon },
+      { title: "events.items.eventTemplates", path: "/event-templates", icon: LayoutTemplateIcon, isDisabled: true },
     ]
-  }
+  },
+  {
+    title: "systems.title", items: [
+      { title: "systems.items.dataTransfer", path: "/data-transfer", icon: FileOutputIcon, isDisabled: true },
+      { title: "systems.items.roleManagement", path: "/roles", icon: ShieldUserIcon },
+      { title: "systems.items.systemConfig", path: "/settings", icon: SettingsIcon, isDisabled: true },
+    ]
+  },
 ];

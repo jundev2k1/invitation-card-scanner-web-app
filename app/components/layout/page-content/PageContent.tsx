@@ -30,7 +30,7 @@ export const PageContent = ({
           {/* Breadcrumb */}
           {breadcrumbs.length > 0 && (
             <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-sm text-muted-foreground">
-              <Link href="/admin" className="hover:text-foreground transition-colors">
+              <Link href="/" className="hover:text-foreground transition-colors">
                 <HomeIcon className="h-4 w-4" />
               </Link>
               {breadcrumbs.map((crumb, index) => (
