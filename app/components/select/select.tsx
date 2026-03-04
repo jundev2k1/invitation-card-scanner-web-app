@@ -13,11 +13,12 @@ interface SelectProps {
   placeholder?: string;
   options: { label: string; value: string }[];
   className?: string;
+  disabled?: boolean;
 }
 
-export default function AppSelect({ value, onValueChange, placeholder, options, className }: SelectProps) {
+export default function AppSelect({ value, onValueChange, placeholder, options, className, disabled }: SelectProps) {
   return (
-    <Select value={value} onValueChange={onValueChange}>
+    <Select value={value} onValueChange={onValueChange} disabled={disabled}>
       <SelectTrigger className={cn("cursor-pointer", className)}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

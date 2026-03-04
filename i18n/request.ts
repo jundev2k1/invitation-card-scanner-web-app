@@ -16,7 +16,8 @@ async function getMessages(locale: Locale) {
     event: (await import(`../messages/event/${locale}.json`)).default,
     eventCategory: (await import(`../messages/event-categories/${locale}.json`)).default,
     permission: (await import(`../messages/permission/${locale}.json`)).default,
-    settings: (await import(`../messages/settings/${locale}.json`)).default
+    settings: (await import(`../messages/settings/${locale}.json`)).default,
+    dataTransfer: (await import(`../messages/data-transfer/${locale}.json`)).default
   }
 }
 

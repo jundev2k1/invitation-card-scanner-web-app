@@ -41,7 +41,7 @@ export const SIDEBAR_GROUPS: SidebarGroupInfo[] = [
   },
   {
     title: "systems.title", items: [
-      { title: "systems.items.dataTransfer", path: "/data-transfer", icon: FileOutputIcon, isDisabled: true },
+      { title: "systems.items.dataTransfer", path: "/data-transfer", icon: FileOutputIcon },
       { title: "systems.items.roleManagement", path: "/roles", icon: ShieldUserIcon },
       { title: "systems.items.systemConfig", path: "/settings", icon: SettingsIcon },
     ]
