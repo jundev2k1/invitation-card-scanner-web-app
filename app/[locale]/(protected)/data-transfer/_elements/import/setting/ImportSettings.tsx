@@ -1,6 +1,6 @@
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Separator } from "@/components";
 import { useTranslations } from "next-intl";
-import { SelectModule } from "../select-module/SelectModule";
+import { SelectModule } from "../../select-module/SelectModule";
 
 export const ImportSettings = () => {
   const t = useTranslations('dataTransfer');

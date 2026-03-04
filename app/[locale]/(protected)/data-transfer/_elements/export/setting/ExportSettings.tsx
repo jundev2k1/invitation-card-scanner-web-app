@@ -7,11 +7,12 @@ import {
   CardTitle,
   Separator
 } from "@/components";
-import { ChevronsRightIcon, EyeIcon, PlusIcon, RefreshIcon, SaveIcon } from "@/icons";
+import { ChevronsRightIcon, PlusIcon, RefreshIcon, SaveIcon } from "@/icons";
 import { cn } from "@/root/lib/utils";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useTranslations } from "next-intl";
+import { PreviewConfig } from "../../../_shared/preview/PreviewConfig";
 import { ExportConfig } from "../../../type";
 import { SelectModule } from "../../select-module/SelectModule";
 import { SortableExportItem } from "../SortableExportItem";
@@ -89,9 +90,7 @@ export const ExportSettings = () => {
                 >
                   {t('actions.reset')}
                 </Button>
-                <Button leftIcon={<EyeIcon />} variant="outline">
-                  {t('export.preview')}
-                </Button>
+                <PreviewConfig type="export" setting={configuredColumns} />
                 <Button leftIcon={<SaveIcon />} disabled={!isSettingChanges}>
                   {t('actions.save')}
                 </Button>

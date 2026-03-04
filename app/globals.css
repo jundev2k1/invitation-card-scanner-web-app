@@ -18,14 +18,44 @@ body.dark {
 
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded;
+  @apply bg-gray-300 rounded-lg;
 }
+
+::-webkit-scrollbar-track {
+    @apply bg-muted/50;
+  }
 
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-400;
+}
+
+.excel-scrollbar {
+  overflow: auto !important; 
+}
+
+.excel-scrollbar::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.excel-scrollbar::-webkit-scrollbar-track {
+  @apply bg-muted/30;
+}
+
+.excel-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-full border-2 border-solid border-transparent bg-clip-padding;
+}
+
+.excel-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}
+
+.excel-scrollbar::-webkit-scrollbar-corner {
+  @apply bg-muted/30;
 }
 
 .custom-time-input::-webkit-calendar-picker-indicator {
@@ -704,4 +734,58 @@ body.dark {
 
 #qr-reader img {
   display: none !important;
+}
+
+@layer components {
+  .excel-wrapper {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  .excel-wrapper > div {
+    height: 100% !important;
+    width: 100% !important;
+    overflow: auto !important;
+    display: block !important;
+    scrollbar-gutter: stable;
+  }
+
+  .excel-wrapper table {
+    border-separate: border-separate !important;
+    border-spacing: 0 !important;
+    min-width: max-content !important;
+    table-layout: fixed !important;
+  }
+
+  .excel-wrapper > div::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  .excel-wrapper > div::-webkit-scrollbar-track {
+    background: hsl(var(--muted) / 0.3);
+  }
+
+  .excel-wrapper > div::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 100px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .excel-wrapper > div::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+
+  .excel-wrapper > div::-webkit-scrollbar-corner {
+    background: hsl(var(--muted) / 0.3);
+  }
+}
+
+.dark .excel-container > div::-webkit-scrollbar-thumb {
+  @apply bg-slate-700 hover:bg-slate-600;
 }

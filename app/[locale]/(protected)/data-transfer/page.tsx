@@ -5,7 +5,7 @@ import { FileOutputIcon } from "@/icons";
 import { FileInputIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ExportSettings } from "./_elements/export/setting/ExportSettings";
-import { ImportSettings } from "./_elements/import/ImportSettings";
+import { ImportSettings } from "./_elements/import/setting/ImportSettings";
 
 export default function DataTransferPage() {
   const t = useTranslations("dataTransfer");

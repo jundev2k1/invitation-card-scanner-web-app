@@ -62,10 +62,10 @@ export interface ImportConfig {
   id: string | undefined;
   name: string;
   description?: string;
-  headerStartRow?: number;
-  dataStartRow?: number;
-  startColumn?: string;
-  endColumn?: string;
+  leftTopPos?: string;
+  leftBottomPos?: string;
+  rightTopPos?: string;
+  rightBottomPos?: string;
   columns: ImportColumn[];
 }
 
@@ -151,10 +151,6 @@ export const mockFetchImportConfigs: ImportConfig[] = [
     id: '6ba7b810-9dad-11d1-80b4-00c04fd430c8',
     name: 'Nhập danh sách danh mục sự kiện',
     description: 'Mô tả',
-    headerStartRow: 1,
-    dataStartRow: 2,
-    startColumn: 'A',
-    endColumn: 'B',
     columns: [
       { id: '6ba7b810-9dad-11d1-80b4-00c04fd430c9', matchingKey: 'parentId', alias: 'ID', order: 0, ignore: true },
       { id: '6ba7b810-9dad-11d1-80b4-00c04fd430ca', matchingKey: 'id', alias: 'Tiêu đề', order: 1, required: true },
@@ -169,10 +165,6 @@ export const mockFetchImportConfigs: ImportConfig[] = [
     id: '123e4567-e89b-12d3-a456-426614174000',
     name: 'Nhập danh sách thẻ sự kiện',
     description: 'Mô tả',
-    headerStartRow: 1,
-    dataStartRow: 2,
-    startColumn: 'A',
-    endColumn: 'B',
     columns: [
       { id: '123e4567-e89b-12d3-a456-426614174001', matchingKey: 'id', alias: 'as ID', order: 0 },
       { id: '123e4567-e89b-12d3-a456-426614174002', matchingKey: 'eventId', alias: 'as Event ID', order: 1 },
