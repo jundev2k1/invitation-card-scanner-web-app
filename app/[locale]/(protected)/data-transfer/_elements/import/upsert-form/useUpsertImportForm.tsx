@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ExportConfig, mockFetchExportConfigs, ModuleEnum } from "../../../type";
-import { InsertExportFormProps as InsertImportFormProps } from "./UpsertImportForm";
+import { InsertImportFormProps } from "./UpsertImportForm";
 
 const onFetchDetail = (id: string): Promise<ExportConfig | null> => {
   return new Promise((resolve) => {

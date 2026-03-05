@@ -1,38 +1,134 @@
 {
-  "title": "Cấu hình Import/Export File",
-  "desc": "Tùy chỉnh cách xuất và nhập dữ liệu cho từng module",
-  "enum": {
-    "module": {
-      "EVENT_CATEGORIES": "Danh mục sự kiện",
-      "EVENTS": "Sự kiện",
-      "EVENT_CARDS": "Thiệp mời sự kiện"
-    }
-  },
-  "moduleInput": {
-    "selectModule": "Chọn module",
-    "selectModulePlaceholder": "Chọn module",
-    "selectSetting": "Chọn cấu hình",
-    "selectSettingPlaceholder": "Chọn cấu hình"
-  },
+  "title": "Data Transfer",
+  "desc": "Export and import data configurations for events, categories, cards, and more.",
   "tabs": {
-    "export": "Xuất file",
-    "import": "Nhập file"
+    "export": "Export",
+    "import": "Import"
   },
   "export": {
-    "title": "Cấu hình Export File",
-    "desc": "Tùy chỉnh cách xuất dữ liệu cho từng module",
-    "available": "Các trường khả dụng",
-    "configured": "Cột xuất file",
-    "addCustom": "Thêm trường đặc biệt",
-    "preview": "Xem trước xuất file"
+    "title": "Export Configuration",
+    "desc": "Customize columns, order, aliases, and formats for exporting data.",
+    "available": "Available Fields",
+    "configured": "Configured Columns",
+    "noSettingSelected": "No export setting selected",
+    "pleaseSelectOrAddSetting": "Please select a module or add a new configuration.",
+    "addCustom": "Add Custom Field (coming soon)",
+    "preview": "Preview",
+    "previewNoConfig": "Please select a configuration to preview",
+    "noDescription": "No description for this configuration",
+    "settingName": "Setting Name",
+    "settingDescription": "Description",
+    "autoAddActionColumn": "Auto-add action column",
+    "autoAddActionColumnDesc": "This will automatically include an action column for processing.",
+    "totalColumns": "Total Columns",
+    "fields": "Fields",
+    "mappingPreview": "Mapping Preview",
+    "aliasLabel": "Alias",
+    "noSetAlias": "No alias set"
   },
   "import": {
-    "title": "Cấu hình nhập file",
-    "desc": "Thiết lập vùng dữ liệu, matching, và action"
+    "title": "Import Configuration",
+    "desc": "Define import columns, data range, ignored fields, and action column support.",
+    "step": {
+      "upload": "Upload & Detect",
+      "mapping": "Column Mapping",
+      "range": "Data Range",
+      "validate": "Validate & Save"
+    },
+    "upload": {
+      "title": "Upload Your File",
+      "desc": "Drag & drop a CSV or Excel file, or click to browse. We will auto-detect headers and suggest settings.",
+      "button": "Choose File",
+      "supported": "Supported formats: .csv, .xlsx, .xls",
+      "noFile": "No file selected",
+      "previewTitle": "File Preview (First 10 rows)"
+    },
+    "mapping": {
+      "title": "Map Columns",
+      "desc": "Match columns from your uploaded file to the target fields of the module.",
+      "sourceColumns": "Source Columns (from file)",
+      "targetFields": "Target Fields",
+      "unmapped": "Unmapped",
+      "autoMatch": "Apply Auto-Match",
+      "ignoreColumn": "Ignore this column",
+      "requiredField": "Required"
+    },
+    "range": {
+      "title": "Select Data Range",
+      "desc": "Click and drag on the grid to select the actual data area (exclude headers, footers, or irrelevant rows).",
+      "autoDetect": "Auto Detect Range",
+      "currentRange": "Current Range",
+      "actionColumn": "Auto-add action column",
+      "actionDesc": "Adds an _action column to support create/update/delete/skip operations during import.",
+      "dataRange": "Data Range",
+      "ignoredColumns": "Ignored Columns"
+    },
+    "validate": {
+      "title": "Validation Summary",
+      "desc": "Review potential issues before saving the configuration.",
+      "noIssues": "No validation issues found. Ready to save.",
+      "missingRequired": "Some required fields are missing data in rows",
+      "formatMismatch": "Data format mismatch detected in some cells",
+      "duplicateKeys": "Potential duplicate keys detected",
+      "ignoredCount": "Ignored columns",
+      "rowCount": "Rows in selected range"
+    },
+    "ignored": "Ignored",
+    "rangeStart": "Start",
+    "autoAddAction": "Auto-add action column (_action)",
+    "autoAddActionDesc": "Include an _action column for import instructions (create/update/delete/skip)."
+  },
+  "moduleInput": {
+    "selectModule": "Select Module",
+    "selectModulePlaceholder": "Choose data module...",
+    "selectSetting": "Select Setting",
+    "selectSettingPlaceholder": "Choose an existing setting..."
   },
   "actions": {
-    "save": "Lưu cấu hình",
-    "preview": "Xem trước",
-    "reset": "Làm mới"
+    "add": "Add",
+    "save": "Save",
+    "reset": "Reset",
+    "preview": "Preview"
+  },
+  "module": {
+    "EVENT_CATEGORIES": "Event Categories",
+    "EVENTS": "Events",
+    "EVENT_CARDS": "Event Cards"
+  },
+  "fields": {
+    "EVENTS": {
+      "id": "ID",
+      "categoryId": "Category ID",
+      "status": "Status",
+      "title": "Title",
+      "description": "Description",
+      "startAt": "Start Time",
+      "endAt": "End Time",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At"
+    },
+    "EVENT_CATEGORIES": {
+      "id": "ID",
+      "parentId": "Parent Category ID",
+      "name": "Name",
+      "slug": "Slug",
+      "description": "Description",
+      "imageUrl": "Image URL",
+      "status": "Status",
+      "sortOrder": "Sort Order",
+      "level": "Level"
+    },
+    "EVENT_CARDS": {
+      "id": "Card ID",
+      "eventId": "Event ID",
+      "guestName": "Guest Name",
+      "accessToken": "Access Token",
+      "isUsed": "Is Used",
+      "firstScannedAt": "First Scanned At",
+      "status": "Status",
+      "notes": "Notes",
+      "updatedAt": "Updated At",
+      "createdAt": "Created At"
+    }
   }
 }

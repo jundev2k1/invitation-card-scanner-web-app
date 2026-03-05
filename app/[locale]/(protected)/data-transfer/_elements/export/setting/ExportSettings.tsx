@@ -42,14 +42,16 @@ export const ExportSettings = () => {
       </CardHeader>
 
       <CardContent className="flex flex-col min-h-160">
-        <SelectModule mode="export" onModuleChange={(conf) => onSettingChange(conf as ExportConfig)} />
+        <SelectModule 
+          mode="export" 
+          onModuleChange={(conf) => onSettingChange(conf as ExportConfig)} 
+        />
 
         <Separator className="my-4" />
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-5 grow">
-          {/* Left: Available fields */}
           <div className="lg:col-span-2 flex flex-col">
-            <h3 className="mb-4 text-lg font-semibold">{t('export.available')}</h3>
+            <h3 className="mb-4 text-lg font-semibold">{t("export.available")}</h3>
             <div className="space-y-2 rounded-lg border p-4 h-full">
               {availableFields.map((field) => (
                 <div
@@ -57,12 +59,8 @@ export const ExportSettings = () => {
                   className={cn("flex items-center justify-between rounded-md border bg-muted/40 p-3")}
                 >
                   <div>
-                    <div className="font-medium">
-                      {field.matchingKey}
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      {field.alias}
-                    </div>
+                    <div className="font-medium">{field.matchingKey}</div>
+                    <div className="text-sm text-muted-foreground">{field.alias}</div>
                   </div>
                   <Button
                     rightIcon={<ChevronsRightIcon />}
@@ -70,17 +68,16 @@ export const ExportSettings = () => {
                     size="sm"
                     onClick={() => onAddColumn(field)}
                   >
-                    Add
+                    {t("actions.add")}
                   </Button>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right: Configured columns - sortable */}
           <div className="lg:col-span-3 flex flex-col">
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-lg font-semibold">{t('export.configured')}</h3>
+              <h3 className="text-lg font-semibold">{t("export.configured")}</h3>
               <div className="flex gap-2">
                 <Button
                   leftIcon={<RefreshIcon />}
@@ -88,11 +85,14 @@ export const ExportSettings = () => {
                   onClick={onReset}
                   disabled={!isSettingChanges}
                 >
-                  {t('actions.reset')}
+                  {t("actions.reset")}
                 </Button>
-                <PreviewConfig type="export" setting={configuredColumns} />
-                <Button leftIcon={<SaveIcon />} disabled={!isSettingChanges}>
-                  {t('actions.save')}
+                <PreviewConfig type="export" setting={configuredColumns} disabled={!configuredColumns} />
+                <Button 
+                  leftIcon={<SaveIcon />} 
+                  disabled={!isSettingChanges}
+                >
+                  {t("actions.save")}
                 </Button>
               </div>
             </div>
@@ -120,22 +120,29 @@ export const ExportSettings = () => {
                 </SortableContext>
               </DndContext>
             )}
+
             {isEmptySetting && (
               <div className="flex flex-col items-center justify-center h-full">
                 <div className="p-12 bg-gray-50 dark:bg-gray-800 border border-dashed rounded-lg text-center">
-                  <p className="text-lg font-medium">Chưa chọn setting</p>
-                  <span className="text-sm">Vui lòng chọn hoặc thêm mới setting...</span>
+                  <p className="text-lg font-medium">{t("export.noSettingSelected")}</p>
+                  <span className="text-sm">{t("export.pleaseSelectOrAddSetting")}</span>
                 </div>
               </div>
             )}
+
             {!isEmptySetting && (
-              <Button leftIcon={<PlusIcon />} variant="outline" className="mt-4 w-full" disabled>
-                {t('export.addCustom')}
+              <Button 
+                leftIcon={<PlusIcon />} 
+                variant="outline" 
+                className="mt-4 w-full" 
+                disabled
+              >
+                {t("export.addCustom")}
               </Button>
             )}
           </div>
         </div>
       </CardContent>
-    </Card >
+    </Card>
   );
 };

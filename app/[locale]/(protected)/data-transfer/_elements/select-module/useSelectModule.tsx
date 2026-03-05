@@ -9,9 +9,9 @@ export const useSelectModule = ({ mode, onModuleChange }: SelectModuleProps) => 
   const [selectedModuleOption, setSelectedModuleOption] = useState<ImportConfig | ExportConfig | null>(null);
 
   const moduleOptions = [
-    { label: t(`enum.module.EVENT_CATEGORIES`), value: ModuleEnum.EVENT_CATEGORIES.toString() },
-    { label: t(`enum.module.EVENTS`), value: ModuleEnum.EVENTS.toString() },
-    { label: t(`enum.module.EVENT_CARDS`), value: ModuleEnum.EVENT_CARDS.toString() },
+    { label: t(`module.EVENT_CATEGORIES`), value: ModuleEnum.EVENT_CATEGORIES.toString() },
+    { label: t(`module.EVENTS`), value: ModuleEnum.EVENTS.toString() },
+    { label: t(`module.EVENT_CARDS`), value: ModuleEnum.EVENT_CARDS.toString() },
   ];
 
   useEffect(() => {

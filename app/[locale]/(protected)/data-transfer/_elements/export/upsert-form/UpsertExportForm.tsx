@@ -1,4 +1,10 @@
-import { Button, Field, FieldGroup, FormCheckbox, FormTextBox } from "@/components";
+import {
+  Button,
+  Field,
+  FieldGroup,
+  FormCheckbox,
+  FormTextBox,
+} from "@/components";
 import { useTranslations } from "next-intl";
 import { FormProvider } from "react-hook-form";
 import { ExportConfig, ModuleEnum } from "../../../type";
@@ -11,7 +17,8 @@ export interface InsertExportFormProps {
 }
 
 export const UpsertExportForm = ({ module, setting, onSuccess }: InsertExportFormProps) => {
-  const tActions = useTranslations('common.actions');
+  const t = useTranslations("dataTransfer");
+  const tActions = useTranslations("common.actions");
 
   const { form, onSubmit } = useUpsertExportForm({ module, setting, onSuccess });
 
@@ -21,20 +28,38 @@ export const UpsertExportForm = ({ module, setting, onSuccess }: InsertExportFor
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Field orientation="responsive" className="flex">
-              <FormTextBox name="name" label="Tên cấu hình" isRequired containerClassName="md:min-w-100" />
-              <FormTextBox name="description" label="Ghi chú" containerClassName="grow" />
+              <FormTextBox 
+                name="name" 
+                label={t("export.settingName")} 
+                isRequired 
+                containerClassName="md:min-w-100" 
+              />
+              <FormTextBox 
+                name="description" 
+                label={t("export.settingDescription")} 
+                containerClassName="grow" 
+              />
             </Field>
+
             <Field orientation="responsive" className="gap-1 justify-between">
               <div className="flex flex-col gap-1">
-                <FormCheckbox name="includesActionColumn" label="Tự động thêm cột hành động" />
+                <FormCheckbox 
+                  name="includesActionColumn" 
+                  label={t("export.autoAddActionColumn")} 
+                />
                 <p className="text-xs text-muted-foreground italic">
-                  *Chọn cấu hình này sẽ tự động thêm cột hành động hỗ trợ import dữ liệu.
+                  {t("export.autoAddActionColumnDesc")}
                 </p>
               </div>
-              <Button type="submit">{!setting ? tActions('add') : tActions('save')}</Button>
+
+              <Button type="submit">
+                {!setting ? tActions("add") : tActions("save")}
+              </Button>
             </Field>
           </FieldGroup>
+
           <Field>
+            {/* Reserved for future fields if needed */}
           </Field>
         </form>
       </FormProvider>

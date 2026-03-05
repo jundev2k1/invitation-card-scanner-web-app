@@ -1,16 +1,17 @@
-import { Button, Field, FieldGroup, FormCheckbox, FormTextBox } from "@/components";
-import { useTranslations } from "next-intl";
-import { FormProvider } from "react-hook-form";
-import { ImportConfig, ModuleEnum } from "../../../type";
-import { useUpsertImportForm } from "./useUpsertImportForm";
+import { Button, Field, FieldGroup, FormCheckbox, FormTextBox } from '@/components';
+import { useTranslations } from 'next-intl';
+import { FormProvider } from 'react-hook-form';
+import { ImportConfig, ModuleEnum } from '../../../type';
+import { useUpsertImportForm } from './useUpsertImportForm';
 
-export interface InsertExportFormProps {
+export interface InsertImportFormProps {
   module: ModuleEnum;
   setting: ImportConfig | null;
   onSuccess: (setting: ImportConfig) => void;
 }
 
-export const UpsertImportForm = ({ module, setting, onSuccess }: InsertExportFormProps) => {
+export const UpsertImportForm = ({ module, setting, onSuccess }: InsertImportFormProps) => {
+  const t = useTranslations('dataTransfer');
   const tActions = useTranslations('common.actions');
 
   const { form, onSubmit } = useUpsertImportForm({ module, setting, onSuccess });
@@ -20,22 +21,32 @@ export const UpsertImportForm = ({ module, setting, onSuccess }: InsertExportFor
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
-            <Field orientation="responsive" className="flex">
-              <FormTextBox name="name" label="Tên cấu hình" isRequired containerClassName="md:min-w-100" />
-              <FormTextBox name="description" label="Ghi chú" containerClassName="grow" />
+            <Field orientation="responsive" className="flex gap-4">
+              <FormTextBox
+                name="name"
+                label={t('export.settingName')}
+                isRequired
+                containerClassName="md:min-w-100"
+              />
+              <FormTextBox
+                name="description"
+                label={t('export.settingDescription')}
+                containerClassName="grow"
+              />
             </Field>
-            <Field orientation="responsive" className="gap-1 justify-between">
+
+            <Field orientation="responsive" className="gap-4 justify-between items-start">
               <div className="flex flex-col gap-1">
-                <FormCheckbox name="includesActionColumn" label="Tự động thêm cột hành động" />
+                <FormCheckbox name="includesActionColumn" label={t('import.autoAddAction')} />
                 <p className="text-xs text-muted-foreground italic">
-                  *Chọn cấu hình này sẽ tự động thêm cột hành động hỗ trợ import dữ liệu.
+                  {t('import.autoAddActionDesc')}
                 </p>
               </div>
-              <Button type="submit">{!setting ? tActions('add') : tActions('save')}</Button>
+              <Button type="submit">
+                {!setting ? tActions('add') : tActions('save')}
+              </Button>
             </Field>
           </FieldGroup>
-          <Field>
-          </Field>
         </form>
       </FormProvider>
     </div>

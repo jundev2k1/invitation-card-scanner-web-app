@@ -2,8 +2,10 @@ import { Combobox, Field, FieldGroup, FieldLabel, Select } from "@/components";
 import { FolderSymlinkIcon } from "@/icons";
 import { useTranslations } from "next-intl";
 import React from "react";
+import { PreviewConfig } from "../../_shared/preview/PreviewConfig";
 import { ExportConfig, ImportConfig, SelectModuleChangeFn } from "../../type";
 import { UpsertExportForm } from "../export/upsert-form/UpsertExportForm";
+import { UpsertImportForm } from "../import/upsert-form/UpsertImportForm";
 import { useSelectModule } from "./useSelectModule";
 
 export type SelectModuleProps = {
@@ -79,10 +81,15 @@ export const SelectModule = React.memo(({
             placeholder={t('selectSettingPlaceholder')}
           />
         )}
+        <PreviewConfig setting={selectedModuleOption} type={mode} disabled={!selectedModuleOption} />
       </div>
 
       {mode === 'import' && (
-        <>Import form</>
+        <UpsertImportForm
+          module={selectedModule}
+          setting={selectedModuleOption as ImportConfig}
+          onSuccess={onInsertSuccess}
+        />
       )}
 
       {mode === 'export' && (

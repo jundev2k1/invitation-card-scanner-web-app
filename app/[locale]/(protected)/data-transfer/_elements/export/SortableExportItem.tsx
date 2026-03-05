@@ -1,7 +1,9 @@
 import { Button, TextBox } from "@/components";
 import { GripVerticalIcon, TrashIcon } from "@/icons";
+import { cn } from "@/lib/utils";
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from "@dnd-kit/utilities";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { ExportColumn } from "../../type";
 
@@ -12,6 +14,7 @@ interface SortableExportItemProps {
 }
 
 export function SortableExportItem({ column, onEditAlias, onRemove }: SortableExportItemProps) {
+  const t = useTranslations('dataTransfer');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [alias, setAlias] = useState<string>(column.alias || '');
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
@@ -53,11 +56,11 @@ export function SortableExportItem({ column, onEditAlias, onRemove }: SortableEx
         <div className="font-medium">{column.matchingKey}</div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <span>
-            Alias:
+            {t('export.aliasLabel')}:
           </span>
           {!isEditing ? (
-            <span onClick={onEditMode}>
-              {alias || '-'}
+            <span onClick={onEditMode} className={cn("cursor-pointer", !alias && 'italic text-xs')}>
+              {alias || `(${t('export.noSetAlias')})`}
             </span>
           ) : (
             <TextBox

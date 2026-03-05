@@ -9,15 +9,16 @@ import { PreviewTable } from "./table/PreviewTable";
 interface PreviewConfigProps {
   setting: ExportConfig | ImportConfig | null,
   type: 'export' | 'import'
+  disabled?: boolean
 }
 
-export const PreviewConfig = ({ setting, type }: PreviewConfigProps) => {
+export const PreviewConfig = ({ setting, type, disabled }: PreviewConfigProps) => {
   const t = useTranslations("dataTransfer");
   const [open, setOpen] = useState<boolean>(false);
 
   return (
     <>
-      <Button leftIcon={<EyeIcon />} onClick={() => setOpen(true)} variant="outline">
+      <Button leftIcon={<EyeIcon />} onClick={() => setOpen(true)} variant="outline" disabled={disabled}>
         {t('export.preview')}
       </Button>
 
@@ -28,7 +29,7 @@ export const PreviewConfig = ({ setting, type }: PreviewConfigProps) => {
             <DialogDescription>{setting?.description}</DialogDescription>
           </div>
 
-          <div className="flex-1 overflow-hidden p-6">
+          <div className="flex flex-col overflow-hidden p-6">
             <PreviewHeader config={setting} type={type} />
             <PreviewTable config={setting as ExportConfig} type={type} />
           </div>

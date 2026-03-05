@@ -15,6 +15,7 @@ export * from "./layout";
 export * from "./loading";
 export * from "./map";
 export * from "./qr";
+export * from "./scroll-area";
 export * from "./select";
 export * from "./separator";
 export * from "./skeleton";
