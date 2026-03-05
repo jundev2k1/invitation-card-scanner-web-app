@@ -60,13 +60,16 @@ export const useRangeStep = ({ config, parsedData }: UseRangeStepProps) => {
   return {
     rangeStart,
     rangeEnd,
+    setRangeStart,
+    setRangeEnd,
+    includesActionColumn,
+    setIncludesActionColumn,
+    toggleActionColumn,
     isSelecting,
     handleMouseDown,
     handleMouseOver,
     handleMouseUp,
     handleAutoDetect,
     handleReset,
-    includesActionColumn,
-    toggleActionColumn,
   };
 };

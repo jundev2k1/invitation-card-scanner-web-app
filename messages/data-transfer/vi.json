@@ -54,14 +54,31 @@
       "requiredField": "Bắt buộc"
     },
     "range": {
-      "title": "Chọn Vùng Dữ liệu",
-      "desc": "Nhấn và kéo trên lưới để chọn vùng dữ liệu thực tế (loại trừ header, footer hoặc phần không liên quan).",
-      "autoDetect": "Tự động Phát hiện Vùng",
-      "currentRange": "Vùng hiện tại",
+      "title": "Chọn Phạm Vi Dữ Liệu",
+      "desc": "Nhấn và kéo trên lưới để chọn vùng dữ liệu thực tế (loại trừ tiêu đề, chân trang hoặc các dòng không liên quan).",
+      "autoDetect": "Tự Động Phát Hiện Phạm Vi",
+      "currentRange": "Phạm Vi Hiện Tại",
       "actionColumn": "Tự động thêm cột hành động",
       "actionDesc": "Thêm cột _action để hỗ trợ tạo/cập nhật/xóa/bỏ qua khi nhập dữ liệu.",
-      "dataRange": "Vùng dữ liệu",
-      "ignoredColumns": "Cột bị bỏ qua"
+      "dataRange": "Phạm Vi Dữ Liệu",
+      "ignoredColumns": "Cột Bị Bỏ Qua",
+      "rangeStart": "Bắt đầu (ví dụ: A2)",
+      "rangeEnd": "Kết thúc (e.g., A10 - G10)",
+      "rowsCount": "Số dòng",
+      "rows": "dòng",
+      "columnsCount": "Số cột",
+      "columns": "cột",
+      "autoY": "Đặt đến cuối tài liệu",
+      "autoYDesc": "Ví trí điểm cuối sẽ được tự động quét đến cuối tài liệu",
+      "includeActionColumn": "Có bao gồm cột hành động?",
+      "actionColumnDesc": "Nếu không check thì ứng dụng sẽ hiểu cột (_action) là một cột bình thường (có thể gây lỗi)",
+      "howTo": {
+        "title": "Hướng dẫn chọn phạm vi",
+        "clickDrag": "Nhấn chuột trái và kéo để chọn vùng dữ liệu nhanh chóng.",
+        "shiftClick": "Nhấn Shift + click để mở rộng vùng chọn từ ô đang focus.",
+        "autoDetectTip": "Nút \"Tự động phát hiện\" sẽ thử đoán vùng dữ liệu dựa trên nội dung có sẵn (thường bắt đầu từ A2).",
+        "actionColumnTip": "Bật tùy chọn này nếu tệp của bạn có cột hướng dẫn hành động (create / update / delete / skip)."
+      }
     },
     "validate": {
       "title": "Tóm tắt Kiểm tra",

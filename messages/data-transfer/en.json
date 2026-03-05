@@ -61,7 +61,24 @@
       "actionColumn": "Auto-add action column",
       "actionDesc": "Adds an _action column to support create/update/delete/skip operations during import.",
       "dataRange": "Data Range",
-      "ignoredColumns": "Ignored Columns"
+      "ignoredColumns": "Ignored Columns",
+      "rangeStart": "Start (e.g., A2 - G2)",
+      "rangeEnd": "End (e.g., A10 - G10)",
+      "rowsCount": "Row count",
+      "rows": "rows",
+      "columnsCount": "Column count",
+      "columns": "columns",
+      "autoY": "Auto set to last row",
+      "autoYDesc": "Auto-detect the last row of data in the file",
+      "includeActionColumn": "Include action column?",
+      "actionColumnDesc": "If not checked, the application will treat it (_action) as a normal column (which may cause errors)",
+      "howTo": {
+        "title": "Range selection guide",
+        "clickDrag": "Left-click and drag to quickly select the data area.",
+        "shiftClick": "Shift + click to expand the selection from the focused cell.",
+        "autoDetectTip": "The \"Auto Detect\" button will try to guess the data area based on existing content (usually starting from A2).",
+        "actionColumnTip": "Enable this option if your file contains an action instruction column (create / update / delete / skip)."
+      }
     },
     "validate": {
       "title": "Validation Summary",
