@@ -21,7 +21,7 @@ export const UpsertImportForm = ({ module, setting, onSuccess }: InsertImportFor
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
-            <Field orientation="responsive" className="flex gap-4">
+            <Field orientation="responsive" className="flex">
               <FormTextBox
                 name="name"
                 label={t('export.settingName')}
