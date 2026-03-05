@@ -66,6 +66,7 @@ export interface ImportConfig {
   leftBottomPos?: string;
   rightTopPos?: string;
   rightBottomPos?: string;
+  includesActionColumn?: boolean;
   columns: ImportColumn[];
 }
 
@@ -91,13 +92,15 @@ type ModuleDtoMap = {
 type ColumnConfigType = {
   [K in keyof ModuleDtoMap]: {
     key: keyof ModuleDtoMap[K];
+    required?: boolean;
+    ignore?: boolean;
   }[];
 };
 
 export const columnConfigs: ColumnConfigType = {
   [ModuleEnum.EVENT_CATEGORIES]: [
     { key: 'parentId' },
-    { key: 'id' },
+    { key: 'id', required: true },
     { key: 'name' },
     { key: 'slug' },
     { key: 'description' },
@@ -107,7 +110,7 @@ export const columnConfigs: ColumnConfigType = {
     { key: 'level' },
   ],
   [ModuleEnum.EVENTS]: [
-    { key: 'id' },
+    { key: 'id', required: true },
     { key: 'categoryId' },
     { key: 'status' },
     { key: 'title' },
@@ -118,7 +121,7 @@ export const columnConfigs: ColumnConfigType = {
     { key: 'updatedAt' },
   ],
   [ModuleEnum.EVENT_CARDS]: [
-    { key: 'id' },
+    { key: 'id', required: true },
     { key: 'eventId' },
     { key: 'guestName' },
     { key: 'accessToken' },

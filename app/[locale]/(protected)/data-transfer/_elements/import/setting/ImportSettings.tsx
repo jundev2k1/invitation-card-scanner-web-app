@@ -33,7 +33,7 @@ export const ImportSettings = () => {
     {
       value: 'mapping',
       label: t('import.step.mapping'),
-      content: <MappingStep />,
+      content: <MappingStep config={selectedConfig} parsedHeaders={['ID', 'Title', 'Date', 'Status']} />,
     },
     {
       value: 'range',
@@ -43,7 +43,7 @@ export const ImportSettings = () => {
     {
       value: 'validate',
       label: t('import.step.validate'),
-      content: <ValidateStep />,
+      content: <ValidateStep config={selectedConfig} />,
     },
   ];
 

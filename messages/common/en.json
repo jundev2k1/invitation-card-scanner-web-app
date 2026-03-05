@@ -73,7 +73,8 @@
     "cancel": "Cancel",
     "close" : "Close",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied",
+    "reset": "Reset"
   },
   "globalSearch": {
     "placeholder": {

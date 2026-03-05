@@ -73,7 +73,8 @@
     "cancel": "Hủy bỏ",
     "close" : "Đóng",
     "copy": "Sao chép",
-    "copied": "Đã sao chép"
+    "copied": "Đã sao chép",
+    "reset": "Đặt lại"
   },
   "globalSearch": {
     "placeholder": {

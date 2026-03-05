@@ -16,9 +16,23 @@ type PreviewTableProps = {
   config: ExportConfig | ImportConfig | null;
   type: 'export' | 'import';
   data?: any[];
+  interactive?: boolean;
+  onCellMouseDown?: (pos: string) => void;
+  onCellMouseOver?: (pos: string) => void;
+  selectedRangeStart?: string | null;
+  selectedRangeEnd?: string | null;
 };
 
-export const PreviewTable = ({ config, type, data = [] }: PreviewTableProps) => {
+export const PreviewTable = ({
+  config,
+  type,
+  data = [],
+  interactive = false,
+  onCellMouseDown,
+  onCellMouseOver,
+  selectedRangeStart,
+  selectedRangeEnd = null,
+}: PreviewTableProps) => {
   const t = useTranslations('dataTransfer');
   const [selectedCell, setSelectedCell] = useState<[string, string]>(['A', '1']);
   const [selCol, selRow] = selectedCell;
@@ -152,6 +166,11 @@ export const PreviewTable = ({ config, type, data = [] }: PreviewTableProps) => 
                     isImport &&
                     isCellInRange(pos, importConfig.leftTopPos, importConfig.rightBottomPos);
 
+                  const isInSelectedRange =
+                    selectedRangeStart &&
+                    selectedRangeEnd &&
+                    isCellInRange(pos, selectedRangeStart, selectedRangeEnd);
+
                   const rawValue = rowIndex > 0 ? data[rowIndex - 1]?.[colDef?.matchingKey ?? ''] : '';
                   const cellValue = formatValue(rawValue, format);
 
@@ -160,14 +179,17 @@ export const PreviewTable = ({ config, type, data = [] }: PreviewTableProps) => 
                       key={pos}
                       className="p-0 w-37.5 min-w-37.5"
                       onClick={() => setSelectedCell([char, rowNum])}
+                      onMouseDown={interactive ? () => onCellMouseDown?.(pos) : undefined}
+                      onMouseOver={interactive ? () => onCellMouseOver?.(pos) : undefined}
                     >
                       <div
                         className={cn(
                           'h-9 w-full border-b border-r px-3 flex items-center text-xs transition-colors cursor-cell relative',
                           getFormatStyles(format),
                           isActive && 'ring-2 ring-primary/60 ring-inset bg-primary/5 dark:bg-primary/10',
-                          inRange && !isActive && !isIgnoredRow && 'bg-emerald-100/60 dark:bg-emerald-900/30',
-                          !isActive && !inRange && !isIgnoredRow && 'hover:bg-muted/40',
+                          isInSelectedRange && 'bg-primary/20 border-primary/40 ring-1 ring-primary/30',
+                          inRange && !isActive && !isInSelectedRange && !isIgnoredRow && 'bg-emerald-100/60 dark:bg-emerald-900/30',
+                          !isActive && !inRange && !isInSelectedRange && !isIgnoredRow && 'hover:bg-muted/40',
                           isIgnoredRow && 'opacity-60'
                         )}
                       >
