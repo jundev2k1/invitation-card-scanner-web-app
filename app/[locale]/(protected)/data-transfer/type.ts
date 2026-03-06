@@ -57,17 +57,34 @@ export interface ImportColumn {
   required?: boolean;
 }
 
+export interface ImportTemplate {
+  name: string;
+  extension?: string;
+  data: string[][];
+}
+
+export interface ImportRange {
+  rangeStart?: string | null;
+  rangeEnd?: string | null;
+  autoScaleY?: boolean;
+}
+
+export interface ImportFileTemplate {
+  name: string;
+  extension: 'csv' | 'xlsx' | 'xls';
+  data: string[][];
+}
+
 export interface ImportConfig {
   module: ModuleEnum;
   id: string | undefined;
   name: string;
   description?: string;
-  leftTopPos?: string;
-  leftBottomPos?: string;
-  rightTopPos?: string;
-  rightBottomPos?: string;
-  includesActionColumn?: boolean;
+  fileTemplate?: ImportFileTemplate | null;
+  range?: ImportRange | null;
   columns: ImportColumn[];
+  createdAt?: Date | undefined;
+  updatedAt?: Date | undefined;
 }
 
 export type SelectModuleChangeFn = (
@@ -147,7 +164,22 @@ export const mockFetchImportConfigs: ImportConfig[] = [
       { id: '550e8400-e29b-41d4-a716-446655440005', matchingKey: 'startAt', order: 4 },
       { id: '550e8400-e29b-41d4-a716-446655440006', matchingKey: 'endAt', order: 5 },
       { id: '550e8400-e29b-41d4-a716-446655440007', matchingKey: 'createdAt', order: 6 },
-    ]
+    ],
+    fileTemplate: {
+      name: 'Danh sách sự kiện.xlsx',
+      extension: 'xlsx',
+      data: [
+        ['id', 'categoryId', 'title', 'description', 'startAt', 'endAt', 'createdAt'],
+        ['1', '2', '3', '4', '5', '6', '7'],
+        ['1', '2', '3', '4', '5', '6', '7'],
+        ['1', '2', '3', '4', '5', '6', '7'],
+      ]
+    },
+    range: {
+      rangeStart: 'A2',
+      rangeEnd: 'G10',
+      autoScaleY: false,
+    }
   },
   {
     module: ModuleEnum.EVENT_CATEGORIES,
@@ -161,7 +193,21 @@ export const mockFetchImportConfigs: ImportConfig[] = [
       { id: '6ba7b810-9dad-11d1-80b4-00c04fd430cc', matchingKey: 'slug', order: 3 },
       { id: '6ba7b810-9dad-11d1-80b4-00c04fd430cd', matchingKey: 'status', order: 4 },
       { id: '6ba7b810-9dad-11d1-80b4-00c04fd430ce', matchingKey: 'createdAt', order: 5 },
-    ]
+    ],
+    fileTemplate: {
+      name: 'Danh sách danh mục sự kiện.xlsx',
+      extension: 'xlsx',
+      data: [
+        ['id', 'name', 'slug', 'status', 'createdAt'],
+        ['1', '2', '3', '4', '5'],
+        ['1', '2', '3', '4', '5'],
+      ],
+    },
+    range: {
+      rangeStart: 'A2',
+      rangeEnd: 'E2',
+      autoScaleY: true,
+    }
   },
   {
     module: ModuleEnum.EVENT_CARDS,
@@ -179,7 +225,23 @@ export const mockFetchImportConfigs: ImportConfig[] = [
       { id: '123e4567-e89b-12d3-a456-426614174008', matchingKey: 'notes', order: 7 },
       { id: '123e4567-e89b-12d3-a456-426614174009', matchingKey: 'updatedAt', order: 8 },
       { id: '123e4567-e89b-12d3-a456-42661417400a', matchingKey: 'createdAt', order: 9 },
-    ]
+    ],
+    fileTemplate: {
+      name: 'Danh sách thẻ sự kiện.xlsx',
+      extension: 'xlsx',
+      data: [
+        ['_action', 'id', 'eventId', 'guestName', 'accessToken', 'isUsed', 'firstScannedAt', 'status', 'notes', 'updatedAt', 'createdAt'],
+        ['D', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+        ['UI', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      ]
+    },
+    range: {
+      rangeStart: 'A2',
+      rangeEnd: 'K2',
+      autoScaleY: true,
+    },
+    updatedAt: new Date('2023-01-01T00:00:00.000Z'),
+    createdAt: new Date('2023-01-01T00:00:00.000Z')
   }
 ];
 

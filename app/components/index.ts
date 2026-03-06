@@ -4,6 +4,7 @@ export * from "./badge";
 export * from "./button";
 export * from "./card";
 export * from "./combobox";
+export * from "./context-menu";
 export * from "./datetime";
 export * from "./dialog";
 export * from "./dropdown";

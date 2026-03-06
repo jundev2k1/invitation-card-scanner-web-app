@@ -41,7 +41,9 @@
       "button": "Choose File",
       "supported": "Supported formats: .csv, .xlsx, .xls",
       "noFile": "No file selected",
-      "previewTitle": "File Preview (First 10 rows)"
+      "previewTitle": "File Preview (First 10 rows)",
+      "noConfigSelectedTitle": "Import Configuration Required",
+      "noConfigSelectedDesc": "Please select an Import Configuration to enable and customize related settings"
     },
     "mapping": {
       "title": "Map Columns",
@@ -78,6 +80,16 @@
         "shiftClick": "Shift + click to expand the selection from the focused cell.",
         "autoDetectTip": "The \"Auto Detect\" button will try to guess the data area based on existing content (usually starting from A2).",
         "actionColumnTip": "Enable this option if your file contains an action instruction column (create / update / delete / skip)."
+      },
+      "context": {
+        "applySelection": "Apply Selection",
+        "applyWithAutoScale": "Apply with Auto-Scale",
+        "clearSelection": "Clear Selection"
+      },
+      "messages": {
+        "rangeCannotBeEqual": "Start and end range cannot be the same",
+        "invalidFormat": "Invalid cell format",
+        "mustBeSameRow": "Data range must be in the same row"
       }
     },
     "validate": {
@@ -92,8 +104,10 @@
     },
     "ignored": "Ignored",
     "rangeStart": "Start",
+    "rangeEnd": "End",
     "autoAddAction": "Auto-add action column (_action)",
-    "autoAddActionDesc": "Include an _action column for import instructions (create/update/delete/skip)."
+    "autoAddActionDesc": "Include an _action column for import instructions (create/update/delete/skip).",
+    "dataRange": "Data is read from"
   },
   "moduleInput": {
     "selectModule": "Select Module",

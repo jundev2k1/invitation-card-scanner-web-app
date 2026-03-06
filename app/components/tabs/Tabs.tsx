@@ -4,6 +4,7 @@ export interface TabItem {
   value: string;
   label: string | React.ReactNode;
   content?: React.ReactNode | undefined;
+  disabled?: boolean;
 }
 
 export interface TabsProps {
@@ -31,7 +32,7 @@ export default function AppTabs({
     <Tabs defaultValue={defaultValue || items[0]?.value} className={className} onValueChange={onChange}>
       <TabsList variant={variant} className={listClassName}>
         {items.map((tab) => (
-          <TabsTrigger key={tab.value} value={tab.value} className={itemClassName}>
+          <TabsTrigger key={tab.value} value={tab.value} className={itemClassName} disabled={tab.disabled}>
             {tab.label}
           </TabsTrigger>
         ))}

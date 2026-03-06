@@ -28,7 +28,6 @@ export const useDashboard = () => {
   const { start, end } = useMemo(() => getDateRange(period), [period]);
   const { isLoading, data } = useGetGeneralStats({ startDate: start, endDate: end });
 
-  console.log(data?.data);
   const onPeriodChange = useCallback((val: PeriodValues) => setPeriod(val), [period]);
 
   const periodOptions: TabItem[] = [

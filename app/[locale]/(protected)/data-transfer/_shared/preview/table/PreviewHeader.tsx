@@ -28,10 +28,10 @@ export const PreviewHeader = ({ config, type }: PreviewHeaderProps) => {
             )}
           </div>
           <div>
-            <h3 className="text-lg font-semibold leading-tight">{config.name}</h3>
+            <h3 className="text-lg font-semibold leading-tight text-primary">{config.name}</h3>
             <div className="mt-1 text-sm text-muted-foreground flex items-center gap-1.5">
               <InfoIcon className="w-3.5 h-3.5 shrink-0" />
-              <span className="truncate max-w-75">
+              <span className="truncate max-w-75 text-muted-foreground">
                 {config.description || t('export.noDescription')}
               </span>
             </div>
@@ -42,13 +42,13 @@ export const PreviewHeader = ({ config, type }: PreviewHeaderProps) => {
           <Badge variant="secondary" className="px-3 py-1 capitalize">
             {type} Mode
           </Badge>
-          {isImport && importConfig.leftTopPos && (
+          {isImport && importConfig?.range?.rangeStart && (
             <Badge
               variant="outline"
               className="border-emerald-500/50 text-emerald-700 bg-emerald-50/80 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-700/50"
             >
-              {t('import.dataRange')}: {importConfig.leftTopPos}
-              {importConfig.rightBottomPos && ` → ${importConfig.rightBottomPos}`}
+              {t('import.dataRange')}: {importConfig.range?.rangeStart}
+              {importConfig.range?.rangeEnd && ` → ${importConfig.range.rangeEnd}`}
             </Badge>
           )}
         </div>
@@ -63,7 +63,7 @@ export const PreviewHeader = ({ config, type }: PreviewHeaderProps) => {
           </span>
           <div className="flex items-center gap-2 text-sm font-mono">
             <LayoutGridIcon className="w-4 h-4 text-muted-foreground" />
-            <span>
+            <span className="text-primary">
               {config.columns?.length || 0} {t('export.fields')}
             </span>
           </div>
@@ -88,7 +88,7 @@ export const PreviewHeader = ({ config, type }: PreviewHeaderProps) => {
             {config.columns?.slice(0, 6).map((col) => (
               <span
                 key={col.id}
-                className="text-xs bg-muted/60 px-2 py-0.5 rounded border border-border/50 truncate max-w-30"
+                className="text-xs bg-muted/60 px-2 py-0.5 rounded border border-border/50 truncate max-w-30 text-muted-foreground"
               >
                 {col.alias || col.matchingKey}
               </span>

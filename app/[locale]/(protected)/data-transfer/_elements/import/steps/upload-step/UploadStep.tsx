@@ -1,11 +1,19 @@
-import { Alert, Button } from '@/components';
+import { Alert, Button, Input } from '@/components';
 import { FileTextIcon, InfoIcon, LoaderIcon, UploadIcon } from "@/icons";
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import { useDropzone } from 'react-dropzone';
+import { ImportFileTemplate } from '../../../../type';
 import { useUploadStep } from './useUploadStep';
 
-export const UploadStep = () => {
+export interface UploadStepProps {
+  templateSetting: ImportFileTemplate | null;
+  onTemplateChange: (data: ImportFileTemplate | null) => void;
+  noConfigSelected?: boolean;
+}
+
+export const UploadStep = ({ onTemplateChange, templateSetting, noConfigSelected }: UploadStepProps) => {
+  const tActions = useTranslations('common.actions');
   const t = useTranslations('dataTransfer.import.upload');
   const {
     file,
@@ -14,7 +22,9 @@ export const UploadStep = () => {
     parsedPreview,
     onDrop,
     handleReset,
-  } = useUploadStep();
+    headerRow,
+    onHeaderRowChange,
+  } = useUploadStep({ onTemplateChange, templateSetting });
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -25,6 +35,18 @@ export const UploadStep = () => {
     },
     maxFiles: 1,
   });
+
+  if (noConfigSelected) return (
+    <div className="h-full flex flex-col space-y-6 p-6">
+      <Alert
+        title={t('noConfigSelectedTitle')}
+        variant="destructive"
+        icon={<InfoIcon />}
+      >
+        {t('noConfigSelectedDesc')}
+      </Alert>
+    </div>
+  );
 
   return (
     <div className="h-full flex flex-col space-y-6 p-6">
@@ -59,7 +81,7 @@ export const UploadStep = () => {
             </div>
           </div>
           <Button variant="ghost" size="sm" onClick={handleReset}>
-            Remove
+            {tActions('delete')}
           </Button>
         </div>
       )}
@@ -87,18 +109,18 @@ export const UploadStep = () => {
           </div>
           <div className="max-h-80 overflow-auto">
             <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="bg-muted/70">
-                  {Object.keys(parsedPreview[0] || {}).map((key) => (
-                    <th key={key} className="border px-4 py-2 text-left font-medium">
-                      {key}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
               <tbody>
                 {parsedPreview.slice(0, 10).map((row, idx) => (
-                  <tr key={idx} className="border-t hover:bg-muted/30">
+                  <tr key={idx} className={cn("border-t hover:bg-muted/30", idx === headerRow && "bg-muted/70")}>
+                    <td className="border px-2 py-2 text-center">
+                      <Input
+                        className="cursor-pointer text-sm w-4 h-4"
+                        type="radio"
+                        name="setAsHeader"
+                        checked={headerRow === idx}
+                        onChange={() => onHeaderRowChange(idx)}
+                      />
+                    </td>
                     {Object.values(row).map((val, i) => (
                       <td key={i} className="border px-4 py-2">
                         {String(val ?? '')}

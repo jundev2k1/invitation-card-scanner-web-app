@@ -1,14 +1,28 @@
 "use client"
 
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-function Table({ className, ...props }: React.ComponentProps<"table">) {
+interface TableProps extends React.ComponentProps<"table"> {
+  containerClassName?: string;
+  containerRef?: React.RefObject<HTMLDivElement | null>;
+  containerTabIndex?: number;
+}
+
+function Table({
+  containerClassName,
+  containerRef,
+  containerTabIndex,
+  className,
+  ...props
+}: TableProps) {
   return (
     <div
+      ref={containerRef || undefined}
       data-slot="table-container"
-      className="relative w-full overflow-x-auto"
+      className={cn("relative w-full overflow-x-auto", containerClassName)}
+      tabIndex={containerTabIndex}
     >
       <table
         data-slot="table"
@@ -107,4 +121,5 @@ function TableCaption({
 export {
   Table, TableBody, TableCaption, TableCell, TableFooter,
   TableHead, TableHeader, TableRow
-}
+};
+

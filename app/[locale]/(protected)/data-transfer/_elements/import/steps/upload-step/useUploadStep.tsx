@@ -1,12 +1,14 @@
 import Papa from 'papaparse';
 import { useCallback, useState } from 'react';
 import * as XLSX from 'xlsx';
+import { UploadStepProps } from './UploadStep';
 
-export const useUploadStep = () => {
+export const useUploadStep = ({ onTemplateChange, templateSetting }: UploadStepProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
-  const [parsedPreview, setParsedPreview] = useState<any[]>([]);
+  const [parsedPreview, setParsedPreview] = useState<string[][]>([]);
+  const [headerRow, setHeaderRow] = useState<number>(0);
 
   const parseFile = useCallback(async (selectedFile: File) => {
     setIsLoading(true);
@@ -14,46 +16,52 @@ export const useUploadStep = () => {
     setParsedPreview([]);
 
     try {
-      let data: any[] = [];
+      const fileExtension = selectedFile.name.split('.').pop() || '';
+      if (!['csv', 'xlsx', 'xls'].includes(fileExtension)) throw new Error('CSV files are not supported.');
+
+      let rawData: string[][] = [];
 
       if (selectedFile.name.endsWith('.csv')) {
-        // Parse CSV
         const text = await selectedFile.text();
         const result = Papa.parse(text, {
-          header: true,
-          skipEmptyLines: true,
-          dynamicTyping: true,
+          header: false,
+          skipEmptyLines: 'greedy',
         });
-
-        if (result.errors.length > 0) {
-          throw new Error(result.errors[0].message);
-        }
-        data = result.data;
+        rawData = result.data as any[][];
       } else {
-        // Parse Excel
         const arrayBuffer = await selectedFile.arrayBuffer();
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
-        data = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
 
-        // Convert to array of objects with header as keys
-        const headers = data[0] as string[];
-        data = data.slice(1).map((row: any[]) =>
-          headers.reduce((obj, header, i) => {
-            obj[header] = row[i] ?? '';
-            return obj;
-          }, {} as Record<string, any>)
-        );
+        rawData = XLSX.utils.sheet_to_json(worksheet, {
+          header: 1,
+          defval: '',
+          blankrows: true
+        }) as string[][];
       }
 
-      setParsedPreview(data.slice(0, 20));
+      setParsedPreview(rawData);
+      onTemplateChange?.({
+        name: selectedFile.name,
+        extension: fileExtension as 'csv' | 'xlsx' | 'xls',
+        data: [...rawData.slice(headerRow, rawData.length)]
+      });
     } catch (err) {
       setParseError((err as Error).message || 'Failed to parse file');
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [onTemplateChange]);
+
+  const onHeaderRowChange = useCallback((row: number) => {
+    setHeaderRow(row);
+    onTemplateChange?.({
+      name: templateSetting?.name || '',
+      extension: templateSetting?.extension || 'xlsx',
+      data: [...parsedPreview.slice(row, parsedPreview.length)]
+    });
+  }, [parsedPreview, headerRow]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
@@ -67,6 +75,7 @@ export const useUploadStep = () => {
     setFile(null);
     setParsedPreview([]);
     setParseError(null);
+    onTemplateChange(null);
   }, []);
 
   return {
@@ -76,5 +85,7 @@ export const useUploadStep = () => {
     parsedPreview,
     onDrop,
     handleReset,
+    headerRow,
+    onHeaderRowChange,
   };
 };

@@ -44,7 +44,6 @@ export default function QRCodeScanner({ onScanSuccess, onScanError }: QRCodeScan
         paused={paused}
         // Called when a code is successfully detected
         onScan={(result) => {
-          console.log(result);
           if (result && result.length > 0) {
             onScanSuccess(result[0].rawValue);
             setIsActive(true);

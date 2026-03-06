@@ -8,44 +8,15 @@ import {
   Tabs
 } from '@/components';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
-import { ImportConfig } from '../../../type';
 import { SelectModule } from '../../select-module/SelectModule';
-import { MappingStep } from '../steps/mapping-step/MappingStep';
-import { RangeStep } from '../steps/range-step/RangeStep';
-import { UploadStep } from '../steps/upload-step/UploadStep';
-import { ValidateStep } from '../steps/validate-step/ValidateStep';
+import { useImportSettings } from './useImportSettings';
 
 export const ImportSettings = () => {
   const t = useTranslations('dataTransfer');
-  const [selectedConfig, setSelectedConfig] = useState<ImportConfig | null>(null);
-
-  const handleConfigChange = (conf: ImportConfig | null) => {
-    setSelectedConfig(conf);
-  };
-
-  const tabItems = [
-    {
-      value: 'upload',
-      label: t('import.step.upload'),
-      content: <UploadStep />,
-    },
-    {
-      value: 'mapping',
-      label: t('import.step.mapping'),
-      content: <MappingStep config={selectedConfig} parsedHeaders={['ID', 'Title', 'Date', 'Status']} />,
-    },
-    {
-      value: 'range',
-      label: t('import.step.range'),
-      content: <RangeStep config={selectedConfig} />,
-    },
-    {
-      value: 'validate',
-      label: t('import.step.validate'),
-      content: <ValidateStep config={selectedConfig} />,
-    },
-  ];
+  const {
+    tabItems,
+    handleConfigChange,
+  } = useImportSettings();
 
   return (
     <Card className="flex flex-col h-full">

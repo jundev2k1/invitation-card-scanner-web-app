@@ -37,7 +37,7 @@ export const AvatarUpload = React.memo(({ id, placeholder, avatarUrl = '', setAv
 
       Toast.showSuccess("Upload avatar successfully.");
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
     }
 
   }, [id, avatarUrl]);

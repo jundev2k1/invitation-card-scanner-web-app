@@ -4,42 +4,41 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
+  TableRow
 } from '@/components';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ExportConfig, ImportConfig } from '../../../type';
+import { PreviewContext } from './PreviewContext';
 import { useMappedColumns } from './useMappedColumns';
 
 type PreviewTableProps = {
   containerClassName?: string;
   config: ExportConfig | ImportConfig | null;
   type: 'export' | 'import';
-  data?: any[];
+  data?: string[][];
   interactive?: boolean;
-  onCellMouseDown?: (pos: string) => void;
-  onCellMouseOver?: (pos: string) => void;
+  onRangeChange?: (start: string | null, end: string | null) => void;
   selectedRangeStart?: string | null;
   selectedRangeEnd?: string | null;
+  autoScaleY?: boolean;
+  onAutoScaleYChange?: (autoScaleY: boolean) => void;
 };
 
-/**
- * Excel-like preview table for import/export mapping
- * Supports cell focus, range selection (drag + shift-click), and visual feedback
- */
 export const PreviewTable = ({
   containerClassName,
   config,
   type,
   data = [],
   interactive = false,
-  onCellMouseDown,
-  onCellMouseOver,
-  selectedRangeStart,
+  onRangeChange,
+  selectedRangeStart = null,
   selectedRangeEnd = null,
+  autoScaleY = false,
+  onAutoScaleYChange,
 }: PreviewTableProps) => {
-  const t = useTranslations('dataTransfer');
+  const tTranfer = useTranslations('dataTransfer');
 
   // Current focused cell (always present)
   const [focusCell, setFocusCell] = useState<string>('A1');
@@ -47,6 +46,139 @@ export const PreviewTable = ({
   // Selection range anchor and current end
   const [rangeStart, setRangeStart] = useState<string | null>(null);
   const [rangeEnd, setRangeEnd] = useState<string | null>(null);
+
+  // Handle smooth scrolling
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollState = useRef({
+    isSpaceDown: false,
+    isDragging: false,
+    startX: 0,
+    startY: 0,
+    scrollLeft: 0,
+    scrollTop: 0,
+  });
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const onGlobalKeyDown = async (e: KeyboardEvent) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        scrollState.current.isSpaceDown = true;
+        container.style.cursor = 'grab';
+
+        // Prevent scrolling
+        const target = e.target;
+        if (target instanceof Node && (target === document.body || container.contains(target))) {
+          e.preventDefault();
+        }
+      }
+    };
+
+    const onGlobalKeyUp = (e: KeyboardEvent) => {
+      if (e.code === 'Space') {
+        scrollState.current.isSpaceDown = false;
+        scrollState.current.isDragging = false;
+        container.style.cursor = 'cell';
+      }
+    };
+
+    const onGlobalMouseDown = (e: MouseEvent) => {
+      if (!scrollState.current.isSpaceDown
+        || e.button == 1
+        || e.button == 2
+      ) return;
+
+      scrollState.current.isDragging = true;
+      container.style.cursor = 'grab!important';
+
+      scrollState.current.startX = e.pageX - container.offsetLeft;
+      scrollState.current.startY = e.pageY - container.offsetTop;
+      scrollState.current.scrollLeft = container.scrollLeft;
+      scrollState.current.scrollTop = container.scrollTop;
+    };
+
+    const onGlobalMouseMove = (e: MouseEvent) => {
+      if (
+        !scrollState.current.isDragging
+        || !scrollState.current.isSpaceDown
+        || e.button == 1
+        || e.button == 2
+      ) return;
+      e.preventDefault();
+
+      const x = e.pageX - container.offsetLeft;
+      const y = e.pageY - container.offsetTop;
+      const walkX = x - scrollState.current.startX;
+      const walkY = y - scrollState.current.startY;
+
+      container.scrollLeft = scrollState.current.scrollLeft - walkX;
+      container.scrollTop = scrollState.current.scrollTop - walkY;
+    };
+
+    const onGlobalMouseUp = (e: MouseEvent) => {
+      if (e.button == 1 || e.button == 2) return;
+
+      scrollState.current.isDragging = false;
+      if (scrollState.current.isSpaceDown) container.style.cursor = 'grab';
+    };
+
+    // Add event listeners
+    window.addEventListener('keydown', onGlobalKeyDown);
+    window.addEventListener('keyup', onGlobalKeyUp);
+    container.addEventListener('mousedown', onGlobalMouseDown);
+    window.addEventListener('mousemove', onGlobalMouseMove);
+    window.addEventListener('mouseup', onGlobalMouseUp);
+
+    // Cleanup khi component unmount
+    return () => {
+      window.removeEventListener('keydown', onGlobalKeyDown);
+      window.removeEventListener('keyup', onGlobalKeyUp);
+      container.removeEventListener('mousedown', onGlobalMouseDown);
+      window.removeEventListener('mousemove', onGlobalMouseMove);
+      window.removeEventListener('mouseup', onGlobalMouseUp);
+    };
+  }, [config, data]);
+
+  useEffect(() => {
+    const onMoveOrCopyKeyDown = (e: KeyboardEvent) => {
+      if (!e.ctrlKey
+        && !e.shiftKey
+        && !e.altKey
+        && !scrollState.current.isSpaceDown
+        && !scrollState.current.isDragging
+      ) {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          setFocusCell((prev) => prev.replace(/^[A-Z]+/, (match) => {
+            const code = match.charCodeAt(0);
+            return code > 65 ? String.fromCharCode(code - 1) : match;
+          }));
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          setFocusCell((prev) => prev.replace(/^[A-Z]+/, (match) => {
+            const code = match.charCodeAt(0);
+            return code < 90 ? String.fromCharCode(code + 1) : match;
+          }));
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          setFocusCell((prev) => prev.replace(/[0-9]+$/, (match) => {
+            const val = Number(match);
+            return val > 1 ? String(val - 1) : match;
+          }));
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          setFocusCell((prev) => prev.replace(/[0-9]+$/, (match) => String(Number(match) + 1)));
+        }
+      }
+    }
+    window.addEventListener('keydown', onMoveOrCopyKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', onMoveOrCopyKeyDown);
+    }
+  }, [focusCell]);
 
   // Track drag state to enable range selection
   const [isDragging, setIsDragging] = useState(false);
@@ -132,6 +264,8 @@ export const PreviewTable = ({
         setIsDragging(false);
         setRangeStart(null);
         setRangeEnd(null);
+        scrollState.current.isDragging = false;
+        scrollState.current.isSpaceDown = false;
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -140,59 +274,122 @@ export const PreviewTable = ({
 
   // Handle single click or shift+click for range extension
   const handleCellClick = useCallback((pos: string, e: React.MouseEvent) => {
-    if (!interactive) return;
+    if (e.button == 1
+      || scrollState.current.isDragging
+      || scrollState.current.isSpaceDown
+    ) return;
+
+    if (!interactive && !e.shiftKey) {
+      setFocusCell(pos);
+      return;
+    }
 
     if (e.shiftKey) {
       setRangeStart(!rangeStart ? focusCell : rangeStart);
       setRangeEnd(pos);
-      onCellMouseDown?.(focusCell);
-      onCellMouseOver?.(pos);
     } else {
       // Regular click → reset to single cell focus
       setIsDragging(false);
       setFocusCell(pos);
       setRangeStart(null);
       setRangeEnd(null);
-      onCellMouseDown?.(pos);
     }
-  }, [interactive, focusCell, rangeStart, rangeEnd, onCellMouseDown, onCellMouseOver]);
+  }, [interactive, focusCell, rangeStart, rangeEnd, onRangeChange]);
 
   const handleMouseDown = useCallback((pos: string, e: React.MouseEvent) => {
-    if (!interactive || e.shiftKey) return;
+    if (!interactive
+      || e.shiftKey
+      || e.button == 2
+      || e.button == 1
+      || scrollState.current.isDragging
+      || scrollState.current.isSpaceDown) return;
 
     setIsDragging(true);
     setFocusCell(pos);
     setRangeStart(pos);
     setRangeEnd(pos);
-    onCellMouseDown?.(pos);
-  }, [interactive, onCellMouseDown]);
+  }, [interactive, onRangeChange]);
 
-  const handleMouseOver = useCallback((pos: string) => {
-    if (!interactive || !isDragging) return;
+  const handleMouseOver = useCallback((pos: string, e: React.MouseEvent) => {
+    if (!interactive
+      || !isDragging
+      || e.shiftKey
+      || e.button == 2
+      || e.button == 1
+      || scrollState.current.isDragging
+      || scrollState.current.isSpaceDown
+    ) return;
+
     setFocusCell(pos);
     setRangeEnd(pos);
-    onCellMouseOver?.(pos);
-  }, [interactive, isDragging, onCellMouseOver]);
+  }, [interactive, isDragging, onRangeChange]);
 
-  const handleMouseUp = useCallback(() => {
-    if (!interactive) return;
+  const handleMouseUp = useCallback((e: React.MouseEvent) => {
+    if (!interactive
+      || e.shiftKey
+      || e.button == 2
+      || e.button == 1
+      || scrollState.current.isDragging
+      || scrollState.current.isSpaceDown
+    ) return;
+
     setIsDragging(false);
   }, [interactive]);
+
+  const handleSelectionChangeWithAutoScale = useCallback(() => {
+    if (!rangeStart || !rangeEnd) return;
+    
+    onRangeChange?.(rangeStart, rangeEnd);
+    onAutoScaleYChange?.(true);
+  }, [selectedRangeStart, selectedRangeEnd, rangeStart, rangeEnd, onRangeChange, autoScaleY]);
+
+  const handleSelectionChange = useCallback(() => {
+    if (!rangeStart || !rangeEnd) return;
+
+    onRangeChange?.(rangeStart, rangeEnd);
+    onAutoScaleYChange?.(false);
+  }, [selectedRangeStart, selectedRangeEnd, rangeStart, rangeEnd, onRangeChange]);
+
+  const handleClearSelection = useCallback(() => {
+    onRangeChange?.(null, null);
+    setRangeStart(null);
+    setRangeEnd(null);
+    setIsDragging(false);
+  }, [selectedRangeStart, selectedRangeEnd, rangeStart, rangeEnd]);
 
   if (!config || !mappedCols.length) {
     return (
       <div className="h-full min-h-100 border rounded-lg flex items-center justify-center text-muted-foreground text-sm bg-muted/30">
-        {t('export.previewNoConfig')}
+        {tTranfer('export.previewNoConfig')}
       </div>
     );
   }
 
+  const extract = (pos: string | null) => {
+    if (!pos) return null;
+    const match = pos.match(/^([A-Z]+)([0-9]+)$/);
+    if (!match) return null;
+    return { c: match[1], r: parseInt(match[2], 10) };
+  };
+
   const isImport = type === 'import';
   const importConfig = config as ImportConfig;
+  const isShowSelectWithAutoScale = isImport
+    && rangeStart !== rangeEnd
+    && extract(rangeStart)?.r === extract(rangeEnd)?.r;
 
   return (
-    <div className={cn("excel-wrapper grow border rounded-md shadow-sm bg-background overflow-hidden", containerClassName)}>
-      <Table className="border-separate border-spacing-0 w-fit">
+    <PreviewContext
+      className={containerClassName}
+      interactive={interactive}
+      isSelected={!!selectedRangeStart && !!selectedRangeEnd}
+      isCellSelecting={!!rangeStart && !!rangeEnd}
+      isShowSelectWithAutoScale={isShowSelectWithAutoScale}
+      onSelectionChangeWithAutoScale={handleSelectionChangeWithAutoScale}
+      onSelectionChange={handleSelectionChange}
+      onClearSelection={handleClearSelection}
+    >
+      <Table containerRef={containerRef} containerTabIndex={0} className="border-separate border-spacing-0 w-fit">
         <TableHeader className="sticky top-0 z-30 bg-muted/90 backdrop-blur-sm">
           <TableRow className="hover:bg-transparent border-none">
             <TableHead className="sticky left-0 top-0 z-40 w-12 h-9 border-b border-r bg-muted/90 backdrop-blur-sm p-0 text-center text-xs font-medium" />
@@ -237,7 +434,7 @@ export const PreviewTable = ({
                   {rowNum}
                 </TableCell>
 
-                {alphabet.map((char) => {
+                {alphabet.map((char, colIndex) => {
                   const pos = `${char}${rowNum}`;
                   const colDef = mappedCols.find((c) => c.letter === char);
                   const format = (colDef as any)?.format;
@@ -247,13 +444,35 @@ export const PreviewTable = ({
                     rangeStart && rangeEnd && isCellInRange(pos, rangeStart, rangeEnd);
 
                   const isSingleSelect = isFocus && !rangeStart && !rangeEnd;
-
-                  const rawValue = rowIndex > 0 ? data[rowIndex - 1]?.[colDef?.matchingKey ?? ''] : '';
+                  const rawValue = data[rowIndex]?.[colIndex] || '';
                   const cellValue = formatValue(rawValue, format);
 
-                  const inRange =
-                    isImport &&
-                    isCellInRange(pos, importConfig.leftTopPos || '', importConfig.rightBottomPos || '');
+                  // Determine if cell is inside the configured import range
+                  let inRange = false;
+
+                  if (isImport && selectedRangeStart && selectedRangeEnd) {
+                    const start = parsePos(selectedRangeStart);
+                    const end = parsePos(selectedRangeEnd);
+                    const current = parsePos(pos);
+
+                    const minCol = Math.min(start.col.charCodeAt(0), end.col.charCodeAt(0));
+                    const maxCol = Math.max(start.col.charCodeAt(0), end.col.charCodeAt(0));
+
+                    const minRow = Math.min(start.row, end.row);
+
+                    // Special rule:
+                    // If autoScaleY is enabled AND start/end are on the same row,
+                    // the selection should expand vertically to the end of the file.
+                    if (autoScaleY && start.row === end.row) {
+                      inRange =
+                        current.col.charCodeAt(0) >= minCol &&
+                        current.col.charCodeAt(0) <= maxCol &&
+                        current.row >= minRow;
+                    } else {
+                      // Default rectangular range behavior
+                      inRange = isCellInRange(pos, selectedRangeStart, selectedRangeEnd);
+                    }
+                  }
 
                   return (
                     <TableCell
@@ -262,14 +481,14 @@ export const PreviewTable = ({
                       className="p-0 w-37.5 min-w-37.5 select-none"
                       onClick={(e) => handleCellClick(pos, e)}
                       onMouseDown={(e) => handleMouseDown(pos, e)}
-                      onMouseOver={() => handleMouseOver(pos)}
+                      onMouseOver={(e) => handleMouseOver(pos, e)}
                       onMouseUp={handleMouseUp}
                     >
                       <div
                         className={cn(
-                          'h-9 border-b border-r px-3 flex items-center text-xs transition-colors cursor-cell relative',
+                          'h-9 border-b border-r px-3 flex items-center text-xs transition-colors relative dark:bg-gray-950',
                           getFormatStyles(format),
-                          isFocus && 'ring-2 ring-primary/60 ring-inset bg-primary/5 dark:bg-primary/10',
+                          isFocus && 'ring-2 ring-primary/60 ring-inset bg-primary/5 dark:bg-primary/10 cell-forcused',
                           isInSelectedRange && 'bg-primary/20 border-primary/40 ring-1 ring-primary/30',
                           isSingleSelect && 'bg-primary/10 border-primary/30',
                           inRange && !isFocus && !isInSelectedRange && !isIgnoredRow && 'bg-emerald-100/60 dark:bg-emerald-900/30',
@@ -284,18 +503,26 @@ export const PreviewTable = ({
                             isIgnoredRow && 'text-destructive/70 line-through select-none'
                           )}
                         >
-                          {rowNum === '1' && colDef
-                            ? colDef.alias || colDef.matchingKey
-                            : cellValue}
+                          {cellValue}
 
                           {isIgnoredRow && rowNum !== '1' && (
-                            <span className="ml-1 text-[10px] font-medium">({t('import.ignored')})</span>
+                            <span className="ml-1 text-[10px] font-medium">({tTranfer('import.ignored')})</span>
                           )}
                         </span>
 
-                        {isImport && pos === importConfig.leftTopPos && (
+                        {isImport && pos === selectedRangeStart && (
                           <div className="absolute -top-0.5 -left-0.5 bg-emerald-600 text-[9px] text-white px-1.5 py-0.5 font-bold rounded-br shadow-sm uppercase select-none">
-                            {t('import.rangeStart')}
+                            {tTranfer('import.rangeStart')}
+                          </div>
+                        )}
+                        {isImport && pos === selectedRangeEnd && (
+                          <div
+                            className={cn(
+                              "absolute bg-emerald-600 text-[9px] text-white px-1.5 py-0.5 font-bold shadow-sm uppercase select-none",
+                              autoScaleY ? "-top-0.5 -right-0.5 rounded-bl" : "-bottom-0.5 -right-0.5 rounded-tl"
+                            )}
+                          >
+                            {tTranfer('import.rangeEnd')}
                           </div>
                         )}
                       </div>
@@ -307,6 +534,6 @@ export const PreviewTable = ({
           })}
         </TableBody>
       </Table>
-    </div>
+    </PreviewContext>
   );
 };

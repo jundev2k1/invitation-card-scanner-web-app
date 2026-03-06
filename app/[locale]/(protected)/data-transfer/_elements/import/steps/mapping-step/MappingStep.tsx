@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { ImportConfig } from '../../../../type';
+import { MappingStepFormValues } from '../../setting/importSettings.type';
 import { SourceMappingItem } from './SourceMappingItem';
 import { TargetMappingItem } from './TargetMappingItem';
 import { useMappingStep } from './useMappingStep';
@@ -11,6 +12,7 @@ import { useMappingStep } from './useMappingStep';
 type MappingStepProps = {
   config: ImportConfig | null;
   parsedHeaders: string[];
+  onMappingStepChange: (data: MappingStepFormValues) => void,
 };
 
 export const MappingStep = ({ config, parsedHeaders }: MappingStepProps) => {
@@ -47,9 +49,9 @@ export const MappingStep = ({ config, parsedHeaders }: MappingStepProps) => {
             </div>
             <ScrollArea className="h-[calc(100%-44px)] pointer-events-auto">
               <div className="p-4 space-y-3 pointer-events-auto">
-                {targetFields.map((field) => (
+                {targetFields.map((field, index) => (
                   <TargetMappingItem
-                    key={field.key}
+                    key={`t_${index}`}
                     item={field}
                     isMapped={!!mappings[field.key]}
                     mappedAlias={mappings[field.key]?.alias}
@@ -75,7 +77,7 @@ export const MappingStep = ({ config, parsedHeaders }: MappingStepProps) => {
               <div className="p-4 space-y-2">
                 {sourceColumns.map((col, index) => (
                   <SourceMappingItem
-                    key={col}
+                    key={`s_${index}`}
                     item={{ key: col, order: index + 1 }}
                     isMapped={!!Object.values(mappings).find(m => m.alias === col)}
                     mappedTo={Object.entries(mappings).find(([_, v]) => v.alias === col)?.[0]}

@@ -41,7 +41,9 @@
       "button": "Chọn File",
       "supported": "Định dạng hỗ trợ: .csv, .xlsx, .xls",
       "noFile": "Chưa chọn file",
-      "previewTitle": "Xem trước File (10 dòng đầu)"
+      "previewTitle": "Xem trước File (10 dòng đầu)",
+      "noConfigSelectedTitle": "Chưa chỉ định file cấu hình",
+      "noConfigSelectedDesc": "Vui lòng chỉ định hoặc tạo mới một Cấu hình Import để bắt đầu tùy chỉnh các thông số kỹ thuật liên quan"
     },
     "mapping": {
       "title": "Ánh xạ Cột",
@@ -78,6 +80,16 @@
         "shiftClick": "Nhấn Shift + click để mở rộng vùng chọn từ ô đang focus.",
         "autoDetectTip": "Nút \"Tự động phát hiện\" sẽ thử đoán vùng dữ liệu dựa trên nội dung có sẵn (thường bắt đầu từ A2).",
         "actionColumnTip": "Bật tùy chọn này nếu tệp của bạn có cột hướng dẫn hành động (create / update / delete / skip)."
+      },
+      "previewContext": {
+        "applySelection": "Áp dụng vùng chọn",
+        "applyWithAutoScale": "Tự động mở rộng hàng",
+        "clearSelection": "Hủy vùng chọn"
+      },
+      "messages": {
+        "rangeCannotBeEqual": "Bắt đầu và kết thúc phải khác nhau",
+        "invalidFormat": "Định dạng ô không đúng",
+        "mustBeSameRow": "Phạm vi dữ liệu phải trong cùng dòng"
       }
     },
     "validate": {
@@ -92,8 +104,10 @@
     },
     "ignored": "Bỏ qua",
     "rangeStart": "Bắt đầu",
+    "rangeEnd": "Kết thúc",
     "autoAddAction": "Tự động thêm cột hành động (_action)",
-    "autoAddActionDesc": "Thêm cột _action để hỗ trợ các thao tác tạo/cập nhật/xóa/bỏ qua khi nhập."
+    "autoAddActionDesc": "Thêm cột _action để hỗ trợ các thao tác tạo/cập nhật/xóa/bỏ qua khi nhập.",
+    "dataRange": "Dữ liệu được đọc từ"
   },
   "moduleInput": {
     "selectModule": "Chọn Module",

@@ -1,49 +1,38 @@
-import { Button, Checkbox, Input, Label } from '@/components';
+import { Button, FormCheckbox, FormTextBox, Label } from '@/components';
 import { Info, RotateCcw, Sparkles } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
+import { FormProvider } from 'react-hook-form';
 import { PreviewTable } from '../../../../_shared/preview/table/PreviewTable';
 import { ImportConfig } from '../../../../type';
+import { RangeStepFormValues } from '../../setting/importSettings.type';
 import { useRangeStep } from './useRangeStep';
 
 type RangeStepProps = {
   config: ImportConfig | null;
-  parsedData?: any[];
+  parsedData?: string[][];
   onRangeChange?: (start: string | null, end: string | null) => void;
-  onActionColumnChange?: (checked: boolean) => void;
+  onRangeFormChange: (data: RangeStepFormValues) => void
 };
 
 export const RangeStep = ({
   config,
   parsedData = [],
   onRangeChange,
-  onActionColumnChange,
 }: RangeStepProps) => {
   const t = useTranslations('dataTransfer.import.range');
   const tCommon = useTranslations('common');
 
   const {
+    form,
+    onFormSubmit,
     rangeStart,
     rangeEnd,
-    includesActionColumn,
-    handleMouseDown,
-    handleMouseOver,
-    handleMouseUp,
+    onRangePreviewChange,
     handleAutoDetect,
-    handleReset,
-    toggleActionColumn,
-    setRangeStart,
-    setRangeEnd,
-    setIncludesActionColumn,
-  } = useRangeStep({ config, parsedData });
-
-  useEffect(() => {
-    onRangeChange?.(rangeStart, rangeEnd);
-  }, [rangeStart, rangeEnd, onRangeChange]);
-
-  useEffect(() => {
-    onActionColumnChange?.(includesActionColumn);
-  }, [includesActionColumn, onActionColumnChange]);
+    onRangeReset,
+    autoScaleY,
+    setAutoScaleY,
+  } = useRangeStep({ config, parsedData, onRangeChange });
 
   return (
     <div className="flex flex-col h-full space-y-6 p-6">
@@ -51,7 +40,7 @@ export const RangeStep = ({
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold tracking-tight">{t('title')}</h3>
-          <p className="text-sm text-muted-foreground mt-1">{t('description')}</p>
+          <p className="text-sm text-muted-foreground mt-1">{t('desc')}</p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -66,7 +55,7 @@ export const RangeStep = ({
           <Button
             leftIcon={<RotateCcw />}
             variant="secondary"
-            onClick={handleReset}
+            onClick={onRangeReset}
             className="gap-1.5 text-muted-foreground hover:text-foreground"
           >
             {tCommon('actions.reset')}
@@ -75,17 +64,15 @@ export const RangeStep = ({
       </div>
 
       {/* Preview Table */}
-      <div
-        className="border rounded-lg overflow-hidden bg-background shadow-sm w-[75vw] max-h-200"
-        onMouseUp={handleMouseUp}
-      >
+      <div className="border rounded-lg bg-background shadow-sm w-[70vw] h-120">
         <PreviewTable
           config={config}
           type="import"
           data={parsedData}
           interactive
-          onCellMouseDown={handleMouseDown}
-          onCellMouseOver={handleMouseOver}
+          autoScaleY={autoScaleY}
+          onAutoScaleYChange={setAutoScaleY}
+          onRangeChange={onRangePreviewChange}
           selectedRangeStart={rangeStart ?? undefined}
           selectedRangeEnd={rangeEnd ?? undefined}
         />
@@ -95,93 +82,49 @@ export const RangeStep = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-muted/40 p-5 rounded-lg border">
         {/* Left column: Range inputs */}
         <div className="space-y-4">
-          <div>
-            <Label htmlFor="range-start" className="flex items-center gap-1.5">
-              {t('rangeStart')} <span className="text-xs text-muted-foreground"></span>
-            </Label>
-            <div className="mt-1.5 flex items-center gap-2">
-              <Input
-                id="range-start"
-                value={rangeStart || ''}
-                onChange={(e) => setRangeStart(e.target.value.trim().toUpperCase() || null)}
-                placeholder="A2"
-                className="font-mono w-32"
-              />
-              <span className="text-muted-foreground">→</span>
-              <Input
-                value={rangeEnd || ''}
-                onChange={(e) => setRangeEnd(e.target.value.trim().toUpperCase() || null)}
-                placeholder="Z100"
-                className="font-mono w-32"
-              />
-            </div>
-          </div>
+          <FormProvider {...form}>
+            <form>
+              <div>
+                <Label htmlFor="range-start" className="flex items-center gap-1.5">
+                  {t('rangeStart')} <span className="text-xs text-muted-foreground"></span>
+                </Label>
+                <div className="mt-1.5 flex items-start gap-2">
+                  <FormTextBox
+                    name="rangeStart"
+                    placeholder="A2"
+                    className="font-mono w-32"
+                    onBlur={form.handleSubmit(onFormSubmit)}
+                  />
+                  <span className="text-muted-foreground">→</span>
+                  <FormTextBox
+                    name="rangeEnd"
+                    placeholder="G2"
+                    className="font-mono w-32"
+                    onBlur={form.handleSubmit(onFormSubmit)}
+                  />
+                </div>
+              </div>
 
-          <div>
-            <Label htmlFor="range-end" className="flex items-center gap-1.5">
-              {t('rangeEnd')} <span className="text-xs text-muted-foreground"></span>
-            </Label>
-            <div className="mt-1.5 flex items-center gap-2">
-              <Input
-                id="range-end"
-                value={rangeStart || ''}
-                onChange={(e) => setRangeStart(e.target.value.trim().toUpperCase() || null)}
-                placeholder="A2"
-                className="font-mono w-32"
-              />
-              <span className="text-muted-foreground">→</span>
-              <Input
-                value={rangeEnd || ''}
-                onChange={(e) => setRangeEnd(e.target.value.trim().toUpperCase() || null)}
-                placeholder="Z100"
-                className="font-mono w-32"
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-2 pt-2">
-            <Checkbox
-              label=''
-              id="include-action-col"
-              checked={includesActionColumn}
-              onCheckedChange={(checked) => {
-                setIncludesActionColumn(!!checked);
-              }}
-            />
-            <div className="grid gap-0.5 leading-none">
-              <label
-                htmlFor="include-action-col"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {t('autoY')}
-              </label>
-              <p className="text-xs text-muted-foreground">
-                {t('autoYDesc')}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-2 pt-2">
-            <Checkbox
-              label=''
-              id="include-action-col"
-              checked={includesActionColumn}
-              onCheckedChange={(checked) => {
-                setIncludesActionColumn(!!checked);
-              }}
-            />
-            <div className="grid gap-0.5 leading-none">
-              <label
-                htmlFor="include-action-col"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {t('includeActionColumn')}
-              </label>
-              <p className="text-xs text-muted-foreground">
-                {t('actionColumnDesc')}
-              </p>
-            </div>
-          </div>
+              <div className="flex items-center space-x-2 pt-2">
+                <FormCheckbox
+                  name="autoScaleY"
+                  label=''
+                  onCheckedChange={form.handleSubmit(onFormSubmit)}
+                />
+                <div className="grid gap-0.5 leading-none">
+                  <label
+                    htmlFor="include-action-col"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    {t('autoY')}
+                  </label>
+                  <p className="text-xs text-muted-foreground">
+                    {t('autoYDesc')}
+                  </p>
+                </div>
+              </div>
+            </form>
+          </FormProvider>
         </div>
 
         {/* Right column: Current status + quick summary */}

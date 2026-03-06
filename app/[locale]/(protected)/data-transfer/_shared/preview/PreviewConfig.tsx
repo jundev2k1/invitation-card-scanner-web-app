@@ -25,8 +25,8 @@ export const PreviewConfig = ({ setting, type, disabled }: PreviewConfigProps) =
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-7xl! h-[80vh] flex flex-col p-0">
           <div className="p-6 pb-0">
-            <DialogTitle>{t('export.preview')}</DialogTitle>
-            <DialogDescription>{setting?.description}</DialogDescription>
+            <DialogTitle className="text-foreground">{t('export.preview')}</DialogTitle>
+            <DialogDescription className="text-muted-foreground">{setting?.description}</DialogDescription>
           </div>
 
           <div className="flex flex-col overflow-hidden p-6">
