@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle, Skeleton } from "@/components";
+import { Card, CardContent, CardHeader, CardTitle, CounterUp, Skeleton } from "@/components";
 import { CalendarClockIcon, ClockIcon, CreditCardIcon, UsersIcon } from "@/icons";
 import { GeneralStatsDto } from "@/types";
 import { useTranslations } from "next-intl";
@@ -20,7 +20,7 @@ export const DashboardStats = React.memo(({ isLoading, stats, period }: Dashboar
   const items = [
     {
       title: tStats("totalUsers"),
-      value: isLoading ? "..." : stats?.totalUsers ?? 0,
+      value: stats?.totalUsers ?? 0,
       subtitle: stats
         ? `${stats.activeUsers ?? 0} active / ${stats.unapprovedUsers ?? 0} pending`
         : "",
@@ -29,7 +29,7 @@ export const DashboardStats = React.memo(({ isLoading, stats, period }: Dashboar
     },
     {
       title: tStats("pendingUsers"),
-      value: isLoading ? "..." : stats?.unapprovedUsers ?? 0,
+      value: stats?.unapprovedUsers ?? 0,
       subtitle: stats?.totalUsers
         ? tStats("percentOfTotalUsers", {
           percent: Math.round((stats.unapprovedUsers / stats.totalUsers) * 100),
@@ -40,7 +40,7 @@ export const DashboardStats = React.memo(({ isLoading, stats, period }: Dashboar
     },
     {
       title: tStats("totalEvents"),
-      value: isLoading ? "..." : stats?.totalEvents ?? 0,
+      value: stats?.totalEvents ?? 0,
       subtitle: stats
         ? `${stats.periodPublishedEvents ?? 0} ${t('enum.status.published')} / ${stats.periodCompletedEvents ?? 0} ${t('enum.status.completed')}`
         : "",
@@ -49,7 +49,7 @@ export const DashboardStats = React.memo(({ isLoading, stats, period }: Dashboar
     },
     {
       title: tStats("totalInvitations"),
-      value: isLoading ? "..." : stats?.totalCards ?? 0,
+      value: stats?.totalCards ?? 0,
       subtitle: stats?.totalCards
         ? tStats("percentOfTotalCards", {
           percent: Math.round((stats.totalUsedCards / stats.totalCards) * 100),
@@ -76,7 +76,9 @@ export const DashboardStats = React.memo(({ isLoading, stats, period }: Dashboar
               </div>
             ) : (
               <>
-                <div className="text-2xl font-bold">{item.value}</div>
+                <div className="text-2xl font-bold">
+                  <CounterUp value={item.value} duration={2} />
+                </div>
                 {item.subtitle && (
                   <p className="text-xs text-muted-foreground mt-1">{item.subtitle}</p>
                 )}

@@ -1,5 +1,5 @@
 "use client";
-import { Tabs } from "@/root/app/components";
+import { RefreshButton, Tabs } from "@/components";
 import { useTranslations } from "next-intl";
 import { EventTrendChart } from "./_elements/event-trend/EventTrendChart";
 import { PendingUsersList } from "./_elements/pending-list/PendingUsersList";
@@ -10,13 +10,14 @@ import { UpcomingEventsList } from "./_elements/up-comming-event/UpcomingEventsL
 import { PeriodValues, useDashboard } from "./useDashboard";
 
 export default function DashboardPage() {
-  const t = useTranslations("dashboard");
+  const tDashboard = useTranslations("dashboard");
   const {
     isLoading,
     data,
     period,
     periodOptions,
     onPeriodChange,
+    onRefresh,
   } = useDashboard();
 
   return (
@@ -25,14 +26,15 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight dark:text-foreground">
-              {t("title")}
+              {tDashboard("title")}
             </h1>
-            <p className="text-muted-foreground">{t("overview")}</p>
+            <p className="text-muted-foreground">{tDashboard("overview")}</p>
           </div>
           <QuickActions />
         </div>
 
-        <div className="flex justify-end pt-4">
+        <div className="flex justify-end gap-2 pt-4">
+          <RefreshButton onRefresh={onRefresh} />
           <Tabs
             listClassName="grid-cols-4"
             defaultValue={period}

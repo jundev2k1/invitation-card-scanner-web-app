@@ -26,9 +26,9 @@ export const useDashboard = () => {
   const [period, setPeriod] = useState<PeriodValues>('month');
 
   const { start, end } = useMemo(() => getDateRange(period), [period]);
-  const { isLoading, data } = useGetGeneralStats({ startDate: start, endDate: end });
+  const { isLoading, data, refetch } = useGetGeneralStats({ startDate: start, endDate: end });
 
-  const onPeriodChange = useCallback((val: PeriodValues) => setPeriod(val), [period]);
+  const onPeriodChange = useCallback((val: PeriodValues) => setPeriod(val), [period, data]);
 
   const periodOptions: TabItem[] = [
     { label: t("period.day"), value: "day" },
@@ -42,5 +42,6 @@ export const useDashboard = () => {
     period,
     onPeriodChange,
     periodOptions,
+    onRefresh: async () => await refetch()
   }
 }

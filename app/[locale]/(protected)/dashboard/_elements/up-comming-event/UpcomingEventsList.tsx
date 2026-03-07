@@ -45,7 +45,9 @@ export const UpcomingEventsList = React.memo(() => {
             ))}
           </div>
         ) : upcomingEvents?.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">{t("noUpcoming")}</div>
+          <div className="space-y-4">
+            <div className="text-center py-8 text-muted-foreground">{t("noUpcoming")}</div>
+          </div>
         ) : (
           <div className="space-y-4">
             {upcomingEvents?.map(event => (

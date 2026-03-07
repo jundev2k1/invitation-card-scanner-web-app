@@ -1,5 +1,5 @@
 "use client";
-import { Card, CardContent, CardHeader, CardTitle, Skeleton } from "@/components";
+import { Card, CardContent, CardHeader, CardTitle, CounterUp, Skeleton } from "@/components";
 import { CalendarClockIcon, ClockIcon, CreditCardIcon, UsersIcon } from "@/icons";
 import { GeneralStatsDto } from "@/types";
 import { useTranslations } from "next-intl";
@@ -84,7 +84,9 @@ export const QuickOverviewCard = React.memo(({ isLoading, stats }: QuickOverview
                 <item.icon className={`h-5 w-5 ${item.color}`} />
                 <p className="text-sm font-medium text-muted-foreground">{item.label}</p>
               </div>
-              <p className="text-3xl font-bold">{item.value}</p>
+              <p className="text-3xl font-bold">
+                <CounterUp value={item.value} duration={1} />
+              </p>
               <p className="text-xs text-muted-foreground">{item.subtitle}</p>
             </div>
           ))}
