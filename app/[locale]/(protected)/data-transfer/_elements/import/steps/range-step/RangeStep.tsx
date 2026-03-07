@@ -1,6 +1,7 @@
 import { Button, FormCheckbox, FormTextBox, Label } from '@/components';
-import { Info, RotateCcw, Sparkles } from 'lucide-react';
+import { InfoIcon, RotateCcwIcon, SparklesIcon } from "@/icons";
 import { useTranslations } from 'next-intl';
+import { useRef } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { PreviewTable } from '../../../../_shared/preview/table/PreviewTable';
 import { ImportConfig } from '../../../../type';
@@ -21,6 +22,7 @@ export const RangeStep = ({
 }: RangeStepProps) => {
   const t = useTranslations('dataTransfer.import.range');
   const tCommon = useTranslations('common');
+  const wRef = useRef<HTMLDivElement>(null);
 
   const {
     form,
@@ -35,7 +37,7 @@ export const RangeStep = ({
   } = useRangeStep({ config, parsedData, onRangeChange });
 
   return (
-    <div className="flex flex-col h-full space-y-6 p-6">
+    <div ref={wRef} className="flex flex-col h-full space-y-6 p-6">
       {/* Header + Quick actions */}
       <div className="flex items-center justify-between">
         <div>
@@ -45,7 +47,7 @@ export const RangeStep = ({
 
         <div className="flex items-center gap-2">
           <Button
-            leftIcon={<Sparkles />}
+            leftIcon={<SparklesIcon />}
             variant="outline"
             onClick={handleAutoDetect}
             className="gap-1.5"
@@ -53,7 +55,7 @@ export const RangeStep = ({
             {t('autoDetect')}
           </Button>
           <Button
-            leftIcon={<RotateCcw />}
+            leftIcon={<RotateCcwIcon />}
             variant="secondary"
             onClick={onRangeReset}
             className="gap-1.5 text-muted-foreground hover:text-foreground"
@@ -64,18 +66,21 @@ export const RangeStep = ({
       </div>
 
       {/* Preview Table */}
-      <div className="border rounded-lg bg-background shadow-sm w-[70vw] h-120">
-        <PreviewTable
-          config={config}
-          type="import"
-          data={parsedData}
-          interactive
-          autoScaleY={autoScaleY}
-          onAutoScaleYChange={setAutoScaleY}
-          onRangeChange={onRangePreviewChange}
-          selectedRangeStart={rangeStart ?? undefined}
-          selectedRangeEnd={rangeEnd ?? undefined}
-        />
+      <div className="border rounded-lg bg-background shadow-sm h-120 relative">
+        <div className="absolute top-0 left-0 w-full h-full">
+          <PreviewTable
+            config={config}
+            type="import"
+            data={parsedData}
+            interactive
+            autoScaleY={autoScaleY}
+            onAutoScaleYChange={setAutoScaleY}
+            onRangeChange={onRangePreviewChange}
+            selectedRangeStart={rangeStart ?? undefined}
+            selectedRangeEnd={rangeEnd ?? undefined}
+          />
+
+        </div>
       </div>
 
       {/* Configuration Form */}
@@ -157,7 +162,7 @@ export const RangeStep = ({
       {/* Helpful instruction block */}
       <div className="bg-blue-50/50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-sm">
         <div className="flex items-start gap-3">
-          <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
+          <InfoIcon className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
           <div className="space-y-2">
             <p className="font-medium text-blue-800 dark:text-blue-300">
               {t('howTo.title')}

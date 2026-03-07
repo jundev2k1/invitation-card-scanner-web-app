@@ -81,7 +81,7 @@
         "autoDetectTip": "The \"Auto Detect\" button will try to guess the data area based on existing content (usually starting from A2).",
         "actionColumnTip": "Enable this option if your file contains an action instruction column (create / update / delete / skip)."
       },
-      "context": {
+      "previewContext": {
         "applySelection": "Apply Selection",
         "applyWithAutoScale": "Apply with Auto-Scale",
         "clearSelection": "Clear Selection"
