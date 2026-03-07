@@ -96,14 +96,14 @@ export const RangeStep = ({
                 <div className="mt-1.5 flex items-start gap-2">
                   <FormTextBox
                     name="rangeStart"
-                    placeholder="A2"
+                    placeholder={t('rangeStartPlaceholder')}
                     className="font-mono w-32"
                     onBlur={form.handleSubmit(onFormSubmit)}
                   />
                   <span className="text-muted-foreground">→</span>
                   <FormTextBox
                     name="rangeEnd"
-                    placeholder="G2"
+                    placeholder={t('rangeEndPlaceholder')}
                     className="font-mono w-32"
                     onBlur={form.handleSubmit(onFormSubmit)}
                   />
@@ -113,20 +113,11 @@ export const RangeStep = ({
               <div className="flex items-center space-x-2 pt-2">
                 <FormCheckbox
                   name="autoScaleY"
-                  label=''
+                  label={t('autoY')}
+                  subLabel={t('autoYDesc')}
                   onCheckedChange={form.handleSubmit(onFormSubmit)}
+                  disabled={(!form.getValues('rangeStart') || !form.getValues('rangeEnd')) && !!form.getValues('autoScaleY')}
                 />
-                <div className="grid gap-0.5 leading-none">
-                  <label
-                    htmlFor="include-action-col"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {t('autoY')}
-                  </label>
-                  <p className="text-xs text-muted-foreground">
-                    {t('autoYDesc')}
-                  </p>
-                </div>
               </div>
             </form>
           </FormProvider>
@@ -137,7 +128,7 @@ export const RangeStep = ({
           <div className="text-sm">
             <span className="font-medium">{t('currentRange')}:</span>{' '}
             <code className="bg-background px-1.5 py-0.5 rounded border text-primary">
-              {rangeStart || '—'} → {rangeEnd || '—'}
+              {rangeStart || t('rangeStartPlaceholder')} → {rangeEnd || t('rangeEndPlaceholder')}
             </code>
           </div>
 

@@ -65,7 +65,9 @@
       "dataRange": "Data Range",
       "ignoredColumns": "Ignored Columns",
       "rangeStart": "Start (e.g., A2 - G2)",
+      "rangeStartPlaceholder": "From start",
       "rangeEnd": "End (e.g., A10 - G10)",
+      "rangeEndPlaceholder": "To end",
       "rowsCount": "Row count",
       "rows": "rows",
       "columnsCount": "Column count",
@@ -89,7 +91,8 @@
       "messages": {
         "rangeCannotBeEqual": "Start and end range cannot be the same",
         "invalidFormat": "Invalid cell format",
-        "mustBeSameRow": "Data range must be in the same row"
+        "mustBeSameRow": "Data range must be in the same row",
+        "mustEnableAutoScaleForAll": "This option must be enabled for all columns"
       }
     },
     "validate": {

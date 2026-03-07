@@ -354,6 +354,7 @@ export const PreviewTable = ({
     onRangeChange?.(null, null);
     setRangeStart(null);
     setRangeEnd(null);
+    onAutoScaleYChange?.(true);
     setIsDragging(false);
   }, [selectedRangeStart, selectedRangeEnd, rangeStart, rangeEnd]);
 

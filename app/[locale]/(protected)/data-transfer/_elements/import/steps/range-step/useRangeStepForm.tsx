@@ -14,15 +14,30 @@ const extract = (pos: string | null) => {
 
 export const createRangeSchema = (t: TranslateFn) =>
   z.object({
-    rangeStart: z.string().regex(/^[A-Z]+[0-9]+$/, t('messages.invalidFormat')),
-    rangeEnd: z.string().regex(/^[A-Z]+[0-9]+$/, t('messages.invalidFormat')),
+    rangeStart: z.string()
+      .regex(/^$|^[A-Z]+[0-9]+$/, t('messages.invalidFormat'))
+      .nullable(),
+    rangeEnd: z.string()
+      .regex(/^$|^[A-Z]+[0-9]+$/, t('messages.invalidFormat'))
+      .nullable(),
     autoScaleY: z.boolean()
   }).superRefine((data, ctx) => {
+    // If rangeStart and rangeEnd are null, autoScaleY must be true
+    if ((data.rangeStart === null || data.rangeEnd === null) && !data.autoScaleY) {
+      ctx.addIssue({
+        code: "custom",
+        message: t('messages.mustEnableAutoScaleForAll'),
+        path: ['autoScaleY'],
+      });
+      return;
+    }
+    if (!data.rangeStart || !data.rangeEnd) return;
+
     const s = extract(data.rangeStart);
     const e = extract(data.rangeEnd);
-
     if (!s || !e) return;
 
+    // Check if rangeStart and rangeEnd are the same
     if (data.rangeStart === data.rangeEnd) {
       ctx.addIssue({
         code: "custom",
@@ -31,6 +46,7 @@ export const createRangeSchema = (t: TranslateFn) =>
       });
     }
 
+    // Check if rangeStart and rangeEnd are in the same row
     if (data.autoScaleY && s.r !== e.r) {
       ctx.addIssue({
         code: "custom",
@@ -41,8 +57,8 @@ export const createRangeSchema = (t: TranslateFn) =>
   });
 
 interface RangeStepForm {
-  rangeStart: string;
-  rangeEnd: string;
+  rangeStart: string | null;
+  rangeEnd: string | null;
   autoScaleY: boolean;
 }
 
@@ -68,17 +84,17 @@ export const useRangeStepForm = ({
   const form = useForm<RangeStepForm>({
     resolver: zodResolver(createRangeSchema(tRange)),
     defaultValues: {
-      rangeStart: start || '',
-      rangeEnd: end || '',
-      autoScaleY: false
+      rangeStart: start || null,
+      rangeEnd: end || null,
+      autoScaleY: autoScaleYState || true
     }
   });
-  
+
   // Sync with props
   useEffect(() => {
     form.setValue('autoScaleY', autoScaleYState || false, { shouldValidate: true });
-    if (start) form.setValue('rangeStart', start, { shouldValidate: true });
-    if (end) form.setValue('rangeEnd', end, { shouldValidate: true });
+    form.setValue('rangeStart', start, { shouldValidate: true });
+    form.setValue('rangeEnd', end, { shouldValidate: true });
   }, [start, end, autoScaleYState, form]);
 
   // Handle submit

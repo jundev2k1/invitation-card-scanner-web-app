@@ -65,7 +65,9 @@
       "dataRange": "Phạm Vi Dữ Liệu",
       "ignoredColumns": "Cột Bị Bỏ Qua",
       "rangeStart": "Bắt đầu (ví dụ: A2)",
+      "rangeStartPlaceholder": "Từ đầu",
       "rangeEnd": "Kết thúc (e.g., A10 - G10)",
+      "rangeEndPlaceholder": "Đến cuối",
       "rowsCount": "Số dòng",
       "rows": "dòng",
       "columnsCount": "Số cột",
@@ -89,7 +91,8 @@
       "messages": {
         "rangeCannotBeEqual": "Bắt đầu và kết thúc phải khác nhau",
         "invalidFormat": "Định dạng ô không đúng",
-        "mustBeSameRow": "Phạm vi dữ liệu phải trong cùng dòng"
+        "mustBeSameRow": "Phạm vi dữ liệu phải trong cùng dòng",
+        "mustEnableAutoScaleForAll": "Tùy chọn này phải được bật nếu muốn đọc hết file"
       }
     },
     "validate": {
