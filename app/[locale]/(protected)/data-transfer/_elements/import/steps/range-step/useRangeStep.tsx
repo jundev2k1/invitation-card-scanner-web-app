@@ -48,8 +48,14 @@ export const useRangeStep = ({ config, parsedData, onRangeChange }: UseRangeStep
       });
     });
 
-    setRangeStart(`${String.fromCharCode(colStart + 65)}${rowStart}`);
-    setRangeEnd(`${String.fromCharCode(lastCol + 65)}${lastRow}`);
+    if (lastRow === parsedData.length) {
+      setRangeStart(`${String.fromCharCode(colStart + 65)}${rowStart}`);
+      setRangeEnd(`${String.fromCharCode(lastCol + 65)}${lastRow}`);
+    } else {
+      setRangeStart(`${String.fromCharCode(colStart + 65)}${rowStart}`);
+      setRangeEnd(`${String.fromCharCode(lastCol + 65)}${rowStart}`);
+      setAutoScaleY(true);
+    }
   }, [parsedData]);
 
   useEffect(() => {
