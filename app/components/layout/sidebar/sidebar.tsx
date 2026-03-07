@@ -1,12 +1,15 @@
+"use client";
 import { IconButton } from "@/components/button";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/icons";
 import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/store";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { SIDEBAR_GROUPS } from "./useSidebar";
 
 export const Sidebar = () => {
+  const pathname = usePathname();
   const tSidebar = useTranslations("common.sidebar");
   const { isCollapsed, toggleSidebar } = useSidebarStore();
   return (
@@ -63,28 +66,33 @@ export const Sidebar = () => {
               </div>
 
               <ul className="space-y-1">
-                {group.items.map((item) => (
-                  <li key={!item.isDisabled ? item.path : '#'}>
-                    <Link
-                      href={item.path}
-                      className={cn(
-                        "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                        "text-gray-700 hover:bg-gray-100 hover:text-gray-900",
-                        "dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-100",
-                        isCollapsed ? "justify-center" : "justify-start",
-                        item.isDisabled && 'cursor-default text-gray-400 dark:text-gray-500'
-                      )}
-                    >
-                      <item.icon className="h-5 w-5 shrink-0 text-gray-500 dark:text-gray-400" />
-                      <span className={cn(
-                        "transition-all duration-300 ease-in-out whitespace-nowrap overflow-hidden",
-                        isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
-                      )}>
-                        {tSidebar(item.title)}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
+                {group.items.map((item) => {
+                  const regex = new RegExp(`^(\\/[a-z]{2})?${item.path}(\\/[^?#]*|$)`);
+                  const isActive = regex.test(pathname);
+                  return (
+                    <li key={!item.isDisabled ? item.path : '#'}>
+                      <Link
+                        href={item.path}
+                        className={cn(
+                          "flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                          "text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          "dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-100",
+                          isActive && "bg-gray-200 text-primary dark:bg-primary/25 dark:text-white",
+                          isCollapsed ? "justify-center" : "justify-start gap-3",
+                          item.isDisabled && 'cursor-default text-gray-400 dark:text-gray-500'
+                        )}
+                      >
+                        <item.icon className="h-5 w-5 shrink-0 text-gray-500 dark:text-gray-400" />
+                        <span className={cn(
+                          "transition-all duration-300 ease-in-out whitespace-nowrap overflow-hidden",
+                          isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+                        )}>
+                          {tSidebar(item.title)}
+                        </span>
+                      </Link>
+                    </li>
+                  )
+                })}
               </ul>
             </li>
           ))}
