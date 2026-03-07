@@ -81,7 +81,9 @@ export const SelectModule = React.memo(({
             placeholder={t('selectSettingPlaceholder')}
           />
         )}
-        <PreviewConfig setting={selectedModuleOption} type={mode} disabled={!selectedModuleOption} />
+        {mode === 'export' && (
+          <PreviewConfig setting={selectedModuleOption} type={mode} disabled={!selectedModuleOption} />
+        )}
       </div>
 
       {mode === 'import' && (
