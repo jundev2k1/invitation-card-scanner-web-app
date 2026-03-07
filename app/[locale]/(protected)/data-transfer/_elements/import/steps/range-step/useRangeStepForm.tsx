@@ -76,9 +76,9 @@ export const useRangeStepForm = ({
   
   // Sync with props
   useEffect(() => {
+    form.setValue('autoScaleY', autoScaleYState || false, { shouldValidate: true });
     if (start) form.setValue('rangeStart', start, { shouldValidate: true });
     if (end) form.setValue('rangeEnd', end, { shouldValidate: true });
-    form.setValue('autoScaleY', autoScaleYState || false, { shouldValidate: true });
   }, [start, end, autoScaleYState, form]);
 
   // Handle submit
