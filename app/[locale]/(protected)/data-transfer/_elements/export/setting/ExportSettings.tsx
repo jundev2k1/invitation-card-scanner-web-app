@@ -44,7 +44,7 @@ export const ExportSettings = () => {
       <CardContent className="flex flex-col min-h-160">
         <SelectModule 
           mode="export" 
-          onModuleChange={(conf) => onSettingChange(conf as ExportConfig)} 
+          onModuleChange={(conf) => onSettingChange(conf as ExportConfig | null)} 
         />
 
         <Separator className="my-4" />

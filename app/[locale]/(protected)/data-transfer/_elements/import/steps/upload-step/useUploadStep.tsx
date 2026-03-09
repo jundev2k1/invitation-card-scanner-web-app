@@ -1,9 +1,10 @@
 import Papa from 'papaparse';
 import { useCallback, useState } from 'react';
 import * as XLSX from 'xlsx';
+import { truncateTemplates } from '../../setting/useImportSettings';
 import { UploadStepProps } from './UploadStep';
 
-export const useUploadStep = ({ onTemplateChange, templateSetting }: UploadStepProps) => {
+export const useUploadStep = ({ templateSetting, onTemplateChange, onTemplateClear }: UploadStepProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
@@ -43,9 +44,11 @@ export const useUploadStep = ({ onTemplateChange, templateSetting }: UploadStepP
 
       setParsedPreview(rawData);
       onTemplateChange?.({
+        columnRow: headerRow,
         name: selectedFile.name,
         extension: fileExtension as 'csv' | 'xlsx' | 'xls',
-        data: [...rawData.slice(headerRow, rawData.length)]
+        size: selectedFile.size,
+        fileData: truncateTemplates(rawData),
       });
     } catch (err) {
       setParseError((err as Error).message || 'Failed to parse file');
@@ -57,9 +60,11 @@ export const useUploadStep = ({ onTemplateChange, templateSetting }: UploadStepP
   const onHeaderRowChange = useCallback((row: number) => {
     setHeaderRow(row);
     onTemplateChange?.({
-      name: templateSetting?.name || '',
-      extension: templateSetting?.extension || 'xlsx',
-      data: [...parsedPreview.slice(row, parsedPreview.length)]
+      columnRow: row,
+      name: templateSetting?.name || null,
+      extension: templateSetting?.extension || null,
+      size: templateSetting?.size || null,
+      fileData: truncateTemplates(parsedPreview)
     });
   }, [parsedPreview, headerRow]);
 
@@ -75,7 +80,7 @@ export const useUploadStep = ({ onTemplateChange, templateSetting }: UploadStepP
     setFile(null);
     setParsedPreview([]);
     setParseError(null);
-    onTemplateChange(null);
+    onTemplateClear();
   }, []);
 
   return {

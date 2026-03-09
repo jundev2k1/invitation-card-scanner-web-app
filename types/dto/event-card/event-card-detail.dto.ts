@@ -1,4 +1,4 @@
-import { EventCardStatus, EventStatus } from "@/types/enum";
+import { EventCardStatus, EventStatus } from "@/types";
 import { EventCardLogDto } from "./event-card-log.dto";
 
 export interface EventCardDetailDto {

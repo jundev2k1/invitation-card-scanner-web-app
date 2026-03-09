@@ -55,6 +55,9 @@
     "toUpper": "Đến",
     "copyContent": "Sao chép nội dung"
   },
+  "badge": {
+    "required": "Bắt buộc"
+  },
   "placeholder": {
     "globalSearch": "Tìm kiếm...",
     "notSet": "Chưa chỉ định",
@@ -70,11 +73,13 @@
     "edit": "Chỉnh Sửa",
     "delete": "Xóa",
     "save": "Lưu thay đổi",
+    "saveConfig": "Lưu cấu hình",
     "cancel": "Hủy bỏ",
     "close" : "Đóng",
     "copy": "Sao chép",
     "copied": "Đã sao chép",
-    "reset": "Đặt lại"
+    "reset": "Đặt lại",
+    "back": "Quay lại"
   },
   "globalSearch": {
     "placeholder": {

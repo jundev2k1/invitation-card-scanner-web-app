@@ -4,21 +4,32 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { RangeStepFormValues } from "../../setting/importSettings.type";
 
-const extract = (pos: string | null) => {
+export const extract = (pos: string | null) => {
   if (!pos) return null;
   const match = pos.match(/^([A-Z]+)([0-9]+)$/);
-  if (!match) return null;
+  if (!match || match.length !== 3) return null;
   return { c: match[1], r: parseInt(match[2], 10) };
 };
 
-export const createRangeSchema = (t: TranslateFn) =>
+export const columnToNumber = (col: string): number => {
+  const upperCol = col.toUpperCase();
+  let result = 0;
+  for (let i = 0; i < upperCol.length; i++) {
+    const charCode = upperCol.charCodeAt(i) - 64;
+    result = result * 26 + charCode;
+  }
+  return result;
+};
+
+export const createRangeSchema = (tValidateMsg: TranslateFn) =>
   z.object({
     rangeStart: z.string()
-      .regex(/^$|^[A-Z]+[0-9]+$/, t('messages.invalidFormat'))
+      .regex(/^$|^[A-Z]+[0-9]+$/, tValidateMsg('invalidFormat'))
       .nullable(),
     rangeEnd: z.string()
-      .regex(/^$|^[A-Z]+[0-9]+$/, t('messages.invalidFormat'))
+      .regex(/^$|^[A-Z]+[0-9]+$/, tValidateMsg('invalidFormat'))
       .nullable(),
     autoScaleY: z.boolean()
   }).superRefine((data, ctx) => {
@@ -26,12 +37,21 @@ export const createRangeSchema = (t: TranslateFn) =>
     if ((data.rangeStart === null || data.rangeEnd === null) && !data.autoScaleY) {
       ctx.addIssue({
         code: "custom",
-        message: t('messages.mustEnableAutoScaleForAll'),
+        message: tValidateMsg('mustEnableAutoScaleForAll'),
         path: ['autoScaleY'],
       });
       return;
     }
-    if (!data.rangeStart || !data.rangeEnd) return;
+    if (!data.rangeStart || !data.rangeEnd) {
+      if (!data.autoScaleY) {
+        ctx.addIssue({
+          code: "custom",
+          message: tValidateMsg('mustEnableAutoScaleForAll'),
+          path: ['autoScaleY'],
+        });
+      }
+      return;
+    }
 
     const s = extract(data.rangeStart);
     const e = extract(data.rangeEnd);
@@ -41,7 +61,7 @@ export const createRangeSchema = (t: TranslateFn) =>
     if (data.rangeStart === data.rangeEnd) {
       ctx.addIssue({
         code: "custom",
-        message: t('messages.rangeCannotBeEqual'),
+        message: tValidateMsg('rangeCannotBeEqual'),
         path: ['rangeEnd'],
       });
     }
@@ -50,7 +70,7 @@ export const createRangeSchema = (t: TranslateFn) =>
     if (data.autoScaleY && s.r !== e.r) {
       ctx.addIssue({
         code: "custom",
-        message: t('messages.mustBeSameRow'),
+        message: tValidateMsg('mustBeSameRow'),
         path: ['rangeEnd'],
       });
     }
@@ -63,46 +83,57 @@ interface RangeStepForm {
 }
 
 interface ImportRangeStepForm {
-  start: string | null;
-  end: string | null;
-  onStartChange?: (start: string | null) => void;
-  onEndChange?: (end: string | null) => void;
-  autoScaleYState?: boolean;
-  onAutoScaleYChange?: (autoScaleY: boolean) => void;
+  rangeStepForm: RangeStepFormValues;
+  onRangeFormChange: (data: RangeStepFormValues) => void;
 }
 
-export const useRangeStepForm = ({
-  start,
-  onStartChange,
-  end,
-  onEndChange,
-  autoScaleYState,
-  onAutoScaleYChange,
-}: ImportRangeStepForm) => {
-  const tRange = useTranslations('dataTransfer.import.range');
-
+export const useRangeStepForm = ({ rangeStepForm, onRangeFormChange }: ImportRangeStepForm) => {
+  const tValidateMsg = useTranslations('dataTransfer.import.validate.messages');
   const form = useForm<RangeStepForm>({
-    resolver: zodResolver(createRangeSchema(tRange)),
+    resolver: zodResolver(createRangeSchema(tValidateMsg)),
     defaultValues: {
-      rangeStart: start || null,
-      rangeEnd: end || null,
-      autoScaleY: autoScaleYState || true
+      rangeStart: rangeStepForm.rangeStart || null,
+      rangeEnd: rangeStepForm.rangeEnd || null,
+      autoScaleY: rangeStepForm.autoScaleY || true
     }
   });
 
-  // Sync with props
   useEffect(() => {
-    form.setValue('autoScaleY', autoScaleYState || false, { shouldValidate: true });
-    form.setValue('rangeStart', start, { shouldValidate: true });
-    form.setValue('rangeEnd', end, { shouldValidate: true });
-  }, [start, end, autoScaleYState, form]);
+    form.trigger(['autoScaleY', 'rangeStart', 'rangeEnd']);
+  }, []);
+
+  const watchedValues = form.watch();
+  useEffect(() => {
+    form.reset(watchedValues);
+  }, [
+    watchedValues.rangeStart,
+    watchedValues.rangeEnd,
+    watchedValues.autoScaleY,
+  ]);
 
   // Handle submit
-  const onFormSubmit = useCallback((data: RangeStepForm) => {
-    onStartChange?.(data.rangeStart || null);
-    onEndChange?.(data.rangeEnd || null);
-    onAutoScaleYChange?.(data.autoScaleY);
-  }, [start, end, onStartChange, onEndChange, onAutoScaleYChange]);
+  const onFormSubmit = useCallback(({
+    rangeStart,
+    rangeEnd,
+    autoScaleY
+  }: {
+    rangeStart?: string | null;
+    rangeEnd?: string | null;
+    autoScaleY?: boolean;
+  }) => {
+    let autoScaleFlg = autoScaleY === undefined ? form.getValues('autoScaleY') : autoScaleY;
+    if (form.getValues('rangeStart') == null && form.getValues('rangeEnd') == null) {
+      autoScaleFlg = true;
+      form.setValue('autoScaleY', true);
+    }
+
+    onRangeFormChange?.({
+      rangeStart: rangeStart === undefined ? rangeStepForm.rangeStart : rangeStart || null,
+      rangeEnd: rangeEnd === undefined ? rangeStepForm.rangeEnd : rangeEnd || null,
+      autoScaleY: autoScaleFlg
+    });
+    form.trigger(['autoScaleY', 'rangeStart', 'rangeEnd']);
+  }, [rangeStepForm, onRangeFormChange]);
 
   return {
     form,

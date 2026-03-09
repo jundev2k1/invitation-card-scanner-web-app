@@ -1,6 +1,7 @@
+import { ImportConfig, ModuleEnum } from "@/root/config/import-file";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
-import { ExportConfig, ImportConfig, mockFetchExportConfigs, mockFetchImportConfigs, ModuleEnum } from "../../type";
+import { ExportConfig, mockFetchExportConfigs, mockFetchImportConfigs } from "../../type";
 import { SelectModuleProps } from "./SelectModule";
 
 export const useSelectModule = ({ mode, onModuleChange }: SelectModuleProps) => {
@@ -12,6 +13,7 @@ export const useSelectModule = ({ mode, onModuleChange }: SelectModuleProps) => 
     { label: t(`module.EVENT_CATEGORIES`), value: ModuleEnum.EVENT_CATEGORIES.toString() },
     { label: t(`module.EVENTS`), value: ModuleEnum.EVENTS.toString() },
     { label: t(`module.EVENT_CARDS`), value: ModuleEnum.EVENT_CARDS.toString() },
+    { label: t(`module.USERS`), value: ModuleEnum.USERS.toString() },
   ];
 
   useEffect(() => {

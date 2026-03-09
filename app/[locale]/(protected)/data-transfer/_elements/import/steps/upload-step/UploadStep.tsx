@@ -3,20 +3,25 @@ import { FileTextIcon, InfoIcon, LoaderIcon, UploadIcon } from "@/icons";
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import { useDropzone } from 'react-dropzone';
-import { ImportFileTemplate } from '../../../../type';
+import { FileTemplateValues } from '../../setting/importSettings.type';
 import { useUploadStep } from './useUploadStep';
 
 export interface UploadStepProps {
-  templateSetting: ImportFileTemplate | null;
-  onTemplateChange: (data: ImportFileTemplate | null) => void;
-  noConfigSelected?: boolean;
+  templateSetting: FileTemplateValues | null,
+  onTemplateChange: (file: FileTemplateValues) => void,
+  onTemplateClear: () => void,
+  noConfigSelected?: boolean,
 }
 
-export const UploadStep = ({ onTemplateChange, templateSetting, noConfigSelected }: UploadStepProps) => {
+export const UploadStep = ({
+  noConfigSelected,
+  templateSetting,
+  onTemplateChange,
+  onTemplateClear,
+}: UploadStepProps) => {
   const tActions = useTranslations('common.actions');
   const t = useTranslations('dataTransfer.import.upload');
   const {
-    file,
     isLoading,
     parseError,
     parsedPreview,
@@ -24,7 +29,7 @@ export const UploadStep = ({ onTemplateChange, templateSetting, noConfigSelected
     handleReset,
     headerRow,
     onHeaderRowChange,
-  } = useUploadStep({ onTemplateChange, templateSetting });
+  } = useUploadStep({ templateSetting, onTemplateChange, onTemplateClear });
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -69,14 +74,14 @@ export const UploadStep = ({ onTemplateChange, templateSetting, noConfigSelected
       </div>
 
       {/* File info & actions */}
-      {file && (
+      {templateSetting?.name && (
         <div className="flex items-center justify-between bg-muted/50 p-4 rounded-lg">
           <div className="flex items-center gap-3">
             <FileTextIcon className="w-8 h-8 text-primary" />
             <div>
-              <p className="font-medium">{file.name}</p>
+              <p className="font-medium">{templateSetting.name}</p>
               <p className="text-xs text-muted-foreground">
-                {(file.size / 1024 / 1024).toFixed(2)} MB
+                {((templateSetting.size || 0) / 1024 / 1024).toFixed(2)} MB
               </p>
             </div>
           </div>
@@ -102,7 +107,7 @@ export const UploadStep = ({ onTemplateChange, templateSetting, noConfigSelected
       )}
 
       {/* Mini Preview Table */}
-      {parsedPreview && parsedPreview.length > 0 && (
+      {templateSetting && templateSetting.fileData.length > 0 && (
         <div className="border rounded-lg overflow-hidden">
           <div className="bg-muted/50 px-4 py-2 font-medium text-sm">
             {t('previewTitle')}
@@ -110,7 +115,7 @@ export const UploadStep = ({ onTemplateChange, templateSetting, noConfigSelected
           <div className="max-h-80 overflow-auto">
             <table className="w-full text-sm border-collapse">
               <tbody>
-                {parsedPreview.slice(0, 10).map((row, idx) => (
+                {templateSetting.fileData.slice(0, 10).map((row, idx) => (
                   <tr key={idx} className={cn("border-t hover:bg-muted/30", idx === headerRow && "bg-muted/70")}>
                     <td className="border px-2 py-2 text-center">
                       <Input

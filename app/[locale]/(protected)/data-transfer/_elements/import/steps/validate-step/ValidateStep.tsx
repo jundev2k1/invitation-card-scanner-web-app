@@ -1,37 +1,28 @@
 import { Alert, Badge, Button, ScrollArea } from '@/components';
 import { AlertTriangleIcon, CheckCheckIcon, InfoIcon, XCircleIcon } from "@/icons";
 import { useTranslations } from 'next-intl';
-import { ImportConfig } from '../../../../type';
+import { ImportFormValues } from '../../setting/importSettings.type';
 import { useValidateStep } from './useValidateStep';
 
 type ValidateStepProps = {
-  config: ImportConfig | null;
+  formValues: ImportFormValues;
   parsedData?: any[];
   mappings?: Record<string, { source: string; ignore?: boolean }>;
   rangeStart?: string | null;
   rangeEnd?: string | null;
   includesActionColumn?: boolean;
-  onSave?: () => void;
 };
 
-export const ValidateStep = ({
-  config,
-  parsedData = [],
-  mappings = {},
-  rangeStart = null,
-  rangeEnd = null,
-  includesActionColumn = false,
-  onSave,
-}: ValidateStepProps) => {
+export const ValidateStep = ({ formValues }: ValidateStepProps) => {
+  const tAction = useTranslations('common.actions');
+  const tTranferAction = useTranslations('dataTransfer.actions');
   const t = useTranslations('dataTransfer.import.validate');
-  const { issues, summary, isValid } = useValidateStep({
-    config,
-    parsedData,
-    mappings,
-    rangeStart,
-    rangeEnd,
-    includesActionColumn,
-  });
+  const {
+    issues,
+    summary,
+    isValid,
+    onSubmit,
+  } = useValidateStep({ formValues });
 
   return (
     <div className="flex flex-col h-full space-y-6 p-6">
@@ -63,7 +54,7 @@ export const ValidateStep = ({
         </div>
 
         <div className="border rounded-lg p-4 bg-muted/20">
-          <div className="text-sm text-muted-foreground">Mapped Fields</div>
+          <div className="text-sm text-muted-foreground">{t('mappedCount')}</div>
           <div className="text-2xl font-bold mt-1">
             {summary.mappedFields || 0} / {summary.totalTargets || 0}
           </div>
@@ -74,7 +65,7 @@ export const ValidateStep = ({
       <div className="flex-1 border rounded-lg overflow-hidden bg-background">
         <div className="bg-muted/50 px-4 py-3 font-medium border-b flex items-center gap-2">
           <AlertTriangleIcon className="w-5 h-5 text-amber-600" />
-          Validation Issues
+          {t('issuesList')}
         </div>
         <ScrollArea className="h-[calc(100%-44px)]">
           {issues.length === 0 ? (
@@ -91,7 +82,7 @@ export const ValidateStep = ({
                   icon={issue.severity === 'error' ? (
                     <XCircleIcon className="h-5 w-5 mt-0.5" />
                   ) : (
-                    <InfoIcon className="h-5 w-5 mt-0.5 text-amber-600" />
+                    <InfoIcon className="h-5 w-5 mt-0.5 text-amber-600!" />
                   )}
                   title={issue.title}
                 >
@@ -105,11 +96,13 @@ export const ValidateStep = ({
 
       {/* Footer Actions */}
       <div className="flex items-center justify-end gap-4 pt-4 border-t">
-        <Button variant="outline" disabled={!isValid}>
-          Back to Range
+        <Button variant="outline" disabled={isValid}>
+          {issues?.length > 0 && issues[0].step === 'mapping' && tTranferAction('backToMapping')}
+          {issues?.length > 0 && issues[0].step === 'range' && tTranferAction('backToRange')}
+          {issues?.length === 0 && tAction('back')}
         </Button>
-        <Button onClick={onSave} disabled={!isValid}>
-          Save Configuration
+        <Button onClick={onSubmit} disabled={!isValid}>
+          {tAction('saveConfig')}
         </Button>
       </div>
     </div>

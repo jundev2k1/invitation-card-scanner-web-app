@@ -15,7 +15,9 @@ export const ImportSettings = () => {
   const t = useTranslations('dataTransfer');
   const {
     tabItems,
+    formValues,
     handleConfigChange,
+    onConfigInfoChange,
   } = useImportSettings();
 
   return (
@@ -28,7 +30,7 @@ export const ImportSettings = () => {
 
       <CardContent className="flex-1 flex flex-col space-y-6">
         {/* Module & Setting Selector */}
-        <SelectModule mode="import" onModuleChange={handleConfigChange} />
+        <SelectModule mode="import" formValues={formValues} onModuleChange={handleConfigChange} onConfigInfoChange={onConfigInfoChange} />
 
         <Separator />
 

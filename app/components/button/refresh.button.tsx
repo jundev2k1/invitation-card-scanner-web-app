@@ -7,9 +7,10 @@ import AppButton from "./default.button";
 type RefreshButtonProps = {
   cooldown?: number;
   onRefresh: () => void;
+  disabled?: boolean;
 };
 
-export function RefreshButton({ cooldown = 5, onRefresh }: RefreshButtonProps) {
+export function RefreshButton({ cooldown = 5, onRefresh, disabled }: RefreshButtonProps) {
   const t = useTranslations();
   const [secondsLeft, setSecondsLeft] = useState(0);
 
@@ -38,7 +39,7 @@ export function RefreshButton({ cooldown = 5, onRefresh }: RefreshButtonProps) {
       className="dark:text-muted-foreground"
       variant="outline"
       onClick={handleRefresh}
-      disabled={isCooldownActive}
+      disabled={disabled || isCooldownActive}
     >
       {t("common.actions.refresh")}
       {isCooldownActive && ` (${secondsLeft}s)`}

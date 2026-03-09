@@ -1,20 +1,22 @@
-import { Button, Field, FieldGroup, FormCheckbox, FormTextBox } from '@/components';
+import { Button, Field, FieldGroup, FormTextBox } from '@/components';
+import { ImportConfig, ModuleEnum } from '@/root/config/import-file';
 import { useTranslations } from 'next-intl';
 import { FormProvider } from 'react-hook-form';
-import { ImportConfig, ModuleEnum } from '../../../type';
+import { ConfigInfoFormValues, ImportFormValues } from '../setting/importSettings.type';
 import { useUpsertImportForm } from './useUpsertImportForm';
 
 export interface InsertImportFormProps {
   module: ModuleEnum;
-  setting: ImportConfig | null;
-  onSuccess: (setting: ImportConfig) => void;
+  formValues: ImportFormValues | null;
+  onInsertSuccess: (setting: ImportConfig) => void;
+  onConfigInfoChange: (value: ConfigInfoFormValues) => void;
 }
 
-export const UpsertImportForm = ({ module, setting, onSuccess }: InsertImportFormProps) => {
+export const UpsertImportForm = ({ module, formValues: setting, onInsertSuccess, onConfigInfoChange }: InsertImportFormProps) => {
   const t = useTranslations('dataTransfer');
   const tActions = useTranslations('common.actions');
 
-  const { form, onSubmit } = useUpsertImportForm({ module, setting, onSuccess });
+  const { form, onSubmit } = useUpsertImportForm({ module, formValues: setting, onInsertSuccess, onConfigInfoChange });
 
   return (
     <div className="p-6 border bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -35,13 +37,7 @@ export const UpsertImportForm = ({ module, setting, onSuccess }: InsertImportFor
               />
             </Field>
 
-            <Field orientation="responsive" className="gap-4 justify-between items-start">
-              <div className="flex flex-col gap-1">
-                <FormCheckbox name="includesActionColumn" label={t('import.autoAddAction')} />
-                <p className="text-xs text-muted-foreground italic">
-                  {t('import.autoAddActionDesc')}
-                </p>
-              </div>
+            <Field orientation="horizontal" className="gap-4 justify-start items-start">
               <Button type="submit">
                 {!setting ? tActions('add') : tActions('save')}
               </Button>

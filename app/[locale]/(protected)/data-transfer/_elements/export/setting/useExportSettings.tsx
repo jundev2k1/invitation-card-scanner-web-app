@@ -1,7 +1,7 @@
 import { KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ExportColumn, ExportConfig, mockAvailableFields, ModuleEnum } from "../../../type";
+import { ExportColumn, ExportConfig, mockFetchExportConfigs } from "../../../type";
 
 export const useExportSettings = () => {
   const [configuredColumns, setConfiguredColumns] = useState<ExportConfig | null>(null);
@@ -11,14 +11,10 @@ export const useExportSettings = () => {
   useEffect(() => {
     setConfiguredColumns(setting ? { ...setting } : null);
 
-    switch (setting?.module) {
-      case ModuleEnum.EVENTS:
-        setAvailableFields(mockAvailableFields);
-        break;
-
-      default:
-        setAvailableFields([]);
-    }
+    const availableFields = mockFetchExportConfigs
+      .find(f => f.module == setting?.module)?.columns || [];
+      
+    setAvailableFields(availableFields);
   }, [setting]);
 
   const onSettingChange = useCallback((conf: ExportConfig | null) => {

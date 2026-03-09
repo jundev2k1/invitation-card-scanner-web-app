@@ -10,6 +10,7 @@ export type Locale = (typeof locales)[number];
 async function getMessages(locale: Locale) {
   return {
     common: (await import(`../messages/common/${locale}.json`)).default,
+    validate: (await import(`../messages/validate/${locale}.json`)).default,
     auth: (await import(`../messages/auth/${locale}.json`)).default,
     dashboard: (await import(`../messages/dashboard/${locale}.json`)).default,
     user: (await import(`../messages/user/${locale}.json`)).default,

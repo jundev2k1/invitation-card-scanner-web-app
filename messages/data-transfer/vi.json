@@ -87,23 +87,27 @@
         "applySelection": "Áp dụng vùng chọn",
         "applyWithAutoScale": "Tự động mở rộng hàng",
         "clearSelection": "Hủy vùng chọn"
-      },
-      "messages": {
-        "rangeCannotBeEqual": "Bắt đầu và kết thúc phải khác nhau",
-        "invalidFormat": "Định dạng ô không đúng",
-        "mustBeSameRow": "Phạm vi dữ liệu phải trong cùng dòng",
-        "mustEnableAutoScaleForAll": "Tùy chọn này phải được bật nếu muốn đọc hết file"
       }
     },
     "validate": {
       "title": "Tóm tắt Kiểm tra",
       "desc": "Kiểm tra các vấn đề tiềm ẩn trước khi lưu cấu hình.",
+      "issuesList": "Danh sách vấn đề",
       "noIssues": "Không phát hiện vấn đề. Sẵn sàng lưu.",
       "missingRequired": "Một số trường bắt buộc thiếu dữ liệu ở các dòng",
       "formatMismatch": "Phát hiện không khớp định dạng ở một số ô",
       "duplicateKeys": "Phát hiện khóa trùng lặp tiềm ẩn",
       "ignoredCount": "Cột bị bỏ qua",
-      "rowCount": "Số dòng trong vùng đã chọn"
+      "rowCount": "Số dòng trong vùng đã chọn",
+      "mappedCount": "Trường đã khớp",
+      "messages": {
+        "rangeCannotBeEqual": "Bắt đầu và kết thúc phải khác nhau",
+        "invalidFormat": "Định dạng ô không đúng",
+        "mustBeSameRow": "Phạm vi dữ liệu phải trong cùng dòng",
+        "mustEnableAutoScaleForAll": "Tùy chọn này phải được bật nếu muốn đọc hết file",
+        "rangeAllWarnTitle": "Xác nhận quét toàn bộ tệp",
+        "rangeAllWarnDesc": "Vui lòng đảm bảo dữ liệu đầu vào đúng định dạng tiêu chuẩn. Nếu tệp chứa các ô có định dạng lạ (format) trong vùng quét, quá trình xử lý có thể phát sinh lỗi ngoài ý muốn"
+      }
     },
     "ignored": "Bỏ qua",
     "rangeStart": "Bắt đầu",
@@ -122,12 +126,15 @@
     "add": "Thêm",
     "save": "Lưu",
     "reset": "Đặt lại",
-    "preview": "Xem trước"
+    "preview": "Xem trước",
+    "backToMapping": "Quay lại ánh xạ cột",
+    "backToRange": "Quay lại vùng dữ liệu"
   },
   "module": {
     "EVENT_CATEGORIES": "Danh mục sự kiện",
     "EVENTS": "Sự kiện",
-    "EVENT_CARDS": "Thiệp mời sự kiện"
+    "EVENT_CARDS": "Thiệp mời sự kiện",
+    "USERS": "Người dùng"
   },
   "fields": {
     "EVENTS": {
@@ -138,6 +145,10 @@
       "description": "Mô tả",
       "startAt": "Thời gian bắt đầu",
       "endAt": "Thời gian kết thúc",
+      "locationName": "Địa điểm",
+      "address": "Địa chỉ",
+      "mapUrl": "Link bản đồ",
+      "settings": "Cấu hình",
       "createdAt": "Ngày tạo",
       "updatedAt": "Ngày cập nhật"
     },

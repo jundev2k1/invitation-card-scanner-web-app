@@ -7,10 +7,9 @@ const ItemTypes = {
 
 type UseMappingItemProps = {
   type: 'source' | 'target';
-  item: { key: string; order?: number };
+  item: { id?: number; key: string | number; order?: number };
   isMapped: boolean;
-  onMap?: (sourceOrder: number, targetKey: string) => void;
-  onUnmap: () => void;
+  onMap?: (sourceOrder: number, targetId: number) => void;
 };
 
 export const useMappingItem = ({
@@ -18,7 +17,6 @@ export const useMappingItem = ({
   item,
   isMapped,
   onMap,
-  onUnmap,
 }: UseMappingItemProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -39,7 +37,7 @@ export const useMappingItem = ({
       accept: ItemTypes.SOURCE_COLUMN,
       drop: (draggedItem: { order: number }) => {
         if (type === 'target' && onMap) {
-          onMap(draggedItem.order, item.key);
+          onMap(draggedItem.order, item.id || 0);
         }
       },
     }),

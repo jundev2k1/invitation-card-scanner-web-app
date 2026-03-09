@@ -1,0 +1,69 @@
+{
+  "common": {
+    "required": "This field is required",
+    "insertRequired": "Required for new entries",
+    "updateRequired": "Required for updates",
+    "unique": "Value must be unique",
+    "nullable": "Cannot be null",
+    "invalidFormat": "Invalid format",
+    "invalidNumber": "Please enter a valid number",
+    "invalidEmail": "Invalid email address",
+    "invalidUrl": "Invalid URL (e.g., https://...)",
+    "invalidPhone": "Invalid phone number",
+    "alreadyExists": "This '{'{field}'}' already exists",
+    "notAllowed": "This value is not permitted"
+  },
+  "format": {
+    "onlyNumber": "Only numbers are allowed",
+    "onlyChar": "Only characters are allowed",
+    "upperCase": "Must be in UPPERCASE",
+    "lowerCase": "Must be in lowercase",
+    "camelCase": "Must be in camelCase",
+    "snakeCase": "Must be in snake_case",
+    "json": "Must be a valid JSON string",
+    "regex": "Invalid format: '{'{message}'}'"
+  },
+  "length": {
+    "minLength": "Must be at least '{'{min}'}' characters",
+    "maxLength": "Cannot exceed '{'{max}'}' characters",
+    "exactLength": "Must be exactly '{'{len}'}' characters",
+    "length": "Must be exactly '{'{len}'}' characters"
+  },
+  "compare": {
+    "equalTo": "Must be equal to '{'{expected}'}'",
+    "notEqualTo": "Must not be equal to '{'{expected}'}'",
+    "greaterThan": "Must be greater than '{'{min}'}'",
+    "greaterThanOrEqual": "Must be greater than or equal to '{'{min}'}'",
+    "lessThan": "Must be less than '{'{max}'}'",
+    "lessThanOrEqual": "Must be less than or equal to '{'{max}'}'",
+    "refer": "Reference check failed: '{'{message}'}'"
+  },
+  "date": {
+    "invalid": "Invalid date format",
+    "future": "Date cannot be in the future",
+    "past": "Date cannot be in the past",
+    "after": "Date must be after '{'{date}'}'",
+    "before": "Date must be before '{'{date}'}'",
+    "order": "Start date must be before end date"
+  },
+  "file": {
+    "tooLarge": "File exceeds limit ('{'{max}'}'MB)",
+    "tooSmall": "File size is too small",
+    "invalidType": "Unsupported file type ('{'{types}'}')",
+    "limitCount": "Maximum '{'{count}'}' files allowed",
+    "uploadFailed": "Failed to upload file"
+  },
+  "excel": {
+    "invalidCell": "Invalid cell reference (e.g., A1)",
+    "invalidColumn": "Invalid column name (e.g., A, B, AA)",
+    "rangeEqual": "Start and end points cannot be the same",
+    "mustSameRow": "Range must be on the same row",
+    "autoScaleRequired": "Auto Scale must be enabled for full file reading",
+    "duplicateRange": "This range is already configured"
+  },
+  "auth": {
+    "passwordWeak": "Password is too weak",
+    "passwordMismatch": "Passwords do not match",
+    "passwordRequire": "Must include uppercase, number, and symbol"
+  }
+}

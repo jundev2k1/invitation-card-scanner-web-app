@@ -1,21 +1,28 @@
 import { Combobox, Field, FieldGroup, FieldLabel, Select } from "@/components";
 import { FolderSymlinkIcon } from "@/icons";
+import { ImportConfig } from "@/root/config/import-file";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { PreviewConfig } from "../../_shared/preview/PreviewConfig";
-import { ExportConfig, ImportConfig, SelectModuleChangeFn } from "../../type";
+import { ExportConfig } from "../../type";
 import { UpsertExportForm } from "../export/upsert-form/UpsertExportForm";
+import { ConfigInfoFormValues, ImportFormValues } from "../import/setting/importSettings.type";
 import { UpsertImportForm } from "../import/upsert-form/UpsertImportForm";
+import { SelectModuleChangeFn } from "./type";
 import { useSelectModule } from "./useSelectModule";
 
 export type SelectModuleProps = {
   mode: 'import' | 'export';
+  formValues?: ImportFormValues | ExportConfig;
   onModuleChange: SelectModuleChangeFn;
+  onConfigInfoChange?: (value: ConfigInfoFormValues) => void;
 };
 
 export const SelectModule = React.memo(({
   mode,
+  formValues,
   onModuleChange,
+  onConfigInfoChange,
 }: SelectModuleProps) => {
   const t = useTranslations("dataTransfer.moduleInput");
   const {
@@ -27,7 +34,7 @@ export const SelectModule = React.memo(({
     onFetchImportOptions,
     onFetchExportOptions,
     onInsertSuccess,
-  } = useSelectModule({ onModuleChange, mode });
+  } = useSelectModule({ onModuleChange, onConfigInfoChange, mode, formValues });
 
   return (
     <FieldGroup >
@@ -49,14 +56,14 @@ export const SelectModule = React.memo(({
             className="mb-0"
             label={t('selectSetting')}
             fetchOptions={onFetchImportOptions}
-            value={selectedModuleOption}
+            value={selectedModuleOption as ImportConfig | null}
             onChange={(val) => onModuleOptionChange(val as ImportConfig)}
-            getOptionLabel={res => res.name}
+            getOptionLabel={res => res.configInfo.name}
             getOptionKey={res => res.id!}
             getDisplayValue={res => (
               <span className="w-full flex items-center gap-1">
                 <FolderSymlinkIcon className="w-4 h-4 mr-2" />
-                {res.name}
+                {res.configInfo.name}
               </span>
             )}
             placeholder={t('selectSettingPlaceholder')}
@@ -68,7 +75,7 @@ export const SelectModule = React.memo(({
             className="mb-0"
             label={t('selectSetting')}
             fetchOptions={onFetchExportOptions}
-            value={selectedModuleOption}
+            value={selectedModuleOption as ExportConfig}
             onChange={(val) => onModuleOptionChange(val as ExportConfig)}
             getOptionLabel={res => res.name}
             getOptionKey={res => res.id!}
@@ -89,8 +96,9 @@ export const SelectModule = React.memo(({
       {mode === 'import' && (
         <UpsertImportForm
           module={selectedModule}
-          setting={selectedModuleOption as ImportConfig}
-          onSuccess={onInsertSuccess}
+          formValues={formValues as ImportFormValues}
+          onConfigInfoChange={(formVal) => onConfigInfoChange?.(formVal)}
+          onInsertSuccess={onInsertSuccess}
         />
       )}
 

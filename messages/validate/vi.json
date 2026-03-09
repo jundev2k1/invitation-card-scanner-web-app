@@ -1,0 +1,69 @@
+{
+  "common": {
+    "required": "Trường này là bắt buộc",
+    "insertRequired": "Bắt buộc khi thêm mới",
+    "updateRequired": "Bắt buộc khi cập nhật",
+    "unique": "Giá trị này phải là duy nhất",
+    "nullable": "Không được để trống (null)",
+    "invalidFormat": "Định dạng không hợp lệ",
+    "invalidNumber": "Vui lòng nhập số hợp lệ",
+    "invalidEmail": "Email không đúng định dạng",
+    "invalidUrl": "Đường dẫn không hợp lệ (VD: https://...)",
+    "invalidPhone": "Số điện thoại không hợp lệ",
+    "alreadyExists": "'{'{field}'}' này đã tồn tại",
+    "notAllowed": "Giá trị này không được phép"
+  },
+  "format": {
+    "onlyNumber": "Chỉ được nhập số",
+    "onlyChar": "Chỉ được nhập chữ cái",
+    "upperCase": "Phải viết IN HOA",
+    "lowerCase": "Phải viết thường",
+    "camelCase": "Phải viết dạng camelCase",
+    "snakeCase": "Phải viết dạng snake_case",
+    "json": "Phải là định dạng JSON hợp lệ",
+    "regex": "Định dạng không khớp: '{'{message}'}'"
+  },
+  "length": {
+    "minLength": "Tối thiểu '{'{min}'}' ký tự",
+    "maxLength": "Không được vượt quá '{'{max}'}' ký tự",
+    "exactLength": "Phải có chính xác '{'{len}'}' ký tự",
+    "length": "Phải có chính xác '{'{len}'}' ký tự"
+  },
+  "compare": {
+    "equalTo": "Giá trị phải bằng '{'{expected}'}'",
+    "notEqualTo": "Giá trị không được bằng '{'{expected}'}'",
+    "greaterThan": "Phải lớn hơn '{'{min}'}'",
+    "greaterThanOrEqual": "Phải lớn hơn hoặc bằng '{'{min}'}'",
+    "lessThan": "Phải nhỏ hơn '{'{max}'}'",
+    "lessThanOrEqual": "Phải nhỏ hơn hoặc bằng '{'{max}'}'",
+    "refer": "Lỗi kiểm tra tham chiếu: '{'{message}'}'"
+  },
+  "date": {
+    "invalid": "Ngày tháng không hợp lệ",
+    "future": "Ngày không được ở tương lai",
+    "past": "Ngày không được ở quá khứ",
+    "after": "Ngày phải sau ngày '{'{date}'}'",
+    "before": "Ngày phải trước ngày '{'{date}'}'",
+    "order": "Ngày bắt đầu phải trước ngày kết thúc"
+  },
+  "file": {
+    "tooLarge": "Kích thước file vượt mức ('{'{max}'}'MB)",
+    "tooSmall": "Kích thước file quá nhỏ",
+    "invalidType": "Định dạng file không hỗ trợ ('{'{types}'}')",
+    "limitCount": "Tối đa cho phép '{'{count}'}' file",
+    "uploadFailed": "Tải lên thất bại"
+  },
+  "excel": {
+    "invalidCell": "Tham chiếu ô không đúng (VD: A1)",
+    "invalidColumn": "Tên cột không đúng (VD: A, B, AA)",
+    "rangeEqual": "Điểm đầu và cuối không được trùng nhau",
+    "mustSameRow": "Dải ô phải nằm trên cùng một hàng",
+    "autoScaleRequired": "Phải bật Auto Scale khi chọn đọc toàn bộ file",
+    "duplicateRange": "Dải ô này đã được thiết lập"
+  },
+  "auth": {
+    "passwordWeak": "Mật khẩu quá yếu",
+    "passwordMismatch": "Mật khẩu xác nhận không khớp",
+    "passwordRequire": "Phải bao gồm chữ hoa, số và ký tự đặc biệt"
+  }
+}

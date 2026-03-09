@@ -55,6 +55,9 @@
     "toUpper": "To",
     "copyContent": "Copy content"
   },
+  "badge": {
+    "required": "Required"
+  },
   "placeholder": {
     "globalSearch": "Search...",
     "notSet": "Not set",
@@ -70,11 +73,13 @@
     "edit": "Edit",
     "delete": "Delete",
     "save": "Save Changes",
+    "saveConfig": "Save Configuration",
     "cancel": "Cancel",
     "close" : "Close",
     "copy": "Copy",
     "copied": "Copied",
-    "reset": "Reset"
+    "reset": "Reset",
+    "back": "Back"
   },
   "globalSearch": {
     "placeholder": {

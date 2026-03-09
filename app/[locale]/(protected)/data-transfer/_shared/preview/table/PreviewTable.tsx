@@ -7,9 +7,11 @@ import {
   TableRow
 } from '@/components';
 import { cn } from '@/lib/utils';
+import { ImportConfig } from '@/root/config/import-file';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ExportConfig, ImportConfig } from '../../../type';
+import { extract } from '../../../_elements/import/steps/range-step/useRangeStepForm';
+import { ExportConfig } from '../../../type';
 import { PreviewContext } from './PreviewContext';
 import { useMappedColumns } from './useMappedColumns';
 
@@ -194,7 +196,7 @@ export const PreviewTable = ({
     return Array.from({ length: rowCount }, (_, i) => String(i + 1));
   }, [data.length]);
 
-  const mappedCols = useMappedColumns(config?.columns ?? []);
+  const mappedCols = useMappedColumns(config, type);
 
   // Returns Tailwind classes based on column format
   const getFormatStyles = useCallback((format?: string) => {
@@ -338,7 +340,7 @@ export const PreviewTable = ({
 
   const handleSelectionChangeWithAutoScale = useCallback(() => {
     if (!rangeStart || !rangeEnd) return;
-    
+
     onRangeChange?.(rangeStart, rangeEnd);
     onAutoScaleYChange?.(true);
   }, [selectedRangeStart, selectedRangeEnd, rangeStart, rangeEnd, onRangeChange, autoScaleY]);
@@ -358,20 +360,13 @@ export const PreviewTable = ({
     setIsDragging(false);
   }, [selectedRangeStart, selectedRangeEnd, rangeStart, rangeEnd]);
 
-  if (!config || !mappedCols.length) {
+  if (!config) {
     return (
       <div className="h-full min-h-100 border rounded-lg flex items-center justify-center text-muted-foreground text-sm bg-muted/30">
         {tTranfer('export.previewNoConfig')}
       </div>
     );
   }
-
-  const extract = (pos: string | null) => {
-    if (!pos) return null;
-    const match = pos.match(/^([A-Z]+)([0-9]+)$/);
-    if (!match) return null;
-    return { c: match[1], r: parseInt(match[2], 10) };
-  };
 
   const isImport = type === 'import';
   const importConfig = config as ImportConfig;
@@ -414,7 +409,7 @@ export const PreviewTable = ({
           {rows.map((rowNum, rowIndex) => {
             const isIgnoredRow =
               isImport &&
-              importConfig.columns?.some((c) => c.ignore && c.order.toString() === rowNum);
+              importConfig.mappingStep?.mappings?.some((c) => c.dest.toString() === rowNum);
 
             return (
               <TableRow

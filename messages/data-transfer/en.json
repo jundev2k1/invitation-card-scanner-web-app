@@ -87,23 +87,29 @@
         "applySelection": "Apply Selection",
         "applyWithAutoScale": "Apply with Auto-Scale",
         "clearSelection": "Clear Selection"
-      },
-      "messages": {
-        "rangeCannotBeEqual": "Start and end range cannot be the same",
-        "invalidFormat": "Invalid cell format",
-        "mustBeSameRow": "Data range must be in the same row",
-        "mustEnableAutoScaleForAll": "This option must be enabled for all columns"
       }
     },
     "validate": {
       "title": "Validation Summary",
       "desc": "Review potential issues before saving the configuration.",
+      "issuesList": "Validation Issues",
       "noIssues": "No validation issues found. Ready to save.",
       "missingRequired": "Some required fields are missing data in rows",
       "formatMismatch": "Data format mismatch detected in some cells",
       "duplicateKeys": "Potential duplicate keys detected",
       "ignoredCount": "Ignored columns",
-      "rowCount": "Rows in selected range"
+      "rowCount": "Rows in selected range",
+      "mappedCount": "Mapped fields",
+      "messages": {
+        "rangeCannotBeEqual": "Start and end range cannot be the same",
+        "invalidFormat": "Invalid cell format",
+        "mustBeSameRow": "Data range must be in the same row",
+        "mustEnableAutoScaleForAll": "This option must be enabled for all columns",
+        "noMappingTitle": "No mapping defined",
+        "noMappingDesc": "You must map at least one column to a field, otherwise the import will fail.",
+        "rangeAllWarnTitle": "Scanning All Files",
+        "rangeAllWarnDesc": "Please ensure the input file follows the standard format. Scanning cells with custom formatting may lead to unexpected processing errors"
+      }
     },
     "ignored": "Ignored",
     "rangeStart": "Start",
@@ -122,12 +128,15 @@
     "add": "Add",
     "save": "Save",
     "reset": "Reset",
-    "preview": "Preview"
+    "preview": "Preview",
+    "backToMapping": "Back to Mapping",
+    "backToRange": "Back to Range Selection"
   },
   "module": {
     "EVENT_CATEGORIES": "Event Categories",
     "EVENTS": "Events",
-    "EVENT_CARDS": "Event Cards"
+    "EVENT_CARDS": "Event Cards",
+    "USERS": "Users"
   },
   "fields": {
     "EVENTS": {
@@ -138,6 +147,10 @@
       "description": "Description",
       "startAt": "Start Time",
       "endAt": "End Time",
+      "locationName": "Location Name",
+      "address": "Address",
+      "mapUrl": "Map URL",
+      "settings": "Settings",
       "createdAt": "Created At",
       "updatedAt": "Updated At"
     },

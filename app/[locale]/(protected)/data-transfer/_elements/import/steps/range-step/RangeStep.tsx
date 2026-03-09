@@ -1,24 +1,23 @@
-import { Button, FormCheckbox, FormTextBox, Label } from '@/components';
+import { Alert, Button, FormCheckbox, FormTextBox, Label } from '@/components';
 import { InfoIcon, RotateCcwIcon, SparklesIcon } from "@/icons";
+import { ImportConfig } from '@/root/config/import-file';
 import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { PreviewTable } from '../../../../_shared/preview/table/PreviewTable';
-import { ImportConfig } from '../../../../type';
-import { RangeStepFormValues } from '../../setting/importSettings.type';
+import { ImportFormValues, RangeStepFormValues } from '../../setting/importSettings.type';
 import { useRangeStep } from './useRangeStep';
 
 type RangeStepProps = {
-  config: ImportConfig | null;
+  formValues: ImportFormValues;
   parsedData?: string[][];
-  onRangeChange?: (start: string | null, end: string | null) => void;
-  onRangeFormChange: (data: RangeStepFormValues) => void
+  onRangeFormChange: (data: RangeStepFormValues) => void;
 };
 
 export const RangeStep = ({
-  config,
+  formValues,
   parsedData = [],
-  onRangeChange,
+  onRangeFormChange,
 }: RangeStepProps) => {
   const t = useTranslations('dataTransfer.import.range');
   const tCommon = useTranslations('common');
@@ -33,8 +32,46 @@ export const RangeStep = ({
     handleAutoDetect,
     onRangeReset,
     autoScaleY,
-    setAutoScaleY,
-  } = useRangeStep({ config, parsedData, onRangeChange });
+    onAutoScaleYChange,
+  } = useRangeStep({ rangeStepForm: formValues.rangeStep, parsedData, onRangeFormChange });
+
+  const previewConfig: ImportConfig = {
+    ...formValues,
+    id: formValues.id,
+    module: formValues.module,
+    configInfo: {
+      name: formValues.configInfo.name,
+      description: formValues.configInfo.description,
+    },
+    mappingStep: {
+      mappings: formValues.mappingStep.mappings,
+      importFields: formValues.mappingStep.importFields,
+    },
+    rangeStep: {
+      rangeStart,
+      rangeEnd,
+      autoScaleY,
+    },
+    uploadStep: {
+      name: formValues.fileTemplate.name,
+      extension: formValues.fileTemplate.extension,
+      size: formValues.fileTemplate.size,
+      data: formValues.fileTemplate.fileData,
+    },
+  }
+
+  if (!formValues?.id)
+    return (
+      <div className="h-full flex flex-col space-y-6 p-6">
+        <Alert
+          title={t('noConfigSelectedTitle')}
+          variant="destructive"
+          icon={<InfoIcon />}
+        >
+          {t('noConfigSelectedDesc')}
+        </Alert>
+      </div>
+    );
 
   return (
     <div ref={wRef} className="flex flex-col h-full space-y-6 p-6">
@@ -69,12 +106,12 @@ export const RangeStep = ({
       <div className="border rounded-lg bg-background shadow-sm h-120 relative">
         <div className="absolute top-0 left-0 w-full h-full">
           <PreviewTable
-            config={config}
+            config={previewConfig}
             type="import"
             data={parsedData}
             interactive
             autoScaleY={autoScaleY}
-            onAutoScaleYChange={setAutoScaleY}
+            onAutoScaleYChange={onAutoScaleYChange}
             onRangeChange={onRangePreviewChange}
             selectedRangeStart={rangeStart ?? undefined}
             selectedRangeEnd={rangeEnd ?? undefined}
@@ -98,14 +135,14 @@ export const RangeStep = ({
                     name="rangeStart"
                     placeholder={t('rangeStartPlaceholder')}
                     className="font-mono w-32"
-                    onBlur={form.handleSubmit(onFormSubmit)}
+                    onBlur={(e) => onFormSubmit({ rangeStart: e.currentTarget.value || null })}
                   />
                   <span className="text-muted-foreground">→</span>
                   <FormTextBox
                     name="rangeEnd"
                     placeholder={t('rangeEndPlaceholder')}
                     className="font-mono w-32"
-                    onBlur={form.handleSubmit(onFormSubmit)}
+                    onBlur={(e) => onFormSubmit({ rangeEnd: e.currentTarget.value || null })}
                   />
                 </div>
               </div>
@@ -115,7 +152,7 @@ export const RangeStep = ({
                   name="autoScaleY"
                   label={t('autoY')}
                   subLabel={t('autoYDesc')}
-                  onCheckedChange={form.handleSubmit(onFormSubmit)}
+                  onCheckedChange={() => onFormSubmit({})}
                   disabled={(!form.getValues('rangeStart') || !form.getValues('rangeEnd')) && !!form.getValues('autoScaleY')}
                 />
               </div>

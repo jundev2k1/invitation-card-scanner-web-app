@@ -1,34 +1,21 @@
-import { useCallback, useEffect, useState } from 'react';
-import { ImportConfig } from '../../../../type';
+import { useCallback } from 'react';
+import { RangeStepFormValues } from '../../setting/importSettings.type';
 import { useRangeStepForm } from './useRangeStepForm';
 
 type UseRangeStepProps = {
-  config: ImportConfig | null;
+  rangeStepForm: RangeStepFormValues;
   parsedData: any[][];
-  onRangeChange?: (start: string | null, end: string | null) => void;
+  onRangeFormChange: (data: RangeStepFormValues) => void;
 };
 
-export const useRangeStep = ({ config, parsedData, onRangeChange }: UseRangeStepProps) => {
-  const [rangeStart, setRangeStart] = useState<string | null>(config?.range?.rangeStart || null);
-  const [rangeEnd, setRangeEnd] = useState<string | null>(config?.range?.rangeEnd || null);
-  const [autoScaleY, setAutoScaleY] = useState<boolean>(config?.range?.autoScaleY || false);
-  const { form, onFormSubmit } = useRangeStepForm({
-    start: rangeStart,
-    end: rangeEnd,
-    onStartChange: setRangeStart,
-    onEndChange: setRangeEnd,
-    autoScaleYState: autoScaleY,
-    onAutoScaleYChange: setAutoScaleY,
-  });
-
-  useEffect(() => {
-    onRangeChange?.(rangeStart, rangeEnd);
-  }, [rangeStart, rangeEnd, onRangeChange]);
+export const useRangeStep = ({ rangeStepForm, parsedData, onRangeFormChange }: UseRangeStepProps) => {
+  const { form, onFormSubmit } = useRangeStepForm({ rangeStepForm, onRangeFormChange });
 
   const onRangePreviewChange = useCallback((start: string | null, end: string | null) => {
-    setRangeStart(start);
-    setRangeEnd(end);
-  }, [rangeStart, rangeEnd]);
+    form.setValue('rangeStart', start);
+    form.setValue('rangeEnd', end);
+    form.trigger(['autoScaleY', 'rangeStart', 'rangeEnd']);
+  }, []);
 
   // Auto detect range
   const handleAutoDetect = useCallback(() => {
@@ -49,27 +36,28 @@ export const useRangeStep = ({ config, parsedData, onRangeChange }: UseRangeStep
     });
 
     if (lastRow === parsedData.length) {
-      setRangeStart(`${String.fromCharCode(colStart + 65)}${rowStart}`);
-      setRangeEnd(`${String.fromCharCode(lastCol + 65)}${lastRow}`);
+      form.setValue('rangeStart', `${String.fromCharCode(colStart + 65)}${rowStart}`);
+      form.setValue('rangeEnd', `${String.fromCharCode(lastCol + 65)}${lastRow}`);
     } else {
-      setRangeStart(`${String.fromCharCode(colStart + 65)}${rowStart}`);
-      setRangeEnd(`${String.fromCharCode(lastCol + 65)}${rowStart}`);
-      setAutoScaleY(true);
+      form.setValue('rangeStart', `${String.fromCharCode(colStart + 65)}${rowStart}`);
+      form.setValue('rangeEnd', `${String.fromCharCode(lastCol + 65)}${rowStart}`);
+      form.setValue('autoScaleY', true);
     }
+    form.trigger(['autoScaleY', 'rangeStart', 'rangeEnd']);
   }, [parsedData]);
 
-  useEffect(() => {
-    if (config?.range?.rangeStart) setRangeStart(config.range.rangeStart);
-    if (config?.range?.rangeEnd) setRangeEnd(config.range.rangeEnd);
-  }, [config]);
+  const onAutoScaleYChange = useCallback((autoScaleY: boolean) => {
+    form.setValue('autoScaleY', autoScaleY);
+    form.trigger(['autoScaleY', 'rangeStart', 'rangeEnd']);
+  }, []);
 
   return {
     form,
     onFormSubmit,
-    rangeStart,
-    rangeEnd,
-    autoScaleY,
-    setAutoScaleY,
+    rangeStart: form.getValues('rangeStart'),
+    rangeEnd: form.getValues('rangeEnd'),
+    autoScaleY: form.getValues('autoScaleY'),
+    onAutoScaleYChange,
     onRangePreviewChange,
     handleAutoDetect,
     onRangeReset: () => onRangePreviewChange(null, null),

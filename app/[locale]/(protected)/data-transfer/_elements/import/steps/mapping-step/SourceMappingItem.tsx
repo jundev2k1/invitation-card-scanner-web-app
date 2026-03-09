@@ -15,7 +15,6 @@ export const SourceMappingItem = ({ item, isMapped, mappedTo, onUnmap }: SourceM
     type: 'source',
     item,
     isMapped,
-    onUnmap,
   });
 
   return (
