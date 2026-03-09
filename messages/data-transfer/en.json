@@ -33,27 +33,48 @@
       "upload": "Upload & Detect",
       "mapping": "Column Mapping",
       "range": "Data Range",
-      "validate": "Validate & Save"
+      "validate": "Validate & Save",
+      "import": "Import Data"
     },
     "upload": {
       "title": "Upload Your File",
       "desc": "Drag & drop a CSV or Excel file, or click to browse. We will auto-detect headers and suggest settings.",
       "button": "Choose File",
-      "supported": "Supported formats: .csv, .xlsx, .xls",
+      "supported": "Supported formats: .csv, .xlsx, .xls, .tsv",
       "noFile": "No file selected",
       "previewTitle": "File Preview (First 10 rows)",
-      "noConfigSelectedTitle": "Import Configuration Required",
-      "noConfigSelectedDesc": "Please select an Import Configuration to enable and customize related settings"
+      "howTo": {
+        "title": "Upload Guide & Template Setup",
+        "items": {
+          "format": "Supports Excel formats (XLSX, XLS, CSV, TSV) with a maximum file size of 10MB.",
+          "preview": "A preview of the first 10 rows will be displayed after a successful upload.",
+          "headerSelect": "Select a row to designate it as the Header row.",
+          "flowMapping": "The selected header row will be used for column mapping in the next step.",
+          "flowRange": "The data range in subsequent steps will automatically start from this header row onwards."
+        }
+      }
     },
     "mapping": {
       "title": "Map Columns",
       "desc": "Match columns from your uploaded file to the target fields of the module.",
       "sourceColumns": "Source Columns (from file)",
       "targetFields": "Target Fields",
+      "mapped": "Mapped",
+      "fields": "fields",
+      "unmappedColumn": "{count} fields unmapped",
       "unmapped": "Unmapped",
       "autoMatch": "Apply Auto-Match",
       "ignoreColumn": "Ignore this column",
-      "requiredField": "Required"
+      "requiredField": "Required",
+      "howTo": {
+        "title": "Column Mapping Guide",
+        "items": {
+          "display": "System fields are on the left, and your file's header fields are on the right.",
+          "interaction": "Drag fields from the left column and drop them onto the matching fields on the right.",
+          "autoMatch": "The 'Apply Auto-match' button helps link fields with similar names automatically.",
+          "warning": "Note: Auto-matching may not be 100% accurate; please review all mappings before proceeding."
+        }
+      }
     },
     "range": {
       "title": "Select Data Range",
@@ -64,24 +85,29 @@
       "actionDesc": "Adds an _action column to support create/update/delete/skip operations during import.",
       "dataRange": "Data Range",
       "ignoredColumns": "Ignored Columns",
-      "rangeStart": "Start (e.g., A2 - G2)",
+      "rangeStart": "Start",
+      "rangeStartField": "Start (e.g., A2 - G2)",
       "rangeStartPlaceholder": "From start",
-      "rangeEnd": "End (e.g., A10 - G10)",
+      "rangeEnd": "End",
+      "rangeEndField": "End (e.g., A10 - G10)",
       "rangeEndPlaceholder": "To end",
       "rowsCount": "Row count",
       "rows": "rows",
       "columnsCount": "Column count",
       "columns": "columns",
-      "autoY": "Auto set to last row",
-      "autoYDesc": "Auto-detect the last row of data in the file",
+      "autoScaleY": "Auto set to last row",
+      "autoScaleYDesc": "Auto-detect the last row of data in the file",
       "includeActionColumn": "Include action column?",
       "actionColumnDesc": "If not checked, the application will treat it (_action) as a normal column (which may cause errors)",
       "howTo": {
-        "title": "Range selection guide",
-        "clickDrag": "Left-click and drag to quickly select the data area.",
-        "shiftClick": "Shift + click to expand the selection from the focused cell.",
-        "autoDetectTip": "The \"Auto Detect\" button will try to guess the data area based on existing content (usually starting from A2).",
-        "actionColumnTip": "Enable this option if your file contains an action instruction column (create / update / delete / skip)."
+        "title": "Quick Guide & Selection Rules",
+        "items": {
+          "drag": "Left-click and drag to select the data area.",
+          "rightClick": "Right-click to set range or 'Apply with Auto-Scale' (requires 2 points on the same row).",
+          "pan": "Hold Space key to pan around the canvas smoothly.",
+          "format": "Enter coordinates in Excel format (e.g., A2, G7).",
+          "empty": "Leaving coordinates empty will scan the entire file; 'Auto set to last row' must be enabled."
+        }
       },
       "previewContext": {
         "applySelection": "Apply Selection",
@@ -103,12 +129,16 @@
       "messages": {
         "rangeCannotBeEqual": "Start and end range cannot be the same",
         "invalidFormat": "Invalid cell format",
+        "pairsMustMatch": "Fill both Start/End fields or leave both empty",
         "mustBeSameRow": "Data range must be in the same row",
         "mustEnableAutoScaleForAll": "This option must be enabled for all columns",
         "noMappingTitle": "No mapping defined",
         "noMappingDesc": "You must map at least one column to a field, otherwise the import will fail.",
         "rangeAllWarnTitle": "Scanning All Files",
-        "rangeAllWarnDesc": "Please ensure the input file follows the standard format. Scanning cells with custom formatting may lead to unexpected processing errors"
+        "rangeAllWarnDesc": "Please ensure the input file follows the standard format.\nScanning cells with custom formatting may lead to unexpected processing errors",
+        "rangeValidationFailed": "Data range validation failed",
+        "mappingValidationFailed": "Column mapping validation failed",
+        "proceedWithWarning": "Some warnings detected. Save and continue anyway?"
       }
     },
     "ignored": "Ignored",
@@ -123,6 +153,10 @@
     "selectModulePlaceholder": "Choose data module...",
     "selectSetting": "Select Setting",
     "selectSettingPlaceholder": "Choose an existing setting..."
+  },
+  "placeholder": {
+    "noConfigSelectedTitle": "Import Configuration Required",
+    "noConfigSelectedDesc": "Please select an Import Configuration to enable and customize related settings"
   },
   "actions": {
     "add": "Add",

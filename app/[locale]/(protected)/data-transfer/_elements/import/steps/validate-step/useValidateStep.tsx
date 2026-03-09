@@ -1,8 +1,9 @@
 import { Toast } from '@/root/app/components';
+import { ModuleEnum } from '@/root/config/import-file';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo } from 'react';
 import { ImportFormValues } from '../../setting/importSettings.type';
-import { columnToNumber, extract } from '../range-step/useRangeStepForm';
+import { columnToNumber, createRangeSchema, extract } from '../range-step/useRangeStepForm';
 
 type ValidationIssue = {
   severity: 'error' | 'warning';
@@ -17,7 +18,10 @@ type UseValidateStepProps = {
 
 export const useValidateStep = ({ formValues }: UseValidateStepProps) => {
   const tGlobalMsg = useTranslations('common.messages');
+  const tRange = useTranslations('dataTransfer.import.range');
+  const tImportFields = useTranslations(`dataTransfer.fields.${ModuleEnum[formValues.module!]}`);
   const tValidateMsg = useTranslations('dataTransfer.import.validate.messages');
+  const tGlobalValidate = useTranslations('validate');
   const colStart = formValues.rangeStep.rangeStart ? extract(formValues.rangeStep.rangeStart)?.c || 'A' : 'A';
   const colEnd = formValues.rangeStep.rangeEnd ? extract(formValues.rangeStep.rangeEnd)?.c || 'Z' : 'Z';
   const colStartOrder = columnToNumber(colStart);
@@ -37,11 +41,10 @@ export const useValidateStep = ({ formValues }: UseValidateStepProps) => {
       result.push({
         severity: 'error',
         step: 'mapping',
-        title: 'No Data Found',
-        description: 'No data found in the selected range.',
+        title: tValidateMsg('noMappingTitle'),
+        description: tValidateMsg('noMappingDesc'),
       });
 
-    console.log(formValues);
     if (!formValues.rangeStep.rangeStart && !formValues.rangeStep.rangeEnd)
       result.push({
         severity: 'warning',
@@ -50,69 +53,50 @@ export const useValidateStep = ({ formValues }: UseValidateStepProps) => {
         description: tValidateMsg('rangeAllWarnDesc'),
       });
 
-    // // 1. Required fields missing mapping
-    // formValues?.columns?.forEach((col) => {
-    //   if (col.required && !mappings[col.matchingKey]) {
-    //     result.push({
-    //       severity: 'error',
-    //       title: 'Missing Mapping for Required Field',
-    //       description: `The required field "${col.matchingKey}" has no mapped source column.`,
-    //     });
-    //   }
-    // });
+    // Check data range step
+    const rangeResult = createRangeSchema(tValidateMsg).safeParse(formValues.rangeStep);
+    if (!rangeResult.success && rangeResult.error.issues) {
+      result.push({
+        severity: 'error',
+        step: 'range',
+        title: tValidateMsg('rangeValidationFailed'),
+        description: rangeResult.error.issues.map(i => `{ ${tRange(i.path.toString())} } - ${i.message}`).join('\n'),
+      });
+    }
 
-    // // 2. Range validation
-    // if (!rangeStart || !rangeEnd) {
-    //   result.push({
-    //     severity: 'error',
-    //     title: 'No Data Range Selected',
-    //     description: 'Please select a valid data range in the previous step.',
-    //   });
-    // } else {
-    //   const startRow = Number(rangeStart.replace(/\D/g, '')) || 1;
-    //   const endRow = Number(rangeEnd.replace(/\D/g, '')) || 1;
-    //   if (endRow <= startRow) {
-    //     result.push({
-    //       severity: 'error',
-    //       title: 'Invalid Range',
-    //       description: 'End row must be greater than start row.',
-    //     });
-    //   }
-    // }
+    // Check mapping step
+    const requiredFields = formValues.mappingStep.configs
+      .filter(c => c.validate
+        && c.validate.required === true
+        && !formValues.mappingStep.mappings.some(m => c.id === m.dest))
+      .map(c => c.matchingKey);
+    if (requiredFields.length > 0) {
+      result.push({
+        severity: 'error',
+        step: 'range',
+        title: tValidateMsg('mappingValidationFailed'),
+        description: requiredFields.map(key => `{ ${tImportFields(key)} } - ${tGlobalValidate('common.required')}`).join('\n'),
+      });
+    }
 
-    // // 3. Data in range check (nếu parsedData có)
-    // if (parsedData.length > 0 && rangeStart && rangeEnd) {
-    // }
-
-    // // 4. Ignored columns count warning nếu quá nhiều
-    // const ignoredCount = config?.columns?.filter((c) => c.ignore).length || 0;
-    // if (ignoredCount > 5) {
-    //   result.push({
-    //     severity: 'warning',
-    //     title: 'High Number of Ignored Columns',
-    //     description: `${ignoredCount} columns are ignored. Ensure this is intentional.`,
-    //   });
-    // }
-
-    // // 5. Action column if enabled
-    // if (includesActionColumn) {
-    //   result.push({
-    //     severity: 'warning',
-    //     title: 'Action Column Enabled',
-    //     description: 'The action column is enabled. Ensure this is intentional.',
-    //   });
-    // }
-
-    return result;
+    return result.sort((a, b) => a.severity === b.severity
+      ? 0
+      : a.severity === 'error' ? -1 : 1);
   }, [formValues]);
 
   const isValid = issues.every((i) => i.severity !== 'error');
 
   const onSubmit = useCallback(() => {
-    if (issues.length > 0) {
+    // Show error to fix
+    if (issues.filter(i => i.severity === 'error').length > 0) {
       Toast.showError('Please fix the issues before proceeding.');
       return;
     }
+
+    // Show warning to re-confirm
+    if (issues.filter(i => i.severity === 'warning').length > 0
+      && !confirm(tValidateMsg('proceedWithWarning'))
+    ) return;
 
     Toast.showSuccess(tGlobalMsg('updateSuccess'));
   }, [formValues, issues]);

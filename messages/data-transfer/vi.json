@@ -33,27 +33,48 @@
       "upload": "Tải lên & Phát hiện",
       "mapping": "Ánh xạ Cột",
       "range": "Vùng Dữ liệu",
-      "validate": "Kiểm tra & Lưu"
+      "validate": "Kiểm tra & Lưu",
+      "import": "Nhập dữ liệu"
     },
     "upload": {
       "title": "Tải lên File của bạn",
       "desc": "Kéo thả file CSV hoặc Excel, hoặc nhấn để chọn file. Hệ thống sẽ tự động phát hiện header và gợi ý cấu hình.",
       "button": "Chọn File",
-      "supported": "Định dạng hỗ trợ: .csv, .xlsx, .xls",
+      "supported": "Định dạng hỗ trợ: .csv, .xlsx, .xls, .tsv",
       "noFile": "Chưa chọn file",
       "previewTitle": "Xem trước File (10 dòng đầu)",
-      "noConfigSelectedTitle": "Chưa chỉ định file cấu hình",
-      "noConfigSelectedDesc": "Vui lòng chỉ định hoặc tạo mới một Cấu hình Import để bắt đầu tùy chỉnh các thông số kỹ thuật liên quan"
+      "howTo": {
+        "title": "Hướng dẫn tải tệp & Thiết lập mẫu",
+        "items": {
+          "format": "Hỗ trợ các tệp định dạng Excel (XLSX, XLS, CSV, TSV) với dung lượng tối đa 10MB.",
+          "preview": "Hệ thống sẽ hiển thị bản xem trước gồm 10 dòng đầu tiên của tệp sau khi tải lên.",
+          "headerSelect": "Hãy chọn một dòng để xác định là dòng Tiêu đề (Header).",
+          "flowMapping": "Dòng tiêu đề được chọn sẽ được dùng để khớp cột (Ánh xạ Cột) ở bước tiếp theo.",
+          "flowRange": "Vùng dữ liệu tại bước sau sẽ tự động bắt đầu tính từ dòng tiêu đề này trở đi."
+        }
+      }
     },
     "mapping": {
       "title": "Ánh xạ Cột",
       "desc": "Kéo thả hoặc chọn để khớp các cột từ file tải lên với các trường mục tiêu của module.",
       "sourceColumns": "Cột nguồn (từ file)",
       "targetFields": "Trường mục tiêu",
+      "mapped": "Đã ánh xạ",
+      "fields": "trường",
+      "unmappedColumn": "{count} trường chưa ánh xạ",
       "unmapped": "Chưa ánh xạ",
       "autoMatch": "Áp dụng Tự động khớp",
       "ignoreColumn": "Bỏ qua cột này",
-      "requiredField": "Bắt buộc"
+      "requiredField": "Bắt buộc",
+      "howTo": {
+        "title": "Hướng dẫn Ánh xạ Cột (Column Mapping)",
+        "items": {
+          "display": "Cột bên trái là các trường hệ thống, cột bên phải là các trường từ file mẫu của bạn.",
+          "interaction": "Kéo trường từ cột bên trái và thả vào trường tương ứng bên phải để tạo liên kết.",
+          "autoMatch": "Nút 'Apply Auto-match' hỗ trợ tự động khớp các trường có tên tương đồng.",
+          "warning": "Lưu ý: Khớp tự động có thể không hoàn toàn chính xác, vui lòng kiểm tra lại kết quả trước khi tiếp tục."
+        }
+      }
     },
     "range": {
       "title": "Chọn Phạm Vi Dữ Liệu",
@@ -64,24 +85,29 @@
       "actionDesc": "Thêm cột _action để hỗ trợ tạo/cập nhật/xóa/bỏ qua khi nhập dữ liệu.",
       "dataRange": "Phạm Vi Dữ Liệu",
       "ignoredColumns": "Cột Bị Bỏ Qua",
-      "rangeStart": "Bắt đầu (ví dụ: A2)",
+      "rangeStart": "Bắt đầu",
+      "rangeStartField": "Bắt đầu (ví dụ: A2)",
       "rangeStartPlaceholder": "Từ đầu",
-      "rangeEnd": "Kết thúc (e.g., A10 - G10)",
+      "rangeEnd": "Kết thúc",
+      "rangeEndField": "Kết thúc (ví dụ: G10)",
       "rangeEndPlaceholder": "Đến cuối",
       "rowsCount": "Số dòng",
       "rows": "dòng",
       "columnsCount": "Số cột",
       "columns": "cột",
-      "autoY": "Đặt đến cuối tài liệu",
-      "autoYDesc": "Ví trí điểm cuối sẽ được tự động quét đến cuối tài liệu",
+      "autoScaleY": "Đặt đến cuối tài liệu",
+      "autoScaleYDesc": "Ví trí điểm cuối sẽ được tự động quét đến cuối tài liệu",
       "includeActionColumn": "Có bao gồm cột hành động?",
       "actionColumnDesc": "Nếu không check thì ứng dụng sẽ hiểu cột (_action) là một cột bình thường (có thể gây lỗi)",
       "howTo": {
-        "title": "Hướng dẫn chọn phạm vi",
-        "clickDrag": "Nhấn chuột trái và kéo để chọn vùng dữ liệu nhanh chóng.",
-        "shiftClick": "Nhấn Shift + click để mở rộng vùng chọn từ ô đang focus.",
-        "autoDetectTip": "Nút \"Tự động phát hiện\" sẽ thử đoán vùng dữ liệu dựa trên nội dung có sẵn (thường bắt đầu từ A2).",
-        "actionColumnTip": "Bật tùy chọn này nếu tệp của bạn có cột hướng dẫn hành động (create / update / delete / skip)."
+        "title": "Hướng dẫn & Quy tắc chọn vùng",
+        "items": {
+          "drag": "Kéo chuột trái để chọn vùng dữ liệu.",
+          "rightClick": "Chuột phải để xác định vùng hoặc dùng 'Tự động mở rộng hàng' (cần chọn 2 điểm cùng hàng).",
+          "pan": "Giữ phím Space để di chuyển (pan) vùng nhìn mượt mà hơn.",
+          "format": "Nhập tọa độ theo định dạng Excel (Ví dụ: A2, G7).",
+          "empty": "Để trống tọa độ sẽ quét toàn file; yêu cầu phải tích chọn 'Đặt đến cuối tài liệu'."
+        }
       },
       "previewContext": {
         "applySelection": "Áp dụng vùng chọn",
@@ -103,10 +129,16 @@
       "messages": {
         "rangeCannotBeEqual": "Bắt đầu và kết thúc phải khác nhau",
         "invalidFormat": "Định dạng ô không đúng",
+        "pairsMustMatch": "Phải điền cả hai ô Start/End hoặc để trống cả hai",
         "mustBeSameRow": "Phạm vi dữ liệu phải trong cùng dòng",
         "mustEnableAutoScaleForAll": "Tùy chọn này phải được bật nếu muốn đọc hết file",
+        "noMappingTitle": "Chưa cấu hình ánh xạ",
+        "noMappingDesc": "Bạn phải ánh xạ ít nhất một cột, bằng không quá trình import sẽ thất bại.",
         "rangeAllWarnTitle": "Xác nhận quét toàn bộ tệp",
-        "rangeAllWarnDesc": "Vui lòng đảm bảo dữ liệu đầu vào đúng định dạng tiêu chuẩn. Nếu tệp chứa các ô có định dạng lạ (format) trong vùng quét, quá trình xử lý có thể phát sinh lỗi ngoài ý muốn"
+        "rangeAllWarnDesc": "Vui lòng đảm bảo dữ liệu đầu vào đúng định dạng tiêu chuẩn.\nNếu tệp chứa các ô có định dạng lạ (format) trong vùng quét, quá trình xử lý có thể phát sinh lỗi ngoài ý muốn",
+        "rangeValidationFailed": "Vùng dữ liệu chưa đúng",
+        "mappingValidationFailed": "Cấu hình ánh xạ không hợp lệ",
+        "proceedWithWarning": "Đang có vài cảnh báo trong cấu hình, bạn vẫn muốn lưu chứ?"
       }
     },
     "ignored": "Bỏ qua",
@@ -121,6 +153,10 @@
     "selectModulePlaceholder": "Chọn module dữ liệu...",
     "selectSetting": "Chọn Cấu hình",
     "selectSettingPlaceholder": "Chọn cấu hình hiện có..."
+  },
+  "placeholder": {
+    "noConfigSelectedTitle": "Chưa chỉ định file cấu hình",
+    "noConfigSelectedDesc": "Vui lòng chỉ định hoặc tạo mới một Cấu hình Import để bắt đầu tùy chỉnh các thông số kỹ thuật liên quan"
   },
   "actions": {
     "add": "Thêm",
