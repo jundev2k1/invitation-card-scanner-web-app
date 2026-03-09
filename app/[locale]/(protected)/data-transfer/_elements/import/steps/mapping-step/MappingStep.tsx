@@ -1,5 +1,5 @@
-import { Button, RefreshButton, ScrollArea } from '@/components';
-import { SaveIcon, WandIcon } from "@/icons";
+import { Alert, Button, RefreshButton, ScrollArea } from '@/components';
+import { InfoIcon, SaveIcon, WandIcon } from "@/icons";
 import { ModuleEnum } from '@/root/config/import-file';
 import { useTranslations } from 'next-intl';
 import { DndProvider } from 'react-dnd';
@@ -12,10 +12,17 @@ import { useMappingStep } from './useMappingStep';
 type MappingStepProps = {
   selectedModule: ModuleEnum | null;
   formValues: MappingStepFormValues | null;
-  onMappingStepChange: (data: MappingStepFormValues) => void,
+  onMappingStepChange: (data: MappingStepFormValues) => void;
+  noConfigSelected?: boolean;
 };
 
-export const MappingStep = ({ selectedModule, formValues, onMappingStepChange }: MappingStepProps) => {
+export const MappingStep = ({
+  selectedModule,
+  formValues,
+  onMappingStepChange,
+  noConfigSelected,
+}: MappingStepProps) => {
+  const tPlaceholder = useTranslations('dataTransfer.placeholder');
   const tAction = useTranslations('common.actions');
   const tMapping = useTranslations('dataTransfer.import.mapping');
   const {
@@ -30,7 +37,19 @@ export const MappingStep = ({ selectedModule, formValues, onMappingStepChange }:
     handleClearMatch,
     handleSubmit,
   } = useMappingStep({ module: selectedModule, formValues, onMappingStepChange });
-console.log(mappings);
+
+  if (noConfigSelected) return (
+    <div className="h-full flex flex-col space-y-6 p-6">
+      <Alert
+        title={tPlaceholder('noConfigSelectedTitle')}
+        variant="destructive"
+        icon={<InfoIcon />}
+      >
+        {tPlaceholder('noConfigSelectedDesc')}
+      </Alert>
+    </div>
+  );
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="h-full flex flex-col space-y-6 p-6">
@@ -70,7 +89,7 @@ console.log(mappings);
                 ))}
                 {unmappedTargets.length > 0 && (
                   <div className="text-sm text-muted-foreground italic mt-4 pl-4">
-                    {unmappedTargets.length} fields chưa ánh xạ
+                    {tMapping('unmappedColumn', { count: unmappedTargets.length })}
                   </div>
                 )}
               </div>
@@ -98,7 +117,7 @@ console.log(mappings);
                 ))}
                 {unmappedSources.length > 0 && (
                   <div className="text-sm text-muted-foreground italic mt-4">
-                    {unmappedSources.length} columns chưa ánh xạ
+                    {tMapping('unmappedColumn', { count: unmappedSources.length })}
                   </div>
                 )}
               </div>
@@ -107,7 +126,25 @@ console.log(mappings);
         </div>
 
         <div className="text-sm text-muted-foreground">
-          Mapped: {Object.keys(mappings).length} / {targetFields.length} fields
+          {tMapping('mapped')}: {Object.keys(mappings).length} / {targetFields.length} {tMapping('fields')}
+        </div>
+
+        {/* Helpful instruction block */}
+        <div className="bg-blue-50/50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-sm">
+          <div className="flex items-start gap-3">
+            <InfoIcon className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
+            <div className="space-y-2">
+              <p className="font-medium text-blue-800 dark:text-blue-300">
+                {tMapping('howTo.title')}
+              </p>
+              <ul className="text-muted-foreground space-y-1.5 list-disc pl-5 text-sm">
+                <li>{tMapping('howTo.items.display')}</li>
+                <li>{tMapping('howTo.items.interaction')}</li>
+                <li>{tMapping('howTo.items.autoMatch')}</li>
+                <li>{tMapping('howTo.items.warning')}</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </DndProvider>

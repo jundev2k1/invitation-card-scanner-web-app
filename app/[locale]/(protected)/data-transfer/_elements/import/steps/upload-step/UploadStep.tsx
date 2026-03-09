@@ -19,12 +19,12 @@ export const UploadStep = ({
   onTemplateChange,
   onTemplateClear,
 }: UploadStepProps) => {
+  const tPlaceholder = useTranslations('dataTransfer.placeholder');
   const tActions = useTranslations('common.actions');
-  const t = useTranslations('dataTransfer.import.upload');
+  const tUpload = useTranslations('dataTransfer.import.upload');
   const {
     isLoading,
     parseError,
-    parsedPreview,
     onDrop,
     handleReset,
     headerRow,
@@ -44,11 +44,11 @@ export const UploadStep = ({
   if (noConfigSelected) return (
     <div className="h-full flex flex-col space-y-6 p-6">
       <Alert
-        title={t('noConfigSelectedTitle')}
+        title={tPlaceholder('noConfigSelectedTitle')}
         variant="destructive"
         icon={<InfoIcon />}
       >
-        {t('noConfigSelectedDesc')}
+        {tPlaceholder('noConfigSelectedDesc')}
       </Alert>
     </div>
   );
@@ -65,12 +65,12 @@ export const UploadStep = ({
       >
         <input {...getInputProps()} />
         <UploadIcon className="w-16 h-16 mb-6 text-muted-foreground" />
-        <p className="text-lg font-medium mb-2">{t('title')}</p>
-        <p className="text-sm text-muted-foreground mb-6">{t('desc')}</p>
+        <p className="text-lg font-medium mb-2">{tUpload('title')}</p>
+        <p className="text-sm text-muted-foreground mb-6">{tUpload('desc')}</p>
         <Button variant="outline" size="lg" disabled={isLoading}>
-          {t('button')}
+          {tUpload('button')}
         </Button>
-        <p className="text-xs text-muted-foreground mt-4">{t('supported')}</p>
+        <p className="text-xs text-muted-foreground mt-4">{tUpload('supported')}</p>
       </div>
 
       {/* File info & actions */}
@@ -110,7 +110,7 @@ export const UploadStep = ({
       {templateSetting && templateSetting.fileData.length > 0 && (
         <div className="border rounded-lg overflow-hidden">
           <div className="bg-muted/50 px-4 py-2 font-medium text-sm">
-            {t('previewTitle')}
+            {tUpload('previewTitle')}
           </div>
           <div className="max-h-80 overflow-auto">
             <table className="w-full text-sm border-collapse">
@@ -138,6 +138,25 @@ export const UploadStep = ({
           </div>
         </div>
       )}
+
+      {/* Helpful instruction block */}
+      <div className="bg-blue-50/50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-sm">
+        <div className="flex items-start gap-3">
+          <InfoIcon className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
+          <div className="space-y-2">
+            <p className="font-medium text-blue-800 dark:text-blue-300">
+              {tUpload('howTo.title')}
+            </p>
+            <ul className="text-muted-foreground space-y-1.5 list-disc pl-5 text-sm">
+              <li>{tUpload('howTo.items.format')}</li>
+              <li>{tUpload('howTo.items.preview')}</li>
+              <li>{tUpload('howTo.items.headerSelect')}</li>
+              <li>{tUpload('howTo.items.flowMapping')}</li>
+              <li>{tUpload('howTo.items.flowRange')}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

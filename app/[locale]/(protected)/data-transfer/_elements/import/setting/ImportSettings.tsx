@@ -39,7 +39,7 @@ export const ImportSettings = () => {
           <Tabs
             items={tabItems}
             defaultValue="upload"
-            listClassName="grid w-full grid-cols-4 mb-6"
+            listClassName="grid w-full grid-cols-5 mb-6"
             contentClassName="flex-1"
           />
         </div>

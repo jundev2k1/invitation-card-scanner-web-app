@@ -42,6 +42,18 @@ export const createRangeSchema = (tValidateMsg: TranslateFn) =>
       });
       return;
     }
+
+    if ((!data.rangeStart && data.rangeEnd)
+      || (data.rangeStart && !data.rangeEnd)
+    ) {
+      ctx.addIssue({
+        code: "custom",
+        message: tValidateMsg('pairsMustMatch'),
+        path: ['rangeEnd'],
+      });
+      return;
+    }
+
     if (!data.rangeStart || !data.rangeEnd) {
       if (!data.autoScaleY) {
         ctx.addIssue({

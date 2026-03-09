@@ -12,14 +12,17 @@ type RangeStepProps = {
   formValues: ImportFormValues;
   parsedData?: string[][];
   onRangeFormChange: (data: RangeStepFormValues) => void;
+  noConfigSelected?: boolean,
 };
 
 export const RangeStep = ({
   formValues,
   parsedData = [],
   onRangeFormChange,
+  noConfigSelected,
 }: RangeStepProps) => {
-  const t = useTranslations('dataTransfer.import.range');
+  const tPlaceholder = useTranslations('dataTransfer.placeholder');
+  const tRange = useTranslations('dataTransfer.import.range');
   const tCommon = useTranslations('common');
   const wRef = useRef<HTMLDivElement>(null);
 
@@ -60,15 +63,15 @@ export const RangeStep = ({
     },
   }
 
-  if (!formValues?.id)
+  if (noConfigSelected)
     return (
       <div className="h-full flex flex-col space-y-6 p-6">
         <Alert
-          title={t('noConfigSelectedTitle')}
+          title={tPlaceholder('noConfigSelectedTitle')}
           variant="destructive"
           icon={<InfoIcon />}
         >
-          {t('noConfigSelectedDesc')}
+          {tPlaceholder('noConfigSelectedDesc')}
         </Alert>
       </div>
     );
@@ -78,8 +81,8 @@ export const RangeStep = ({
       {/* Header + Quick actions */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold tracking-tight">{t('title')}</h3>
-          <p className="text-sm text-muted-foreground mt-1">{t('desc')}</p>
+          <h3 className="text-lg font-semibold tracking-tight">{tRange('title')}</h3>
+          <p className="text-sm text-muted-foreground mt-1">{tRange('desc')}</p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -89,7 +92,7 @@ export const RangeStep = ({
             onClick={handleAutoDetect}
             className="gap-1.5"
           >
-            {t('autoDetect')}
+            {tRange('autoDetect')}
           </Button>
           <Button
             leftIcon={<RotateCcwIcon />}
@@ -128,19 +131,19 @@ export const RangeStep = ({
             <form>
               <div>
                 <Label htmlFor="range-start" className="flex items-center gap-1.5">
-                  {t('rangeStart')} <span className="text-xs text-muted-foreground"></span>
+                  {tRange('rangeStartField')} <span className="text-xs text-muted-foreground"></span>
                 </Label>
                 <div className="mt-1.5 flex items-start gap-2">
                   <FormTextBox
                     name="rangeStart"
-                    placeholder={t('rangeStartPlaceholder')}
+                    placeholder={tRange('rangeStartPlaceholder')}
                     className="font-mono w-32"
                     onBlur={(e) => onFormSubmit({ rangeStart: e.currentTarget.value || null })}
                   />
                   <span className="text-muted-foreground">→</span>
                   <FormTextBox
                     name="rangeEnd"
-                    placeholder={t('rangeEndPlaceholder')}
+                    placeholder={tRange('rangeEndPlaceholder')}
                     className="font-mono w-32"
                     onBlur={(e) => onFormSubmit({ rangeEnd: e.currentTarget.value || null })}
                   />
@@ -150,8 +153,8 @@ export const RangeStep = ({
               <div className="flex items-center space-x-2 pt-2">
                 <FormCheckbox
                   name="autoScaleY"
-                  label={t('autoY')}
-                  subLabel={t('autoYDesc')}
+                  label={tRange('autoScaleY')}
+                  subLabel={tRange('autoScaleYDesc')}
                   onCheckedChange={() => onFormSubmit({})}
                   disabled={(!form.getValues('rangeStart') || !form.getValues('rangeEnd')) && !!form.getValues('autoScaleY')}
                 />
@@ -163,26 +166,30 @@ export const RangeStep = ({
         {/* Right column: Current status + quick summary */}
         <div className="space-y-3 flex flex-col justify-center">
           <div className="text-sm">
-            <span className="font-medium">{t('currentRange')}:</span>{' '}
+            <span className="font-medium">{tRange('currentRange')}:</span>{' '}
             <code className="bg-background px-1.5 py-0.5 rounded border text-primary">
-              {rangeStart || t('rangeStartPlaceholder')} → {rangeEnd || t('rangeEndPlaceholder')}
+              {form.formState.isValid ? (rangeStart || tRange('rangeStartPlaceholder')) : '—'}
+              {' → '}
+              {form.formState.isValid ? (rangeEnd || tRange('rangeEndPlaceholder')) : '—'}
             </code>
           </div>
 
           <div className="text-sm">
-            <span className="font-medium">{t('rowsCount')}:</span>{' '}
-            {rangeStart && rangeEnd
-              ? Math.max(0, parseInt(rangeEnd.replace(/\D/g, '')) - parseInt(rangeStart.replace(/\D/g, '')) + 1)
+            <span className="font-medium">{tRange('rowsCount')}:</span>{' '}
+            {rangeStart && rangeEnd && form.formState.isValid
+              ? !form.getValues('autoScaleY')
+                ? Math.max(0, parseInt(rangeEnd.replace(/\D/g, '')) - parseInt(rangeStart.replace(/\D/g, '')) + 1)
+                : '∞'
               : '—'}{' '}
-            {t('rows')}
+            {tRange('rows')}
           </div>
 
           <div className="text-sm">
-            <span className="font-medium">{t('columnsCount')}:</span>{' '}
+            <span className="font-medium">{tRange('columnsCount')}:</span>{' '}
             {rangeStart && rangeEnd
               ? Math.max(0, rangeEnd.charCodeAt(0) - rangeStart.charCodeAt(0) + 1)
               : '—'}{' '}
-            {t('columns')}
+            {tRange('columns')}
           </div>
         </div>
       </div>
@@ -193,13 +200,14 @@ export const RangeStep = ({
           <InfoIcon className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
           <div className="space-y-2">
             <p className="font-medium text-blue-800 dark:text-blue-300">
-              {t('howTo.title')}
+              {tRange('howTo.title')}
             </p>
             <ul className="text-muted-foreground space-y-1.5 list-disc pl-5 text-sm">
-              <li>{t('howTo.clickDrag')}</li>
-              <li>{t('howTo.shiftClick')}</li>
-              <li>{t('howTo.autoDetectTip')}</li>
-              <li>{t('howTo.actionColumnTip')}</li>
+              <li>{tRange('howTo.items.drag')}</li>
+              <li>{tRange('howTo.items.rightClick')}</li>
+              <li>{tRange('howTo.items.pan')}</li>
+              <li>{tRange('howTo.items.format')}</li>
+              <li>{tRange('howTo.items.empty')}</li>
             </ul>
           </div>
         </div>

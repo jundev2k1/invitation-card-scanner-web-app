@@ -57,6 +57,7 @@ const getTabItems = ({
           selectedModule={selectedModule}
           formValues={formValues.mappingStep}
           onMappingStepChange={onMappingStepChange}
+          noConfigSelected={!hasConfig}
         />
       ),
       disabled: !hasConfig
@@ -69,6 +70,7 @@ const getTabItems = ({
           formValues={formValues}
           parsedData={rangeData}
           onRangeFormChange={onRangeStepChange}
+          noConfigSelected={!hasConfig}
         />
       ),
       disabled: !hasConfig || !formValues.fileTemplate.name
@@ -77,10 +79,21 @@ const getTabItems = ({
       value: 'validate',
       label: tTranfer('import.step.validate'),
       content: (
-        <ValidateStep formValues={formValues} />
+        <ValidateStep
+          formValues={formValues}
+          noConfigSelected={!hasConfig}
+        />
       ),
       disabled: !hasConfig
     },
+    {
+      value: 'import',
+      label: tTranfer('import.step.import'),
+      content: (
+        <>Import data</>
+      ),
+      disabled: !hasConfig
+    }
   ]
 };
 
