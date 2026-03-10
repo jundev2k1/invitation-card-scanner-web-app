@@ -6,7 +6,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SelectModuleChangeFn } from "../../select-module/type";
 import { MappingStep } from "../steps/mapping-step/MappingStep";
 import { RangeStep } from "../steps/range-step/RangeStep";
-import { columnToNumber, extract } from "../steps/range-step/useRangeStepForm";
 import { UploadStep } from "../steps/upload-step/UploadStep";
 import { ValidateStep } from "../steps/validate-step/ValidateStep";
 import { ConfigInfoFormValues, FileTemplateValues, ImportFormValues, MappingStepFormValues, RangeStepFormValues } from "./importSettings.type";
@@ -166,68 +165,73 @@ export const useImportSettings = () => {
     }
   }, [selectedConfig]);
 
-  const handleConfigChange: SelectModuleChangeFn = (conf) => {
+  const handleConfigChange: SelectModuleChangeFn = useCallback((conf) => {
     setSelectedConfig(conf as ImportConfig | null);
-  };
+  }, []);
 
   const onConfigInfoChange = useCallback((info: ConfigInfoFormValues) => {
-    setFormValues({
-      ...formValues,
-      configInfo: info
-    })
+    setFormValues(prev => {
+      return ({
+        ...prev,
+        configInfo: info
+      })
+    });
   }, []);
 
   const onTemplateChange = useCallback((file: FileTemplateValues) => {
-    const template = formValues.fileTemplate;
-    const importHeaders = template.fileData.slice(template.columnRow, 1)?.[0] || [];
-    const importFields = importHeaders.map((c, index) => ({ field: c, order: index }));
-    setFormValues({
-      ...formValues,
-      fileTemplate: {
-        ...formValues.fileTemplate,
-        columnRow: file.columnRow,
-        name: file.name,
-        extension: file.extension,
-        size: file.size,
-        fileData: truncateTemplates(file?.fileData || []),
-      },
-      rangeStep: {
-        ...formValues.rangeStep,
-        rangeStart: null,
-        rangeEnd: null,
-        autoScaleY: true,
-      },
-      mappingStep: {
-        configs: [...formValues.mappingStep.configs],
-        importFields,
-        mappings: [],
-      }
-    })
-  }, [formValues, selectedConfig]);
+    setFormValues(prev => {
+      const importHeaders = prev.fileTemplate.fileData.slice(file.columnRow, file.columnRow + 1)?.[0] || [];
+      const importFields = importHeaders.map((c, index) => ({ field: c, order: index }));
+      return ({
+        ...prev,
+        fileTemplate: {
+          ...prev.fileTemplate,
+          columnRow: file.columnRow,
+          name: file.name,
+          extension: file.extension,
+          size: file.size,
+          fileData: truncateTemplates(file?.fileData || []),
+        },
+        rangeStep: {
+          ...prev.rangeStep,
+          rangeStart: null,
+          rangeEnd: null,
+          autoScaleY: true,
+        },
+        mappingStep: {
+          configs: [...prev.mappingStep.configs],
+          importFields,
+          mappings: [],
+        }
+      })
+    });
+  }, []);
 
   const onTemplateClear = useCallback(() => {
-    setFormValues({
-      ...formValues,
-      fileTemplate: {
-        ...formValues.fileTemplate,
-        name: null,
-        extension: null,
-        size: null,
-        fileData: [],
-      },
-      rangeStep: {
-        ...formValues.rangeStep,
-        rangeStart: null,
-        rangeEnd: null,
-        autoScaleY: true,
-      },
-      mappingStep: {
-        configs: [...formValues.mappingStep.configs],
-        importFields: [],
-        mappings: [],
+    setFormValues(prev => {
+      return {
+        ...prev,
+        fileTemplate: {
+          ...prev.fileTemplate,
+          name: null,
+          extension: null,
+          size: null,
+          fileData: [],
+        },
+        rangeStep: {
+          ...prev.rangeStep,
+          rangeStart: null,
+          rangeEnd: null,
+          autoScaleY: true,
+        },
+        mappingStep: {
+          configs: [...prev.mappingStep.configs],
+          importFields: [],
+          mappings: [],
+        }
       }
     });
-  }, [formValues, selectedConfig]);
+  }, []);
 
   const onRangeStepChange = useCallback(({
     rangeStart,
@@ -237,18 +241,8 @@ export const useImportSettings = () => {
     setFormValues((prevFormValues) => {
       const rangeStep = prevFormValues.rangeStep;
       const template = prevFormValues.fileTemplate;
-      const importHeaders = template.fileData.slice(template.columnRow, 1)?.[0] || [];
-
-      let importFields: { field: string; order: number }[] = [];
-      if (rangeStart && rangeEnd) {
-        const s = extract(rangeStart)!;
-        const e = extract(rangeEnd)!;
-        if (s && e) {
-          const startCol = columnToNumber(s.c);
-          const endCol = columnToNumber(e.c);
-          importFields = importHeaders.slice(startCol, endCol - startCol + 1).map((c, index) => ({ field: c, order: index }));
-        }
-      }
+      const importFields = (template.fileData.slice(template.columnRow, 1)?.[0] || [])
+        .map((c, index) => ({ field: c, order: index }));
 
       return {
         ...prevFormValues,
@@ -270,14 +264,16 @@ export const useImportSettings = () => {
   const onMappingStepChange = useCallback(({
     mappings,
   }: MappingStepFormValues) => {
-    setFormValues({
-      ...formValues,
-      mappingStep: {
-        ...formValues.mappingStep,
-        mappings,
-      }
+    setFormValues(prev => {
+      return ({
+        ...prev,
+        mappingStep: {
+          ...prev.mappingStep,
+          mappings,
+        }
+      })
     });
-  }, [formValues, selectedConfig]);
+  }, []);
 
   const tabItems = useMemo(() => getTabItems({
     tTranfer,

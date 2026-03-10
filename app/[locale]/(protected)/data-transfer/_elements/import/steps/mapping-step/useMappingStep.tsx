@@ -33,7 +33,7 @@ export const useMappingStep = ({ module, formValues, onMappingStepChange }: UseM
 
   const sourceColumns = useMemo(() => {
     return formValues?.importFields ?? [];
-  }, [formValues]);
+  }, [formValues?.importFields]);
 
   const [mappings, setMappings] = useState<MappingItem[]>(formValues?.mappings.map(m => {
     const target = targetFields.find((i) => i.id === m.dest);
