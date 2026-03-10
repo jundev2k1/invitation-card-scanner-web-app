@@ -24,7 +24,18 @@
     "fields": "Fields",
     "mappingPreview": "Mapping Preview",
     "aliasLabel": "Alias",
-    "noSetAlias": "No alias set"
+    "noSetAlias": "No alias set",
+    "howTo": {
+      "title": "Data Export Configuration Guide",
+      "items": {
+        "selection": "The left column contains system fields; click 'Add' to move a field to the export list on the right.",
+        "multiExport": "The system allows exporting a single field multiple times with no selection limit.",
+        "reorder": "In the right column, drag and drop fields up or down to reorder their appearance in the file.",
+        "alias": "Click the 'Alias' text below a field name to customize the output column header.",
+        "formatting": "Use the dropdown menu to set data formats (e.g., converting URLs to Images/QR codes or showing labels for Enum values,...).",
+        "customField": "The 'Add Custom Field' button allows creating new data points by combining or calculating multiple fields."
+      }
+    }
   },
   "import": {
     "title": "Import Configuration",

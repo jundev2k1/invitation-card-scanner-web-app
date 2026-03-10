@@ -24,7 +24,18 @@
     "fields": "trường",
     "mappingPreview": "Xem trước mapping",
     "aliasLabel": "Tiêu đề cột",
-    "noSetAlias": "Chưa chỉ định"
+    "noSetAlias": "Chưa chỉ định",
+    "howTo": {
+      "title": "Hướng dẫn cấu hình Xuất dữ liệu",
+      "items": {
+        "selection": "Cột bên trái chứa các trường hệ thống; nhấn nút 'Thêm' để chuyển trường sang danh sách xuất bên phải.",
+        "multiExport": "Hệ thống hỗ trợ xuất một trường nhiều lần, không giới hạn số lượng lựa chọn.",
+        "reorder": "Tại cột bên phải, kéo thả các trường lên hoặc xuống để thay đổi thứ tự xuất hiện trong file.",
+        "alias": "Nhấn vào dòng chữ bên cạnh 'Tiêu đề cột' bên dưới tên trường để tùy chỉnh tiêu đề cột theo ý muốn.",
+        "formatting": "Sử dụng menu chọn để định dạng dữ liệu (Ví dụ: Chuyển URL thành Hình ảnh, Mã QR, hoặc hiển thị nhãn cho các giá trị Enum,...).",
+        "customField": "Nút 'Thêm trường tùy chỉnh' cho phép tạo trường dữ liệu mới bằng cách kết hợp hoặc tính toán từ nhiều trường khác nhau."
+      }
+    }
   },
   "import": {
     "title": "Cấu hình Nhập",
