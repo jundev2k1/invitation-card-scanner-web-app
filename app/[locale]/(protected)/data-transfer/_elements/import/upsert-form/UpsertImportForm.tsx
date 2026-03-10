@@ -12,11 +12,11 @@ export interface InsertImportFormProps {
   onConfigInfoChange: (value: ConfigInfoFormValues) => void;
 }
 
-export const UpsertImportForm = ({ module, formValues: setting, onInsertSuccess, onConfigInfoChange }: InsertImportFormProps) => {
+export const UpsertImportForm = ({ module, formValues, onInsertSuccess, onConfigInfoChange }: InsertImportFormProps) => {
   const t = useTranslations('dataTransfer');
   const tActions = useTranslations('common.actions');
 
-  const { form, onSubmit } = useUpsertImportForm({ module, formValues: setting, onInsertSuccess, onConfigInfoChange });
+  const { form, onSubmit } = useUpsertImportForm({ module, formValues, onInsertSuccess, onConfigInfoChange });
 
   return (
     <div className="p-6 border bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -39,7 +39,7 @@ export const UpsertImportForm = ({ module, formValues: setting, onInsertSuccess,
 
             <Field orientation="horizontal" className="gap-4 justify-start items-start">
               <Button type="submit">
-                {!setting ? tActions('add') : tActions('save')}
+                {!formValues?.id ? tActions('add') : tActions('save')}
               </Button>
             </Field>
           </FieldGroup>

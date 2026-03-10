@@ -5,9 +5,10 @@ import {
   FormCheckbox,
   FormTextBox,
 } from "@/components";
+import { ModuleEnum } from "@/root/config/import-file";
 import { useTranslations } from "next-intl";
 import { FormProvider } from "react-hook-form";
-import { ExportConfig, ModuleEnum } from "../../../type";
+import { ExportConfig } from "../../../type";
 import { useUpsertExportForm } from "./useUpsertExportForm";
 
 export interface InsertExportFormProps {
@@ -28,24 +29,24 @@ export const UpsertExportForm = ({ module, setting, onSuccess }: InsertExportFor
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Field orientation="responsive" className="flex">
-              <FormTextBox 
-                name="name" 
-                label={t("export.settingName")} 
-                isRequired 
-                containerClassName="md:min-w-100" 
+              <FormTextBox
+                name="name"
+                label={t("export.settingName")}
+                isRequired
+                containerClassName="md:min-w-100"
               />
-              <FormTextBox 
-                name="description" 
-                label={t("export.settingDescription")} 
-                containerClassName="grow" 
+              <FormTextBox
+                name="description"
+                label={t("export.settingDescription")}
+                containerClassName="grow"
               />
             </Field>
 
             <Field orientation="responsive" className="gap-1 justify-between">
               <div className="flex flex-col gap-1">
-                <FormCheckbox 
-                  name="includesActionColumn" 
-                  label={t("export.autoAddActionColumn")} 
+                <FormCheckbox
+                  name="includesActionColumn"
+                  label={t("export.autoAddActionColumn")}
                 />
                 <p className="text-xs text-muted-foreground italic">
                   {t("export.autoAddActionColumnDesc")}
