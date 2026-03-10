@@ -1,8 +1,9 @@
 import { Button, Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components";
 import { EyeIcon } from "@/icons";
+import { ImportConfig } from "@/root/config/import-file";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { ExportConfig, ImportConfig } from "../../type";
+import { ExportConfig } from "../../type";
 import { PreviewHeader } from "./table/PreviewHeader";
 import { PreviewTable } from "./table/PreviewTable";
 
@@ -26,7 +27,11 @@ export const PreviewConfig = ({ setting, type, disabled }: PreviewConfigProps) =
         <DialogContent className="max-w-7xl! h-[80vh] flex flex-col p-0">
           <div className="p-6 pb-0">
             <DialogTitle className="text-foreground">{t('export.preview')}</DialogTitle>
-            <DialogDescription className="text-muted-foreground">{setting?.description}</DialogDescription>
+            <DialogDescription className="text-muted-foreground">
+              {type === 'export'
+                ? (setting as ExportConfig)?.description || ''
+                : (setting as ImportConfig)?.configInfo.description || ''}
+            </DialogDescription>
           </div>
 
           <div className="flex flex-col overflow-hidden p-6">

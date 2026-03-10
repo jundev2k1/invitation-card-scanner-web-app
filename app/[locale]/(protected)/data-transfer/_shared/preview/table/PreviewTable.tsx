@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { ImportConfig } from '@/root/config/import-file';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { getImportConfig } from '../../../_elements/import/setting/useImportSettings';
 import { extract } from '../../../_elements/import/steps/range-step/useRangeStepForm';
 import { ExportConfig } from '../../../type';
 import { PreviewContext } from './PreviewContext';
@@ -258,6 +259,33 @@ export const PreviewTable = ({
     );
   }, [parsePos]);
 
+  const getNormalizedRange = useCallback((start: string, end: string) => {
+    const s = parsePos(start);
+    const e = parsePos(end);
+
+    const startColCode = s.col.charCodeAt(0);
+    const endColCode = e.col.charCodeAt(0);
+
+    const minCol = String.fromCharCode(Math.min(startColCode, endColCode));
+    const maxCol = String.fromCharCode(Math.max(startColCode, endColCode));
+
+    let minRow = Math.min(s.row, e.row);
+    const maxRow = Math.max(s.row, e.row);
+
+    const headerRow = 1;
+    if (minRow === headerRow) {
+      minRow = headerRow + 1;
+    }
+
+    const finalMinRow = minRow > maxRow ? maxRow : minRow;
+
+    return {
+      start: `${minCol}${finalMinRow}`,
+      end: `${maxCol}${maxRow}`,
+      isSameRow: s.row === e.row
+    };
+  }, [parsePos]);
+
   // Pressing Escape clears the selection range but keeps focus
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -341,16 +369,20 @@ export const PreviewTable = ({
   const handleSelectionChangeWithAutoScale = useCallback(() => {
     if (!rangeStart || !rangeEnd) return;
 
-    onRangeChange?.(rangeStart, rangeEnd);
-    onAutoScaleYChange?.(true);
-  }, [selectedRangeStart, selectedRangeEnd, rangeStart, rangeEnd, onRangeChange, autoScaleY]);
+    const { start, end, isSameRow } = getNormalizedRange(rangeStart, rangeEnd);
+    if (isSameRow) {
+      onRangeChange?.(start, end);
+      onAutoScaleYChange?.(true);
+    }
+  }, [rangeStart, rangeEnd, onRangeChange, onAutoScaleYChange, getNormalizedRange]);
 
   const handleSelectionChange = useCallback(() => {
     if (!rangeStart || !rangeEnd) return;
 
-    onRangeChange?.(rangeStart, rangeEnd);
+    const { start, end } = getNormalizedRange(rangeStart, rangeEnd);
+    onRangeChange?.(start, end);
     onAutoScaleYChange?.(false);
-  }, [selectedRangeStart, selectedRangeEnd, rangeStart, rangeEnd, onRangeChange]);
+  }, [rangeStart, rangeEnd, onRangeChange, onAutoScaleYChange, getNormalizedRange]);
 
   const handleClearSelection = useCallback(() => {
     onRangeChange?.(null, null);
@@ -373,6 +405,7 @@ export const PreviewTable = ({
   const isShowSelectWithAutoScale = isImport
     && rangeStart !== rangeEnd
     && extract(rangeStart)?.r === extract(rangeEnd)?.r;
+  const fieldConfigs = useMemo(() => isImport ? getImportConfig(importConfig.module) : [], [importConfig.module]);
 
   return (
     <PreviewContext
@@ -407,24 +440,18 @@ export const PreviewTable = ({
 
         <TableBody>
           {rows.map((rowNum, rowIndex) => {
-            const isIgnoredRow =
-              isImport &&
-              importConfig.mappingStep?.mappings?.some((c) => c.dest.toString() === rowNum);
-
             return (
               <TableRow
                 key={rowNum}
                 className={cn(
                   'hover:bg-transparent border-none transition-colors',
-                  isIgnoredRow && 'bg-destructive/5'
                 )}
               >
                 <TableCell
                   draggable={false}
                   className={cn(
                     'sticky left-0 z-20 w-12 h-9 border-b border-r bg-muted/70 p-0 text-center text-xs font-medium transition-colors select-none',
-                    parsePos(focusCell).row === Number(rowNum) && 'bg-primary/15 text-primary border-r-primary',
-                    isIgnoredRow && 'bg-destructive/15 text-destructive border-r-destructive font-semibold'
+                    parsePos(focusCell).row === Number(rowNum) && 'bg-primary/15 text-primary border-r-primary'
                   )}
                 >
                   {rowNum}
@@ -470,6 +497,25 @@ export const PreviewTable = ({
                     }
                   }
 
+                  const currentMapping = importConfig.mappingStep?.mappings?.find((c) => c.src === colIndex);
+                  const isHeaderIgnored = isImport
+                    && rowIndex === 0
+                    && importConfig.mappingStep
+                    && colIndex < importConfig.mappingStep.importFields.length + 1
+                    && !currentMapping;
+                  const isHeaderRequired = isImport
+                    && rowIndex === 0
+                    && importConfig.mappingStep
+                    && colIndex < importConfig.mappingStep.importFields.length + 1
+                    && !!currentMapping
+                    && fieldConfigs.some((c) => c.id === currentMapping?.dest && c.validate?.required === true);
+
+                  const inContent = colIndex < ((importConfig.mappingStep?.importFields.length || 0) + 1)
+                    && rowIndex > 0 && (autoScaleY || inRange || rowIndex < data.length);
+                  const isIgnored = isImport
+                    && inContent
+                    && (!inRange || !currentMapping);
+
                   return (
                     <TableCell
                       draggable={false}
@@ -487,21 +533,22 @@ export const PreviewTable = ({
                           isFocus && 'ring-2 ring-primary/60 ring-inset bg-primary/5 dark:bg-primary/10 cell-forcused',
                           isInSelectedRange && 'bg-primary/20 border-primary/40 ring-1 ring-primary/30',
                           isSingleSelect && 'bg-primary/10 border-primary/30',
-                          inRange && !isFocus && !isInSelectedRange && !isIgnoredRow && 'bg-emerald-100/60 dark:bg-emerald-900/30',
-                          !isFocus && !inRange && !isInSelectedRange && !isIgnoredRow && 'hover:bg-muted/40',
-                          isIgnoredRow && 'opacity-60'
+                          inRange && !isFocus && !isInSelectedRange && !isIgnored && 'bg-emerald-100/60 dark:bg-emerald-900/30',
+                          !isFocus && !inRange && !isInSelectedRange && !isIgnored && 'hover:bg-muted/40',
+                          (isIgnored || isHeaderIgnored) && 'opacity-60 bg-destructive/25 dark:bg-destructive/15',
                         )}
                       >
                         <span
                           className={cn(
                             'truncate w-full',
                             rowNum === '1' && colDef && 'font-semibold italic',
-                            isIgnoredRow && 'text-destructive/70 line-through select-none'
+                            (isIgnored || isHeaderIgnored) && 'text-destructive/70 line-through select-none'
                           )}
                         >
                           {cellValue}
+                          {isHeaderRequired && <span className="ml-1 text-[10px] font-medium text-destructive">(*)</span>}
 
-                          {isIgnoredRow && rowNum !== '1' && (
+                          {!cellValue && isIgnored && (
                             <span className="ml-1 text-[10px] font-medium">({tTranfer('import.ignored')})</span>
                           )}
                         </span>

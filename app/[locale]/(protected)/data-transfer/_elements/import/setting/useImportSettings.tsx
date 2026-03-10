@@ -103,7 +103,7 @@ export const truncateTemplates = (templates: any[][]): string[][] => {
     .map(t => t.toString().substring(0, 15) + (t.length > 15 ? '...' : '')));
 };
 
-const getImportConfig = (module: ModuleEnum | null): readonly MappingConfigField[] => {
+export const getImportConfig = (module: ModuleEnum | null): readonly MappingConfigField[] => {
   switch (module) {
     case ModuleEnum.EVENTS:
       return ImportFileConfig.EventImportConfig;
