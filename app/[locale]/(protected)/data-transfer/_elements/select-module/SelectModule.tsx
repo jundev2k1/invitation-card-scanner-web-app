@@ -1,5 +1,5 @@
-import { Combobox, Field, FieldGroup, FieldLabel, Select } from "@/components";
-import { FolderSymlinkIcon } from "@/icons";
+import { Button, Combobox, Field, FieldGroup, FieldLabel, Select } from "@/components";
+import { FolderSymlinkIcon, TrashIcon } from "@/icons";
 import { ImportConfig } from "@/root/config/import-file";
 import { useTranslations } from "next-intl";
 import React from "react";
@@ -24,7 +24,8 @@ export const SelectModule = React.memo(({
   onModuleChange,
   onConfigInfoChange,
 }: SelectModuleProps) => {
-  const t = useTranslations("dataTransfer.moduleInput");
+  const tGlobalActions = useTranslations("common.actions");
+  const tModuleInput = useTranslations("dataTransfer.moduleInput");
   const {
     moduleOptions,
     selectedModule,
@@ -34,27 +35,28 @@ export const SelectModule = React.memo(({
     onFetchImportOptions,
     onFetchExportOptions,
     onInsertSuccess,
+    onDeleteOption,
   } = useSelectModule({ onModuleChange, onConfigInfoChange, mode, formValues });
 
   return (
     <FieldGroup >
-      <div className="flex items-end gap-4">
+      <div className="flex items-end gap-2">
         <Field orientation="vertical" className="gap-0.5 w-75">
           <FieldLabel className="text-slate-900 dark:text-muted-foreground">
-            {t('selectModule')}
+            {tModuleInput('selectModule')}
           </FieldLabel>
           <Select
             value={selectedModule.toString()}
             options={moduleOptions}
             onValueChange={onModuleSelectChange}
-            placeholder={t('selectModulePlaceholder')}
+            placeholder={tModuleInput('selectModulePlaceholder')}
           />
         </Field>
         {mode === 'import' && (
           <Combobox
             containerClassName="col-span-2 min-w-100"
             className="mb-0"
-            label={t('selectSetting')}
+            label={tModuleInput('selectSetting')}
             fetchOptions={onFetchImportOptions}
             value={selectedModuleOption as ImportConfig | null}
             onChange={(val) => onModuleOptionChange(val as ImportConfig)}
@@ -66,14 +68,14 @@ export const SelectModule = React.memo(({
                 {res.configInfo.name}
               </span>
             )}
-            placeholder={t('selectSettingPlaceholder')}
+            placeholder={tModuleInput('selectSettingPlaceholder')}
           />
         )}
         {mode === 'export' && (
           <Combobox
             containerClassName="col-span-2 min-w-100"
             className="mb-0"
-            label={t('selectSetting')}
+            label={tModuleInput('selectSetting')}
             fetchOptions={onFetchExportOptions}
             value={selectedModuleOption as ExportConfig}
             onChange={(val) => onModuleOptionChange(val as ExportConfig)}
@@ -85,11 +87,20 @@ export const SelectModule = React.memo(({
                 {res.name}
               </span>
             )}
-            placeholder={t('selectSettingPlaceholder')}
+            placeholder={tModuleInput('selectSettingPlaceholder')}
           />
         )}
-        {mode === 'export' && (
-          <PreviewConfig setting={selectedModuleOption} type={mode} disabled={!selectedModuleOption} />
+        {selectedModuleOption && (
+          <>
+            <PreviewConfig setting={selectedModuleOption} type={mode} disabled={!selectedModuleOption} />
+            <Button
+              leftIcon={<TrashIcon />}
+              variant="destructive"
+              onClick={() => selectedModuleOption.id && onDeleteOption(selectedModuleOption.id)}
+            >
+              {tGlobalActions('delete')}
+            </Button>
+          </>
         )}
       </div>
 
@@ -112,3 +123,5 @@ export const SelectModule = React.memo(({
     </FieldGroup>
   );
 });
+
+SelectModule.displayName = 'SelectModule';

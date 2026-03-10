@@ -1,3 +1,4 @@
+import { Toast } from "@/components";
 import { ImportConfig, ModuleEnum } from "@/root/config/import-file";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
@@ -5,15 +6,16 @@ import { ExportConfig, mockFetchExportConfigs, mockFetchImportConfigs } from "..
 import { SelectModuleProps } from "./SelectModule";
 
 export const useSelectModule = ({ mode, onModuleChange }: SelectModuleProps) => {
-  const t = useTranslations('dataTransfer');
+  const tGlobalMsg = useTranslations('common.messages');
+  const tTransfer = useTranslations('dataTransfer');
   const [selectedModule, setSelectedModule] = useState<ModuleEnum>(ModuleEnum.EVENTS);
   const [selectedModuleOption, setSelectedModuleOption] = useState<ImportConfig | ExportConfig | null>(null);
 
   const moduleOptions = [
-    { label: t(`module.EVENT_CATEGORIES`), value: ModuleEnum.EVENT_CATEGORIES.toString() },
-    { label: t(`module.EVENTS`), value: ModuleEnum.EVENTS.toString() },
-    { label: t(`module.EVENT_CARDS`), value: ModuleEnum.EVENT_CARDS.toString() },
-    { label: t(`module.USERS`), value: ModuleEnum.USERS.toString() },
+    { label: tTransfer(`module.EVENT_CATEGORIES`), value: ModuleEnum.EVENT_CATEGORIES.toString() },
+    { label: tTransfer(`module.EVENTS`), value: ModuleEnum.EVENTS.toString() },
+    { label: tTransfer(`module.EVENT_CARDS`), value: ModuleEnum.EVENT_CARDS.toString() },
+    { label: tTransfer(`module.USERS`), value: ModuleEnum.USERS.toString() },
   ];
 
   useEffect(() => {
@@ -54,6 +56,12 @@ export const useSelectModule = ({ mode, onModuleChange }: SelectModuleProps) => 
 
   const onInsertSuccess = useCallback((setting: ImportConfig | ExportConfig) => {
     setSelectedModuleOption(setting);
+    Toast.showSuccess(tGlobalMsg('insertSuccess'));
+  }, []);
+
+  const onDeleteOption = useCallback((id: string) => {
+    setSelectedModuleOption(null);
+    Toast.showSuccess(tGlobalMsg('deleteSuccess'));
   }, []);
 
   return {
@@ -65,5 +73,6 @@ export const useSelectModule = ({ mode, onModuleChange }: SelectModuleProps) => 
     onFetchImportOptions,
     onFetchExportOptions,
     onInsertSuccess,
+    onDeleteOption,
   };
 };
