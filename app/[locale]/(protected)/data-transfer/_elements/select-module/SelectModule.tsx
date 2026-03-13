@@ -1,10 +1,10 @@
 import { Button, Combobox, Field, FieldGroup, FieldLabel, Select } from "@/components";
 import { FolderSymlinkIcon, TrashIcon } from "@/icons";
-import { ImportConfig } from "@/root/config/import-file";
+import { ImportConfig, ModuleEnum } from "@/root/config/import-file";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { PreviewConfig } from "../../_shared/preview/PreviewConfig";
-import { ExportConfig } from "../../type";
+import { ExportConfig } from "../export/setting/exportSettings.type";
 import { UpsertExportForm } from "../export/upsert-form/UpsertExportForm";
 import { ConfigInfoFormValues, ImportFormValues } from "../import/setting/importSettings.type";
 import { UpsertImportForm } from "../import/upsert-form/UpsertImportForm";
@@ -28,7 +28,6 @@ export const SelectModule = React.memo(({
   const tModuleInput = useTranslations("dataTransfer.moduleInput");
   const {
     moduleOptions,
-    selectedModule,
     onModuleSelectChange,
     selectedModuleOption,
     onModuleOptionChange,
@@ -46,7 +45,7 @@ export const SelectModule = React.memo(({
             {tModuleInput('selectModule')}
           </FieldLabel>
           <Select
-            value={selectedModule.toString()}
+            value={formValues?.module?.toString() || ModuleEnum.EVENTS.toString()}
             options={moduleOptions}
             onValueChange={onModuleSelectChange}
             placeholder={tModuleInput('selectModulePlaceholder')}
@@ -58,7 +57,7 @@ export const SelectModule = React.memo(({
             className="mb-0"
             label={tModuleInput('selectSetting')}
             fetchOptions={onFetchImportOptions}
-            value={selectedModuleOption as ImportConfig | null}
+            value={selectedModuleOption as ImportConfig}
             onChange={(val) => onModuleOptionChange(val as ImportConfig)}
             getOptionLabel={res => res.configInfo.name}
             getOptionKey={res => res.id!}
@@ -106,7 +105,7 @@ export const SelectModule = React.memo(({
 
       {mode === 'import' && (
         <UpsertImportForm
-          module={selectedModule}
+          module={formValues?.module || ModuleEnum.EVENTS}
           formValues={formValues as ImportFormValues}
           onConfigInfoChange={(formVal) => onConfigInfoChange?.(formVal)}
           onInsertSuccess={onInsertSuccess}
@@ -115,7 +114,7 @@ export const SelectModule = React.memo(({
 
       {mode === 'export' && (
         <UpsertExportForm
-          module={selectedModule}
+          module={formValues?.module || ModuleEnum.EVENTS}
           setting={selectedModuleOption as ExportConfig}
           onSuccess={onInsertSuccess}
         />

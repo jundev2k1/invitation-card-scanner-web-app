@@ -8,14 +8,15 @@ import {
   Separator
 } from "@/components";
 import { ChevronsRightIcon, InfoIcon, PlusIcon, RefreshIcon, SaveIcon } from "@/icons";
+import { ModuleEnum } from "@/root/config/import-file";
 import { cn } from "@/root/lib/utils";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useTranslations } from "next-intl";
 import { PreviewConfig } from "../../../_shared/preview/PreviewConfig";
-import { ExportConfig } from "../../../type";
 import { SelectModule } from "../../select-module/SelectModule";
 import { SortableExportItem } from "../SortableExportItem";
+import { ExportConfig } from "./exportSettings.type";
 import { useExportSettings } from "./useExportSettings";
 
 export const ExportSettings = () => {
@@ -23,11 +24,12 @@ export const ExportSettings = () => {
   const {
     isSettingChanges,
     isEmptySetting,
+    formValues,
     configuredColumns,
-    availableFields,
     onSettingChange,
     onReset,
     onAddColumn,
+    onFormatChange,
     onEditAlias,
     handleDragEnd,
     handleRemoveColumn,
@@ -53,14 +55,16 @@ export const ExportSettings = () => {
           <div className="lg:col-span-2 flex flex-col">
             <h3 className="mb-4 text-lg font-semibold">{tTransfer("export.available")}</h3>
             <div className="space-y-2 rounded-lg border p-4 h-full">
-              {availableFields.map((field) => (
+              {configuredColumns.map((field) => (
                 <div
-                  key={field.id}
+                  key={field.matchingKey}
                   className={cn("flex items-center justify-between rounded-md border bg-muted/40 p-3")}
                 >
                   <div>
                     <div className="font-medium">{field.matchingKey}</div>
-                    <div className="text-sm text-muted-foreground">{field.alias}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {tTransfer(`fields.${ModuleEnum[formValues?.module || ModuleEnum.EVENTS]}.${field.matchingKey}`)}
+                    </div>
                   </div>
                   <Button
                     rightIcon={<ChevronsRightIcon />}
@@ -87,7 +91,7 @@ export const ExportSettings = () => {
                 >
                   {tTransfer("actions.reset")}
                 </Button>
-                <PreviewConfig type="export" setting={configuredColumns} disabled={!configuredColumns} />
+                <PreviewConfig type="export" setting={formValues} disabled={!formValues} />
                 <Button
                   leftIcon={<SaveIcon />}
                   disabled={!isSettingChanges}
@@ -97,21 +101,22 @@ export const ExportSettings = () => {
               </div>
             </div>
 
-            {configuredColumns && (
+            {formValues && (
               <DndContext
                 sensors={sensors}
                 collisionDetection={closestCenter}
                 onDragEnd={handleDragEnd}
               >
                 <SortableContext
-                  items={configuredColumns.columns.map((c) => c.id)}
+                  items={formValues.columns.map((c) => c.id)}
                   strategy={verticalListSortingStrategy}
                 >
                   <div className="space-y-3">
-                    {configuredColumns.columns.map((col) => (
+                    {formValues.columns.map((col) => (
                       <SortableExportItem
                         key={col.id}
                         column={col}
+                        onFormatChange={onFormatChange}
                         onEditAlias={onEditAlias}
                         onRemove={handleRemoveColumn}
                       />

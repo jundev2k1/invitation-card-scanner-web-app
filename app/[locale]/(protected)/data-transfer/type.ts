@@ -1,36 +1,6 @@
 import { ExportFieldType } from "@/root/config/export-file";
 import { ImportConfig, ModuleEnum } from "@/root/config/import-file";
-import {
-  EventCardDto,
-  EventCategorySearchItemDto,
-  EventDetailDto,
-} from "@/types";
-
-export interface ExportColumn {
-  id: string;
-  matchingKey: EntityKey;
-  alias?: string;
-  format?: ExportFieldType;
-  order: number;
-}
-
-export type EntityKey = keyof EventDetailDto
-  | keyof EventCategorySearchItemDto
-  | keyof EventCardDto;
-
-export interface ColumnConfig<T> {
-  key: keyof T | string;
-  required?: boolean;
-}
-
-export interface ExportConfig {
-  module: ModuleEnum;
-  id: string;
-  name: string;
-  description?: string;
-  includesActionColumn?: boolean;
-  columns: ExportColumn[];
-}
+import { ExportConfig } from "./_elements/export/setting/exportSettings.type";
 
 export const mockFetchImportConfigs: ImportConfig[] = [
   {
@@ -151,13 +121,20 @@ export const mockFetchExportConfigs: ExportConfig[] = [
     id: '987fcdeb-1234-5678-9abc-def012345678',
     name: 'Xuất danh sách sự kiện',
     columns: [
-      { id: '987fcdeb-1234-5678-9abc-def012345679', matchingKey: 'id', alias: 'ID', order: 0 },
-      { id: '987fcdeb-1234-5678-9abc-def01234567a', matchingKey: 'categoryId', alias: 'ID danh sách', order: 1 },
-      { id: '987fcdeb-1234-5678-9abc-def01234567b', matchingKey: 'title', alias: 'Tiêu đề', order: 2 },
-      { id: '987fcdeb-1234-5678-9abc-def01234567c', matchingKey: 'description', order: 3 },
-      { id: '987fcdeb-1234-5678-9abc-def01234567d', matchingKey: 'startAt', order: 4 },
-      { id: '987fcdeb-1234-5678-9abc-def01234567e', matchingKey: 'endAt', order: 5 },
-      { id: '987fcdeb-1234-5678-9abc-def01234567f', matchingKey: 'createdAt', order: 6 },
+      { matchingKey: 'id', alias: 'ID', order: 0, format: ExportFieldType.TEXT },
+      { matchingKey: 'cateId', alias: 'ID danh mục', order: 1, format: ExportFieldType.TEXT },
+      { matchingKey: 'cateTitle', alias: 'Tiêu đề danh mục', order: 1, format: ExportFieldType.TEXT },
+      { matchingKey: 'cateSlug', alias: 'Slug danh mục', order: 1, format: ExportFieldType.TEXT },
+      { matchingKey: 'name', alias: 'Tiêu đề', order: 2, format: ExportFieldType.TEXT },
+      { matchingKey: 'description', order: 3, format: ExportFieldType.TEXT },
+      { matchingKey: 'startAt', order: 4, format: ExportFieldType.DATETIME },
+      { matchingKey: 'endAt', order: 5, format: ExportFieldType.DATETIME },
+      { matchingKey: 'location', order: 4, format: ExportFieldType.TEXT },
+      { matchingKey: 'address', order: 5, format: ExportFieldType.TEXT },
+      { matchingKey: 'mapUrl', order: 5, format: ExportFieldType.TEXT },
+      { matchingKey: 'status', order: 6, format: ExportFieldType.NUMBER },
+      { matchingKey: 'createdAt', order: 6, format: ExportFieldType.DATETIME },
+      { matchingKey: 'updatedAt', order: 7, format: ExportFieldType.DATETIME },
     ]
   },
   {
@@ -165,16 +142,16 @@ export const mockFetchExportConfigs: ExportConfig[] = [
     id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
     name: 'Xuất danh sách thẻ sự kiện',
     columns: [
-      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567891', matchingKey: 'id', alias: 'ID', order: 0 },
-      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567892', matchingKey: 'eventId', alias: 'ID sự kiện', order: 1 },
-      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567893', matchingKey: 'guestName', order: 2 },
-      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567894', matchingKey: 'accessToken', order: 3 },
-      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567895', matchingKey: 'isUsed', order: 4 },
-      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567896', matchingKey: 'firstScannedAt', order: 5 },
-      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567897', matchingKey: 'status', order: 6 },
-      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567898', matchingKey: 'notes', order: 7 },
-      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567899', matchingKey: 'updatedAt', order: 8 },
-      { id: 'a1b2c3d4-e5f6-7890-abcd-ef123456789a', matchingKey: 'createdAt', order: 9 },
+      { matchingKey: 'id', alias: 'ID', order: 0, format: ExportFieldType.TEXT },
+      { matchingKey: 'eventId', alias: 'ID sự kiện', order: 1, format: ExportFieldType.TEXT },
+      { matchingKey: 'guestName', order: 2, format: ExportFieldType.TEXT },
+      { matchingKey: 'accessToken', order: 3, format: ExportFieldType.QR },
+      { matchingKey: 'isUsed', order: 4, format: ExportFieldType.TEXT },
+      { matchingKey: 'firstScannedAt', order: 5, format: ExportFieldType.DATETIME },
+      { matchingKey: 'status', order: 6, format: ExportFieldType.NUMBER },
+      { matchingKey: 'notes', order: 7, format: ExportFieldType.TEXT },
+      { matchingKey: 'updatedAt', order: 8, format: ExportFieldType.DATETIME },
+      { matchingKey: 'createdAt', order: 9, format: ExportFieldType.DATETIME },
     ]
   },
   {
@@ -182,12 +159,12 @@ export const mockFetchExportConfigs: ExportConfig[] = [
     id: 'fedcba98-7654-3210-9876-543210fedcba',
     name: 'Xuất danh sách danh mục sự kiện',
     columns: [
-      { id: 'fedcba98-7654-3210-9876-543210fedcb1', matchingKey: 'id', alias: 'ID', order: 0 },
-      { id: 'fedcba98-7654-3210-9876-543210fedcb2', matchingKey: 'parentId', alias: 'ID sự kiện', order: 1 },
-      { id: 'fedcba98-7654-3210-9876-543210fedcb3', matchingKey: 'name', order: 2 },
-      { id: 'fedcba98-7654-3210-9876-543210fedcb4', matchingKey: 'slug', order: 3 },
-      { id: 'fedcba98-7654-3210-9876-543210fedcb5', matchingKey: 'status', order: 4 },
-      { id: 'fedcba98-7654-3210-9876-543210fedcb6', matchingKey: 'createdAt', order: 5 },
+      { matchingKey: 'id', alias: 'ID', order: 0, format: ExportFieldType.TEXT },
+      { matchingKey: 'parentId', alias: 'ID sự kiện', order: 1, format: ExportFieldType.TEXT },
+      { matchingKey: 'name', order: 2, format: ExportFieldType.TEXT },
+      { matchingKey: 'slug', order: 3, format: ExportFieldType.TEXT },
+      { matchingKey: 'status', order: 4, format: ExportFieldType.NUMBER },
+      { matchingKey: 'createdAt', order: 5, format: ExportFieldType.DATETIME },
     ]
   }
 ];

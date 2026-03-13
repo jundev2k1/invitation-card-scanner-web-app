@@ -35,6 +35,15 @@
         "formatting": "Sử dụng menu chọn để định dạng dữ liệu (Ví dụ: Chuyển URL thành Hình ảnh, Mã QR, hoặc hiển thị nhãn cho các giá trị Enum,...).",
         "customField": "Nút 'Thêm trường tùy chỉnh' cho phép tạo trường dữ liệu mới bằng cách kết hợp hoặc tính toán từ nhiều trường khác nhau."
       }
+    },
+    "types": {
+      "text": "Ký văn bản",
+      "number": "Kiểu số",
+      "dateTime": "Ngày giờ",
+      "date": "Kiểu ngày",
+      "time": "Kiểu giờ",
+      "image": "Hình ảnh",
+      "qr": "Mã QR"
     }
   },
   "import": {
@@ -186,9 +195,11 @@
   "fields": {
     "EVENTS": {
       "id": "ID",
-      "categoryId": "ID danh mục",
+      "cateId": "ID danh mục",
+      "cateTitle": "Tiêu đề danh mục",
+      "cateSlug": "Slug danh mục",
       "status": "Trạng thái",
-      "title": "Tiêu đề",
+      "title": "Tiêu đề sự kiện",
       "description": "Mô tả",
       "startAt": "Thời gian bắt đầu",
       "endAt": "Thời gian kết thúc",
@@ -213,10 +224,13 @@
     "EVENT_CARDS": {
       "id": "ID thẻ",
       "eventId": "ID sự kiện",
-      "guestName": "Tên khách",
+      "eventTitle": "Tiêu đề sự kiện",
+      "startAt": "Thời gian bắt đầu",
+      "endAt": "Thời gian kết thúc",
+      "guestName": "Tên khách mời",
       "accessToken": "Mã truy cập",
-      "isUsed": "Đã sử dụng",
-      "firstScannedAt": "Lần quét đầu",
+      "isUsed": "Cờ đã sử dụng",
+      "firstScannedAt": "Lần quét đầu lúc",
       "status": "Trạng thái",
       "notes": "Ghi chú",
       "updatedAt": "Ngày cập nhật",

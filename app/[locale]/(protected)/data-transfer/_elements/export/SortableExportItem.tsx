@@ -1,25 +1,109 @@
-import { Button, TextBox } from "@/components";
-import { GripVerticalIcon, TrashIcon } from "@/icons";
+import { IconButton, Select, TextBox } from "@/components";
+import { TranslateFn } from "@/i18n/type";
+import {
+  BarcodeIcon,
+  CalendarClockIcon,
+  CalendarDaysIcon,
+  CircleDollarSignIcon,
+  ClockIcon,
+  GripVerticalIcon,
+  HashIcon,
+  ImageIcon,
+  PercentIcon,
+  QrCodeIcon,
+  TextInitialIcon,
+  TrashIcon
+} from "@/icons";
 import { cn } from "@/lib/utils";
+import { ExportFieldType } from "@/root/config/export-file";
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from "@dnd-kit/utilities";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import { ExportColumn } from "../../type";
+import { useEffect, useMemo, useState } from "react";
+import { ExportFields } from "./setting/exportSettings.type";
 
 interface SortableExportItemProps {
-  column: ExportColumn;
+  column: ExportFields;
+  onFormatChange: (id: string, format: ExportFieldType) => void;
   onEditAlias: (id: string, alias: string) => void;
   onRemove: (id: string) => void;
 }
 
-export function SortableExportItem({ column, onEditAlias, onRemove }: SortableExportItemProps) {
-  const t = useTranslations('dataTransfer');
+const getFormatLabel = (tExport: TranslateFn, format: ExportFieldType) => {
+  switch (format) {
+    case ExportFieldType.TEXT:
+      return <span className="flex items-center gap-1">
+        <TextInitialIcon className="w-4 h-4" />
+        {tExport('export.types.text')}
+      </span>;
+
+    case ExportFieldType.NUMBER:
+      return <span className="flex items-center gap-1">
+        <HashIcon className="w-4 h-4" />
+        {tExport('export.types.number')}
+      </span>;
+
+    case ExportFieldType.PERCENT:
+      return <span className="flex items-center gap-1">
+        <PercentIcon className="w-4 h-4" />
+        {tExport('export.types.percent')}
+      </span>;
+
+    case ExportFieldType.CURRENCY:
+      return <span className="flex items-center gap-1">
+        <CircleDollarSignIcon className="w-4 h-4" />
+        {tExport('export.types.number')}
+      </span>;
+
+    case ExportFieldType.DATETIME:
+      return <span className="flex items-center gap-1">
+        <CalendarClockIcon className="w-4 h-4" />
+        {tExport('export.types.dateTime')}
+      </span>;
+
+    case ExportFieldType.DATE:
+      return <span className="flex items-center gap-1">
+        <CalendarDaysIcon className="w-4 h-4" />
+        {tExport('export.types.date')}
+      </span>;
+
+    case ExportFieldType.TIME:
+      return <span className="flex items-center gap-1">
+        <ClockIcon className="w-4 h-4" />
+        {tExport('export.types.time')}
+      </span>;
+
+    case ExportFieldType.BARCODE:
+      return <span className="flex items-center gap-1">
+        <BarcodeIcon className="w-4 h-4" />
+        {tExport('export.types.qrCode')}
+      </span>;
+
+    case ExportFieldType.QR:
+      return <span className="flex items-center gap-1">
+        <QrCodeIcon className="w-4 h-4" />
+        {tExport('export.types.qrCode')}
+      </span>;
+
+    case ExportFieldType.IMAGE:
+      return <span className="flex items-center gap-1">
+        <ImageIcon className="w-4 h-4" />
+        {tExport('export.types.image')}
+      </span>;
+
+    default:
+      return <span className="flex items-center gap-1">
+        <TextInitialIcon className="w-4 h-4" />
+        {tExport('export.types.text')}
+      </span>;
+  }
+}
+
+export function SortableExportItem({ column, onFormatChange, onEditAlias, onRemove }: SortableExportItemProps) {
+  const tTransfer = useTranslations('dataTransfer');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [alias, setAlias] = useState<string>(column.alias || '');
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
-    id: column.id,
-  });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: column.id });
 
   useEffect(() => {
     setAlias(column.alias || '');
@@ -42,6 +126,13 @@ export function SortableExportItem({ column, onEditAlias, onRemove }: SortableEx
     setIsEditing(false);
   };
 
+  const formatOptions = useMemo(() => {
+    return column.allowedFormat.map((f) => ({
+      label: getFormatLabel(tTransfer, f),
+      value: f,
+    }));
+  }, [column.matchingKey]);
+
   return (
     <div
       ref={setNodeRef}
@@ -56,11 +147,11 @@ export function SortableExportItem({ column, onEditAlias, onRemove }: SortableEx
         <div className="font-medium">{column.matchingKey}</div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <span>
-            {t('export.aliasLabel')}:
+            {tTransfer('export.aliasLabel')}:
           </span>
           {!isEditing ? (
             <span onClick={onEditMode} className={cn("cursor-pointer", !alias && 'italic text-xs')}>
-              {alias || `(${t('export.noSetAlias')})`}
+              {alias || `(${tTransfer('export.noSetAlias')})`}
             </span>
           ) : (
             <TextBox
@@ -74,10 +165,15 @@ export function SortableExportItem({ column, onEditAlias, onRemove }: SortableEx
         </div>
       </div>
 
-      <Button
-        leftIcon={<TrashIcon className="h-4 w-4" />}
+      <Select
+        className="min-w-35"
+        value={column.format}
+        onValueChange={(value) => onFormatChange(column.id, value as ExportFieldType)}
+        options={formatOptions}
+      />
+      <IconButton
+        icon={<TrashIcon className="h-4 w-4" />}
         variant="ghost"
-        size="icon"
         onClick={() => onRemove(column.id)}
       />
     </div >

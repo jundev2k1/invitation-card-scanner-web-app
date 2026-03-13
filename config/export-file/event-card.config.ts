@@ -2,49 +2,42 @@ import { ExportConfigField, ExportFieldType } from "./type";
 
 export const EventCardExportConfig = Object.freeze([
   {
-    id: 1,
     matchingKey: 'id',
     allowedFormat: [
       ExportFieldType.TEXT,
     ]
   },
   {
-    id: 2,
     matchingKey: 'eventId',
     allowedFormat: [
       ExportFieldType.TEXT,
     ]
   },
   {
-    id: 2,
     matchingKey: 'eventName',
     allowedFormat: [
       ExportFieldType.TEXT,
     ]
   },
   {
-    id: 2,
     matchingKey: 'startAt',
     allowedFormat: [
       ExportFieldType.DATETIME,
     ]
   },
   {
-    id: 2,
     matchingKey: 'endAt',
     allowedFormat: [
       ExportFieldType.DATETIME,
     ]
   },
   {
-    id: 3,
     matchingKey: 'guestName',
     allowedFormat: [
       ExportFieldType.TEXT,
     ]
   },
   {
-    id: 4,
     matchingKey: 'accessToken',
     allowedFormat: [
       ExportFieldType.TEXT,
@@ -52,7 +45,6 @@ export const EventCardExportConfig = Object.freeze([
     ]
   },
   {
-    id: 5,
     matchingKey: 'isUsed',
     allowedFormat: [
       ExportFieldType.TEXT,
@@ -60,14 +52,12 @@ export const EventCardExportConfig = Object.freeze([
     ]
   },
   {
-    id: 6,
     matchingKey: 'firstScannedAt',
     allowedFormat: [
       ExportFieldType.DATETIME,
     ]
   },
   {
-    id: 7,
     matchingKey: 'status',
     allowedFormat: [
       ExportFieldType.NUMBER,
@@ -75,14 +65,12 @@ export const EventCardExportConfig = Object.freeze([
     ]
   },
   {
-    id: 8,
     matchingKey: 'notes',
     allowedFormat: [
       ExportFieldType.TEXT,
     ]
   },
   {
-    id: 9,
     matchingKey: 'createdAt',
     allowedFormat: [
       ExportFieldType.DATETIME,
@@ -91,7 +79,6 @@ export const EventCardExportConfig = Object.freeze([
     ]
   },
   {
-    id: 10,
     matchingKey: 'updatedAt',
     allowedFormat: [
       ExportFieldType.DATETIME,

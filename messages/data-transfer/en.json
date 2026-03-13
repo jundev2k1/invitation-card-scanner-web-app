@@ -35,6 +35,15 @@
         "formatting": "Use the dropdown menu to set data formats (e.g., converting URLs to Images/QR codes or showing labels for Enum values,...).",
         "customField": "The 'Add Custom Field' button allows creating new data points by combining or calculating multiple fields."
       }
+    },
+    "types": {
+      "text": "Text",
+      "number": "Number",
+      "dateTime": "DateTime",
+      "date": "Date",
+      "time": "Time",
+      "image": "Image",
+      "qr": "QR Code"
     }
   },
   "import": {
@@ -186,7 +195,9 @@
   "fields": {
     "EVENTS": {
       "id": "ID",
-      "categoryId": "Category ID",
+      "cateId": "Category ID",
+      "cateTitle": "Category Title",
+      "cateSlug": "Category Slug",
       "status": "Status",
       "title": "Title",
       "description": "Description",
@@ -213,9 +224,12 @@
     "EVENT_CARDS": {
       "id": "Card ID",
       "eventId": "Event ID",
+      "eventTitle": "Event Title",
+      "startAt": "Start Time",
+      "endAt": "End Time",
       "guestName": "Guest Name",
       "accessToken": "Access Token",
-      "isUsed": "Is Used",
+      "isUsed": "Is Used flag",
       "firstScannedAt": "First Scanned At",
       "status": "Status",
       "notes": "Notes",

@@ -1,14 +1,14 @@
 import { Toast } from "@/components";
 import { ImportConfig, ModuleEnum } from "@/root/config/import-file";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
-import { ExportConfig, mockFetchExportConfigs, mockFetchImportConfigs } from "../../type";
+import { useCallback, useState } from "react";
+import { mockFetchExportConfigs, mockFetchImportConfigs } from "../../type";
+import { ExportConfig } from "../export/setting/exportSettings.type";
 import { SelectModuleProps } from "./SelectModule";
 
-export const useSelectModule = ({ mode, onModuleChange }: SelectModuleProps) => {
+export const useSelectModule = ({ mode, onModuleChange, formValues }: SelectModuleProps) => {
   const tGlobalMsg = useTranslations('common.messages');
   const tTransfer = useTranslations('dataTransfer');
-  const [selectedModule, setSelectedModule] = useState<ModuleEnum>(ModuleEnum.EVENTS);
   const [selectedModuleOption, setSelectedModuleOption] = useState<ImportConfig | ExportConfig | null>(null);
 
   const moduleOptions = [
@@ -18,55 +18,66 @@ export const useSelectModule = ({ mode, onModuleChange }: SelectModuleProps) => 
     { label: tTransfer(`module.USERS`), value: ModuleEnum.USERS.toString() },
   ];
 
-  useEffect(() => {
-    if (!selectedModuleOption) {
-      onModuleChange(null);
-      return;
-    }
-
-    onModuleChange(selectedModuleOption);
-  }, [selectedModule, selectedModuleOption]);
-
   const onModuleSelectChange = useCallback((value: ModuleEnum | string) => {
-    setSelectedModule(value as ModuleEnum);
+    if (mode === 'export') {
+      onModuleChange({
+        id: '',
+        module: value as ModuleEnum,
+        name: '',
+        description: '',
+        includesActionColumn: false,
+        columns: [],
+      } as ExportConfig);
+    } else {
+      onModuleChange({
+        id: undefined,
+        module: value as ModuleEnum,
+        uploadStep: { name: null, extension: null, size: null, data: [] },
+        configInfo: { name: '', description: '' },
+        mappingStep: { importFields: [], mappings: [] },
+        rangeStep: { rangeStart: null, rangeEnd: null, autoScaleY: false },
+        createdAt: undefined,
+        updatedAt: undefined
+      } as ImportConfig);
+    }
     setSelectedModuleOption(null);
-  }, [selectedModule, mode]);
+  }, [mode]);
 
   const onModuleOptionChange = useCallback((setting: ImportConfig | ExportConfig) => {
     setSelectedModuleOption(setting);
-  }, [selectedModule, selectedModuleOption, mode]);
+    onModuleChange(setting);
+  }, [mode]);
 
   const onFetchImportOptions = useCallback(async (keyword: string): Promise<ImportConfig[]> => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const res = mockFetchImportConfigs.filter(i => i.module == selectedModule);
+        const res = mockFetchImportConfigs.filter(i => i.module == formValues?.module);
         resolve(res);
       }, 300);
     })
-  }, [selectedModule, mode]);
+  }, [mode]);
 
   const onFetchExportOptions = useCallback(async (keyword: string): Promise<ExportConfig[]> => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const res = mockFetchExportConfigs.filter(i => i.module == selectedModule);
+        const res = mockFetchExportConfigs.filter(i => i.module == formValues?.module);
         resolve(res);
       }, 300);
     });
-  }, [selectedModule, mode]);
+  }, [mode]);
 
   const onInsertSuccess = useCallback((setting: ImportConfig | ExportConfig) => {
-    setSelectedModuleOption(setting);
+    onModuleChange(setting);
     Toast.showSuccess(tGlobalMsg('insertSuccess'));
   }, []);
 
   const onDeleteOption = useCallback((id: string) => {
-    setSelectedModuleOption(null);
+    onModuleChange(null);
     Toast.showSuccess(tGlobalMsg('deleteSuccess'));
   }, []);
 
   return {
     moduleOptions,
-    selectedModule,
     onModuleSelectChange,
     selectedModuleOption,
     onModuleOptionChange,
