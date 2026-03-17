@@ -10,7 +10,7 @@ export const EventCategoryImportConfig = Object.freeze([
       updateIgnore: true,
       refer: {
         key: 'id',
-        validators: (val: string, refVal: string) => (val === 'ROOT' && refVal.length === 3) || (refVal.length - val.length === 3),
+        validator: (val: string, refVal: string) => (val === 'ROOT' && refVal.length === 3) || (refVal.length - val.length === 3),
         messageFn: (tGlobal, val) => tGlobal('events.category.ROOT')
       }
     }
@@ -24,7 +24,7 @@ export const EventCategoryImportConfig = Object.freeze([
       unique: true,
       refer: {
         key: 'id',
-        validators: (val: string, refVal: string) => (val === 'ROOT' && refVal.length === 3) || (refVal.length - val.length === 3),
+        validator: (val: string, refVal: string) => (val === 'ROOT' && refVal.length === 3) || (refVal.length - val.length === 3),
         messageFn: (tGlobal, val) => tGlobal('events.category.ROOT')
       }
     }

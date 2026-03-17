@@ -23,6 +23,7 @@ export const mockFetchImportConfigs: ImportConfig[] = [
       importFields: [],
     },
     uploadStep: {
+      columnRow: 0,
       name: 'Danh sách sự kiện.xlsx',
       extension: 'xlsx',
       size: 2000000,
@@ -58,6 +59,7 @@ export const mockFetchImportConfigs: ImportConfig[] = [
       importFields: [],
     },
     uploadStep: {
+      columnRow: 0,
       name: 'Danh sách danh mục sự kiện.xlsx',
       extension: 'xlsx',
       size: 5012,
@@ -96,6 +98,7 @@ export const mockFetchImportConfigs: ImportConfig[] = [
       importFields: [],
     },
     uploadStep: {
+      columnRow: 0,
       name: 'Danh sách thẻ sự kiện.xlsx',
       extension: 'xlsx',
       size: 5012,

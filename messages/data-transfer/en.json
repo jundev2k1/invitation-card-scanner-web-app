@@ -161,6 +161,69 @@
         "proceedWithWarning": "Some warnings detected. Save and continue anyway?"
       }
     },
+    "importFile": {
+      "upload": {
+        "title": "Upload File to Import",
+        "desc": "Drag & drop your CSV/Excel file here or click to select",
+        "button": "Choose File",
+        "supported": "Supported: .csv, .xlsx"
+      },
+      "actions": {
+        "remove": "Remove",
+        "import": "Start Import"
+      },
+      "progress": {
+        "importing": "Importing"
+      },
+      "result": {
+        "successTitle": "Import Successful",
+        "withErrorsTitle": "Import Completed with Errors",
+        "success": "Success",
+        "errors": "Errors",
+        "rows": "rows"
+      },
+      "preview": {
+        "title": "Data Preview (First 10 rows)"
+      },
+      "validate": {
+        "noConfigSelected": "No import configuration selected",
+        "errorsTitle": "Validation Errors",
+        "passedTitle": "Validation Passed",
+        "fieldsWithErrors": "fields with errors",
+        "totalErrors": "total errors",
+        "passedMessage": "File pass validation, ready to import",
+        "missingRequired": "Missing required value in {row} rows",
+        "missingInsertRequired": "Missing value required for insert in {row} rows",
+        "missingUpdateRequired": "Missing value required for update in {row} rows",
+        "exactLength": "Length must be {length} characters in {row} rows",
+        "minLength": "Minimum length {min} characters required in {row} rows",
+        "maxLength": "Maximum length {max} characters exceeded in {row} rows",
+        "invalidEmail": "Invalid email format in {row} rows",
+        "invalidPhone": "Invalid phone number format in {row} rows",
+        "invalidRegex": "Invalid format in {row} rows",
+        "mustBeGreaterThan": "Value must be greater than {value} in {row} rows",
+        "mustBeGreaterThanOrEqual": "Value must be greater than or equal to {value} in {row} rows",
+        "mustBeLessThan": "Value must be less than {value} in {row} rows",
+        "mustBeLessThanOrEqual": "Value must be less than or equal to {value} in {row} rows",
+        "mustEqual": "Value must equal {value} in {row} rows",
+        "mustNotEqual": "Value must not equal {value} in {row} rows",
+        "refer": "{field} is invalid compared to {refField} (row {row})",
+        "onlyNumber": "Only numbers allowed in {row} rows",
+        "onlyChar": "Only letters allowed in {row} rows",
+        "mustBeUpperCase": "Value must be uppercase in {row} rows",
+        "mustBeLowerCase": "Value must be lowercase in {row} rows",
+        "mustBeCamelCase": "Value must follow CamelCase format in {row} rows",
+        "mustBeSnakeCase": "Value must follow snake_case format in {row} rows",
+        "invalidJson": "Invalid JSON format in {row} rows",
+        "invalidUrl": "Invalid URL format in {row} rows",
+        "notNullable": "Value cannot be null in {row} rows",
+        "notEmpty": "Value cannot be empty in {row} rows",
+        "generalError": "File failed validation. Please fix errors before importing."
+      },
+      "validation": {
+        "generalError": "File failed validation. Please fix errors before importing."
+      }
+    },
     "ignored": "Ignored",
     "rangeStart": "Start",
     "rangeEnd": "End",

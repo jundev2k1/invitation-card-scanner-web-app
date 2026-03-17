@@ -45,7 +45,7 @@ export interface MappingConfigValidation {
   lessThan?: number;
   lessThanOrEqual?: number;
   regex?: { pattern: string, message: string };
-  refer?: { key: string, validator: <TVal, TRefVal>(value: TVal, refVal: TRefVal) => boolean, messageFn: (t: TranslateFn, value?: any) => string };
+  refer?: { key: string, validator: <TVal, TRefVal>(value: TVal, refVal: TRefVal) => boolean, messageFn: (t: TranslateFn, value?: any, rowIndex?: number) => string };
   insertIgnore?: boolean;
   updateIgnore?: boolean;
 }
@@ -71,6 +71,7 @@ export interface ImportRange {
 }
 
 export interface ImportFileTemplate {
+  columnRow: number;
   name?: string | null;
   extension?: 'csv' | 'xlsx' | 'xls' | null;
   size: number | null;

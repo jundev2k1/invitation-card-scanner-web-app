@@ -3,7 +3,7 @@ import { EyeIcon } from "@/icons";
 import { ImportConfig } from "@/root/config/import-file";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { ExportConfig } from "../../type";
+import { ExportConfig } from "../../_elements/export/setting/exportSettings.type";
 import { PreviewHeader } from "./table/PreviewHeader";
 import { PreviewTable } from "./table/PreviewTable";
 
@@ -16,6 +16,13 @@ interface PreviewConfigProps {
 export const PreviewConfig = ({ setting, type, disabled }: PreviewConfigProps) => {
   const t = useTranslations("dataTransfer");
   const [open, setOpen] = useState<boolean>(false);
+  console.log(setting);
+  let importData = [] as any[][];
+  if (type == 'import') {
+    const importConfig = setting as ImportConfig;
+    const startRow = importConfig.uploadStep?.columnRow || 0;
+    importData = importConfig.uploadStep?.data.slice(startRow) || [];
+  }
 
   return (
     <>
@@ -36,7 +43,7 @@ export const PreviewConfig = ({ setting, type, disabled }: PreviewConfigProps) =
 
           <div className="flex flex-col overflow-hidden p-6">
             <PreviewHeader config={setting} type={type} />
-            <PreviewTable config={setting as ExportConfig} type={type} />
+            <PreviewTable config={setting as ExportConfig} type={type} data={importData} />
           </div>
         </DialogContent>
       </Dialog>

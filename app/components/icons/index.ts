@@ -1,6 +1,6 @@
 export {
   AlertTriangle as AlertTriangleIcon,
-  AtSign as AtSignIcon, Barcode as BarcodeIcon, Bell as BellIcon, Briefcase as BriefcaseIcon, CalendarClock as CalendarClockIcon, CalendarDays as CalendarDaysIcon, Camera as CameraIcon, Captions as CaptionsIcon, CheckCheck as CheckCheckIcon, CheckCircle as CheckCircleIcon, Check as CheckIcon, ChevronDown as ChevronDownIcon, ChevronLeft as ChevronLeftIcon,
+  AtSign as AtSignIcon, Barcode as BarcodeIcon, Bell as BellIcon, Briefcase as BriefcaseIcon, CalendarClock as CalendarClockIcon, CalendarDays as CalendarDaysIcon, Camera as CameraIcon, Captions as CaptionsIcon, CheckCheck as CheckCheckIcon, CheckCircle2 as CheckCircle2Icon, CheckCircle as CheckCircleIcon, Check as CheckIcon, ChevronDown as ChevronDownIcon, ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
   ChevronsLeft as ChevronsLeftIcon,
   ChevronsRight as ChevronsRightIcon, ChevronUp as ChevronUpIcon, CircleDollarSign as CircleDollarSignIcon, ClipboardPen as ClipboardPenIcon, Clock as ClockIcon, Copy as CopyIcon, CreditCard as CreditCardIcon, Crown as CrownIcon, DollarSign as DollarSignIcon, Ellipsis as EllipsisIcon, Eraser as EraserIcon, Eye as EyeIcon,

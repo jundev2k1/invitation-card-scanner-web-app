@@ -56,6 +56,7 @@ export const RangeStep = ({
       autoScaleY,
     },
     uploadStep: {
+      columnRow: formValues.fileTemplate.columnRow,
       name: formValues.fileTemplate.name,
       extension: formValues.fileTemplate.extension,
       size: formValues.fileTemplate.size,

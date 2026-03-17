@@ -14,7 +14,7 @@ export const EventImportConfig = Object.freeze([
   },
   {
     id: 2,
-    matchingKey: 'categoryId',
+    matchingKey: 'cateId',
     type: DataType.STRING,
     validate: {
       nullable: true,
@@ -53,8 +53,8 @@ export const EventImportConfig = Object.freeze([
       nullable: true,
       refer: {
         key: 'startAt',
-        validators: (val: Date | null, refVal: Date) => !val || val > refVal,
-        messageFn: 'endAt must be greater than startAt',
+        validator: (val: Date | null, refVal: Date) => !val || val > refVal,
+        messageFn: (t, val, rowNum) => t('validate.refer', { field: 'endAt', refField: 'startAt', row: rowNum }),
       },
     }
   },

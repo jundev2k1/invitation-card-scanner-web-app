@@ -4,6 +4,7 @@ import { TranslateFn } from "@/root/i18n/type";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { SelectModuleChangeFn } from "../../select-module/type";
+import { ImportFileStep } from "../steps/import-file/ImportFileStep";
 import { MappingStep } from "../steps/mapping-step/MappingStep";
 import { RangeStep } from "../steps/range-step/RangeStep";
 import { UploadStep } from "../steps/upload-step/UploadStep";
@@ -14,6 +15,7 @@ interface getTabItemsProps {
   tTranfer: TranslateFn,
   selectedModule: ModuleEnum | null,
   hasConfig: boolean,
+  selectedConfig: ImportConfig | null,
   formValues: ImportFormValues,
   onTemplateChange: (file: FileTemplateValues) => void,
   onTemplateClear: () => void,
@@ -25,6 +27,7 @@ const getTabItems = ({
   tTranfer,
   selectedModule,
   hasConfig = false,
+  selectedConfig,
   formValues,
   onTemplateChange,
   onTemplateClear,
@@ -89,9 +92,9 @@ const getTabItems = ({
       value: 'import',
       label: tTranfer('import.step.import'),
       content: (
-        <>Import data</>
+        <ImportFileStep config={selectedConfig} />
       ),
-      disabled: !hasConfig
+      disabled: !hasConfig || ((selectedConfig?.mappingStep?.mappings.length || 0) == 0)
     }
   ]
 };
@@ -146,7 +149,7 @@ const getDefaultFormValues = (setting: ImportConfig | null): ImportFormValues =>
     mappingStep: {
       configs: mappingConfig,
       mappings: setting?.mappingStep?.mappings || [],
-      importFields: setting?.uploadStep?.data?.[0].map((f, i) => ({ field: f, order: i })) || [],
+      importFields: setting?.uploadStep?.data?.[0]?.map((f, i) => ({ field: f, order: i })) || [],
     },
   }
 };
@@ -279,6 +282,7 @@ export const useImportSettings = () => {
     tTranfer,
     selectedModule: selectedConfig?.module || null,
     hasConfig: !!selectedConfig,
+    selectedConfig,
     formValues,
     onTemplateChange,
     onTemplateClear,

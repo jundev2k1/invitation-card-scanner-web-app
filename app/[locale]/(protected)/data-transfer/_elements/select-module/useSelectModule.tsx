@@ -32,7 +32,7 @@ export const useSelectModule = ({ mode, onModuleChange, formValues }: SelectModu
       onModuleChange({
         id: undefined,
         module: value as ModuleEnum,
-        uploadStep: { name: null, extension: null, size: null, data: [] },
+        uploadStep: { columnRow: 0, name: null, extension: null, size: null, data: [] },
         configInfo: { name: '', description: '' },
         mappingStep: { importFields: [], mappings: [] },
         rangeStep: { rangeStart: null, rangeEnd: null, autoScaleY: false },
@@ -51,20 +51,20 @@ export const useSelectModule = ({ mode, onModuleChange, formValues }: SelectModu
   const onFetchImportOptions = useCallback(async (keyword: string): Promise<ImportConfig[]> => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const res = mockFetchImportConfigs.filter(i => i.module == formValues?.module);
+        const res = mockFetchImportConfigs.filter(i => i.module == (formValues?.module || ModuleEnum.EVENTS));
         resolve(res);
       }, 300);
     })
-  }, [mode]);
+  }, [mode, formValues?.module]);
 
   const onFetchExportOptions = useCallback(async (keyword: string): Promise<ExportConfig[]> => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const res = mockFetchExportConfigs.filter(i => i.module == formValues?.module);
+        const res = mockFetchExportConfigs.filter(i => i.module == (formValues?.module || ModuleEnum.EVENTS));
         resolve(res);
       }, 300);
     });
-  }, [mode]);
+  }, [mode, formValues?.module]);
 
   const onInsertSuccess = useCallback((setting: ImportConfig | ExportConfig) => {
     onModuleChange(setting);

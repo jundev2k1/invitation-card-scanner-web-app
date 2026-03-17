@@ -36,7 +36,7 @@ export const EventCardImportConfig = Object.freeze([
     validate: {
       refer: {
         key: 'firstScannedAt',
-        validators: (val: boolean, refVal: Date | null) => (val == true && refVal != null) || (val == false && refVal == null),
+        validator: (val: boolean, refVal: Date | null) => (val == true && refVal != null) || (val == false && refVal == null),
         messageFn: (t, val) => t('common.message.required')
       },
     }
@@ -49,8 +49,8 @@ export const EventCardImportConfig = Object.freeze([
       nullable: true,
       refer: {
         key: 'isUsed',
-        validators: (val: Date | null, refVal: boolean) => (refVal == true && val != null) || (refVal == false && val == null),
-        messageFn: (t, val) => 'firstScannedAt must be null if isUsed is false'
+        validator: (val: Date | null, refVal: boolean) => (refVal == true && val != null) || (refVal == false && val == null),
+        messageFn: (t, val) => t('firstScannedAt must be null if isUsed is false')
       },
     }
   },
